@@ -32,17 +32,19 @@ namespace MashupDesignTool
         }
         #endregion enum resize direction
 
-        UserControl selectedControl;
-        ProxyControl selectedProxyControl;
         ResizeDirection resizeDirection;
-        Point clickPoint;
         Point beginResizedPoint;
-        bool isControlCaptured;
+        bool isCaptured;
         bool isResizing;
         bool canResize;
         bool isShowingContextMenu;
+        bool canvasClick;
+        Point beginCanvasClicked;
+        List<Point> clickPoints;
         List<UserControl> controls;
         List<ProxyControl> proxyControls;
+        List<UserControl> selectedControls;
+        List<ProxyControl> selectedProxyControls;
 
         public List<UserControl> Controls
         {
@@ -54,15 +56,20 @@ namespace MashupDesignTool
         {
             InitializeComponent();
 
-            selectedControl = null;
             isResizing = false;
             canResize = false;
             isShowingContextMenu = false;
-            
-            CursorManager.InitCursor(LayoutRoot);
+            canvasClick = false;
+            isCaptured = false;
 
+            CursorManager.InitCursor(LayoutRoot);
+            Canvas.SetZIndex(multipleSelectRect, 9999);
+
+            clickPoints = new List<Point>();
             proxyControls = new List<ProxyControl>();
             controls = new List<UserControl>();
+            selectedControls = new List<UserControl>();
+            selectedProxyControls = new List<ProxyControl>();
 
             this.AttachRightClick(OnRightClick);
         }
@@ -86,53 +93,110 @@ namespace MashupDesignTool
         #region dragdrop control
         void control_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ProxyControl pc = (ProxyControl)sender;
-            pc.ReleaseMouseCapture();
-            isControlCaptured = false;
+            if (isCaptured)
+            {
+                isCaptured = false;
+                foreach (ProxyControl pc in selectedProxyControls)
+                    pc.ReleaseMouseCapture();
+            }
         }
 
         void control_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isControlCaptured)
+            if (isCaptured)
             {
                 Point pt = e.GetPosition(LayoutRoot);
-                double x = pt.X - clickPoint.X;
-                double y = pt.Y - clickPoint.Y;
-                ProxyControl pc = (ProxyControl)sender;
-                UserControl uc = pc.RealControl;
-
-                if (x < 0 || y < 0 || x + uc.Width >= this.ActualWidth || y + uc.Height >= this.ActualHeight)
+                Point delta = new Point(0, 0);
+                Point[] pts = new Point[selectedProxyControls.Count];
+                
+                for (int i = 0; i < selectedProxyControls.Count; i++)
                 {
-                    if (x < 0)
-                        x = 0;
-                    else if (x + uc.Width >= this.ActualWidth)
-                        x = this.ActualWidth - uc.Width - 1;
+                    double x = pt.X - clickPoints[i].X;
+                    double y = pt.Y - clickPoints[i].Y;
+                    ProxyControl pc = selectedProxyControls[i];
+                    UserControl uc = pc.RealControl;
 
-                    if (y < 0)
-                        y = 0;
-                    else if (y + uc.Height >= this.ActualHeight)
-                        y = this.ActualHeight - uc.Height - 1;
+                    pts[i].X = x;
+                    pts[i].Y = y;
+
+                    if (x < 0 && x < delta.X)
+                        delta.X = x;
+                    else if (x + uc.Width >= this.ActualWidth && x + uc.Width - this.ActualWidth + 1 > delta.X)
+                        delta.X = x + uc.Width - this.ActualWidth + 1;
+
+                    if (y < 0 && y < delta.Y)
+                        delta.Y = y;
+                    else if (y + uc.Height >= this.ActualHeight && y + uc.Height - this.ActualHeight + 1 > delta.Y)
+                        delta.Y = y + uc.Height - this.ActualHeight + 1;
                 }
-                pc.MoveControl(x, y);
+
+                for (int i = 0; i < pts.Length; i++)
+                {
+                    ProxyControl pc = selectedProxyControls[i];
+                    pc.MoveControl(pts[i].X - delta.X, pts[i].Y - delta.Y);
+                }
             }
         }
 
         void control_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!canResize)
+            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
-                if (selectedProxyControl != null)
-                    selectedProxyControl.UpdateVisibility(System.Windows.Visibility.Collapsed);
-
+                isCaptured = true;
                 ProxyControl pc = (ProxyControl)sender;
-                clickPoint = e.GetPosition(pc.RealControl);
-                pc.CaptureMouse();
-                isControlCaptured = true;
-
-                pc.UpdateVisibility(System.Windows.Visibility.Visible);
-                selectedControl = pc.RealControl;
-                selectedProxyControl = pc;
+                bool b = false;
+                foreach (ProxyControl selectedProxyControl in selectedProxyControls)
+                    if (selectedProxyControl.Equals(pc))
+                    {
+                        selectedProxyControls.Remove(selectedProxyControl);
+                        selectedControls.Remove(selectedProxyControl.RealControl);
+                        selectedProxyControl.UpdateVisibility(System.Windows.Visibility.Collapsed);
+                        b = true;
+                        break;
+                    }
+                if (b == false)
+                {
+                    selectedProxyControls.Add(pc);
+                    selectedControls.Add(pc.RealControl);
+                    pc.UpdateVisibility(System.Windows.Visibility.Visible);
+                }
+                else if (b == true && selectedProxyControls.Count == 0)
+                {
+                    isCaptured = false;
+                }
             }
+            else if (selectedControls.Count >= 2 || !canResize)
+            {
+                ProxyControl pc = (ProxyControl)sender;
+                isCaptured = false;
+                foreach (ProxyControl selectedProxyControl in selectedProxyControls)
+                    if (selectedProxyControl.Equals(pc))
+                        isCaptured = true;
+                if (isCaptured == false)
+                {
+                    foreach (ProxyControl selectedProxyControl in selectedProxyControls)
+                        selectedProxyControl.UpdateVisibility(System.Windows.Visibility.Collapsed);
+                    selectedProxyControls.Clear();
+                    selectedControls.Clear();
+                    clickPoints.Clear();
+
+                    clickPoints.Add(e.GetPosition(pc));
+                    selectedProxyControls.Add(pc);
+                    selectedControls.Add(pc.RealControl);
+                    isCaptured = true;
+                    pc.UpdateVisibility(System.Windows.Visibility.Visible);
+                    pc.CaptureMouse();
+                }
+                else
+                {
+                    clickPoints.Clear();
+                    foreach (ProxyControl selectedProxyControl in selectedProxyControls)
+                    {
+                        clickPoints.Add(e.GetPosition(selectedProxyControl.RealControl));
+                        selectedProxyControl.CaptureMouse();
+                    }
+                }
+            } 
 
             if (isShowingContextMenu)
             {
@@ -141,10 +205,10 @@ namespace MashupDesignTool
         }
         #endregion dragdrop control
 
-        #region resize control
+        #region resize control and select multiple controls
         private void LayoutRoot_MouseMove(object sender, MouseEventArgs e)
         {
-            if (selectedControl != null)
+            if (selectedControls.Count == 1)
             {
                 if (!isResizing)
                 {
@@ -155,19 +219,39 @@ namespace MashupDesignTool
                     OnResizing(e);
                 }
             }
+            else if (canvasClick)
+            {
+                Point pt = e.GetPosition(LayoutRoot);
+                double x = pt.X > beginCanvasClicked.X ? beginCanvasClicked.X : pt.X;
+                double y = pt.Y > beginCanvasClicked.Y ? beginCanvasClicked.Y : pt.Y;
+                double width = Math.Abs(pt.X - beginCanvasClicked.X);
+                double height = Math.Abs(pt.Y - beginCanvasClicked.Y);
+
+                multipleSelectRect.Visibility = System.Windows.Visibility.Visible;
+                multipleSelectRect.SetValue(Canvas.LeftProperty, x);
+                multipleSelectRect.SetValue(Canvas.TopProperty, y);
+                multipleSelectRect.Width = width;
+                multipleSelectRect.Height = height;
+            }
         }
 
         private void LayoutRoot_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (canResize)
             {
-                isResizing = true;
+                isResizing = true; 
+                selectedProxyControls[0].CaptureMouse();
             }
-            else if (!isControlCaptured)
+            else if (!isCaptured)
             {
-                selectedControl = null;
-                if (selectedProxyControl != null)
+                foreach (ProxyControl selectedProxyControl in selectedProxyControls)
                     selectedProxyControl.UpdateVisibility(System.Windows.Visibility.Collapsed);
+                selectedControls.Clear();
+                selectedProxyControls.Clear();
+                clickPoints.Clear();
+
+                canvasClick = true;
+                beginCanvasClicked = e.GetPosition(LayoutRoot);
             }
             
             if (isShowingContextMenu)
@@ -183,11 +267,37 @@ namespace MashupDesignTool
                 Point pt = e.GetPosition(LayoutRoot);
                 ResizeControl(pt);
                 isResizing = false;
+                selectedProxyControls[0].ReleaseMouseCapture();
+            }
+            else if (canvasClick)
+            {
+                Point pt = e.GetPosition(LayoutRoot);
+                Rect rect = new Rect(beginCanvasClicked, pt);
+
+                foreach (ProxyControl selectedProxyControl in selectedProxyControls)
+                    selectedProxyControl.UpdateVisibility(System.Windows.Visibility.Collapsed);
+                selectedControls.Clear();
+                selectedProxyControls.Clear();
+
+                foreach (ProxyControl pc in proxyControls)
+                {
+                    double x = (double)pc.RealControl.GetValue(Canvas.LeftProperty);
+                    double y = (double)pc.RealControl.GetValue(Canvas.TopProperty);
+                    if (rect.Contains(new Point(x, y)) && rect.Contains(new Point(x + pc.RealControl.Width, y + pc.RealControl.Height)))
+                    {
+                        selectedControls.Add(pc.RealControl);
+                        selectedProxyControls.Add(pc);
+                        pc.UpdateVisibility(System.Windows.Visibility.Visible);
+                    }
+                }
+                multipleSelectRect.Visibility = System.Windows.Visibility.Collapsed;
+                canvasClick = false;
             }
         }
 
         private void CheckCanResize(MouseEventArgs e)
         {
+            UserControl selectedControl = selectedControls[0];
             Point pt = e.GetPosition(selectedControl);
             canResize = false;
 
@@ -368,6 +478,9 @@ namespace MashupDesignTool
 
         private void ResizeControl(Point pt)
         {
+            UserControl selectedControl = selectedControls[0];
+            ProxyControl selectedProxyControl = selectedProxyControls[0];
+
             double x, y;
             double width, height;
 
@@ -417,11 +530,14 @@ namespace MashupDesignTool
             selectedProxyControl.MoveControl(x, y);
             CursorManager.UpdateCursorPosition(pt);
         }
-        #endregion resize control
+        #endregion resize control and select multiple controls
 
         private void LayoutRoot_MouseLeave(object sender, MouseEventArgs e)
         {
             isResizing = false;
+            isCaptured = false;
+            foreach (ProxyControl pc in selectedProxyControls)
+                pc.ReleaseMouseCapture();
             CursorManager.ChangeCursor(this, CursorManager.CursorType.Arrow);
         }
 
@@ -468,5 +584,14 @@ namespace MashupDesignTool
             lbContextMenu.SelectedIndex = -1;
         }
         #endregion contextmenu
+
+        private void LayoutRoot_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void LayoutRoot_KeyUp(object sender, KeyEventArgs e)
+        {
+        }
     }
 }

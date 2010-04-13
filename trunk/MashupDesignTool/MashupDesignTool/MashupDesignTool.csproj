@@ -84,6 +84,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Click.cs" />
+    <Compile Include="KeyClick.cs" />
     <Compile Include="ProxyControl.xaml.cs">
       <DependentUpon>ProxyControl.xaml</DependentUpon>
     </Compile>
