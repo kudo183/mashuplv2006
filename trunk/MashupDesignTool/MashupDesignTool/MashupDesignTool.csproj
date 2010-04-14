@@ -84,8 +84,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Click.cs" />
-    <Compile Include="KeyClick.cs" />
+    <Compile Include="ObjectConverter.cs" />
     <Compile Include="ProxyControl.xaml.cs">
       <DependentUpon>ProxyControl.xaml</DependentUpon>
     </Compile>
@@ -98,7 +97,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RightClick.cs" />
-    <Compile Include="SampleTreeItem.cs" />
     <Compile Include="DesignCanvas.xaml.cs">
       <DependentUpon>DesignCanvas.xaml</DependentUpon>
     </Compile>
