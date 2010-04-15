@@ -23,8 +23,8 @@ namespace MashupDesignTool
         }
 
         private static CursorType currCursor = CursorType.Arrow;
-        private static CustomCursor cursorSizeENWS = new CustomCursor("SizeENWS.png");
-        private static CustomCursor cursorSizeWNES = new CustomCursor("SizeWNES.png");
+        private static CustomCursor cursorSizeENWS = new CustomCursor(@"Images/SizeENWS.png");
+        private static CustomCursor cursorSizeWNES = new CustomCursor(@"Images/SizeWNES.png");
 
         public static void InitCursor(Canvas canvas)
         {

@@ -13,7 +13,8 @@
             <controls:TreeView x:Name="TreeControl" controlsToolkit:DockPanel.Dock="Left" Background="AliceBlue">
             </controls:TreeView>
             <controlsToolkit:DockPanel LastChildFill="True">
-                <Grid Width="200" controlsToolkit:DockPanel.Dock="Right"></Grid>
+                <Grid Width="200" controlsToolkit:DockPanel.Dock="Right">
+                </Grid>
                 <my:DesignCanvas HorizontalAlignment="Stretch" x:Name="designCanvas1" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left">
                 </my:DesignCanvas>
             </controlsToolkit:DockPanel>

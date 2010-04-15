@@ -3,38 +3,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" xmlns:my="clr-namespace:MashupDesignTool" xmlns:bubbleCreme="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.BubbleCreme" xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" xmlns:my1="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.BureauBlack" xmlns:expressionLight="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.ExpressionLight" xmlns:my2="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.RainierOrange" xmlns:twilightBlue="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.TwilightBlue" xmlns:my3="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.WhistlerBlue" xmlns:layoutToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit" d:DesignHeight="300" d:DesignWidth="400" xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input">
-
-    <UserControl.Resources>
-        <Storyboard x:Name="ShowPopup">
-            <DoubleAnimationUsingKeyFrames BeginTime="0" Storyboard.TargetName="lbContextMenu" Storyboard.TargetProperty="(UIElement.Opacity)">
-                <SplineDoubleKeyFrame KeyTime="0" Value="0"/>
-                <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Name="HidePopup">
-            <DoubleAnimationUsingKeyFrames BeginTime="0" Duration="0" Storyboard.TargetName="lbContextMenu" Storyboard.TargetProperty="(UIElement.Opacity)">
-                <DiscreteDoubleKeyFrame KeyTime="0" Value="0" />
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-    </UserControl.Resources>
+    mc:Ignorable="d" xmlns:my="clr-namespace:MashupDesignTool" xmlns:bubbleCreme="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.BubbleCreme" xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" xmlns:my1="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.BureauBlack" xmlns:expressionLight="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.ExpressionLight" xmlns:my2="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.RainierOrange" xmlns:twilightBlue="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.TwilightBlue" xmlns:my3="clr-namespace:System.Windows.Controls.Theming;assembly=System.Windows.Controls.Theming.WhistlerBlue" xmlns:layoutToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit" d:DesignHeight="300" d:DesignWidth="400" xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input" KeyDown="LayoutRoot_KeyDown" KeyUp="LayoutRoot_KeyUp" LostFocus="UserControl_LostFocus">
 
     <Grid>
-        <Border BorderBrush="Silver" BorderThickness="2" >
-            <Canvas x:Name="LayoutRoot" Background="Violet" MouseMove="LayoutRoot_MouseMove" MouseLeftButtonDown="LayoutRoot_MouseLeftButtonDown" MouseLeftButtonUp="LayoutRoot_MouseLeftButtonUp" KeyDown="LayoutRoot_KeyDown" KeyUp="LayoutRoot_KeyUp">
-                <Popup x:Name="contextMenu" Opened="contextMenu_Opened" Closed="contextMenu_Closed">
-                    <Grid Opacity="0.8" x:Name="gridContextMenu">
-                        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="3" >
-                            <ListBox x:Name="lbContextMenu" Height="Auto" SelectionChanged="lbContextMenu_SelectionChanged">
-                                <ListBoxItem Content="Menu item 1" />
-                                <ListBoxItem Content="Menu item 2" />
-                                <ListBoxItem Content="Menu item 2" />
-                                <ListBoxItem Content="Menu item 2" />
-                            </ListBox>
-                        </Border>
-                    </Grid>
-                </Popup>
-                <Rectangle Canvas.Left="10" Canvas.Top="10" Height="100" Name="multipleSelectRect" Stroke="SteelBlue" StrokeThickness="2" Width="121" Visibility="Collapsed" Fill="LightBlue" Opacity="0.4" />
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" Grid.Column="0" Grid.Row="0" >
+            <Canvas x:Name="LayoutRoot" Background="AliceBlue" MouseMove="LayoutRoot_MouseMove" MouseLeftButtonDown="LayoutRoot_MouseLeftButtonDown" MouseLeftButtonUp="LayoutRoot_MouseLeftButtonUp" KeyDown="LayoutRoot_KeyDown" KeyUp="LayoutRoot_KeyUp">
+                <Rectangle Canvas.Left="198" Canvas.Top="105" Height="100" Name="multipleSelectRect" Stroke="SteelBlue" StrokeThickness="2" Width="121" Visibility="Collapsed" Fill="LightBlue" Opacity="0.4" />
+                <Button Content="Button" Height="0" Name="button1" Width="0" Canvas.Left="6" Canvas.Top="6" />
+                <dataInput:Label Canvas.Left="232" Canvas.Top="18" Height="50" Name="label1" Width="100" />
             </Canvas>
         </Border>
     </Grid>

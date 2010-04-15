@@ -33,9 +33,6 @@ namespace MashupDesignTool
             clientRoot = absoluteUri.Substring(0, lastSlash + 1);
 
             DownloadControlInfo();
-
-            designCanvas1.Height = (double)new System.Windows.LengthConverter().ConvertFromString("Auto");
-            designCanvas1.Width = (double)new System.Windows.LengthConverter().ConvertFromString("Auto");
         }
 
         #region download info.xml and contruct control tree

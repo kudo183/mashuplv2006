@@ -85,6 +85,13 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ObjectConverter.cs" />
+    <Compile Include="ContextMenu.xaml.cs">
+      <DependentUpon>ContextMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuItem.xaml.cs">
+      <DependentUpon>MenuItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuItemEventArgs.cs" />
     <Compile Include="ProxyControl.xaml.cs">
       <DependentUpon>ProxyControl.xaml</DependentUpon>
     </Compile>
@@ -100,12 +107,26 @@
     <Compile Include="DesignCanvas.xaml.cs">
       <DependentUpon>DesignCanvas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SeparatorMenuItem.xaml.cs">
+      <DependentUpon>SeparatorMenuItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TextImageMenuItem.xaml.cs">
+      <DependentUpon>TextImageMenuItem.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="ContextMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ProxyControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -122,13 +143,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SeparatorMenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TextImageMenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="SizeENWS.png" />
-    <Resource Include="SizeWNES.png" />
+    <Resource Include="Images\SizeENWS.png" />
+    <Resource Include="Images\SizeWNES.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\BringForward.png" />
+    <Resource Include="Images\BringToFront.png" />
+    <Resource Include="Images\Properties.png" />
+    <Resource Include="Images\SendBackward.png" />
+    <Resource Include="Images\SendToBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Delete.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
