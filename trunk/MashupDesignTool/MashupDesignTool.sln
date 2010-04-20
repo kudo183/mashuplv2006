@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MashupDesignTool", "MashupDesignTool\MashupDesignTool.csproj", "{6798B89C-1D97-4C82-A4D5-06F817CA2DF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MashupDesignTool.Web", "MashupDesignTool.Web\MashupDesignTool.Web.csproj", "{25407CA3-FC19-4F58-85AF-96EB8CDC41FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6798B89C-1D97-4C82-A4D5-06F817CA2DF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6798B89C-1D97-4C82-A4D5-06F817CA2DF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6798B89C-1D97-4C82-A4D5-06F817CA2DF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6798B89C-1D97-4C82-A4D5-06F817CA2DF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25407CA3-FC19-4F58-85AF-96EB8CDC41FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25407CA3-FC19-4F58-85AF-96EB8CDC41FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25407CA3-FC19-4F58-85AF-96EB8CDC41FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25407CA3-FC19-4F58-85AF-96EB8CDC41FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

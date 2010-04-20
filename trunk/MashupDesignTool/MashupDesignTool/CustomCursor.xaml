@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="MashupDesignTool.CustomCursor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="21" d:DesignWidth="22">
+    
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0*" />
+        </Grid.RowDefinitions>
+        <Image HorizontalAlignment="Left" Name="image1" VerticalAlignment="Top" Height="21" Width="22" Stretch="None">
+            <Image.Effect>
+                <DropShadowEffect Opacity="0.4" ShadowDepth="3"></DropShadowEffect>
+            </Image.Effect>
+        </Image>
+    </Grid>
+</UserControl>
