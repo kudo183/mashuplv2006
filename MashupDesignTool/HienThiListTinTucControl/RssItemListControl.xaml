@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="HienThiListTinTucControl.RssItemListControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:as="clr-namespace:AnimatedSliderControl;assembly=AnimatedSliderControl"
+    xmlns:my="clr-namespace:HienThiListTinTucControl"
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    mc:Ignorable="d"
+    d:DesignHeight="234" d:DesignWidth="708" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Name="DarkBrush" Color="DarkGray"  />
+        <SolidColorBrush x:Name="MediumBrush" Color="Gray" />
+        <SolidColorBrush x:Name="LightBrush" Color="White"/>
+        <Style TargetType="RepeatButton" x:Name="RepeatButtonStyle">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Path x:Name="Root" Height="20" Width="25" Fill="{StaticResource LightBrush}" Stretch="Fill" Stroke="{StaticResource DarkBrush}" Data="M446.17392,172.90543 C446.27936,192.92148 406.35571,204.69794 421.05554,180.64854 C427.8862,169.47339 393.68411,196.98341 393.91034,173.09254 C394.12988,149.90575 431.90207,180.51912 421.05554,166.83844 C405.30811,146.97626 446.08047,155.16463 446.17392,172.90543 z">
+                        </Path>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="RepeatButton" x:Name="RepeatButtonStyleLeft">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Path x:Name="Root" Height="20" Width="25" Fill="{StaticResource LightBrush}" Stretch="Fill" Stroke="{StaticResource DarkBrush}" Data="M446.17392,172.90543 C446.27936,192.92148 406.35571,204.69794 421.05554,180.64854 C427.8862,169.47339 393.68411,196.98341 393.91034,173.09254 C394.12988,149.90575 431.90207,180.51912 421.05554,166.83844 C405.30811,146.97626 446.08047,155.16463 446.17392,172.90543 z" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-180"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style TargetType="as:AnimatedSlider">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Resources>
+                                <Storyboard x:Name="ToLeftStoryboard">
+                                    <DoubleAnimation x:Name="ToLeftAnimation"
+                                 Storyboard.TargetName="ItemsPresenter"
+                                 Storyboard.TargetProperty="(Canvas.Left)"
+                                 By="128.3" Duration="0:0:.4"/>
+                                </Storyboard>
+                                <Storyboard x:Name="ToRightStoryboard">
+                                    <DoubleAnimation x:Name="ToRightAnimation"
+                                    Storyboard.TargetName="ItemsPresenter"
+                                 Storyboard.TargetProperty="(Canvas.Left)"
+                                 By="-128.3" Duration="0:0:.4"/>
+                                </Storyboard>
+
+                            </Grid.Resources>
+                            <RepeatButton x:Name="LeftButton" Content="Left" Delay="400" Interval="400" />
+                            <RepeatButton x:Name="RightButton" Content="Right" Grid.Column="2"  Delay="400" Interval="400" />
+                            <Canvas x:Name="View" Cursor="Hand" Grid.Column="1" Background="{TemplateBinding Background}"  >
+                                <ItemsPresenter x:Name="ItemsPresenter" Height="{TemplateBinding Height}"/>
+                            </Canvas>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Border BorderBrush="Black">
+        <Grid x:Name="LayoutRoot">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF00003F" Offset="0.006" />
+                    <GradientStop Color="#FF8FA3A3" Offset="0.901" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="10,5,0,0" x:Name="channelTitle" FontSize="20" FontWeight="Bold" FontFamily="Arial Black" Foreground="White" ></TextBlock>
+                <Image Grid.Column="1" Margin="3,3,3,3" Stretch="Uniform" x:Name="channelImage" HorizontalAlignment="Center"></Image>
+            </Grid>
+            <as:AnimatedSlider x:Name="listRssItem" Grid.Row="1" ItemHeight="120" ItemWidth="80" Margin="0,1,0,0" Height="150" VerticalAlignment="Top"
+                              LeftButtonStyle="{StaticResource RepeatButtonStyleLeft}"
+                              RightButtonStyle="{StaticResource RepeatButtonStyle}"
+                              >
+                <as:AnimatedSlider.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1"/>
+                </as:AnimatedSlider.Background>
+            </as:AnimatedSlider>
+        </Grid>
+    </Border>
+</UserControl>

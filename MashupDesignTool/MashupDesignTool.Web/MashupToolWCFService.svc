@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="MashupDesignTool.Web.MashupToolWCFService" CodeBehind="MashupToolWCFService.svc.cs" %>

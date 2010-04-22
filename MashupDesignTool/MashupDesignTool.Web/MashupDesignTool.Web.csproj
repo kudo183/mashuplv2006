@@ -13,7 +13,7 @@
     <RootNamespace>MashupDesignTool.Web</RootNamespace>
     <AssemblyName>MashupDesignTool.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <SilverlightApplicationList>{6798B89C-1D97-4C82-A4D5-06F817CA2DF0}|..\MashupDesignTool\MashupDesignTool.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{6798B89C-1D97-4C82-A4D5-06F817CA2DF0}|..\MashupDesignTool\MashupDesignTool.csproj|ClientBin|False,{4C30F88D-B4EF-4AF3-AF7A-19DDBECBBD49}|..\TestControl\TestControl.csproj|ClientBin|False</SilverlightApplicationList>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +34,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -59,11 +61,18 @@
     <Content Include="ClientBin\controls\control3.png" />
     <Content Include="ClientBin\controls\control4.dll" />
     <Content Include="ClientBin\controls\control4.png" />
-    <Content Include="ClientBin\controls\info.xml" />
+    <Content Include="ClientBin\controls\control6.dll" />
+    <Content Include="ClientBin\controls\info.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="ClientBin\MashupDesignTool.xap" />
+    <Content Include="ClientBin\TestControl.xap" />
     <Content Include="MashupDesignToolTestPage.aspx" />
     <Content Include="MashupDesignToolTestPage.html" />
+    <Content Include="MashupToolWCFService.svc" />
     <Content Include="Silverlight.js" />
+    <Content Include="TestControlTestPage.aspx" />
+    <Content Include="TestControlTestPage.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -73,9 +82,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MashupToolWCFService.svc.cs">
+      <DependentUpon>MashupToolWCFService.svc</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="abc.rss">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>
@@ -83,7 +99,7 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
+          <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>1646</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>

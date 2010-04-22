@@ -1,0 +1,30 @@
+<Controls>
+  <Control>
+    <name>Control1</name>
+    <displayname>Textbox</displayname>
+    <description>This is control 1</description>
+    <iconname>control1.png</iconname>
+    <group>Group 1</group>
+  </Control>
+  <Control>
+    <name>Control2</name>
+    <displayname>Calendar</displayname>
+    <description>This is control 2</description>
+    <iconname>control2.png</iconname>
+    <group>Group 1</group>
+  </Control>
+  <Control>
+    <name>Control3</name>
+    <displayname>Control button 1</displayname>
+    <description>This is control 3</description>
+    <iconname>control3.png</iconname>
+    <group>Group 2</group>
+  </Control>
+  <Control>
+    <name>Control4</name>
+    <displayname>Control button 2</displayname>
+    <description>This is control 4</description>
+    <iconname>control4.png</iconname>
+    <group>Group 2</group>
+  </Control>
+</Controls>
