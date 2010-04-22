@@ -5,6 +5,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MashupDesignTool", "MashupD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MashupDesignTool.Web", "MashupDesignTool.Web\MashupDesignTool.Web.csproj", "{25407CA3-FC19-4F58-85AF-96EB8CDC41FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HienThiListTinTucControl", "HienThiListTinTucControl\HienThiListTinTucControl.csproj", "{F91522CB-C32D-497C-8980-4393C4265464}"
+	ProjectSection(ProjectDependencies) = postProject
+		{25407CA3-FC19-4F58-85AF-96EB8CDC41FF} = {25407CA3-FC19-4F58-85AF-96EB8CDC41FF}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestControl", "TestControl\TestControl.csproj", "{4C30F88D-B4EF-4AF3-AF7A-19DDBECBBD49}"
+	ProjectSection(ProjectDependencies) = postProject
+		{25407CA3-FC19-4F58-85AF-96EB8CDC41FF} = {25407CA3-FC19-4F58-85AF-96EB8CDC41FF}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimatedSliderControl", "AnimatedSliderControl\AnimatedSliderControl.csproj", "{21B0B82A-5137-4B9F-9526-50223FE3497E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EffectLibrary", "EffectLibrary\EffectLibrary.csproj", "{28FB534C-5A60-4634-82F4-4116BFB9297B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsReaderControl", "NewsReaderControl\NewsReaderControl.csproj", "{C5090887-DDB3-4255-95BF-9AE006112402}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +35,26 @@ Global
 		{25407CA3-FC19-4F58-85AF-96EB8CDC41FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25407CA3-FC19-4F58-85AF-96EB8CDC41FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25407CA3-FC19-4F58-85AF-96EB8CDC41FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F91522CB-C32D-497C-8980-4393C4265464}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F91522CB-C32D-497C-8980-4393C4265464}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F91522CB-C32D-497C-8980-4393C4265464}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F91522CB-C32D-497C-8980-4393C4265464}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C30F88D-B4EF-4AF3-AF7A-19DDBECBBD49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C30F88D-B4EF-4AF3-AF7A-19DDBECBBD49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C30F88D-B4EF-4AF3-AF7A-19DDBECBBD49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C30F88D-B4EF-4AF3-AF7A-19DDBECBBD49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21B0B82A-5137-4B9F-9526-50223FE3497E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21B0B82A-5137-4B9F-9526-50223FE3497E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21B0B82A-5137-4B9F-9526-50223FE3497E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21B0B82A-5137-4B9F-9526-50223FE3497E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28FB534C-5A60-4634-82F4-4116BFB9297B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28FB534C-5A60-4634-82F4-4116BFB9297B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28FB534C-5A60-4634-82F4-4116BFB9297B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28FB534C-5A60-4634-82F4-4116BFB9297B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5090887-DDB3-4255-95BF-9AE006112402}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5090887-DDB3-4255-95BF-9AE006112402}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5090887-DDB3-4255-95BF-9AE006112402}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5090887-DDB3-4255-95BF-9AE006112402}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

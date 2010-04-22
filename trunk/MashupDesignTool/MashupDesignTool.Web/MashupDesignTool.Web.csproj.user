@@ -4,7 +4,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <StartPageUrl>MashupDesignToolTestPage.aspx</StartPageUrl>
+          <StartPageUrl>TestControlTestPage.aspx</StartPageUrl>
           <StartAction>SpecificPage</StartAction>
           <AspNetDebugging>True</AspNetDebugging>
           <SilverlightDebugging>True</SilverlightDebugging>
@@ -22,6 +22,7 @@
           <AlwaysStartWebServerOnDebug>True</AlwaysStartWebServerOnDebug>
           <ProjectOutputReferences>
             <Ref Project="{6798B89C-1D97-4C82-A4D5-06F817CA2DF0}" Folder="ClientBin">MashupDesignTool.xap</Ref>
+            <Ref Project="{4C30F88D-B4EF-4AF3-AF7A-19DDBECBBD49}" Folder="ClientBin">TestControl.xap</Ref>
           </ProjectOutputReferences>
         </WebProjectProperties>
       </FlavorProperties>
