@@ -58,7 +58,7 @@ namespace MashupDesignTool
             int lastSlash = absoluteUri.LastIndexOf("/");
             string assemblyPath = absoluteUri.Substring(0, lastSlash + 1);
             //And tack on name of assembly:
-            assemblyPath += "controls/info.xml";
+            assemblyPath += "Controls/info.xml";
 
             Uri uri = new Uri(assemblyPath, UriKind.Absolute);
             //Start an async download:
