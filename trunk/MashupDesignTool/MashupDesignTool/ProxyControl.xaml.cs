@@ -27,6 +27,39 @@ namespace MashupDesignTool
             realControl = uc;
             MoveControl(x, y);
             ResizeControl(width, height);
+
+            uc.SizeChanged += new SizeChangedEventHandler(uc_SizeChanged);
+        }
+
+        public ProxyControl(UserControl uc)
+        {
+            InitializeComponent();
+            realControl = uc;
+            uc.SizeChanged += new SizeChangedEventHandler(uc_SizeChanged);
+        }
+
+        public ProxyControl(UserControl uc, double x, double y)
+        {
+            InitializeComponent();
+            realControl = uc;
+            MoveControl(x, y);
+            uc.SizeChanged += new SizeChangedEventHandler(uc_SizeChanged);
+        }
+
+        void uc_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double width = e.NewSize.Width;
+            double height = e.NewSize.Height;
+            double x = Canvas.GetLeft(realControl);
+            double y = Canvas.GetTop(realControl);
+
+            realControl.Width = width;
+            realControl.Height = height;
+
+            this.SetValue(Canvas.LeftProperty, x - 7);
+            this.SetValue(Canvas.TopProperty, y - 7);
+            this.Width = width + 14;
+            this.Height = height + 14;
         }
 
         public UserControl RealControl

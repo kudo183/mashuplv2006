@@ -80,6 +80,7 @@
     <Compile Include="ContextMenu.xaml.cs">
       <DependentUpon>ContextMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ControlInfo.cs" />
     <Compile Include="ControlTreeViewItem.xaml.cs">
       <DependentUpon>ControlTreeViewItem.xaml</DependentUpon>
     </Compile>
@@ -176,6 +177,9 @@
     <None Include="Images\.svn\text-base\Thumbs.db.svn-base" />
     <None Include="Images\Thumbs.db" />
     <None Include="Properties\AppManifest.xml" />
+    <Content Include="ServiceReferences.ClientConfig">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\BringForward.png" />
@@ -192,6 +196,20 @@
     <Folder Include="Images\.svn\tmp\prop-base\" />
     <Folder Include="Images\.svn\tmp\props\" />
     <Folder Include="Images\.svn\tmp\text-base\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DockCanvas\DockCanvas.csproj">
+      <Project>{C38EEC60-122E-4002-A7B1-E6465DC41201}</Project>
+      <Name>DockCanvas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyPropertyGrid\MyPropertyGrid.csproj">
+      <Project>{EBE7ECFD-0942-49A9-BF98-0FE9378C1472}</Project>
+      <Name>MyPropertyGrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NewsReaderControl\NewsReaderControl.csproj">
+      <Project>{B6062C93-78FB-4DD9-B6E0-3A41687FCFD9}</Project>
+      <Name>NewsReaderControl</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

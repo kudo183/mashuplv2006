@@ -1,23 +1,468 @@
-﻿<UserControl x:Class="MashupDesignTool.MainPage"
+﻿<UserControl xmlns:sdk="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input"  x:Class="MashupDesignTool.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:propertyGrid="clr-namespace:SL30PropertyGrid;assembly=MyPropertyGrid"
     xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
-    mc:Ignorable="d"
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    mc:Ignorable="d" x:Name="root"
     d:DesignHeight="300" d:DesignWidth="400" xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" Loaded="UserControl_Loaded" xmlns:my="clr-namespace:MashupDesignTool">
+    
+    <UserControl.Resources>
+        <Style x:Key="ExpanderButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <vsm:VisualStateManager.VisualStateGroups>
+                                <vsm:VisualStateGroup x:Name="CommonStates">
+                                    <vsm:VisualState x:Name="Normal"/>
+                                    <vsm:VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
+                                                Duration="00:00:00.0010000" Storyboard.TargetName="GradientStop1" 
+                                                Storyboard.TargetProperty="Color">
+                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FF8C9BF2"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
+                                                Duration="00:00:00.0010000" Storyboard.TargetName="GradientStop2" 
+                                                Storyboard.TargetProperty="Color">
+                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FF6672BA"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
+                                                Duration="00:00:00.0010000" Storyboard.TargetName="GradientStop3" 
+                                                Storyboard.TargetProperty="Color">
+                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FF47528E"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
+                                                Duration="00:00:00.0010000" Storyboard.TargetName="GradientStop4" 
+                                                Storyboard.TargetProperty="Color">
+                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FF293161"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </vsm:VisualState>
+                                    <vsm:VisualState x:Name="Disabled">
+                                        <Storyboard/>
+                                    </vsm:VisualState>
+                                </vsm:VisualStateGroup>
+                                <vsm:VisualStateGroup x:Name="FocusStates">
+                                    <vsm:VisualState x:Name="Focused">
+                                        <Storyboard/>
+                                    </vsm:VisualState>
+                                    <vsm:VisualState x:Name="Unfocused"/>
+                                </vsm:VisualStateGroup>
+                            </vsm:VisualStateManager.VisualStateGroups>
+                            <Border CornerRadius="3"
+                                       BorderBrush="#FF333333" BorderThickness="2" 
+                                       x:Name="border" RenderTransformOrigin="0.5,0.5">
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop x:Name="GradientStop1" Color="#FF0E101A" Offset="0.0" />
+                                        <GradientStop x:Name="GradientStop2" Color="#FF0E101A" Offset="0.43" />
+                                        <GradientStop x:Name="GradientStop3" Color="#FF373946" Offset="0.57" />
+                                        <GradientStop x:Name="GradientStop4" Color="#FF373946" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Border.RenderTransform>
+                                <ContentPresenter x:Name="contentPresenter" 
+                                       ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TitlePanelHorizontal" TargetType="sdk:Label">
+            <Setter Property="Background" Value="#FF2D355C">
+            </Setter>
+            <Setter Property="Foreground" Value="White">
+            </Setter>
+        </Style>
+        <Style x:Key="TitlePanelVertical" TargetType="sdk:Label">
+            <Setter Property="Background" Value="Transparent">
+            </Setter>
+            <Setter Property="Foreground" Value="White">
+            </Setter>
+        </Style>
+
+        <Storyboard x:Name="CollapseToolbarPanel">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(controls:GridSplitter.Visibility)" 
+                                           BeginTime="00:00:00" Duration="0:0:0"
+                                           Storyboard.TargetName="spliter1">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Duration="0:0:.3" To="24" x:Name="CollapseToolbarPanelColumn" 
+                             Storyboard.TargetName="root" 
+                             Storyboard.TargetProperty="ColumnToolbarWidth"></DoubleAnimation>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="TreeControl">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="ToolbarTitle">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="ToolbarTitleVertical">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Visible</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Button.Content)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="ToolbarExpander">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>&gt;</DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Name="ExpandToolbarPanel">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(controls:GridSplitter.Visibility)" 
+                                           BeginTime="00:00:00" Duration="0:0:0"
+                                           Storyboard.TargetName="spliter1">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Visible</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Duration="0:0:.3" From="24" x:Name="ExpandToolbarPanelColumn"
+                             Storyboard.TargetName="root" 
+                             Storyboard.TargetProperty="ColumnToolbarWidth"></DoubleAnimation>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="TreeControl">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Visible</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="ToolbarTitle">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Visible</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="ToolbarTitleVertical">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Button.Content)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="ToolbarExpander">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>&lt;</DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Name="CollapsePropertiesGridPanel">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(controls:GridSplitter.Visibility)" 
+                                           BeginTime="00:00:00" Duration="0:0:0"
+                                           Storyboard.TargetName="spliter2">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Duration="0:0:.3" To="24" x:Name="CollapsePropertiesGridPanelColumn" 
+                             Storyboard.TargetName="root" 
+                             Storyboard.TargetProperty="ColumnPropertiesGridWidth"></DoubleAnimation>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="propertiesGrid">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="PropertiesGridTitle">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="PropertiesGridTitleVertical">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Visible</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Button.Content)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="PropertiesGridExpander">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>&lt;</DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Name="ExpandPropertiesGridPanel">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(controls:GridSplitter.Visibility)" 
+                                           BeginTime="00:00:00" Duration="0:0:0"
+                                           Storyboard.TargetName="spliter2">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Visible</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Duration="0:0:.3" From="24" x:Name="ExpandPropertiesGridPanelColumn"
+                             Storyboard.TargetName="root" 
+                             Storyboard.TargetProperty="ColumnPropertiesGridWidth"></DoubleAnimation>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="propertiesGrid">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Visible</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="PropertiesGridTitle">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Visible</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="PropertiesGridTitleVertical">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Visibility>Collapsed</Visibility>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Button.Content)" 
+                                           BeginTime="00:00:00.3" Duration="0:0:0"
+                                           Storyboard.TargetName="PropertiesGridExpander">
+                <ObjectAnimationUsingKeyFrames.KeyFrames>
+                    <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                        <DiscreteObjectKeyFrame.Value>&gt;</DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames.KeyFrames>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
 
     <controlsToolkit:DockPanel LastChildFill="True">
-        <Grid Height="100" controlsToolkit:DockPanel.Dock="Top"></Grid>
-        <controlsToolkit:DockPanel LastChildFill="True">
-            <controls:TreeView x:Name="TreeControl" controlsToolkit:DockPanel.Dock="Left" Background="AliceBlue" SelectedItemChanged="TreeControl_SelectedItemChanged">
-            </controls:TreeView>
-                <controlsToolkit:DockPanel LastChildFill="True">
-                    <Grid Width="200" controlsToolkit:DockPanel.Dock="Right">
-                    </Grid>
-                    <my:DesignCanvas HorizontalAlignment="Stretch" x:Name="designCanvas1" VerticalAlignment="Stretch" controlsToolkit:DockPanel.Dock="Left">
-                    </my:DesignCanvas>
-                </controlsToolkit:DockPanel>
-        </controlsToolkit:DockPanel>
+        <controlsToolkit:DockPanel.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF2B3151" Offset="0.008" />
+                <GradientStop Color="#FF2B3151" Offset="0.4" />
+                <GradientStop Color="#FF191D30" Offset="0.7" />
+                <GradientStop Color="Black" Offset="1" />
+            </LinearGradientBrush>
+        </controlsToolkit:DockPanel.Background>
+        <Grid Height="100" controlsToolkit:DockPanel.Dock="Top">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                    <GradientStop Color="#FF131522" Offset="0.006" />
+                    <GradientStop Color="#FF06070B" Offset="0.975" />
+                    <GradientStop Color="#FF4C569B" Offset="0.156" />
+                    <GradientStop Color="#FF4C569B" Offset="0.787" />
+                    <GradientStop Color="#FF767CAA" Offset="0.451" />
+                </LinearGradientBrush>
+            </Grid.Background>
+        </Grid>
+        
+        <Grid Height="15" controlsToolkit:DockPanel.Dock="Top">
+            <Grid.Background>
+                <SolidColorBrush Color="#232842"></SolidColorBrush>
+            </Grid.Background>
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" x:Name="ToolbarColumn"></ColumnDefinition>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+                <ColumnDefinition Width="6*"></ColumnDefinition>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+                <ColumnDefinition Width="250" x:Name="PropertiesGridColumn"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" BorderBrush="#FF885A2C" BorderThickness="2" x:Name="ToolbarPanel">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="20"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <controls:TreeView Grid.Row="1" BorderBrush="#FF885A2C" BorderThickness="0,1,0,0"
+                                       Grid.ColumnSpan="2" Grid.Column="0" x:Name="TreeControl"
+                                       SelectedItemChanged="TreeControl_SelectedItemChanged" 
+                                       VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                       Foreground="White">
+                        <controls:TreeView.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF151E38" Offset="0" />
+                                <GradientStop Color="#FF161E34" Offset="0.6" />
+                                <GradientStop Color="Black" Offset="1" />
+                            </LinearGradientBrush>
+                        </controls:TreeView.Background>
+                    </controls:TreeView>
+                    <Button Grid.Column="1" x:Name="ToolbarExpander" Foreground="White" 
+                            Style="{StaticResource ExpanderButtonStyle}" Content="&lt;" Padding="0" FontWeight="Bold" Click="ExpanderToolbar_Click">
+                    </Button>
+                    <sdk:Label Grid.Column="0" x:Name="ToolbarTitle"
+                               Style="{StaticResource TitlePanelHorizontal}" Content="Toolbar"
+                               Margin="3,0,0,0">
+                    </sdk:Label>
+                </Grid>
+            </Border>
+
+            <controls:GridSplitter Grid.Column="1" Background="Transparent" x:Name="spliter1"
+                                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            </controls:GridSplitter>
+
+            <my:DesignCanvas Grid.Column="2" x:Name="designCanvas1" 
+                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                             SelectPropertiesMenu="designCanvas1_SelectPropertiesMenu" SelectionChanged="designCanvas1_SelectionChanged"
+                             BorderBrush="#FF885A2C" Background="#2D355C" BorderThickness="2">
+            </my:DesignCanvas>
+
+            <controls:GridSplitter Grid.Column="3" Background="Transparent" x:Name="spliter2"
+                                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            </controls:GridSplitter>
+
+            <Border Grid.Column="5" BorderBrush="#FF885A2C" BorderThickness="2" x:Name="PropertiesGridPanel">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <propertyGrid:PropertyGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="propertiesGrid" 
+                                       VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                       GridBorderThickness="0,1,0,0" Foreground="White" GridBorderBrush="#FF885A2C">
+                        <propertyGrid:PropertyGrid.GridBackgroundBrush>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF151E38" Offset="0" />
+                                <GradientStop Color="#FF161E34" Offset="0.6" />
+                                <GradientStop Color="Black" Offset="1" />
+                            </LinearGradientBrush>
+                        </propertyGrid:PropertyGrid.GridBackgroundBrush>
+                    </propertyGrid:PropertyGrid>
+                    <Button Grid.Column="0" x:Name="PropertiesGridExpander" Foreground="White" 
+                            Style="{StaticResource ExpanderButtonStyle}" Content="&gt;" Padding="0" FontWeight="Bold" Click="PropertiesGridExpander_Click">
+                    </Button>
+                    <sdk:Label Grid.Column="1" x:Name="PropertiesGridTitle"
+                               Style="{StaticResource TitlePanelHorizontal}" Content="Properties"
+                               HorizontalAlignment="Right" HorizontalContentAlignment="Right"
+                               Margin="0,0,3,0">
+                    </sdk:Label>
+                </Grid>
+            </Border>
+            <sdk:Label x:Name="ToolbarTitleVertical" Content="Toolbar" Grid.RowSpan="1" Grid.ColumnSpan="3" Visibility="Collapsed"
+                       VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                       Margin="-2,8,0,0" Style="{StaticResource TitlePanelVertical}" 
+                       HorizontalAlignment="Left" VerticalAlignment="Top">
+                <sdk:Label.RenderTransform>
+                    <RotateTransform Angle="90" CenterX="0" CenterY="20"></RotateTransform>
+                </sdk:Label.RenderTransform>
+            </sdk:Label>
+            <sdk:Label x:Name="PropertiesGridTitleVertical" Content="Properties" Margin="3,5,-95,0" Visibility="Collapsed"
+                       Grid.RowSpan="1" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" 
+                       VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                       Style="{StaticResource TitlePanelVertical}" 
+                       VerticalAlignment="Top" HorizontalAlignment="Right">
+                <sdk:Label.RenderTransform>
+                    <RotateTransform Angle="90" CenterX="-20" CenterY="0"></RotateTransform>
+                </sdk:Label.RenderTransform>
+            </sdk:Label>
+        </Grid>
     </controlsToolkit:DockPanel>
 </UserControl>

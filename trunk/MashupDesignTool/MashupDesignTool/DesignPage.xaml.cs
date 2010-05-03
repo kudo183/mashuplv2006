@@ -19,10 +19,17 @@ namespace MashupDesignTool
 {
     public partial class MainPage : UserControl
     {
-        Dictionary<String, Assembly> LoadedAssembly = new Dictionary<String, Assembly>();
-        String controlName = "";
+        Dictionary<string, Assembly> LoadedAssembly = new Dictionary<string, Assembly>();
+        Dictionary<string, Assembly> LoadingAssembly = new Dictionary<string, Assembly>();
+        //List<string> downloadingDllReferences = new List<string>();
+        //List<string> downloadingDllFilename = new List<string>();
+        Dictionary<WebClient, string> downloadingDllReferences = new Dictionary<WebClient, string>();
+        Dictionary<WebClient, string> downloadingDllFilenames = new Dictionary<WebClient, string>();
         String clientRoot = "";
         DispatcherTimer doubleClickTimer;
+        double toolbarWidthBeforeCollapse;
+        double propertiesGridWidthBeforeCollapse;
+        List<ControlInfo> listControls =  new List<ControlInfo>();
 
         public MainPage()
         {
@@ -39,6 +46,8 @@ namespace MashupDesignTool
             doubleClickTimer = new DispatcherTimer();
             doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
+
+            propertiesGrid.SelectedObject = designCanvas1.RootCanvas;
         }
 
         #region download info.xml and contruct control tree
@@ -63,20 +72,11 @@ namespace MashupDesignTool
             XmlReader reader = XmlReader.Create(e.Result);
             XDocument document = XDocument.Load(reader);
 
-            string name, displayName, description, group, iconName;
             foreach (XElement element in document.Descendants("Control"))
             {
-                name = displayName = description = group = iconName = "";
-                try
-                {
-                    name = element.Element("name").Value;
-                    displayName = element.Element("displayname").Value;
-                    description = element.Element("description").Value;
-                    group = element.Element("group").Value;
-                    iconName = element.Element("iconname").Value;
-                }
-                catch { }
-                AddControlToTree(name, displayName, description, iconName, group);
+                ControlInfo ci = new ControlInfo(element);
+                listControls.Add(ci);
+                AddControlToTree(ci);
             }
         }
 
@@ -94,56 +94,116 @@ namespace MashupDesignTool
             t.Items.Add(tvi);
         }
 
-        private void AddControlToTree(string name, string displayName, string description, string iconName, string group)
+        private void AddControlToTree(ControlInfo ci)
         {
-            ControlTreeViewItem item = new ControlTreeViewItem();
-            item.SetControlIcon(clientRoot + "controls/" + iconName);
-            item.SetControlName(name);
-            item.SetControlDescription(description);
-            item.SetControlDisplayName(displayName);
-
+            ControlTreeViewItem item = new ControlTreeViewItem(ci, clientRoot);
             item.MouseLeftButtonDown += new MouseButtonEventHandler(item_MouseLeftButtonDown);
-            AddTreeViewItem(TreeControl, group, item);
+            AddTreeViewItem(TreeControl, ci.Group, item);
         }
         #endregion
 
-        private void DownloadControl()
+        private void DownloadControl(ControlInfo ci)
         {
-            String assemblyPath = clientRoot + "controls/" + controlName + ".dll";
+            String assemblyPath = clientRoot + "Controls/ControlDll/" + ci.DllFilename;
 
-            Uri uri = new Uri(assemblyPath, UriKind.Absolute);
-            //Start an async download:
-            WebClient webClient = new WebClient();
-            webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_DownloadControlCompleted);
-            webClient.OpenReadAsync(uri);
+            if (!ci.IsDllFileDownloaded)
+            {
+                if (!downloadingDllFilenames.ContainsValue(assemblyPath))
+                {
+                    Uri uri = new Uri(assemblyPath, UriKind.Absolute);
+                    //Start an async download:
+                    WebClient webClient = new WebClient();
+                    webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_DownloadControlCompleted);
+                    webClient.OpenReadAsync(uri);
+                    downloadingDllFilenames.Add(webClient, ci.ControlName);
+                }
+            }
+
+            for (int i = 0; i < ci.DllReferences.Count; i++)
+            {
+                if (!ci.IsDllReferencesDownloaded[i])
+                {
+                    assemblyPath = clientRoot + "Controls/ReferenceDll/" + ci.DllReferences[i];
+                    if (!downloadingDllReferences.ContainsValue(ci.DllReferences[i]))
+                    {
+                        Uri uri = new Uri(assemblyPath, UriKind.Absolute);
+                        //Start an async download:
+                        WebClient webClient = new WebClient();
+                        webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_DownloadDllDependenceCompleted);
+                        webClient.OpenReadAsync(uri);
+                        downloadingDllReferences.Add(webClient, ci.DllReferences[i]);
+                    }
+                }
+            }
         }
 
         private void webClient_DownloadControlCompleted(object sender, OpenReadCompletedEventArgs e)
         {
-            AssemblyPart assemblyPart = new AssemblyPart();
-            Assembly assembly = assemblyPart.Load(e.Result);
-            LoadedAssembly.Add(controlName, assembly);
+            if (e.Error == null)
+            {
+                string controlName = downloadingDllFilenames[(WebClient)sender];
+                downloadingDllFilenames.Remove((WebClient)sender);
+                AssemblyPart assemblyPart = new AssemblyPart();
+                Assembly assembly = assemblyPart.Load(e.Result);
+                for (int i = 0; i < listControls.Count; i++)
+                {
+                    if (listControls[i].ControlName == controlName)
+                    {
+                        listControls[i].IsDllFileDownloaded = true;
+                        if (listControls[i].IsReady)
+                            LoadedAssembly.Add(controlName, assembly);
+                        else
+                            LoadingAssembly.Add(controlName, assembly);
+                    }
+                }
+            }
+        }
+
+        private void webClient_DownloadDllDependenceCompleted(object sender, OpenReadCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                string dll = downloadingDllReferences[(WebClient)sender];
+                downloadingDllReferences.Remove((WebClient)sender);
+                AssemblyPart assemblyPart = new AssemblyPart();
+                Assembly assembly = assemblyPart.Load(e.Result);
+
+                for (int i = 0; i < listControls.Count; i++)
+                {
+                    string controlName = listControls[i].ControlName;
+                    if (!LoadedAssembly.ContainsKey(controlName))
+                    {
+                        listControls[i].CheckDllReferences(dll);
+                        if (listControls[i].IsReady)
+                        {
+                            LoadedAssembly.Add(controlName, LoadingAssembly[controlName]);
+                            LoadingAssembly.Remove(controlName);
+                        }
+                    }
+                }
+            }
         }
 
         //when user click a control, download it if needed.
         private void item_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            ControlTreeViewItem item = (ControlTreeViewItem)sender; 
             if (doubleClickTimer.IsEnabled)
             {
                 doubleClickTimer.Stop();
-                UserControl o = LoadedAssembly[controlName].CreateInstance("control." + controlName) as UserControl;
-                if (o == null)
-                    return; 
-                designCanvas1.AddControl(o, 100.0, 100.0, 50, 40);
+                if (!LoadedAssembly.ContainsKey(item.ControlInfo.ControlName))
+                    return;
+                UserControl uc = LoadedAssembly[item.ControlInfo.ControlName].CreateInstance(item.ControlInfo.ControlName) as UserControl;
+                if (uc == null)
+                    return;
+                designCanvas1.AddControl(uc, 100.0, 100.0, 400, 300);
             }
             else
             {
                 doubleClickTimer.Start();
-                ControlTreeViewItem item = (ControlTreeViewItem)sender;
-                controlName = item.GetControlName();
-                if (LoadedAssembly.Keys.Contains(controlName) == true)
+                if (LoadedAssembly.Keys.Contains(item.ControlInfo.ControlName) == true)
                     return;
-                DownloadControl();
+                DownloadControl(item.ControlInfo);
             }
         }
 
@@ -155,6 +215,77 @@ namespace MashupDesignTool
         private void TreeControl_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             doubleClickTimer.Stop();
+        }
+
+        private void designCanvas1_SelectPropertiesMenu(object sender, UIElement element)
+        {
+            propertiesGrid.SelectedObject = element;
+            if (propertiesGrid.Visibility == System.Windows.Visibility.Collapsed)
+            {
+                ExpandPropertiesGridPanelColumn.To = propertiesGridWidthBeforeCollapse;
+                ExpandPropertiesGridPanel.Begin();
+            }
+        }
+
+        private void designCanvas1_SelectionChanged(object sender, UIElement element)
+        {
+            propertiesGrid.SelectedObject = element;
+        }
+
+        private void ExpanderToolbar_Click(object sender, RoutedEventArgs e)
+        {
+            if (TreeControl.Visibility == System.Windows.Visibility.Visible)
+            {
+                toolbarWidthBeforeCollapse = ToolbarPanel.ActualWidth;
+                CollapseToolbarPanelColumn.From = toolbarWidthBeforeCollapse;
+                CollapseToolbarPanel.Begin();
+            }
+            else
+            {
+                ExpandToolbarPanelColumn.To = toolbarWidthBeforeCollapse;
+                ExpandToolbarPanel.Begin();
+            }
+        }
+
+        private void PropertiesGridExpander_Click(object sender, RoutedEventArgs e)
+        {
+            if (propertiesGrid.Visibility == System.Windows.Visibility.Visible)
+            {
+                propertiesGridWidthBeforeCollapse = PropertiesGridPanel.ActualWidth;
+                CollapsePropertiesGridPanelColumn.From = propertiesGridWidthBeforeCollapse;
+                CollapsePropertiesGridPanel.Begin();
+            }
+            else
+            {
+                ExpandPropertiesGridPanelColumn.To = propertiesGridWidthBeforeCollapse;
+                ExpandPropertiesGridPanel.Begin();
+            }
+        }
+
+        private static readonly DependencyProperty ColumnToolbarWidthProperty = DependencyProperty.Register("ColumnToolbarWidth", typeof(double), typeof(MainPage), new PropertyMetadata(ColumnToolbarWidthChanged));
+
+        private double ColumnToolbarWidth
+        {
+            get { return (double)GetValue(ColumnToolbarWidthProperty); }
+            set { SetValue(ColumnToolbarWidthProperty, value); }
+        }
+
+        private static void ColumnToolbarWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((MainPage)d).ToolbarColumn.Width = new GridLength((double)e.NewValue);
+        }
+
+        private static readonly DependencyProperty ColumnPropertiesGridWidthProperty = DependencyProperty.Register("ColumnPropertiesGridWidth", typeof(double), typeof(MainPage), new PropertyMetadata(ColumnPropertiesGridWidthChanged));
+
+        private double ColumnPropertiesGridWidth
+        {
+            get { return (double)GetValue(ColumnPropertiesGridWidthProperty); }
+            set { SetValue(ColumnPropertiesGridWidthProperty, value); }
+        }
+
+        private static void ColumnPropertiesGridWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((MainPage)d).PropertiesGridColumn.Width = new GridLength((double)e.NewValue);
         }
     }
 }
