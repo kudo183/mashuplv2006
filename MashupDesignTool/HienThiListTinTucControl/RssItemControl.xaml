@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:liquidRichText="clr-namespace:Liquid;assembly=Liquid.RichText"
     mc:Ignorable="d"
-    d:DesignHeight="179" d:DesignWidth="232">
+    d:DesignHeight="400" d:DesignWidth="300" SizeChanged="UserControl_SizeChanged">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -23,10 +23,10 @@
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="3"></DropShadowEffect>
             </Border.Effect>
-            <StackPanel x:Name="LayoutItem">
-                <liquidRichText:RichTextBlock Name="RssItemTitle" TextWrapping="Wrap" Margin="5,0,0,0" FontSize="12" FontWeight="Bold" FontFamily="Arial" FontStyle="Italic"  Foreground="#FF0000CC" LinkClicked="RssItemTitle_LinkClicked" />
-                <TextBlock Margin="5,0,0,0" Name="RssItemPubDate" VerticalAlignment="Stretch" Foreground="#FF867878" FontStyle="Italic" FontSize="9" TextWrapping="Wrap" />
-                <liquidRichText:RichTextBlock Name="RssItemDetail" TextWrapping="Wrap" Margin="5,0,0,0" FontSize="10" LinkClicked="RssItemTitle_LinkClicked" />
+            <StackPanel x:Name="LayoutItem" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <liquidRichText:RichTextBlock Name="RssItemTitle" TextWrapping="Wrap" Margin="5,0,0,0" FontSize="12" FontWeight="Bold" FontFamily="Arial" FontStyle="Italic"  Foreground="#FF0000CC" LinkClicked="RssItemTitle_LinkClicked" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                <TextBlock Margin="5,0,0,0" Name="RssItemPubDate" VerticalAlignment="Stretch" Foreground="#FF867878" FontStyle="Italic" FontSize="9" TextWrapping="Wrap" HorizontalAlignment="Stretch" />
+                <liquidRichText:RichTextBlock Name="RssItemDetail" TextWrapping="Wrap" Margin="5,0,0,0" FontSize="10" LinkClicked="RssItemTitle_LinkClicked" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
             </StackPanel>
         </Border>
     </Grid>

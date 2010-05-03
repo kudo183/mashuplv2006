@@ -11,38 +11,49 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.ServiceModel.Syndication;
 using Liquid;
+using Effect;
+using System.Xml;
+using System.IO;
+using System.Text;
 
 namespace HienThiListTinTucControl
 {
     public partial class RssItemControl : UserControl
     {
-        SyndicationItem item;
         public delegate void LinkClicked(object sender, string link);
         public event LinkClicked LinkClickedHandler;
 
-        public RssItemControl()
+        SyndicationItem item;
+
+        internal RssItemControl()
         {
             InitializeComponent();
         }
 
-        public RssItemControl(SyndicationItem item)
+        public static RssItemControl Create(SyndicationItem item)
         {
-            InitializeComponent();
-            Item = item;
+            RssItemControl control = new RssItemControl();
+            control.Item = item;
+            control.RssItemTitle.Load(Format.HTML, "<a href='" + item.Links[0].Uri.AbsoluteUri + "'><u><b>" + item.Title.Text + "</b></u></a>");
+            control.RssItemPubDate.Text = item.PublishDate.ToString();
+            string summary = item.Summary.Text.Replace(" &", " -");
+            summary = item.Summary.Text.Replace("& ", "- ");
+
+            XmlReader reader = XmlReader.Create(new StringReader("<content>" + summary + "</content>"));
+            bool b = true;
+            try { while (reader.Read()); }
+            catch { b = false; }
+
+            if (b == false)
+                return null;
+            control.RssItemDetail.Load(Format.HTML, summary);
+            return control;
         }
 
         public SyndicationItem Item
         {
             get { return item; }
-            set
-            {
-                item = value;
-                RssItemTitle.Load(Format.HTML, "<a href='" + item.Links[0].Uri.AbsoluteUri + "'><u><b>" + item.Title.Text + "</b></u></a>");
-                RssItemPubDate.Text = item.PublishDate.ToString();
-                string detail = item.Summary.Text.Replace("&lt;", "<");
-                detail = detail.Replace("&gt;", ">");
-                RssItemDetail.Load(Format.HTML, detail);
-            }
+            internal set { item = value; }
         }
 
         private void RssItemTitle_LinkClicked(object sender, RichTextBoxEventArgs e)
@@ -51,6 +62,15 @@ namespace HienThiListTinTucControl
             {
                 LinkClickedHandler(this, (string)e.Parameter.ToString());
             }
+        }
+
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            RectangleGeometry rg = new RectangleGeometry();
+            rg.Rect = new Rect(0, 0, e.NewSize.Width, e.NewSize.Height);
+            LayoutItem.Clip = rg;
+            LayoutItem.Width = e.NewSize.Width - 10;
+            LayoutItem.Height = e.NewSize.Height - 7;
         }
     }
 }

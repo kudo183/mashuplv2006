@@ -15,14 +15,28 @@ namespace MashupDesignTool
 {
     public partial class ControlTreeViewItem : UserControl
     {
-        private string controlName;
+        private ControlInfo controlInfo;
+
+        public ControlInfo ControlInfo
+        {
+            get { return controlInfo; }
+            set { controlInfo = value; }
+        }
 
         public ControlTreeViewItem()
         {
             InitializeComponent();
         }
 
-        public void SetControlIcon(string uri)
+        public ControlTreeViewItem(ControlInfo controlInfo, string clientRoot) : this()
+        {
+            this.controlInfo = controlInfo;
+            SetControlIcon(clientRoot + "/" + controlInfo.IconName);
+            SetControlDisplayName(controlInfo.DisplayName);
+            SetControlDescription(controlInfo.Description);
+        }
+
+        private void SetControlIcon(string uri)
         {
             try
             {
@@ -31,24 +45,14 @@ namespace MashupDesignTool
             catch { }
         }
 
-        public void SetControlDisplayName(string displayName)
+        private void SetControlDisplayName(string displayName)
         {
             ControlDisplayName.Content = displayName;
         }
 
-        public void SetControlDescription(string description)
+        private void SetControlDescription(string description)
         {
             ControlDescription.Content = description;
-        }
-
-        public string GetControlName()
-        {
-            return controlName;
-        }
-
-        public void SetControlName(string controlName)
-        {
-            this.controlName = controlName;
         }
     }
 }

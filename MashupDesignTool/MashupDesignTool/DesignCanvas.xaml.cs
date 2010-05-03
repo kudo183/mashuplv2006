@@ -32,6 +32,12 @@ namespace MashupDesignTool
         }
         #endregion enum resize direction
 
+        public delegate void OnSelectMenu(object sender, UIElement element);
+        public event OnSelectMenu SelectPropertiesMenu;
+
+        public delegate void OnSelectionChanged(object sender, UIElement element);
+        public event OnSelectionChanged SelectionChanged;
+
         ResizeDirection resizeDirection;
         Point beginResizedPoint;
         bool isCaptured;
@@ -81,6 +87,11 @@ namespace MashupDesignTool
             timer.Tick += new EventHandler(timer_Tick);
 
             CreateContextMenu();
+        }
+
+        public DockCanvas.DockCanvas RootCanvas
+        {
+            get { return ControlContainer; }
         }
 
         #region context menu
@@ -204,6 +215,8 @@ namespace MashupDesignTool
 
         void miProperties_SelectMenuItem(object sender, MenuItemEventArgs e)
         {
+            if (SelectPropertiesMenu != null)
+                SelectPropertiesMenu(sender, selectedControls[0]);
         }
         #endregion context menu
 
@@ -211,14 +224,15 @@ namespace MashupDesignTool
         public void AddControl(UserControl uc, double x, double y, int width, int height)
         {
             uc.Margin = new Thickness(0, 0, 0, 0);
-            ProxyControl pc = new ProxyControl(uc, x, y, width, height);
+            //ProxyControl pc = new ProxyControl(uc, x, y, width, height);
+            ProxyControl pc = new ProxyControl(uc, 10, 10);
             proxyControls.Add(pc);
             controls.Add(uc);
             int index = FindTopProxyControlIndex();
             Canvas.SetZIndex(pc, index + 2);
             Canvas.SetZIndex(uc, index + 1);
 
-            LayoutRoot.Children.Add(uc);
+            ControlContainer.Children.Add(uc);
             LayoutRoot.Children.Add(pc);
 
             pc.MouseLeftButtonDown += new MouseButtonEventHandler(control_MouseLeftButtonDown);
@@ -227,6 +241,11 @@ namespace MashupDesignTool
 
             ClearSelectedList();
             AddSelectedControl(pc);
+
+            textBox1.Focus();
+
+            if (SelectionChanged != null)
+                SelectionChanged(this, uc);
 
             this.Focus();
         }
@@ -311,6 +330,9 @@ namespace MashupDesignTool
                         selectedProxyControl.CaptureMouse();
                     }
                 }
+                if (selectedControls.Count == 1)
+                    if (SelectionChanged != null)
+                        SelectionChanged(this, selectedControls[0]);
             } 
 
             if (isShowingContextMenu)
@@ -397,6 +419,9 @@ namespace MashupDesignTool
                 ClearSelectedList();
                 canvasClick = true;
                 beginCanvasClicked = e.GetPosition(LayoutRoot);
+
+                if (SelectionChanged != null)
+                    SelectionChanged(this, ControlContainer);
             }
             
             if (isShowingContextMenu)
@@ -887,7 +912,7 @@ namespace MashupDesignTool
             foreach (ProxyControl pc in selectedProxyControls)
             {
                 LayoutRoot.Children.Remove(pc);
-                LayoutRoot.Children.Remove(pc.RealControl);
+                ControlContainer.Children.Remove(pc.RealControl);
                 proxyControls.Remove(pc);
                 controls.Remove(pc.RealControl);
             }
@@ -922,6 +947,15 @@ namespace MashupDesignTool
 
             multipleSelectRect.Visibility = System.Windows.Visibility.Collapsed;
             canvasClick = false;
+        }
+
+        private void root_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            textBox1.Text = "";
         }
     }
 }

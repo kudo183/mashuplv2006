@@ -13,13 +13,22 @@ using System.Xml;
 using System.ServiceModel.Syndication;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Windows.Threading;
+using Effect;
 
 namespace HienThiListTinTucControl
 {
     public partial class RssItemListControl : UserControl
     {
-        public delegate void LinkClicked(object sender, string link);
-        public event LinkClicked LinkClickedHandler;
+        public delegate void LinkClickedHandler(object sender, string link);
+        public event LinkClickedHandler LinkClicked;
+        double itemwidth, itemheight;
+        bool isMovingToLeft;
+        int numItemPerView = 1;
+        int currView = 0;
+        int numView = 0;
+        List<SplitScreenEffectControl> listItems = new List<SplitScreenEffectControl>();
+        double dx = 0;
 
         string rssURL;
 
@@ -50,46 +59,36 @@ namespace HienThiListTinTucControl
                 channelTitle.Text = feed.Title.Text;
                 channelImage.Source = new BitmapImage(feed.ImageUrl);
 
-                double x, y;
-                x = y = 0;
+                listItems.Clear();
                 foreach (SyndicationItem item in feed.Items)
                 {
-                    RssItemControl ric = new RssItemControl(item);
-                    listRssItem.Items.Add(ric);
-                    ric.LinkClickedHandler += new RssItemControl.LinkClicked(ric_LinkClickedHandler);
+                    RssItemControl ric = RssItemControl.Create(item);
+                    if (ric != null)
+                    {
+                        SplitScreenEffectControl effect = new SplitScreenEffectControl(ric, SplitScreenEffectControl.SplitDirection.VERTICAL);
+                        Canvas.SetTop(effect, 2);
+                        listItems.Add(effect);
+                        ric.Width = itemwidth;
+                        ric.Height = itemheight;
+                        ric.LinkClickedHandler += new RssItemControl.LinkClicked(ric_LinkClickedHandler);
+                    }
                 }
+                numView = listItems.Count / numItemPerView + 1;
+                currView = 0;
+                UpdateViewList();
+                UpdateButtonEnable();
             }
         }
 
         void ric_LinkClickedHandler(object sender, string link)
         {
-            if (LinkClickedHandler != null)
-                LinkClickedHandler(sender, link);
+            if (LinkClicked != null)
+                LinkClicked(sender, link);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            double width, height;
-            width = height = 0;
-            if (!double.IsNaN(this.ActualHeight) && this.ActualHeight != 0 && this.ActualWidth != 0)
-            {
-                width = this.ActualWidth;
-                height = this.ActualHeight;
-            }
-            else if (!double.IsNaN(this.Height) && this.Width != 0 && this.Height != 0)
-            {
-                width = this.Width;
-                height = this.Height; 
-            }
-            if (width != 0 && height != 0)
-            {
-                height -= 50;
-                double itemheight = height - 10;
-                double itemwidth = itemheight * 1.5;
-                if (itemwidth / width < 2)
-                    itemwidth = itemwidth < width / 2 ? itemwidth : width / 2;
-                listRssItem.SetWidthHeight(width, height, itemwidth, itemheight);
-            }
+
         }
 
         public Brush Background
@@ -102,6 +101,145 @@ namespace HienThiListTinTucControl
         {
             get { return channelTitle.Foreground; }
             set { channelTitle.Foreground = value; }
+        }
+
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            SetClipRegion();
+
+            for (int i = 0; i < listItems.Count; i++)
+            {
+                listItems[i].Width = itemwidth;
+                listItems[i].Height = itemheight;
+            }
+            UpdateViewList();
+        }
+
+        private void SetClipRegion()
+        {
+            double width = listRssItem.ActualWidth;
+            double height = listRssItem.ActualHeight;
+
+            if (width > 0 && height > 0)
+            {
+                RectangleGeometry rg = new RectangleGeometry();
+                rg.Rect = new Rect(0, 0, width, height);
+                listRssItem.Clip = rg;
+            }
+
+            if (width != 0 && height >= 4)
+            {
+                itemheight = height - 4;
+                itemwidth = itemheight * 1.2;
+                numItemPerView = (int)(width / itemwidth);
+                dx = (width - (numItemPerView * itemwidth)) / numItemPerView;
+            }
+            else
+            {
+                itemheight = 4;
+                itemwidth = 6;
+                numItemPerView = 1;
+                dx = 0;
+            }
+        }
+
+        private void UpdateViewList()
+        {
+            listRssItem.Children.Clear();
+
+            double x = -listRssItem.ActualWidth + (dx / 2);
+            for (int i = -1; i <= 1; i++)
+            {
+                int view = currView + i;
+                if (view >= 0 && view < numView)
+                {
+                    int k = view * numItemPerView;
+                    for (int j = 0; j < numItemPerView; j++)
+                    {
+                        Canvas.SetLeft(listItems[k], x);
+                        listRssItem.Children.Add(listItems[k]);
+                        x += itemwidth + dx;
+                        k++;
+                    }
+                }
+                else
+                {
+                    x += listRssItem.ActualWidth;
+                }
+            }
+        }
+
+        private void RunAnimation(bool moveLeft)
+        {
+            MoveAndScaleEffect.BasicMoveEffect[] effects = new MoveAndScaleEffect.BasicMoveEffect[listRssItem.Children.Count];
+            EnableButton(LeftButton, LeftButtonDisable, false);
+            EnableButton(RighttButton, RighttButtonDisable, false);
+            double deltax = listRssItem.ActualWidth;
+            if (!moveLeft)
+                deltax = -listRssItem.ActualWidth;
+
+            for (int i = 0; i < effects.Length; i++)
+            {
+                UIElement element = listRssItem.Children[i];
+                Point begin = new Point(Canvas.GetLeft(element), Canvas.GetTop(element));
+                Point end = new Point(Canvas.GetLeft(element) + deltax, Canvas.GetTop(element));
+                effects[i] = new MoveAndScaleEffect.BasicMoveEffect(listRssItem.Children[i], begin, end, MoveAndScaleEffect.BasicMoveEffect.BasicMoveEffectSpeed.NORMAL);
+            }
+            effects[effects.Length - 1].EffectComplete += new MoveAndScaleEffect.BasicMoveEffect.EffectCompleteHandler(RssItemListControl_EffectComplete);
+            for (int i = 0; i < effects.Length; i++)
+                effects[i].Start();
+        }
+
+        void RssItemListControl_EffectComplete(object sender, UIElement element)
+        {
+            UpdateViewList();
+            UpdateButtonEnable();
+        }
+
+        private void UpdateButtonEnable()
+        {
+            bool left, right;
+            left = right = false;
+            if (listRssItem.Children.Count != 0)
+            {
+                if (currView > 0)
+                    left = true;
+                if (currView < numView - 1)
+                    right = true;
+            }
+
+            EnableButton(LeftButton, LeftButtonDisable, left);
+            EnableButton(RighttButton, RighttButtonDisable, right);
+        }
+
+        private void EnableButton(Button normal, Button disable, bool b)
+        {
+            normal.IsEnabled = b;
+            disable.IsEnabled = !b;
+            if (b)
+            {
+                normal.Visibility = System.Windows.Visibility.Visible;
+                disable.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                normal.Visibility = System.Windows.Visibility.Collapsed;
+                disable.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
+        private void RighttButton_Click(object sender, RoutedEventArgs e)
+        {
+            currView++;
+            isMovingToLeft = false;
+            RunAnimation(isMovingToLeft);
+        }
+
+        private void LeftButton_Click(object sender, RoutedEventArgs e)
+        {
+            currView--;
+            isMovingToLeft = true;
+            RunAnimation(isMovingToLeft);
         }
     }
 }
