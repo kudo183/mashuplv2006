@@ -49,9 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Liquid.RichText">
-      <HintPath>C:\Documents and Settings\tphai\Desktop\Liquid.RichText.dll</HintPath>
-      <Private>True</Private>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>dll\Liquid.RichText.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
