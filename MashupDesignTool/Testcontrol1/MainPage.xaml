@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="Testcontrol1.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400" xmlns:my="clr-namespace:NewsReaderControl;assembly=NewsReaderControl" Loaded="UserControl_Loaded" xmlns:my1="clr-namespace:Liquid;assembly=Liquid.HtmlRichTextArea">
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <my:NewsReader HorizontalAlignment="Left" Name="newsReader1" VerticalAlignment="Top" Height="276" Width="292" />
+        <Button Content="Button" Height="23" HorizontalAlignment="Left" Margin="325,277,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+        <my:NewsPage HorizontalAlignment="Left" Margin="310,38,0,0" Name="newsPage1" VerticalAlignment="Top" Height="200" Width="216" />
+        <my1:HtmlRichTextArea HorizontalAlignment="Left" Margin="325,244,0,0" Name="htmlRichTextArea1" VerticalAlignment="Top" Width="238" Height="44" />
+    </Grid>
+</UserControl>

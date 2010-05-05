@@ -171,23 +171,38 @@ namespace HienThiListTinTucControl
 
         private void RunAnimation(bool moveLeft)
         {
-            MoveAndScaleEffect.BasicMoveEffect[] effects = new MoveAndScaleEffect.BasicMoveEffect[listRssItem.Children.Count];
+            BasicMoveEffect[] effects = new BasicMoveEffect[listRssItem.Children.Count];
             EnableButton(LeftButton, LeftButtonDisable, false);
             EnableButton(RighttButton, RighttButtonDisable, false);
             double deltax = listRssItem.ActualWidth;
             if (!moveLeft)
                 deltax = -listRssItem.ActualWidth;
 
-            for (int i = 0; i < effects.Length; i++)
+            int n = listRssItem.Children.Count;
+            for (int i = 0; i < n; i++)
             {
                 UIElement element = listRssItem.Children[i];
                 Point begin = new Point(Canvas.GetLeft(element), Canvas.GetTop(element));
                 Point end = new Point(Canvas.GetLeft(element) + deltax, Canvas.GetTop(element));
-                effects[i] = new MoveAndScaleEffect.BasicMoveEffect(listRssItem.Children[i], begin, end, MoveAndScaleEffect.BasicMoveEffect.BasicMoveEffectSpeed.NORMAL);
+                BasicMoveEffect.AttachEffect(element, begin, end, BasicMoveEffect.BasicMoveEffectSpeed.NORMAL);
             }
-            effects[effects.Length - 1].EffectComplete += new MoveAndScaleEffect.BasicMoveEffect.EffectCompleteHandler(RssItemListControl_EffectComplete);
-            for (int i = 0; i < effects.Length; i++)
-                effects[i].Start();
+            for (int i = 0; i < n; i++)
+                BasicMoveEffect.Start(listRssItem.Children[i]);
+            if (n > 0)
+            {
+                Storyboard sb = BasicMoveEffect.GetStoryboard(listRssItem.Children[n - 1]);
+                if (sb != null)
+                    sb.Completed += new EventHandler(sb_Completed);
+            }
+        }
+
+        void sb_Completed(object sender, EventArgs e)
+        {
+            UpdateViewList();
+            UpdateButtonEnable();
+            Storyboard sb = BasicMoveEffect.GetStoryboard(listRssItem.Children[listRssItem.Children.Count - 1]);
+            if (sb != null)
+                sb.Completed -= new EventHandler(sb_Completed);
         }
 
         void RssItemListControl_EffectComplete(object sender, UIElement element)

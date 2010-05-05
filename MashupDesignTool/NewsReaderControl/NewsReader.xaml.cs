@@ -9,203 +9,118 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using DockCanvas;
 using System.Windows.Threading;
-using MoveAndScaleEffect;
+using Effect;
 
 namespace NewsReaderControl
 {
     public partial class NewsReader : UserControl
     {
-        const double SCALE_RATIO = 0.3;
-
-        NewsPage currentPage = null;
-        List<string> listURL = new List<string>();
-        List<NewsPage> listMovePage = new List<NewsPage>();
-        List<MoveAndScaleEffect.Effect> effect = new List<MoveAndScaleEffect.Effect>();
-        DispatcherTimer timer;
-        int selectedIndex;
+        NewsPage frontPage, backPage;
 
         public NewsReader()
         {
             InitializeComponent();
 
-            //nonePage.SetPageContent(@"<h1 align='center'>News Reader<h1>"); 
-
-            timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 0, 200);
-            timer.Tick += new EventHandler(timer_Tick);
+            frontPage = page1;
+            backPage = page2;
         }
 
-        private void ChangePage()
+        public void NavigatePage(string url)
         {
-            if (listPages.SelectedIndex == -1)
-                return;
-
-            double x = Canvas.GetLeft((UIElement)listPages.SelectedItem);
-            double y = Canvas.GetTop((UIElement)listPages.SelectedItem);
-            Canvas.SetLeft(listMovePage[listPages.SelectedIndex], x);
-            Canvas.SetTop(listMovePage[listPages.SelectedIndex], y);
-            ScaleSmall(listMovePage[listPages.SelectedIndex]);
-            for (int i = 0; i < effect.Count; i++)
-                listMovePage[i].Visibility = System.Windows.Visibility.Collapsed;
-            listMovePage[listPages.SelectedIndex].Visibility = System.Windows.Visibility.Visible;
-            effect[listPages.SelectedIndex].Start();
+            backPage.PageURL = url;
+            backPage.Visibility = System.Windows.Visibility.Collapsed;
+            TurnEffect.AttachEffect(frontPage, 0, 90, TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(400), 0.5, TurnEffect.TurnEffectOrientation.VERTICAL);
+            Storyboard sb = TurnEffect.GetStoryboard(frontPage);
+            if (sb != null)
+                sb.Completed += new EventHandler(sb_Completed1);
+            TurnEffect.Start(frontPage);
         }
 
-        private void ScaleSmall(NewsPage page)
+        public void LoadHTML(string html)
         {
-            ScaleTransform transform = null;
-            if (page.RenderTransform == null)
-            {
-                transform = new ScaleTransform();
-                page.RenderTransform = transform;
-            }
-            else if (page.RenderTransform is TransformGroup)
-            {
-                TransformGroup tg = (TransformGroup)page.RenderTransform;
-                foreach (Transform t in tg.Children)
-                {
-                    if (t is ScaleTransform)
-                    {
-                        transform = (ScaleTransform)t;
-                        break;
-                    }
-                }
-                if (transform == null)
-                {
-                    transform = new ScaleTransform();
-                    tg.Children.Add(transform);
-                }
-            }
-            else if (page.RenderTransform is ScaleTransform)
-            {
-                transform = (ScaleTransform)page.RenderTransform;
-            }
-            else
-            {
-                TransformGroup tg = new TransformGroup();
-                Transform t = page.RenderTransform;
-                tg.Children.Add(t);
-                transform = new ScaleTransform();
-                tg.Children.Add(transform);
-                page.RenderTransform = tg;
-            }
-            transform.ScaleX = SCALE_RATIO;
-            transform.ScaleY = SCALE_RATIO;
+            backPage.LoadHTML(html);
+            backPage.Visibility = System.Windows.Visibility.Collapsed;
+            TurnEffect.AttachEffect(frontPage, 0, 90, TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(400), 0.5, TurnEffect.TurnEffectOrientation.VERTICAL);
+            Storyboard sb = TurnEffect.GetStoryboard(frontPage);
+            if (sb != null)
+                sb.Completed += new EventHandler(sb_Completed1);
+            TurnEffect.Start(frontPage);
         }
 
-        public void AddPages(string url)
+        void sb_Completed1(object sender, EventArgs e)
         {
-            if (listURL.Contains(url))
-            {
-                int i = 0;
-                for (; i < listURL.Count; i++)
-                {
-                    if (listURL[i] == url)
-                        break;
-                }
-                listPages.SelectedIndex = i;
-                //ChangePage();
-                return;
-            }
-
-            NewsPage page = CreateNewPage(url);
-            listPages.Items.Add(page);
-            listPages.SelectedIndex = listPages.Items.Count - 1;
-
-            page = CreateNewPage(url);
-            page.Visibility = System.Windows.Visibility.Collapsed;
-            LayoutRoot.Children.Add(page);
-            listMovePage.Add(page);
-            listURL.Add(url);
-            effect.Add(CreateEffect(page));
-
-            //ChangePage();
+            Storyboard sb = TurnEffect.GetStoryboard(frontPage);
+            if (sb != null)
+                sb.Completed -= new EventHandler(sb_Completed1);
+            backPage.Visibility = System.Windows.Visibility.Visible;
+            frontPage.Visibility = System.Windows.Visibility.Collapsed;
+            TurnEffect.AttachEffect(backPage, -90, 0, TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(400), 0.5, TurnEffect.TurnEffectOrientation.VERTICAL);
+            TurnEffect.Start(backPage);
+            sb = TurnEffect.GetStoryboard(backPage);
+            if (sb != null)
+                sb.Completed += new EventHandler(sb_Completed2);
         }
 
-        private NewsPage CreateNewPage(string url)
+        void sb_Completed2(object sender, EventArgs e)
         {
-            NewsPage page = new NewsPage();
-            page.PageURL = url;
-            page.Width = nonePage.Width;
-            page.Height = nonePage.Height; 
-            TransformGroup group = new TransformGroup();
-            ScaleTransform scale = new ScaleTransform();
-            scale.ScaleX = SCALE_RATIO;
-            scale.ScaleY = SCALE_RATIO;
-            group.Children.Add(scale);
-            page.RenderTransform = scale;
-            return page;
+            Storyboard sb = TurnEffect.GetStoryboard(backPage);
+            if (sb != null)
+                sb.Completed -= new EventHandler(sb_Completed2); 
+            Switch();
         }
 
-        private MoveAndScaleEffect.Effect CreateEffect(NewsPage page)
+        private void Switch()
         {
-            Point begin = new Point(Canvas.GetLeft(page), Canvas.GetTop(page));
-            Point end = new Point(Canvas.GetLeft(nonePage), Canvas.GetTop(nonePage));
-            Point scaleFrom = new Point(0.4, 0.4);
-            Point scaleTo = new Point(1, 1);
-            return new MoveAndScaleEffect.Effect(page, begin, end, scaleFrom, scaleTo, MoveAndScaleEffect.Effect.MoveAndScaleEffectSpeed.NORMAL);
+            NewsPage temp = frontPage;
+            frontPage = backPage;
+            backPage = temp;
+            Canvas.SetZIndex(frontPage, 2);
+            Canvas.SetZIndex(backPage, 1);
         }
 
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            double width, height;
-            width = height = 0;
-            if (!double.IsNaN(this.ActualWidth) && this.ActualWidth != 0 && this.ActualHeight != 0)
-            {
-                width = this.ActualWidth;
-                height = this.ActualHeight;
-            }
-            else if (double.IsNaN(this.Height))
-            {
-                width = this.Width;
-                height = this.Height;
-            }
-
-            if (width != 0 && height != 0)
-            {
-                LayoutRoot.Width = width;
-                LayoutRoot.Height = height;
-
-                listPages.Width = width * SCALE_RATIO + 20;
-                listPages.Height = height;
-
-                Canvas.SetLeft(nonePage, listPages.Width);
-                nonePage.Width = width - listPages.Width;
-                nonePage.Height = height;
-
-                if (currentPage == null)
-                    return;
-
-                Canvas.SetLeft(currentPage, listPages.Width);
-                currentPage.Width = width - listPages.Width;
-                currentPage.Height = height;
-
-                effect.Clear();
-                foreach (NewsPage page in listMovePage)
-                    effect.Add(CreateEffect(page));
-            }
+            
         }
 
         private void listPages_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (timer.IsEnabled)
-            {
-                timer.Stop();
-                if (selectedIndex == listPages.SelectedIndex && selectedIndex != -1)
-                    ChangePage();
-            }
-            else
-            {
-                timer.Start();
-                selectedIndex = listPages.SelectedIndex;
-            }
+            
         }
 
-        void timer_Tick(object sender, EventArgs e)
+        private void Canvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            timer.Stop();
+            page1.Width = e.NewSize.Width;
+            page1.Height = e.NewSize.Height;
+            page2.Width = e.NewSize.Width;
+            page2.Height = e.NewSize.Height;
+        }
+
+        private void sdMagnification_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (page1 != null)
+                MagnifierOverEffect.ChangeMagnification(page1, sdMagnification.Value);
+            if (page2 != null)
+                MagnifierOverEffect.ChangeMagnification(page2, sdMagnification.Value);
+        }
+
+        private void ckbMagnifier_Checked(object sender, RoutedEventArgs e)
+        {
+            MagnifierOverEffect.AttachEffect(page1, sdMagnification.Value);
+            MagnifierOverEffect.AttachEffect(page2, sdMagnification.Value);
+        }
+
+        private void ckbMagnifier_Unchecked(object sender, RoutedEventArgs e)
+        {
+            MagnifierOverEffect.DetachEffect(page1);
+            MagnifierOverEffect.DetachEffect(page2);
+        }
+
+        public Brush MagnifierChoiseBackground
+        {
+            get { return spMagnifierChoise.Background; }
+            set { spMagnifierChoise.Background = value; }
         }
     }
 }

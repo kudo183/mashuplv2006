@@ -46,11 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Divelements.SilverlightTools, Version=1.0.2.25469, Culture=neutral, PublicKeyToken=75b7ec17dd7c14c3, processorArchitecture=MSIL" />
-    <Reference Include="DockCanvas">
-      <HintPath>..\DockCanvas\Bin\Debug\DockCanvas.dll</HintPath>
-    </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -66,6 +64,11 @@
       <DependentUpon>NewsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\ServiceReference1\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="NewsReader.xaml">
@@ -78,13 +81,43 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Divelements.SilverlightTools.dll" />
+    <ProjectReference Include="..\Effect\Effect.csproj">
+      <Project>{D7CD730C-B3EF-4558-AC0C-F24DDF19099D}</Project>
+      <Name>Effect</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Liquid.HtmlRichTextArea\Liquid.HtmlRichTextArea.csproj">
+      <Project>{3631374F-4860-4C3A-A99B-A27088926FB2}</Project>
+      <Name>Liquid.HtmlRichTextArea</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MoveAndScaleEffect\MoveAndScaleEffect.csproj">
-      <Project>{2A06773B-99D2-4081-B83B-71F72B02BFDC}</Project>
-      <Name>MoveAndScaleEffect</Name>
-    </ProjectReference>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServiceReference1\MashupToolWCFService.wsdl" />
+    <None Include="Service References\ServiceReference1\MashupToolWCFService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference1\MashupToolWCFService1.wsdl" />
+    <None Include="Service References\ServiceReference1\MashupToolWCFService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ServiceReference1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServiceReference1\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServiceReference1\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServiceReference1\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

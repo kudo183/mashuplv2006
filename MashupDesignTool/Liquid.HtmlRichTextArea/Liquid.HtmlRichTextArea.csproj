@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D7CD730C-B3EF-4558-AC0C-F24DDF19099D}</ProjectGuid>
+    <ProjectGuid>{3631374F-4860-4C3A-A99B-A27088926FB2}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Effect</RootNamespace>
-    <AssemblyName>Effect</AssemblyName>
+    <RootNamespace>Liquid.HtmlRichTextArea</RootNamespace>
+    <AssemblyName>Liquid.HtmlRichTextArea</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -50,27 +50,18 @@
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Interactivity, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicMoveEffect.cs" />
-    <Compile Include="Magnifier.cs" />
-    <Compile Include="MagnifierOverBehavior.cs" />
-    <Compile Include="MagnifierOverEffect.cs" />
+    <Compile Include="Components\HtmlBlock.cs" />
+    <Compile Include="Components\HtmlInline.cs" />
+    <Compile Include="Components\Utility.cs" />
+    <Compile Include="HtmlRichTextArea.cs" />
+    <Compile Include="Components\HtmlRichTextAreaStyle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShaderEffectBase.cs" />
-    <Compile Include="SplitScreenEffectControl.cs" />
-    <Compile Include="TurnEffect.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Source\Magnifier.fx" />
-    <Resource Include="Source\Magnifier.ps" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="System.Windows.Interactivity.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
