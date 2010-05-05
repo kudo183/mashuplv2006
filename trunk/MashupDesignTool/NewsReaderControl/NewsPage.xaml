@@ -3,24 +3,24 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:dst="clr-namespace:Divelements.SilverlightTools;assembly=Divelements.SilverlightTools"
+    xmlns:lq="clr-namespace:Liquid;assembly=Liquid.HtmlRichTextArea"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
+    d:DesignHeight="300" d:DesignWidth="400" x:Name="root" Loaded="root_Loaded">
 
-    <Border>
-        <Grid x:Name="LayoutRoot" Background="White">
+    <Border BorderBrush="{Binding BorderBrush, ElementName=root}" BorderThickness="{Binding BorderThickness, ElementName=root}">
+        <Grid x:Name="LayoutRoot" Background="{Binding Background, ElementName=root}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="15"></RowDefinition>
+                <RowDefinition Height="8"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="15"></RowDefinition>
+                <RowDefinition Height="8"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15"></ColumnDefinition>
+                <ColumnDefinition Width="8"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="15"></ColumnDefinition>
+                <ColumnDefinition Width="8"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <dst:HtmlHost Name="page" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></dst:HtmlHost>
+            <lq:HtmlRichTextArea Name="page" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsReadOnly="True" Cursor="Arrow"></lq:HtmlRichTextArea>
         </Grid>
     </Border>
 </UserControl>

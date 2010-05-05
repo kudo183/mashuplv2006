@@ -12,6 +12,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HienThiListTinTucControl", 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsReaderControl", "NewsReaderControl\NewsReaderControl.csproj", "{B6062C93-78FB-4DD9-B6E0-3A41687FCFD9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{25407CA3-FC19-4F58-85AF-96EB8CDC41FF} = {25407CA3-FC19-4F58-85AF-96EB8CDC41FF}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockCanvas", "DockCanvas\DockCanvas.csproj", "{C38EEC60-122E-4002-A7B1-E6465DC41201}"
 EndProject
@@ -22,6 +25,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorPicker", "ColorPicker\ColorPicker.csproj", "{DCA68119-D086-44AF-A067-A6B9F3FEEA80}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Effect", "Effect\Effect.csproj", "{D7CD730C-B3EF-4558-AC0C-F24DDF19099D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Liquid.HtmlRichTextArea", "Liquid.HtmlRichTextArea\Liquid.HtmlRichTextArea.csproj", "{3631374F-4860-4C3A-A99B-A27088926FB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testcontrol1", "Testcontrol1\Testcontrol1.csproj", "{AAA4E9CE-56C4-4D7C-8EE7-94CAA670A3E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +72,14 @@ Global
 		{D7CD730C-B3EF-4558-AC0C-F24DDF19099D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7CD730C-B3EF-4558-AC0C-F24DDF19099D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7CD730C-B3EF-4558-AC0C-F24DDF19099D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3631374F-4860-4C3A-A99B-A27088926FB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3631374F-4860-4C3A-A99B-A27088926FB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3631374F-4860-4C3A-A99B-A27088926FB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3631374F-4860-4C3A-A99B-A27088926FB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAA4E9CE-56C4-4D7C-8EE7-94CAA670A3E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAA4E9CE-56C4-4D7C-8EE7-94CAA670A3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAA4E9CE-56C4-4D7C-8EE7-94CAA670A3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAA4E9CE-56C4-4D7C-8EE7-94CAA670A3E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

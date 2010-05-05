@@ -96,10 +96,6 @@
       <Project>{D7CD730C-B3EF-4558-AC0C-F24DDF19099D}</Project>
       <Name>Effect</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MoveAndScaleEffect\MoveAndScaleEffect.csproj">
-      <Project>{2A06773B-99D2-4081-B83B-71F72B02BFDC}</Project>
-      <Name>MoveAndScaleEffect</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
