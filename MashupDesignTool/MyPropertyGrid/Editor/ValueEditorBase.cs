@@ -48,14 +48,19 @@ namespace SL30PropertyGrid
 			base.OnLostFocus(e);
 
 			if (this.IsSelected)
-				this.Label.Background = new SolidColorBrush(PropertyGrid.backgroundColor);
+				this.Label.Background = new SolidColorBrush(PropertyGrid.labelBackgroundColorFocused);
 			else
-				this.Label.Background = new SolidColorBrush(Colors.White);
+				this.Label.Background = new SolidColorBrush(PropertyGrid.labelBackgroundColor);
 
-			if (this.Property.CanWrite)
-				this.Label.Foreground = new SolidColorBrush(Colors.Black);
-			else
-				this.Label.Foreground = new SolidColorBrush(Colors.Gray);
+            if (this.Property.CanWrite)
+            {
+                if(this.IsSelected)
+                    this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorFocused);
+                else
+                    this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColor);
+            }
+            else
+                this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorReadOnly);
 		}
 
 		private void Label_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -85,16 +90,20 @@ namespace SL30PropertyGrid
 
 					if (value)
 					{
-						this.Label.Background = new SolidColorBrush(PropertyGrid.backgroundColorFocused);
-						this.Label.Foreground = new SolidColorBrush(Colors.White);
+						this.Label.Background = new SolidColorBrush(PropertyGrid.labelBackgroundColorFocused);
+                        if (this.Property.CanWrite)
+                            this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorFocused);
+                        else
+                            this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorReadOnly);
 					}
 					else
 					{
-						this.Label.Background = new SolidColorBrush(Colors.White);
+                        this.Label.Background = new SolidColorBrush(PropertyGrid.labelBackgroundColor);
+                        //this.Label.Background = new SolidColorBrush(PropertyGrid.backgroundColor);
 						if (this.Property.CanWrite)
-							this.Label.Foreground = new SolidColorBrush(Colors.Black);
+							this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColor);
 						else
-							this.Label.Foreground = new SolidColorBrush(Colors.Gray);
+							this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorReadOnly);
 					}
 				}
 			}
@@ -110,5 +119,10 @@ namespace SL30PropertyGrid
 		/// </summary>
 		public PropertyItem Property { get; private set; }
 		#endregion
+
+        virtual public void UpdatePropertyValue()
+        {
+            Property.updateValue();
+        }
 	}
 }

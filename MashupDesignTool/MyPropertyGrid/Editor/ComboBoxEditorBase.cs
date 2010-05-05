@@ -188,6 +188,13 @@ namespace SL30PropertyGrid
 			ShowTextBox();
 		}
 		#endregion
+
+        override public void UpdatePropertyValue()
+        {
+            base.UpdatePropertyValue();
+            currentValue = Property.Value;
+            txt.Text = currentValue.ToString();
+        }
 	}
 	#endregion
 }
