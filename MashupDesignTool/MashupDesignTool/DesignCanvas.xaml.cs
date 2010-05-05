@@ -38,6 +38,7 @@ namespace MashupDesignTool
         public delegate void OnSelectionChanged(object sender, UIElement element);
         public event OnSelectionChanged SelectionChanged;
 
+
         ResizeDirection resizeDirection;
         Point beginResizedPoint;
         bool isCaptured;
@@ -71,9 +72,9 @@ namespace MashupDesignTool
             isShowingContextMenu = false;
             canvasClick = false;
             isCaptured = false;
-
+            
             CursorManager.InitCursor(LayoutRoot);
-            Canvas.SetZIndex(multipleSelectRect, 9999);
+            DockCanvas.DockCanvas.SetZIndex(multipleSelectRect, 9999);
 
             clickPoints = new List<Point>();
             proxyControls = new List<ProxyControl>();
@@ -122,89 +123,89 @@ namespace MashupDesignTool
             contextMenu.AddMenuItem(new SeparatorMenuItem());
             contextMenu.AddMenuItem(miProperties);
 
-            Canvas.SetZIndex(contextMenu, 9999);
+            DockCanvas.DockCanvas.SetZIndex(contextMenu, 9999);
             LayoutRoot.Children.Add(contextMenu);
         }
 
         void miBringToFront_SelectMenuItem(object sender, MenuItemEventArgs e)
         {
-            int zindex = Canvas.GetZIndex(selectedProxyControls[0]);
+            int zindex = DockCanvas.DockCanvas.GetZIndex(selectedProxyControls[0]);
             int newZindex = zindex;
             foreach (ProxyControl pc in proxyControls)
             {
-                int pcZIndex = Canvas.GetZIndex(pc);
+                int pcZIndex = DockCanvas.DockCanvas.GetZIndex(pc);
                 if (pcZIndex > zindex)
                 {
-                    Canvas.SetZIndex(pc, pcZIndex - 2);
-                    Canvas.SetZIndex(pc.RealControl, pcZIndex - 3);
+                    DockCanvas.DockCanvas.SetZIndex(pc, pcZIndex - 2);
+                    DockCanvas.DockCanvas.SetZIndex(pc.RealControl, pcZIndex - 3);
                     newZindex = newZindex < pcZIndex ? pcZIndex : newZindex;
                 }
             }
-            Canvas.SetZIndex(selectedProxyControls[0], newZindex);
-            Canvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
+            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0], newZindex);
+            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
         }
 
         void miBringForward_SelectMenuItem(object sender, MenuItemEventArgs e)
         {
-            int zindex = Canvas.GetZIndex(selectedProxyControls[0]);
+            int zindex = DockCanvas.DockCanvas.GetZIndex(selectedProxyControls[0]);
             int newZindex = zindex;
             ProxyControl swapPC = selectedProxyControls[0];
             foreach (ProxyControl pc in proxyControls)
             {
-                int pcZIndex = Canvas.GetZIndex(pc);
+                int pcZIndex = DockCanvas.DockCanvas.GetZIndex(pc);
                 if (pcZIndex > zindex && (pcZIndex < newZindex || newZindex == zindex))
                 {
                     newZindex = pcZIndex;
                     swapPC = pc;
                 }
             }
-            Canvas.SetZIndex(selectedProxyControls[0], newZindex);
-            Canvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
+            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0], newZindex);
+            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
             if (swapPC != null)
             {
-                Canvas.SetZIndex(swapPC, zindex);
-                Canvas.SetZIndex(swapPC.RealControl, zindex - 1);
+                DockCanvas.DockCanvas.SetZIndex(swapPC, zindex);
+                DockCanvas.DockCanvas.SetZIndex(swapPC.RealControl, zindex - 1);
             }
         }
 
         void miSendToBack_SelectMenuItem(object sender, MenuItemEventArgs e)
         {
-            int zindex = Canvas.GetZIndex(selectedProxyControls[0]);
+            int zindex = DockCanvas.DockCanvas.GetZIndex(selectedProxyControls[0]);
             int newZindex = zindex;
             foreach (ProxyControl pc in proxyControls)
             {
-                int pcZIndex = Canvas.GetZIndex(pc);
+                int pcZIndex = DockCanvas.DockCanvas.GetZIndex(pc);
                 if (pcZIndex < zindex)
                 {
-                    Canvas.SetZIndex(pc, pcZIndex + 2);
-                    Canvas.SetZIndex(pc.RealControl, pcZIndex + 1);
+                    DockCanvas.DockCanvas.SetZIndex(pc, pcZIndex + 2);
+                    DockCanvas.DockCanvas.SetZIndex(pc.RealControl, pcZIndex + 1);
                     newZindex = newZindex > pcZIndex ? pcZIndex : newZindex;
                 }
             }
-            Canvas.SetZIndex(selectedProxyControls[0], newZindex);
-            Canvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
+            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0], newZindex);
+            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
         }
 
         void miSendBackward_SelectMenuItem(object sender, MenuItemEventArgs e)
         {
-            int zindex = Canvas.GetZIndex(selectedProxyControls[0]);
+            int zindex = DockCanvas.DockCanvas.GetZIndex(selectedProxyControls[0]);
             int newZindex = zindex;
             ProxyControl swapPC = selectedProxyControls[0];
             foreach (ProxyControl pc in proxyControls)
             {
-                int pcZIndex = Canvas.GetZIndex(pc);
+                int pcZIndex = DockCanvas.DockCanvas.GetZIndex(pc);
                 if (pcZIndex < zindex && (pcZIndex > newZindex || newZindex == zindex))
                 {
                     newZindex = pcZIndex;
                     swapPC = pc;
                 }
             }
-            Canvas.SetZIndex(selectedProxyControls[0], newZindex);
-            Canvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
+            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0], newZindex);
+            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
             if (swapPC != null)
             {
-                Canvas.SetZIndex(swapPC, zindex);
-                Canvas.SetZIndex(swapPC.RealControl, zindex - 1);
+                DockCanvas.DockCanvas.SetZIndex(swapPC, zindex);
+                DockCanvas.DockCanvas.SetZIndex(swapPC.RealControl, zindex - 1);
             }
         }
 
@@ -229,8 +230,8 @@ namespace MashupDesignTool
             proxyControls.Add(pc);
             controls.Add(uc);
             int index = FindTopProxyControlIndex();
-            Canvas.SetZIndex(pc, index + 2);
-            Canvas.SetZIndex(uc, index + 1);
+            DockCanvas.DockCanvas.SetZIndex(pc, index + 2);
+            DockCanvas.DockCanvas.SetZIndex(uc, index + 1);
 
             ControlContainer.Children.Add(uc);
             LayoutRoot.Children.Add(pc);
@@ -254,10 +255,10 @@ namespace MashupDesignTool
         {
             if (proxyControls.Count == 0)
                 return 0;
-            int index = Canvas.GetZIndex(proxyControls[0]);
+            int index = DockCanvas.DockCanvas.GetZIndex(proxyControls[0]);
             for (int i = 1; i < proxyControls.Count; i++)
-                if (index < Canvas.GetZIndex(proxyControls[i]))
-                    index = Canvas.GetZIndex(proxyControls[i]);
+                if (index < DockCanvas.DockCanvas.GetZIndex(proxyControls[i]))
+                    index = DockCanvas.DockCanvas.GetZIndex(proxyControls[i]);
             return index;
         }
         #endregion add new control to canvas
@@ -647,6 +648,8 @@ namespace MashupDesignTool
                 canResize = false;
                 CursorManager.ChangeCursor(this, CursorManager.CursorType.Arrow);
             }
+
+            
         }
 
         private void ResizeControl(Point pt)
@@ -769,7 +772,7 @@ namespace MashupDesignTool
                     Rect rect = new Rect((double)uc.GetValue(Canvas.LeftProperty), (double)uc.GetValue(Canvas.TopProperty), uc.ActualWidth, uc.ActualHeight);
                     if (rect.Contains(pt))
                     {
-                        int pczindex = Canvas.GetZIndex(pc);
+                        int pczindex = DockCanvas.DockCanvas.GetZIndex(pc);
                         if (pczindex > zindex)
                         {
                             zindex = pczindex;
