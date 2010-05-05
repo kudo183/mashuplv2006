@@ -48,9 +48,14 @@ namespace DockCanvas
         
         private void OnDockTypeChanged(FrameworkElement element, DockType oldValue, DockType newValue)
         {
+            if (newValue == DockType.None)
+            {
+                element.Width = 50;
+                element.Height = 50;
+            }
             if (preventUpdateChildrenPosition == true)
-                return;
-            UpdateChildrenPosition();
+                return;            
+            UpdateChildrenPosition(0);
         }
 
         public static void SetDockType(FrameworkElement element, DockType dockType)
@@ -64,7 +69,7 @@ namespace DockCanvas
         }
         #endregion ZIndexTypeProperty
 
-        #region ZIndexTypeProperty
+        #region ZIndexProperty
         //public static new void SetZIndex(UIElement element, int index)
         //{
         //    Canvas.SetZIndex(element, index);
@@ -75,18 +80,18 @@ namespace DockCanvas
         //    return (int)Canvas.GetZIndex(element);
         //}
 
-        public static readonly DependencyProperty ZIndexTypeProperty =
+        public static readonly DependencyProperty ZIndexProperty =
             DependencyProperty.RegisterAttached("ZIndex", typeof(int), typeof(DockCanvas), new PropertyMetadata(0, OnZIndexChanged));
 
         public static new void SetZIndex(UIElement element, int index)
         {
             Canvas.SetZIndex(element, index);
-            element.SetValue(ZIndexTypeProperty, index);
+            element.SetValue(ZIndexProperty, index);
         }
 
         public static new int GetZIndex(UIElement element)
         {
-            return (int)element.GetValue(ZIndexTypeProperty);
+            return (int)element.GetValue(ZIndexProperty);
         }
         private static void OnZIndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -98,7 +103,7 @@ namespace DockCanvas
         {
             if (preventUpdateChildrenPosition == true)
                 return;
-            UpdateChildrenPosition();
+            UpdateChildrenPosition(1);
         }
         #endregion
         
@@ -134,7 +139,7 @@ namespace DockCanvas
             }
         }
 
-        public void UpdateChildrenPosition()
+        public void UpdateChildrenPosition(int type)
         {
             UpdateIndex();
             SortASCByZIndex();
@@ -156,9 +161,7 @@ namespace DockCanvas
                 DockType dockType = DockCanvas.GetDockType(element);
                 switch (dockType)
                 {
-                    case DockType.None:
-                        element.Width = 50;
-                        element.Height = 50;
+                    case DockType.None:                       
                         break;
                     case DockType.Left:
                         Canvas.SetLeft(element, remainRect.Left);
