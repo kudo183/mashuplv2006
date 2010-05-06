@@ -18,8 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsReaderControl", "NewsRe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockCanvas", "DockCanvas\DockCanvas.csproj", "{C38EEC60-122E-4002-A7B1-E6465DC41201}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoveAndScaleEffect", "MoveAndScaleEffect\MoveAndScaleEffect.csproj", "{2A06773B-99D2-4081-B83B-71F72B02BFDC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPropertyGrid", "MyPropertyGrid\MyPropertyGrid.csproj", "{EBE7ECFD-0942-49A9-BF98-0FE9378C1472}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorPicker", "ColorPicker\ColorPicker.csproj", "{DCA68119-D086-44AF-A067-A6B9F3FEEA80}"
@@ -56,10 +54,6 @@ Global
 		{C38EEC60-122E-4002-A7B1-E6465DC41201}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C38EEC60-122E-4002-A7B1-E6465DC41201}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C38EEC60-122E-4002-A7B1-E6465DC41201}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2A06773B-99D2-4081-B83B-71F72B02BFDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A06773B-99D2-4081-B83B-71F72B02BFDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2A06773B-99D2-4081-B83B-71F72B02BFDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2A06773B-99D2-4081-B83B-71F72B02BFDC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBE7ECFD-0942-49A9-BF98-0FE9378C1472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EBE7ECFD-0942-49A9-BF98-0FE9378C1472}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBE7ECFD-0942-49A9-BF98-0FE9378C1472}.Release|Any CPU.ActiveCfg = Release|Any CPU
