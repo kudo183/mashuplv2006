@@ -33,6 +33,22 @@ namespace Testcontrol1
         {
             newsReader1.LoadHTML(htmls[i]);
             i = (i + 1) % htmls.Length;
+
+            textBox1.Text = MashupDesignTool.MyXmlSerializer.Serialize(comboBox1);
+            
+            Button element = (Button)MashupDesignTool.MyXmlSerializer.Load(MashupDesignTool.MyXmlSerializer.Serialize(button1));
+            element.Margin = new Thickness(100, 100, 0, 0);
+            element.Name = i.ToString();
+            element.Content = "Hello";
+            LayoutRoot.Children.Add(element);
+
+            
+            ComboBox cb = (ComboBox)MashupDesignTool.MyXmlSerializer.Load(MashupDesignTool.MyXmlSerializer.Serialize(comboBox1));
+            cb.Margin = new Thickness(100, 100, 0, 0);
+            cb.Name = (i + 10).ToString();
+            cb.UpdateLayout();
+            cb.SelectedIndex = 0;
+            LayoutRoot.Children.Add(cb);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

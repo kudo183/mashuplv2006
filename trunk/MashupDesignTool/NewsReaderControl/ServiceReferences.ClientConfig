@@ -1,0 +1,17 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <customBinding>
+                <binding name="CustomBinding_MashupToolWCFService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+            </customBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost:1646/MashupToolWCFService.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_MashupToolWCFService"
+                contract="ServiceReference1.MashupToolWCFService" name="CustomBinding_MashupToolWCFService" />
+        </client>
+    </system.serviceModel>
+</configuration>

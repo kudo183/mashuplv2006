@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c5081861-b1ca-497a-a837-b6edc29fe249" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1646/MashupToolWCFService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MashupToolWCFService.xsd" MetadataType="Schema" ID="0d96e145-2aa3-49a1-8060-a3130b1e9f9f" SourceId="1" SourceUrl="http://localhost:1646/MashupToolWCFService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MashupToolWCFService1.xsd" MetadataType="Schema" ID="aa2f74c9-5f63-42bc-8eb6-1bb39db40b93" SourceId="1" SourceUrl="http://localhost:1646/MashupToolWCFService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MashupToolWCFService.wsdl" MetadataType="Wsdl" ID="65cc045e-c222-42cf-806c-1b1e2937f15d" SourceId="1" SourceUrl="http://localhost:1646/MashupToolWCFService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="MashupToolWCFService1.wsdl" MetadataType="Wsdl" ID="3ca9044a-1562-45bf-b287-d78d17648290" SourceId="1" SourceUrl="http://localhost:1646/MashupToolWCFService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

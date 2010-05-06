@@ -2,10 +2,13 @@
 using System.Text;
 using System.Xml;
 using System.Reflection;
-
 using System.Collections.Generic;
 using System.Collections;
 using System.Diagnostics;
+using System.IO;
+using System.Xml.Linq;
+using System.Windows.Media;
+
 namespace MashupDesignTool
 {
     public class MyXmlSerializer
@@ -14,7 +17,7 @@ namespace MashupDesignTool
         {
             StringBuilder sb = new StringBuilder();
             XmlWriter xm = XmlWriter.Create(sb);
-            xm.WriteStartElement(o.GetType().Name);
+            xm.WriteStartElement(o.GetType().ToString());
             Serialize(o, xm);
             xm.WriteEndElement();
             xm.Flush();
@@ -180,6 +183,108 @@ namespace MashupDesignTool
                 xm.WriteEndElement();
             }
         }
-        
+
+        #region load
+        public static object Load(string xml)
+        {
+            object obj = null;
+            try
+            {
+                XmlReader reader = XmlReader.Create(new StringReader(xml));
+                XDocument doc = XDocument.Load(reader);
+                XElement root = doc.Root;
+
+                Type type = Type.GetType(root.Name.ToString());
+                obj = Activator.CreateInstance(type);
+
+                object value;
+                string propertyName;
+                foreach (XElement element in root.Nodes())
+                {
+                    propertyName = element.Name.ToString();
+                    value = Load(element);
+                    type.GetProperty(propertyName).SetValue(obj, value, null);
+                }
+            }
+            catch { }
+            return obj;
+        }
+
+        private static object Load(XElement element)
+        {
+            Type type = Type.GetType(element.Attribute("Type").Value);
+            if (type.IsPrimitive)
+            {
+                return LoadPrimitive(element);
+            }
+            else if (type.IsArray)
+            {
+                return LoadArray(element);
+            }
+            else if (typeof(IList).IsAssignableFrom(type))
+            {
+                return LoadList(element);
+            }
+            else
+            {
+                return LoadNotPrimitive(element);
+            }
+        }
+
+        private static object LoadPrimitive(XElement element)
+        {
+            Type type = Type.GetType(element.Attribute("Type").Value);
+            return Convert.ChangeType(element.Value, type, null);
+        }
+
+        private static object LoadArray(XElement element)
+        {
+            Type type = Type.GetType(element.Attribute("Type").Value);
+
+            int count = 0;
+            foreach (XElement child in element.Elements("Child"))
+                count++;
+            Array array = Array.CreateInstance(type, count);
+
+            count = 0;
+            foreach (XElement child in element.Elements("Child"))
+            {
+                object temp = Load(child);
+                array.SetValue(temp, count);
+                count++;
+            }
+            return array;
+        }
+
+        private static object LoadList(XElement element)
+        {
+            Type type = Type.GetType(element.Attribute("Type").Value);
+            IList list = (IList)Activator.CreateInstance(type);
+
+            foreach (XElement child in element.Elements("Child"))
+            {
+                object temp = Load(child);
+                list.Add(temp);
+            }
+            return list;
+        }
+
+        private static object LoadNotPrimitive(XElement element)
+        {
+            Type type = Type.GetType(element.Attribute("Type").Value);
+            object obj = Activator.CreateInstance(type);
+
+            string propertyName;
+            object value;
+            foreach (XElement child in element.Elements())
+            {
+                propertyName = child.Name.ToString();
+                value = Load(child);
+                type.GetProperty(propertyName).SetValue(obj, value, null);
+            }
+
+            return obj;
+        }
+        #endregion load
     }
 }

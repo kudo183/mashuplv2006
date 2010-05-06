@@ -9,7 +9,17 @@
     <Grid x:Name="LayoutRoot" Background="White">
         <my:NewsReader HorizontalAlignment="Left" Name="newsReader1" VerticalAlignment="Top" Height="276" Width="292" />
         <Button Content="Button" Height="23" HorizontalAlignment="Left" Margin="325,277,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
-        <my:NewsPage HorizontalAlignment="Left" Margin="310,38,0,0" Name="newsPage1" VerticalAlignment="Top" Height="200" Width="216" />
-        <my1:HtmlRichTextArea HorizontalAlignment="Left" Margin="325,244,0,0" Name="htmlRichTextArea1" VerticalAlignment="Top" Width="238" Height="44" />
+        <my:NewsPage HorizontalAlignment="Left" Margin="312,7,0,0" Name="newsPage1" VerticalAlignment="Top" Height="200" Width="216" />
+        <my1:HtmlRichTextArea HorizontalAlignment="Left" Margin="298,215,0,0" Name="htmlRichTextArea1" VerticalAlignment="Top" Width="238" Height="61" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="120,277,0,0" Name="comboBox1" VerticalAlignment="Top" Width="160">
+            <ComboBoxItem Content="1" />
+            <ComboBoxItem Content="2" />
+            <!--<ComboBoxItem>
+                <ComboBoxItem.Content>
+                    <Button Content="ABC"></Button>
+                </ComboBoxItem.Content>
+            </ComboBoxItem>-->
+        </ComboBox>
+        <TextBox Height="58" HorizontalAlignment="Left" Margin="528,268,0,0" Name="textBox1" VerticalAlignment="Top" Width="136" />
     </Grid>
 </UserControl>
