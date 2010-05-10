@@ -26,7 +26,8 @@
             <StackPanel x:Name="LayoutItem" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <liquidRichText:RichTextBlock Name="RssItemTitle" TextWrapping="Wrap" Margin="5,0,0,0" FontSize="12" FontWeight="Bold" FontFamily="Arial" FontStyle="Italic"  Foreground="#FF0000CC" LinkClicked="RssItemTitle_LinkClicked" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
                 <TextBlock Margin="5,0,0,0" Name="RssItemPubDate" VerticalAlignment="Stretch" Foreground="#FF867878" FontStyle="Italic" FontSize="9" TextWrapping="Wrap" HorizontalAlignment="Stretch" />
-                <liquidRichText:RichTextBlock Name="RssItemDetail" TextWrapping="Wrap" Margin="5,0,0,0" FontSize="10" LinkClicked="RssItemTitle_LinkClicked" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                <liquidRichText:RichTextBlock Name="RssItemDetail" TextWrapping="Wrap" Margin="5,0,0,0" FontSize="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                <!--<liquidRichText:RichTextBlock Name="RssItemDetail" TextWrapping="Wrap" Margin="5,0,0,0" FontSize="10" LinkClicked="RssItemTitle_LinkClicked" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />-->
             </StackPanel>
         </Border>
     </Grid>

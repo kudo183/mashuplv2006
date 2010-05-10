@@ -23,6 +23,9 @@ namespace HienThiListTinTucControl
         public delegate void LinkClicked(object sender, string link);
         public event LinkClicked LinkClickedHandler;
 
+        public delegate void ContentChoise(object sender, string data);
+        public event ContentChoise ContentChoiseHandler;
+
         SyndicationItem item;
 
         internal RssItemControl()
@@ -61,6 +64,10 @@ namespace HienThiListTinTucControl
             if (LinkClickedHandler != null)
             {
                 LinkClickedHandler(this, (string)e.Parameter.ToString());
+            }
+            if (ContentChoiseHandler != null)
+            {
+                ContentChoiseHandler(this, item.Summary.Text);
             }
         }
 

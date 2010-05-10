@@ -22,6 +22,9 @@ namespace HienThiListTinTucControl
     {
         public delegate void LinkClickedHandler(object sender, string link);
         public event LinkClickedHandler LinkClicked;
+        public delegate void ContentChoiseHandler(object sender, string data);
+        public event ContentChoiseHandler ContentChoise;
+
         double itemwidth, itemheight;
         bool isMovingToLeft;
         int numItemPerView = 1;
@@ -43,7 +46,7 @@ namespace HienThiListTinTucControl
             set
             {
                 rssURL = value;
-                ServiceReference1.MashupToolWCFServiceClient client = new ServiceReference1.MashupToolWCFServiceClient();
+                ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
                 client.GetStringFromURLCompleted += new EventHandler<ServiceReference1.GetStringFromURLCompletedEventArgs>(client_GetStringFromURLCompleted);
                 client.GetStringFromURLAsync(rssURL);
             }
@@ -71,6 +74,7 @@ namespace HienThiListTinTucControl
                         ric.Width = itemwidth;
                         ric.Height = itemheight;
                         ric.LinkClickedHandler += new RssItemControl.LinkClicked(ric_LinkClickedHandler);
+                        ric.ContentChoiseHandler += new RssItemControl.ContentChoise(ric_ContentChoiseHandler);
                     }
                 }
                 numView = listItems.Count / numItemPerView + 1;
@@ -78,6 +82,12 @@ namespace HienThiListTinTucControl
                 UpdateViewList();
                 UpdateButtonEnable();
             }
+        }
+
+        void ric_ContentChoiseHandler(object sender, string data)
+        {
+            if (ContentChoise != null)
+                ContentChoise(sender, data);
         }
 
         void ric_LinkClickedHandler(object sender, string link)
