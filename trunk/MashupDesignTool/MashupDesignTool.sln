@@ -7,12 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MashupDesignTool.Web", "Mas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HienThiListTinTucControl", "HienThiListTinTucControl\HienThiListTinTucControl.csproj", "{F91522CB-C32D-497C-8980-4393C4265464}"
 	ProjectSection(ProjectDependencies) = postProject
+		{A030D202-0053-498B-958C-CAA017926C05} = {A030D202-0053-498B-958C-CAA017926C05}
 		{25407CA3-FC19-4F58-85AF-96EB8CDC41FF} = {25407CA3-FC19-4F58-85AF-96EB8CDC41FF}
 		{25407CA3-FC19-4F58-85AF-96EB8CDC41FF} = {25407CA3-FC19-4F58-85AF-96EB8CDC41FF}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsReaderControl", "NewsReaderControl\NewsReaderControl.csproj", "{B6062C93-78FB-4DD9-B6E0-3A41687FCFD9}"
 	ProjectSection(ProjectDependencies) = postProject
+		{A030D202-0053-498B-958C-CAA017926C05} = {A030D202-0053-498B-958C-CAA017926C05}
 		{25407CA3-FC19-4F58-85AF-96EB8CDC41FF} = {25407CA3-FC19-4F58-85AF-96EB8CDC41FF}
 	EndProjectSection
 EndProject
@@ -27,6 +29,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Liquid.HtmlRichTextArea", "Liquid.HtmlRichTextArea\Liquid.HtmlRichTextArea.csproj", "{3631374F-4860-4C3A-A99B-A27088926FB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testcontrol1", "Testcontrol1\Testcontrol1.csproj", "{AAA4E9CE-56C4-4D7C-8EE7-94CAA670A3E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfService", "WcfService\WcfService.csproj", "{A030D202-0053-498B-958C-CAA017926C05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +78,10 @@ Global
 		{AAA4E9CE-56C4-4D7C-8EE7-94CAA670A3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAA4E9CE-56C4-4D7C-8EE7-94CAA670A3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAA4E9CE-56C4-4D7C-8EE7-94CAA670A3E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A030D202-0053-498B-958C-CAA017926C05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A030D202-0053-498B-958C-CAA017926C05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A030D202-0053-498B-958C-CAA017926C05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A030D202-0053-498B-958C-CAA017926C05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

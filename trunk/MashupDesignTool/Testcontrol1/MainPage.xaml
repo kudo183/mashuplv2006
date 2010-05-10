@@ -4,22 +4,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400" xmlns:my="clr-namespace:NewsReaderControl;assembly=NewsReaderControl" Loaded="UserControl_Loaded" xmlns:my1="clr-namespace:Liquid;assembly=Liquid.HtmlRichTextArea">
+    d:DesignHeight="300" d:DesignWidth="400" xmlns:my="clr-namespace:NewsReaderControl;assembly=NewsReaderControl" Loaded="UserControl_Loaded" xmlns:my1="clr-namespace:Liquid;assembly=Liquid.HtmlRichTextArea" xmlns:my2="clr-namespace:HienThiListTinTucControl;assembly=HienThiListTinTucControl">
 
     <Grid x:Name="LayoutRoot" Background="White">
-        <my:NewsReader HorizontalAlignment="Left" Name="newsReader1" VerticalAlignment="Top" Height="276" Width="292" />
-        <Button Content="Button" Height="23" HorizontalAlignment="Left" Margin="325,277,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="250"></RowDefinition>
+        </Grid.RowDefinitions>
+        <my:NewsReader Grid.Row="0" HorizontalAlignment="Stretch" Name="newsReader1" VerticalAlignment="Stretch" Loaded="newsReader1_Loaded" />
+        <my2:RssItemListControl Grid.Row="1" HorizontalAlignment="Stretch" Name="rssItemListControl1" VerticalAlignment="Stretch" RssURL="http://vnexpress.net/rss/gl/trang-chu.rss" LinkClicked="rssItemListControl1_LinkClicked" ContentChoise="rssItemListControl1_ContentChoise" />
+        <!--<Button Content="Button" Height="23" HorizontalAlignment="Left" Margin="325,277,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
         <my:NewsPage HorizontalAlignment="Left" Margin="312,7,0,0" Name="newsPage1" VerticalAlignment="Top" Height="200" Width="216" />
         <my1:HtmlRichTextArea HorizontalAlignment="Left" Margin="298,215,0,0" Name="htmlRichTextArea1" VerticalAlignment="Top" Width="238" Height="61" />
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="120,277,0,0" Name="comboBox1" VerticalAlignment="Top" Width="160">
             <ComboBoxItem Content="1" />
-            <ComboBoxItem Content="2" />
+            <ComboBoxItem Content="2" />-->
             <!--<ComboBoxItem>
                 <ComboBoxItem.Content>
                     <Button Content="ABC"></Button>
                 </ComboBoxItem.Content>
             </ComboBoxItem>-->
-        </ComboBox>
-        <TextBox Height="58" HorizontalAlignment="Left" Margin="528,268,0,0" Name="textBox1" VerticalAlignment="Top" Width="136" />
+        <!--</ComboBox>
+        <TextBox Height="58" HorizontalAlignment="Left" Margin="528,268,0,0" Name="textBox1" VerticalAlignment="Top" Width="136" />-->
     </Grid>
 </UserControl>

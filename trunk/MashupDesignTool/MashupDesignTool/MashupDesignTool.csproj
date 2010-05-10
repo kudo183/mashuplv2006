@@ -177,9 +177,7 @@
     <None Include="Images\.svn\text-base\Thumbs.db.svn-base" />
     <None Include="Images\Thumbs.db" />
     <None Include="Properties\AppManifest.xml" />
-    <Content Include="ServiceReferences.ClientConfig">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\BringForward.png" />
