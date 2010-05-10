@@ -94,12 +94,11 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\ServiceReference1\MashupToolWCFService.wsdl" />
-    <None Include="Service References\ServiceReference1\MashupToolWCFService.xsd">
+    <None Include="Service References\ServiceReference1\Service1.wsdl" />
+    <None Include="Service References\ServiceReference1\Service1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ServiceReference1\MashupToolWCFService1.wsdl" />
-    <None Include="Service References\ServiceReference1\MashupToolWCFService1.xsd">
+    <None Include="Service References\ServiceReference1\Service11.xsd">
       <SubType>Designer</SubType>
     </None>
     <Content Include="ServiceReferences.ClientConfig" />

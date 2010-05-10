@@ -32,19 +32,14 @@ namespace Effect
 
         public static void AttachEffect(UIElement element, Point begin, Point end, BasicMoveEffectSpeed speed)
         {
-            Storyboard sb;
             if (storyboard.ContainsKey(element))
             {
-                sb = storyboard[element];
-                sb.Children.Clear();
-            }
-            else
-            {
-                sb = new Storyboard();
-                Storyboard.SetTarget(sb, element);
-                storyboard.Add(element, sb);
+                storyboard.Remove(element);
             }
 
+            Storyboard sb = new Storyboard();
+            Storyboard.SetTarget(sb, element);
+            storyboard.Add(element, sb);
             DoubleAnimationUsingKeyFrames animationKeyFrames1 = new DoubleAnimationUsingKeyFrames();
             Storyboard.SetTargetProperty(animationKeyFrames1, new PropertyPath(@"(Canvas.Left)"));
             LinearDoubleKeyFrame PositionLeft = new LinearDoubleKeyFrame();

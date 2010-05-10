@@ -405,11 +405,16 @@
                                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             </controls:GridSplitter>
 
-            <my:DesignCanvas Grid.Column="2" x:Name="designCanvas1" 
-                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                             SelectPropertiesMenu="designCanvas1_SelectPropertiesMenu" SelectionChanged="designCanvas1_SelectionChanged"
-                             BorderBrush="#FF885A2C" Background="#2D355C" BorderThickness="2">
-            </my:DesignCanvas>
+            <!--<ScrollViewer Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                          VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                          Background="LightGray" >-->
+                <my:DesignCanvas Grid.Column="2" x:Name="designCanvas1" IsHitTestVisible="True"
+                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                 SelectPropertiesMenu="designCanvas1_SelectPropertiesMenu" SelectionChanged="designCanvas1_SelectionChanged"
+                                 BorderBrush="#FF885A2C" Background="#2D355C" BorderThickness="3" Margin="5,5,5,5"
+                                 >
+                </my:DesignCanvas>
+            <!--</ScrollViewer>-->
 
             <controls:GridSplitter Grid.Column="3" Background="Transparent" x:Name="spliter2"
                                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch">

@@ -31,7 +31,7 @@ namespace NewsReaderControl
             set 
             {
                 url = value;
-                ServiceReference1.MashupToolWCFServiceClient client = new ServiceReference1.MashupToolWCFServiceClient();
+                ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
                 client.GetStringFromURLCompleted += new EventHandler<ServiceReference1.GetStringFromURLCompletedEventArgs>(client_GetStringFromURLCompleted);
                 client.GetStringFromURLAsync(url);
             }

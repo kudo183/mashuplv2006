@@ -31,32 +31,52 @@ namespace Testcontrol1
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            newsReader1.LoadHTML(htmls[i]);
-            i = (i + 1) % htmls.Length;
+            //newsReader1.LoadHTML(htmls[i]);
+            //i = (i + 1) % htmls.Length;
 
-            textBox1.Text = MashupDesignTool.MyXmlSerializer.Serialize(comboBox1);
+            //textBox1.Text = MashupDesignTool.MyXmlSerializer.Serialize(comboBox1);
             
-            Button element = (Button)MashupDesignTool.MyXmlSerializer.Load(MashupDesignTool.MyXmlSerializer.Serialize(button1));
-            element.Margin = new Thickness(100, 100, 0, 0);
-            element.Name = i.ToString();
-            element.Content = "Hello";
-            LayoutRoot.Children.Add(element);
+            //Button element = (Button)MashupDesignTool.MyXmlSerializer.Load(MashupDesignTool.MyXmlSerializer.Serialize(button1));
+            //element.Margin = new Thickness(100, 100, 0, 0);
+            //element.Name = i.ToString();
+            //element.Content = "Hello";
+            //LayoutRoot.Children.Add(element);
 
             
-            ComboBox cb = (ComboBox)MashupDesignTool.MyXmlSerializer.Load(MashupDesignTool.MyXmlSerializer.Serialize(comboBox1));
-            cb.Margin = new Thickness(100, 100, 0, 0);
-            cb.Name = (i + 10).ToString();
-            cb.UpdateLayout();
-            cb.SelectedIndex = 0;
-            LayoutRoot.Children.Add(cb);
+            //ComboBox cb = (ComboBox)MashupDesignTool.MyXmlSerializer.Load(MashupDesignTool.MyXmlSerializer.Serialize(comboBox1));
+            //cb.Margin = new Thickness(100, 100, 0, 0);
+            //cb.Name = (i + 10).ToString();
+            //cb.UpdateLayout();
+            //cb.SelectedIndex = 0;
+            //LayoutRoot.Children.Add(cb);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            newsPage1.LoadHTML("<strong>hello world</strong>");
+            //newsPage1.LoadHTML("<strong>hello world</strong>");
 
-            htmlRichTextArea1.SetDefaultStyles();
-            htmlRichTextArea1.Load("<p><img src='http://www.google.com.vn/images/firefox/sprite2.png'/></p>");
+            //htmlRichTextArea1.SetDefaultStyles();
+            //htmlRichTextArea1.Load("<p><img src='http://www.google.com.vn/images/firefox/sprite2.png'/></p>");
+        }
+
+        private void newsReader1_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rssItemListControl1_LinkClicked(object sender, string link)
+        {
+            
+        }
+
+        private void rssItemListControl1_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void rssItemListControl1_ContentChoise(object sender, string data)
+        {
+            newsReader1.LoadHTML("<p>" + data + "</p>");
         }
     }
 }
