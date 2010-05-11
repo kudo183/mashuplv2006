@@ -148,14 +148,14 @@ namespace MashupDesignTool
                 int pcZIndex = DockCanvas.DockCanvas.GetZIndex(pc);
                 if (pcZIndex > zindex)
                 {
-                    SetZindex(pc, pcZIndex - 2, pcZIndex - 3);
+                    SetZindex(pc, pcZIndex - 1);
                     newZindex = newZindex < pcZIndex ? pcZIndex : newZindex;
                 }
             }
-            SetZindex(selectedProxyControls[0], newZindex, newZindex - 1);
+            SetZindex(selectedProxyControls[0], newZindex);
 
             if (ZIndexChanged != null)
-                ZIndexChanged(selectedControls[0].Control, newZindex - 1);
+                ZIndexChanged(selectedControls[0].Control, newZindex);
         }
 
         void miBringForward_SelectMenuItem(object sender, MenuItemEventArgs e)
@@ -172,14 +172,14 @@ namespace MashupDesignTool
                     swapPC = pc;
                 }
             }
-            SetZindex(selectedProxyControls[0], newZindex, newZindex - 1);
+            SetZindex(selectedProxyControls[0], newZindex);
             if (swapPC != null)
             {
-                SetZindex(swapPC, zindex, zindex - 1);
+                SetZindex(swapPC, zindex);
             }
 
             if (ZIndexChanged != null)
-                ZIndexChanged(selectedControls[0].Control, newZindex - 1);
+                ZIndexChanged(selectedControls[0].Control, newZindex);
         }
 
         void miSendToBack_SelectMenuItem(object sender, MenuItemEventArgs e)
@@ -191,14 +191,14 @@ namespace MashupDesignTool
                 int pcZIndex = DockCanvas.DockCanvas.GetZIndex(pc);
                 if (pcZIndex < zindex)
                 {
-                    SetZindex(pc, pcZIndex + 2, pcZIndex + 1);
+                    SetZindex(pc, pcZIndex + 1);
                     newZindex = newZindex > pcZIndex ? pcZIndex : newZindex;
                 }
             }
-            SetZindex(selectedProxyControls[0], newZindex, newZindex - 1);
+            SetZindex(selectedProxyControls[0], newZindex);
 
             if (ZIndexChanged != null)
-                ZIndexChanged(selectedControls[0].Control, newZindex - 1);
+                ZIndexChanged(selectedControls[0].Control, newZindex);
         }
 
         void miSendBackward_SelectMenuItem(object sender, MenuItemEventArgs e)
@@ -215,21 +215,21 @@ namespace MashupDesignTool
                     swapPC = pc;
                 }
             }
-            SetZindex(selectedProxyControls[0], newZindex, newZindex - 1);
+            SetZindex(selectedProxyControls[0], newZindex);
             if (swapPC != null)
             {
-                SetZindex(swapPC, zindex, zindex - 1);
+                SetZindex(swapPC, zindex);
             }
 
             if (ZIndexChanged != null)
-                ZIndexChanged(selectedControls[0].Control, newZindex - 1);
+                ZIndexChanged(selectedControls[0].Control, newZindex);
         }
 
-        private static void SetZindex(ProxyControl pc, int zindex, int rzindex)
+        private static void SetZindex(ProxyControl pc, int zindex)
         {
             DockCanvas.DockCanvas.SetZIndex(pc, zindex);
-            DockCanvas.DockCanvas.SetZIndex(pc.RealControl, rzindex);
-            DockCanvas.DockCanvas.SetZIndex(pc.RealControl.Control, rzindex);
+            DockCanvas.DockCanvas.SetZIndex(pc.RealControl, zindex);
+            DockCanvas.DockCanvas.SetZIndex(pc.RealControl.Control, zindex);
         }
 
         void miDelete_SelectMenuItem(object sender, MenuItemEventArgs e)
@@ -254,9 +254,7 @@ namespace MashupDesignTool
             proxyControls.Add(pc);
             controls.Add(ec);
             int index = FindTopProxyControlIndex();
-            DockCanvas.DockCanvas.SetZIndex(pc, index + 2);
-            DockCanvas.DockCanvas.SetZIndex(uc, index + 1);
-            SetZindex(pc, index + 2, index + 1);
+            SetZindex(pc, index + 1);
 
             ControlContainer.Children.Add(ec);
             LayoutRoot.Children.Add(pc);
