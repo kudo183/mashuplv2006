@@ -9,19 +9,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using BasicLibrary;
 
 namespace MashupDesignTool
 {
     public partial class ProxyControl : UserControl
     {
-        private UserControl realControl;
+        private EffectableControl realControl;
 
         public ProxyControl()
         {
             InitializeComponent();
         }
 
-        public ProxyControl(UserControl uc, double x, double y, double width, double height)
+        public ProxyControl(EffectableControl uc, double x, double y, double width, double height)
         {
             InitializeComponent();
             realControl = uc;
@@ -31,14 +32,14 @@ namespace MashupDesignTool
             uc.SizeChanged += new SizeChangedEventHandler(uc_SizeChanged);
         }
 
-        public ProxyControl(UserControl uc)
+        public ProxyControl(EffectableControl uc)
         {
             InitializeComponent();
             realControl = uc;
             uc.SizeChanged += new SizeChangedEventHandler(uc_SizeChanged);
         }
 
-        public ProxyControl(UserControl uc, double x, double y)
+        public ProxyControl(EffectableControl uc, double x, double y)
         {
             InitializeComponent();
             realControl = uc;
@@ -62,7 +63,7 @@ namespace MashupDesignTool
             this.Height = height + 14;
         }
 
-        public UserControl RealControl
+        public EffectableControl RealControl
         {
             get { return realControl; }
             set { realControl = value; }

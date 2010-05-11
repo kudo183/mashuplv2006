@@ -196,6 +196,10 @@
     <Folder Include="Images\.svn\tmp\text-base\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
+      <Project>{CAC33183-F531-43AD-A288-6575775B4BE1}</Project>
+      <Name>BasicLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DockCanvas\DockCanvas.csproj">
       <Project>{C38EEC60-122E-4002-A7B1-E6465DC41201}</Project>
       <Name>DockCanvas</Name>
