@@ -12,7 +12,10 @@
             <RowDefinition Height="250"></RowDefinition>
         </Grid.RowDefinitions>
         <my:NewsReader Grid.Row="0" HorizontalAlignment="Stretch" Name="newsReader1" VerticalAlignment="Stretch" Loaded="newsReader1_Loaded" />
-        <my2:RssItemListControl Grid.Row="1" HorizontalAlignment="Stretch" Name="rssItemListControl1" VerticalAlignment="Stretch" RssURL="http://vnexpress.net/rss/gl/trang-chu.rss" LinkClicked="rssItemListControl1_LinkClicked" ContentChoise="rssItemListControl1_ContentChoise" />
+        <!--<my2:RssItemListControl Grid.Row="1" HorizontalAlignment="Stretch" Name="rssItemListControl1" VerticalAlignment="Stretch" RssURL="http://vnexpress.net/rss/gl/trang-chu.rss" LinkClicked="rssItemListControl1_LinkClicked" ContentChoise="rssItemListControl1_ContentChoise" />-->
+
+        <Image Source="http://www.bongda.24h.com.vn/forum/imagehosting3/2-2009/856084a00716563d40.jpg"></Image>
+        
         <!--<Button Content="Button" Height="23" HorizontalAlignment="Left" Margin="325,277,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
         <my:NewsPage HorizontalAlignment="Left" Margin="312,7,0,0" Name="newsPage1" VerticalAlignment="Top" Height="200" Width="216" />
         <my1:HtmlRichTextArea HorizontalAlignment="Left" Margin="298,215,0,0" Name="htmlRichTextArea1" VerticalAlignment="Top" Width="238" Height="61" />
