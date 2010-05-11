@@ -22,6 +22,10 @@ namespace SL30PropertyGrid
     /// </summary>
     public partial class PropertyGrid : ContentControl
     {
+
+        public delegate void OnPropertyValueChange(UIElement ui, string name, object value);
+        public event OnPropertyValueChange PropertyValueChange;
+
         #region Fields
 
         //#99B4D1
@@ -64,6 +68,14 @@ namespace SL30PropertyGrid
         #endregion
 
         #region Properties
+
+        private FrameworkElement _SelectedObjectParent;
+
+        public FrameworkElement SelectedObjectParent
+        {
+            get { return _SelectedObjectParent; }
+            set { _SelectedObjectParent = value; }
+        }
 
         #region SelectedObject
 
@@ -204,7 +216,7 @@ namespace SL30PropertyGrid
             int rowCount = -1;
 
             // Parse the objects properties
-            props = PropertyGrid.ParseObject(obj);
+            props = ParseObject(obj);
 
             #region Render the Grid
 
@@ -272,6 +284,7 @@ namespace SL30PropertyGrid
         }
         void AddPropertyRow(PropertyItem item, ref int rowIndex)
         {
+            item.PropertyChanged += new PropertyChangedEventHandler(item_PropertyChanged);
             #region Create Display Objects
             PropertyGridLabel label = CreateLabel(item.Name, item.DisplayName);
             ValueEditorBase editor = EditorService.GetEditor(item, label);
@@ -305,6 +318,17 @@ namespace SL30PropertyGrid
             Grid.SetRow(brd, rowIndex);
             Grid.SetColumn(brd, 2);
             #endregion
+        }
+
+        void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (PropertyValueChange != null)
+            {
+                PropertyItem pi = sender as PropertyItem;
+                UIElement ui = pi.Instant as UIElement;
+                PropertyValueChange(ui, pi.Name, pi.Value);
+            }
+
         }
         void AddGridSplitter(int rowCount)
         {
@@ -363,7 +387,7 @@ namespace SL30PropertyGrid
             return img;
         }
 
-        static List<PropertyItem> ParseObject(object objItem)
+        private List<PropertyItem> ParseObject(object objItem)
         {
             if (null == objItem)
                 return new List<PropertyItem>();
@@ -395,7 +419,7 @@ namespace SL30PropertyGrid
                     try
                     {
                         object value = pinfo.GetValue(objItem, null);
-                        PropertyItem prop = new PropertyItem(objItem, value, pinfo, readOnly, false, null, null, null);
+                        PropertyItem prop = new PropertyItem(objItem, null, value, pinfo, readOnly, false, null, null, null);
                         pc.Add(prop);
                     }
                     catch (Exception ex) { }
@@ -404,13 +428,18 @@ namespace SL30PropertyGrid
 
             #region attached property
             FrameworkElement fe = objItem as FrameworkElement;
+            while (fe != null && fe.Parent != _SelectedObjectParent)
+            {
+                fe = fe.Parent as FrameworkElement;
+            }
+
             int beginIndex = pc.Count;
             if (fe != null)
             {
-                FrameworkElement parent = fe.Parent as FrameworkElement;
-                if (parent != null)
+                _SelectedObjectParent = fe.Parent as FrameworkElement;
+                if (_SelectedObjectParent != null)
                 {
-                    Type parentType = parent.GetType();
+                    Type parentType = _SelectedObjectParent.GetType();
 
                     while (parentType != null)
                     {
@@ -468,14 +497,12 @@ namespace SL30PropertyGrid
                                 try
                                 {
                                     //get the default value
-                                    DependencyProperty dp = (DependencyProperty)field.GetValue(fe.Parent);
-                                    object defaultValue = dp.GetMetadata(parentType).DefaultValue;
-                                    MemberInfo[] ff = dp.GetType().GetMember("_propertyType",MemberTypes.All,BindingFlags.NonPublic);
-                                    //get the value
+                                    DependencyProperty dp = (DependencyProperty)field.GetValue(_SelectedObjectParent);
+                                    
                                     object currentValue = fe.GetValue(dp);
                                     //now have both the value and the default, we're away!
 
-                                    PropertyItem propAttached = new PropertyItem(objItem, currentValue, null, readOnly, true, propertyName, get, set);
+                                    PropertyItem propAttached = new PropertyItem(objItem, _SelectedObjectParent, currentValue, null, readOnly, true, propertyName, get, set);
                                     pc.Add(propAttached);
                                 }
                                 catch (Exception ex)
