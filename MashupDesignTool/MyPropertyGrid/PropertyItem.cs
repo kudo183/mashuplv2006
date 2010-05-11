@@ -3,6 +3,7 @@ namespace SL30PropertyGrid
 {
     #region Using Directives
     using System;
+    using System.Windows;
     using System.ComponentModel;
     using System.Linq;
     using System.Reflection;
@@ -47,9 +48,10 @@ namespace SL30PropertyGrid
         /// </summary>
         /// <param name="instance"></param>
         /// <param name="property"></param>
-        public PropertyItem(object instance, object value, PropertyInfo property, bool readOnly, bool attached, string name, MethodInfo g, MethodInfo s)
+        public PropertyItem(object instance, object parent, object value, PropertyInfo property, bool readOnly, bool attached, string name, MethodInfo g, MethodInfo s)
         {
             _instance = instance;
+            _parent = parent;
             _propertyInfo = property;
             _value = value;
             _readOnly = readOnly;
@@ -72,6 +74,12 @@ namespace SL30PropertyGrid
         #endregion
 
         #region Properties
+        public object Instant
+        {
+            get { return _instance; }
+        }
+
+        private object _parent;
 
         public string Name
         {
@@ -141,7 +149,7 @@ namespace SL30PropertyGrid
                     if (propertyType.IsEnum)
                     {
                         object val = Enum.Parse(propertyType, value.ToString(), false);
-                        _set.Invoke(null, new object[] {_instance, val });
+                        _set.Invoke(null, new object[] { _instance, val });
                         OnPropertyChanged("Value");
                     }
                     else
@@ -295,7 +303,12 @@ namespace SL30PropertyGrid
         {
             if (_attached == true)
             {
-                _value = _get.Invoke(_instance, null);
+                FrameworkElement fe = _instance as FrameworkElement;
+                while (fe != null && fe.Parent != _parent)
+                {
+                    fe = fe.Parent as FrameworkElement;
+                }
+                _value = _get.Invoke(null, new object[] {fe });
                 return;
             }
             _value = _propertyInfo.GetValue(_instance, null);
