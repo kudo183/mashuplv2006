@@ -34,6 +34,45 @@ namespace MashupDesignTool
         public MainPage()
         {
             InitializeComponent();
+            propertiesGrid.SelectedObjectParent = designCanvas1.ControlContainer;
+            designCanvas1.PositionChanged += new DesignCanvas.PositionChangedHander(designCanvas1_PositionChanged);
+            designCanvas1.ZIndexChanged += new DesignCanvas.ZIndexChangedHandler(designCanvas1_ZIndexChanged);
+            propertiesGrid.PropertyValueChange += new SL30PropertyGrid.PropertyGrid.OnPropertyValueChange(propertiesGrid_PropertyValueChange);
+        }
+
+        void propertiesGrid_PropertyValueChange(UIElement ui, string name, object value)
+        {
+            switch (name)
+            {
+                case "Left":
+                    break;
+                case "Top":
+                    break;
+                case "ZIndex":
+                    break;
+                case "Width":
+                    break;
+                case "Height":
+                    break;
+                case "DockType":
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        void designCanvas1_ZIndexChanged(object sender, int zindex)
+        {
+            propertiesGrid.UpdatePropertyValue("ZIndex");
+        }
+
+        void designCanvas1_PositionChanged(object sender, bool multiControl)
+        {
+            if (multiControl)
+                return;
+           
+            propertiesGrid.UpdatePropertyValue("Left");
+            propertiesGrid.UpdatePropertyValue("Top");
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
