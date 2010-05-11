@@ -18,6 +18,11 @@ namespace MashupDesignTool
 {
     public partial class DesignCanvas : UserControl
     {
+        public delegate void PositionChangedHander(object sender);
+        public event PositionChangedHander PositionChanged;
+        public delegate void ZIndexChangedHandler(object sender, int zindex);
+        public event ZIndexChangedHandler ZIndexChanged;
+
         #region enum resize direction
         enum ResizeDirection
         {
@@ -143,6 +148,9 @@ namespace MashupDesignTool
             }
             DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0], newZindex);
             DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
+
+            if (ZIndexChanged != null)
+                ZIndexChanged(selectedControls[0], newZindex - 1);
         }
 
         void miBringForward_SelectMenuItem(object sender, MenuItemEventArgs e)
@@ -166,6 +174,9 @@ namespace MashupDesignTool
                 DockCanvas.DockCanvas.SetZIndex(swapPC, zindex);
                 DockCanvas.DockCanvas.SetZIndex(swapPC.RealControl, zindex - 1);
             }
+
+            if (ZIndexChanged != null)
+                ZIndexChanged(selectedControls[0], newZindex - 1);
         }
 
         void miSendToBack_SelectMenuItem(object sender, MenuItemEventArgs e)
@@ -184,6 +195,9 @@ namespace MashupDesignTool
             }
             DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0], newZindex);
             DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
+
+            if (ZIndexChanged != null)
+                ZIndexChanged(selectedControls[0], newZindex - 1);
         }
 
         void miSendBackward_SelectMenuItem(object sender, MenuItemEventArgs e)
@@ -207,6 +221,9 @@ namespace MashupDesignTool
                 DockCanvas.DockCanvas.SetZIndex(swapPC, zindex);
                 DockCanvas.DockCanvas.SetZIndex(swapPC.RealControl, zindex - 1);
             }
+
+            if (ZIndexChanged != null)
+                ZIndexChanged(selectedControls[0], newZindex - 1);
         }
 
         void miDelete_SelectMenuItem(object sender, MenuItemEventArgs e)
@@ -349,6 +366,16 @@ namespace MashupDesignTool
 
             for (int i = 0; i < selectedProxyControls.Count; i++)
             {
+                if (((DockCanvas.DockCanvas.DockType)selectedControls[i].GetValue(DockCanvas.DockCanvas.DockTypeProperty)) != DockCanvas.DockCanvas.DockType.None)
+                {
+                    delta.X = delta.Y = 0;
+                    for (int j = 0; j < selectedProxyControls.Count; j++)
+                    {
+                        pts[j].X = Canvas.GetLeft(selectedControls[j]);
+                        pts[j].Y = Canvas.GetTop(selectedControls[j]);
+                    }
+                    break;
+                }
                 double x = pt.X - clickPoints[i].X;
                 double y = pt.Y - clickPoints[i].Y;
                 ProxyControl pc = selectedProxyControls[i];
@@ -373,6 +400,9 @@ namespace MashupDesignTool
                 ProxyControl pc = selectedProxyControls[i];
                 pc.MoveControl(pts[i].X - delta.X, pts[i].Y - delta.Y);
             }
+
+            if (delta.X != 0 && delta.Y != 0 && PositionChanged != null)
+                PositionChanged(this);
             return pt;
         }
         #endregion dragdrop control
@@ -609,9 +639,36 @@ namespace MashupDesignTool
             }
             #endregion set cursor, begin resized point, resize direction
 
+            #region check docktype
+            DockCanvas.DockCanvas.DockType dt = (DockCanvas.DockCanvas.DockType)selectedControl.GetValue(DockCanvas.DockCanvas.DockTypeProperty);
+            switch (dt)
+            {
+                case DockCanvas.DockCanvas.DockType.None:
+                    break;
+                case DockCanvas.DockCanvas.DockType.Fill:
+                    canResize = false;
+                    break;
+                case DockCanvas.DockCanvas.DockType.Left:
+                    if (resizeDirection != ResizeDirection.RIGHT)
+                        canResize = false;
+                    break;
+                case DockCanvas.DockCanvas.DockType.Right:
+                    if (resizeDirection != ResizeDirection.LEFT)
+                        canResize = false;
+                    break;
+                case DockCanvas.DockCanvas.DockType.Top:
+                    if (resizeDirection != ResizeDirection.BOTTOM)
+                        canResize = false;
+                    break;
+                case DockCanvas.DockCanvas.DockType.Bottom:
+                    if (resizeDirection != ResizeDirection.TOP)
+                        canResize = false;
+                    break;
+            }
+            #endregion check docktype
+
             if (!canResize)
                 CursorManager.ChangeCursor(this, CursorManager.CursorType.Arrow);
-
             CursorManager.UpdateCursorPosition(e.GetPosition(LayoutRoot));
         }
 
@@ -649,7 +706,7 @@ namespace MashupDesignTool
                 CursorManager.ChangeCursor(this, CursorManager.CursorType.Arrow);
             }
 
-            
+            //ControlContainer.UpdateChildrenPosition(1);
         }
 
         private void ResizeControl(Point pt)
@@ -883,6 +940,17 @@ namespace MashupDesignTool
 
             for (int i = 0; i < selectedProxyControls.Count; i++)
             {
+                if (((DockCanvas.DockCanvas.DockType)selectedControls[i].GetValue(DockCanvas.DockCanvas.DockTypeProperty)) != DockCanvas.DockCanvas.DockType.None)
+                {
+                    delta.X = delta.Y = 0;
+                    for (int j = 0; j < selectedProxyControls.Count; j++)
+                    {
+                        pts[j].X = Canvas.GetLeft(selectedControls[j]);
+                        pts[j].Y = Canvas.GetTop(selectedControls[j]);
+                    }
+                    break;
+                }
+
                 ProxyControl pc = selectedProxyControls[i];
                 UserControl uc = pc.RealControl;
                 double x = (double)uc.GetValue(Canvas.LeftProperty) + pt.X;
@@ -907,6 +975,9 @@ namespace MashupDesignTool
                 ProxyControl pc = selectedProxyControls[i];
                 pc.MoveControl(pts[i].X - delta.X, pts[i].Y - delta.Y);
             }
+
+            if (delta.X != 0 && delta.Y != 0 && PositionChanged != null)
+                PositionChanged(this);
         }
         #endregion keyboard
 
