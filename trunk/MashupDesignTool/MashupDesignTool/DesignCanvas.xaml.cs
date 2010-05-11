@@ -13,16 +13,12 @@ using System.Reflection;
 using System.Windows.Media.Imaging;
 using System.Xml;
 using System.Windows.Threading;
+using BasicLibrary;
 
 namespace MashupDesignTool
 {
     public partial class DesignCanvas : UserControl
     {
-        public delegate void PositionChangedHander(object sender);
-        public event PositionChangedHander PositionChanged;
-        public delegate void ZIndexChangedHandler(object sender, int zindex);
-        public event ZIndexChangedHandler ZIndexChanged;
-
         #region enum resize direction
         enum ResizeDirection
         {
@@ -36,6 +32,12 @@ namespace MashupDesignTool
             BOTTOMRIGHT
         }
         #endregion enum resize direction
+
+        public delegate void PositionChangedHander(object sender);
+        public event PositionChangedHander PositionChanged;
+        
+        public delegate void ZIndexChangedHandler(object sender, int zindex);
+        public event ZIndexChangedHandler ZIndexChanged;
 
         public delegate void OnSelectMenu(object sender, UIElement element);
         public event OnSelectMenu SelectPropertiesMenu;
@@ -53,9 +55,9 @@ namespace MashupDesignTool
         bool canvasClick;
         Point beginCanvasClicked;
         List<Point> clickPoints;
-        List<UserControl> controls;
+        List<EffectableControl> controls;
         List<ProxyControl> proxyControls;
-        List<UserControl> selectedControls;
+        List<EffectableControl> selectedControls;
         List<ProxyControl> selectedProxyControls;
         DispatcherTimer timer;
         List<Key> arrowKeyPressed;
@@ -64,8 +66,13 @@ namespace MashupDesignTool
 
         public List<UserControl> Controls
         {
-            get { return controls; }
-            set { controls = value; }
+            get 
+            {
+                List<UserControl> list = new List<UserControl>();
+                foreach (EffectableControl ec in controls)
+                    list.Add(ec.Control);
+                return list; 
+            }
         }
 
         public DesignCanvas()
@@ -83,8 +90,8 @@ namespace MashupDesignTool
 
             clickPoints = new List<Point>();
             proxyControls = new List<ProxyControl>();
-            controls = new List<UserControl>();
-            selectedControls = new List<UserControl>();
+            controls = new List<EffectableControl>();
+            selectedControls = new List<EffectableControl>();
             selectedProxyControls = new List<ProxyControl>();
             arrowKeyPressed = new List<Key>();
 
@@ -141,16 +148,14 @@ namespace MashupDesignTool
                 int pcZIndex = DockCanvas.DockCanvas.GetZIndex(pc);
                 if (pcZIndex > zindex)
                 {
-                    DockCanvas.DockCanvas.SetZIndex(pc, pcZIndex - 2);
-                    DockCanvas.DockCanvas.SetZIndex(pc.RealControl, pcZIndex - 3);
+                    SetZindex(pc, pcZIndex - 2, pcZIndex - 3);
                     newZindex = newZindex < pcZIndex ? pcZIndex : newZindex;
                 }
             }
-            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0], newZindex);
-            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
+            SetZindex(selectedProxyControls[0], newZindex, newZindex - 1);
 
             if (ZIndexChanged != null)
-                ZIndexChanged(selectedControls[0], newZindex - 1);
+                ZIndexChanged(selectedControls[0].Control, newZindex - 1);
         }
 
         void miBringForward_SelectMenuItem(object sender, MenuItemEventArgs e)
@@ -167,16 +172,14 @@ namespace MashupDesignTool
                     swapPC = pc;
                 }
             }
-            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0], newZindex);
-            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
+            SetZindex(selectedProxyControls[0], newZindex, newZindex - 1);
             if (swapPC != null)
             {
-                DockCanvas.DockCanvas.SetZIndex(swapPC, zindex);
-                DockCanvas.DockCanvas.SetZIndex(swapPC.RealControl, zindex - 1);
+                SetZindex(swapPC, zindex, zindex - 1);
             }
 
             if (ZIndexChanged != null)
-                ZIndexChanged(selectedControls[0], newZindex - 1);
+                ZIndexChanged(selectedControls[0].Control, newZindex - 1);
         }
 
         void miSendToBack_SelectMenuItem(object sender, MenuItemEventArgs e)
@@ -188,16 +191,14 @@ namespace MashupDesignTool
                 int pcZIndex = DockCanvas.DockCanvas.GetZIndex(pc);
                 if (pcZIndex < zindex)
                 {
-                    DockCanvas.DockCanvas.SetZIndex(pc, pcZIndex + 2);
-                    DockCanvas.DockCanvas.SetZIndex(pc.RealControl, pcZIndex + 1);
+                    SetZindex(pc, pcZIndex + 2, pcZIndex + 1);
                     newZindex = newZindex > pcZIndex ? pcZIndex : newZindex;
                 }
             }
-            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0], newZindex);
-            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
+            SetZindex(selectedProxyControls[0], newZindex, newZindex - 1);
 
             if (ZIndexChanged != null)
-                ZIndexChanged(selectedControls[0], newZindex - 1);
+                ZIndexChanged(selectedControls[0].Control, newZindex - 1);
         }
 
         void miSendBackward_SelectMenuItem(object sender, MenuItemEventArgs e)
@@ -214,16 +215,21 @@ namespace MashupDesignTool
                     swapPC = pc;
                 }
             }
-            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0], newZindex);
-            DockCanvas.DockCanvas.SetZIndex(selectedProxyControls[0].RealControl, newZindex - 1);
+            SetZindex(selectedProxyControls[0], newZindex, newZindex - 1);
             if (swapPC != null)
             {
-                DockCanvas.DockCanvas.SetZIndex(swapPC, zindex);
-                DockCanvas.DockCanvas.SetZIndex(swapPC.RealControl, zindex - 1);
+                SetZindex(swapPC, zindex, zindex - 1);
             }
 
             if (ZIndexChanged != null)
-                ZIndexChanged(selectedControls[0], newZindex - 1);
+                ZIndexChanged(selectedControls[0].Control, newZindex - 1);
+        }
+
+        private static void SetZindex(ProxyControl pc, int zindex, int rzindex)
+        {
+            DockCanvas.DockCanvas.SetZIndex(pc, zindex);
+            DockCanvas.DockCanvas.SetZIndex(pc.RealControl, rzindex);
+            DockCanvas.DockCanvas.SetZIndex(pc.RealControl.Control, rzindex);
         }
 
         void miDelete_SelectMenuItem(object sender, MenuItemEventArgs e)
@@ -234,23 +240,25 @@ namespace MashupDesignTool
         void miProperties_SelectMenuItem(object sender, MenuItemEventArgs e)
         {
             if (SelectPropertiesMenu != null)
-                SelectPropertiesMenu(sender, selectedControls[0]);
+                SelectPropertiesMenu(sender, selectedControls[0].Control);
         }
         #endregion context menu
 
         #region add new control to canvas
         public void AddControl(UserControl uc, double x, double y, int width, int height)
         {
+            EffectableControl ec = new EffectableControl(uc);
             uc.Margin = new Thickness(0, 0, 0, 0);
             //ProxyControl pc = new ProxyControl(uc, x, y, width, height);
-            ProxyControl pc = new ProxyControl(uc, 10, 10);
+            ProxyControl pc = new ProxyControl(ec, 10, 10);
             proxyControls.Add(pc);
-            controls.Add(uc);
+            controls.Add(ec);
             int index = FindTopProxyControlIndex();
             DockCanvas.DockCanvas.SetZIndex(pc, index + 2);
             DockCanvas.DockCanvas.SetZIndex(uc, index + 1);
+            SetZindex(pc, index + 2, index + 1);
 
-            ControlContainer.Children.Add(uc);
+            ControlContainer.Children.Add(ec);
             LayoutRoot.Children.Add(pc);
 
             pc.MouseLeftButtonDown += new MouseButtonEventHandler(control_MouseLeftButtonDown);
@@ -350,7 +358,7 @@ namespace MashupDesignTool
                 }
                 if (selectedControls.Count == 1)
                     if (SelectionChanged != null)
-                        SelectionChanged(this, selectedControls[0]);
+                        SelectionChanged(this, selectedControls[0].Control);
             } 
 
             if (isShowingContextMenu)
