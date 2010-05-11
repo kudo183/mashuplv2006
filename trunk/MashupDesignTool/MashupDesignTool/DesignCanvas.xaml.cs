@@ -33,7 +33,7 @@ namespace MashupDesignTool
         }
         #endregion enum resize direction
 
-        public delegate void PositionChangedHander(object sender);
+        public delegate void PositionChangedHander(object sender, bool multiControl);
         public event PositionChangedHander PositionChanged;
         
         public delegate void ZIndexChangedHandler(object sender, int zindex);
@@ -401,14 +401,23 @@ namespace MashupDesignTool
                     delta.Y = y + uc.Height - this.ActualHeight + 1;
             }
 
+            bool b = true;
+            if (pts[0].X - delta.X == Canvas.GetLeft(selectedControls[0]) && pts[0].Y - delta.Y == Canvas.GetTop(selectedControls[0]))
+                b = false;
+
             for (int i = 0; i < pts.Length; i++)
             {
                 ProxyControl pc = selectedProxyControls[i];
                 pc.MoveControl(pts[i].X - delta.X, pts[i].Y - delta.Y);
             }
 
-            if (delta.X != 0 && delta.Y != 0 && PositionChanged != null)
-                PositionChanged(this);
+            if (b == true && PositionChanged != null)
+            {
+                if (selectedControls.Count == 1)
+                    PositionChanged(this, false);
+                else
+                    PositionChanged(this, true);
+            }
             return pt;
         }
         #endregion dragdrop control
@@ -976,14 +985,23 @@ namespace MashupDesignTool
                     delta.Y = y + uc.Height - this.ActualHeight + 1;
             }
 
+            bool b = true;
+            if (pts[0].X - delta.X == Canvas.GetLeft(selectedControls[0]) && pts[0].Y - delta.Y == Canvas.GetTop(selectedControls[0]))
+                b = false;
+
             for (int i = 0; i < pts.Length; i++)
             {
                 ProxyControl pc = selectedProxyControls[i];
                 pc.MoveControl(pts[i].X - delta.X, pts[i].Y - delta.Y);
             }
 
-            if (delta.X != 0 && delta.Y != 0 && PositionChanged != null)
-                PositionChanged(this);
+            if (b == true && PositionChanged != null)
+            {
+                if (selectedControls.Count == 1)
+                    PositionChanged(this, false);
+                else
+                    PositionChanged(this, true);
+            }
         }
         #endregion keyboard
 
