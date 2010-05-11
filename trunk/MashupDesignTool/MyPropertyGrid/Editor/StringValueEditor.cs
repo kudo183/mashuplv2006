@@ -88,7 +88,7 @@ namespace SL30PropertyGrid
         override public void UpdatePropertyValue()
         {
             base.UpdatePropertyValue();
-            txt.Text = null;
+            txt.Text = "";
             if (null != Property.Value)
                 txt.Text = Property.Value.ToString();
         }
