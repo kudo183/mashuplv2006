@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Xml;
 using System.Xml.Linq;
 using System.Windows.Threading;
+using BasicLibrary;
 
 namespace MashupDesignTool
 {
@@ -21,15 +22,13 @@ namespace MashupDesignTool
     {
         Dictionary<string, Assembly> LoadedAssembly = new Dictionary<string, Assembly>();
         Dictionary<string, Assembly> LoadingAssembly = new Dictionary<string, Assembly>();
-        //List<string> downloadingDllReferences = new List<string>();
-        //List<string> downloadingDllFilename = new List<string>();
         Dictionary<WebClient, string> downloadingDllReferences = new Dictionary<WebClient, string>();
         Dictionary<WebClient, string> downloadingDllFilenames = new Dictionary<WebClient, string>();
         String clientRoot = "";
         DispatcherTimer doubleClickTimer;
         double toolbarWidthBeforeCollapse;
         double propertiesGridWidthBeforeCollapse;
-        List<ControlInfo> listControls =  new List<ControlInfo>();
+        List<ControlInfo> listControls = new List<ControlInfo>();
 
         public MainPage()
         {
@@ -42,19 +41,47 @@ namespace MashupDesignTool
 
         void propertiesGrid_PropertyValueChange(UIElement ui, string name, object value)
         {
+            ProxyControl pc = designCanvas1.SelectedProxyControls[0];
+            EffectableControl ec = designCanvas1.SelectedControls[0];
+            DockCanvas.DockCanvas.DockType dt = DockCanvas.DockCanvas.GetDockType(ec);
+
             switch (name)
             {
                 case "Left":
+                    if (dt == DockCanvas.DockCanvas.DockType.None)
+                        pc.SetX(double.Parse((string)value));
                     break;
                 case "Top":
+                    if (dt == DockCanvas.DockCanvas.DockType.None)
+                        pc.SetY(double.Parse((string)value));
                     break;
                 case "ZIndex":
+                    designCanvas1.SetZindex(pc, int.Parse((string)value));
                     break;
                 case "Width":
+                    if (dt == DockCanvas.DockCanvas.DockType.None
+                        || dt == DockCanvas.DockCanvas.DockType.Left
+                        || dt == DockCanvas.DockCanvas.DockType.Right)
+                    {
+                        pc.SetWidth(double.Parse((string)value));
+                        designCanvas1.ControlContainer.UpdateChildrenPosition();
+                        designCanvas1.UpdateAllProxyControlPosition();
+                    }
                     break;
                 case "Height":
+                    if (dt == DockCanvas.DockCanvas.DockType.None
+                        || dt == DockCanvas.DockCanvas.DockType.Top
+                        || dt == DockCanvas.DockCanvas.DockType.Bottom)
+                    {
+                        pc.SetHeight(double.Parse((string)value));
+                        designCanvas1.ControlContainer.UpdateChildrenPosition();
+                        designCanvas1.UpdateAllProxyControlPosition();
+                    }
                     break;
                 case "DockType":
+                    DockCanvas.DockCanvas.SetDockType(designCanvas1.SelectedControls[0], (DockCanvas.DockCanvas.DockType)Enum.Parse(typeof(DockCanvas.DockCanvas.DockType), (string)value, true));
+                    designCanvas1.ControlContainer.UpdateChildrenPosition();
+                    designCanvas1.UpdateAllProxyControlPosition();
                     break;
                 default:
                     break;
@@ -226,7 +253,7 @@ namespace MashupDesignTool
         //when user click a control, download it if needed.
         private void item_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ControlTreeViewItem item = (ControlTreeViewItem)sender; 
+            ControlTreeViewItem item = (ControlTreeViewItem)sender;
             if (doubleClickTimer.IsEnabled)
             {
                 doubleClickTimer.Stop();
