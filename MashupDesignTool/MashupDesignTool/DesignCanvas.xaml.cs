@@ -75,6 +75,17 @@ namespace MashupDesignTool
             }
         }
 
+        public List<EffectableControl> SelectedControls
+        {
+            get { return selectedControls; }
+            set { selectedControls = value; }
+        }
+
+        public List<ProxyControl> SelectedProxyControls
+        {
+            get { return selectedProxyControls; }
+        }
+
         public DesignCanvas()
         {
             InitializeComponent();
@@ -225,7 +236,7 @@ namespace MashupDesignTool
                 ZIndexChanged(selectedControls[0].Control, newZindex);
         }
 
-        private static void SetZindex(ProxyControl pc, int zindex)
+        public void SetZindex(ProxyControl pc, int zindex)
         {
             DockCanvas.DockCanvas.SetZIndex(pc, zindex);
             DockCanvas.DockCanvas.SetZIndex(pc.RealControl, zindex);
@@ -721,7 +732,8 @@ namespace MashupDesignTool
                 CursorManager.ChangeCursor(this, CursorManager.CursorType.Arrow);
             }
 
-            //ControlContainer.UpdateChildrenPosition(1);
+            ControlContainer.UpdateChildrenPosition();
+            UpdateAllProxyControlPosition();
         }
 
         private void ResizeControl(Point pt)
@@ -777,6 +789,14 @@ namespace MashupDesignTool
             selectedProxyControl.ResizeControl(width, height);
             selectedProxyControl.MoveControl(x, y);
             CursorManager.UpdateCursorPosition(pt);
+        }
+
+        public void UpdateAllProxyControlPosition()
+        {
+            for (int i = 0; i < proxyControls.Count; i++)
+            {
+                proxyControls[i].MoveControl(Canvas.GetLeft(controls[i]), Canvas.GetTop(controls[i]));
+            }
         }
         #endregion resize control and select multiple controls
 

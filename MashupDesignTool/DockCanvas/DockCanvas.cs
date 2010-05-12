@@ -55,7 +55,7 @@ namespace DockCanvas
             }
             if (preventUpdateChildrenPosition == true)
                 return;            
-            UpdateChildrenPosition(0);
+            UpdateChildrenPosition();
         }
 
         public static void SetDockType(FrameworkElement element, DockType dockType)
@@ -103,7 +103,7 @@ namespace DockCanvas
         {
             if (preventUpdateChildrenPosition == true)
                 return;
-            UpdateChildrenPosition(1);
+            UpdateChildrenPosition();
         }
         #endregion
         
@@ -139,7 +139,7 @@ namespace DockCanvas
             }
         }
 
-        public void UpdateChildrenPosition(int type)
+        public void UpdateChildrenPosition()
         {
             UpdateIndex();
             SortASCByZIndex();

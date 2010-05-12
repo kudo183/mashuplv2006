@@ -71,20 +71,38 @@ namespace MashupDesignTool
 
         public void ResizeControl(double width, double height)
         {
-            realControl.Width = width;
-            realControl.Height = height;
-
-            this.Width = width + 14;
-            this.Height = height + 14;
+            SetWidth(width);
+            SetHeight(height);
         }
 
         public void MoveControl(double x, double y)
         {
-            realControl.SetValue(Canvas.LeftProperty, x);
-            realControl.SetValue(Canvas.TopProperty, y);
+            SetX(x);
+            SetY(y);
+        }
 
+        public void SetX(double x)
+        {
+            realControl.SetValue(Canvas.LeftProperty, x);
             this.SetValue(Canvas.LeftProperty, x - 7);
+        }
+
+        public void SetY(double y)
+        {
+            realControl.SetValue(Canvas.TopProperty, y);
             this.SetValue(Canvas.TopProperty, y - 7);
+        }
+
+        public void SetWidth(double width)
+        {
+            realControl.Width = width;
+            this.Width = width + 14;
+        }
+
+        public void SetHeight(double height)
+        {
+            realControl.Height = height;
+            this.Height = height + 14;
         }
 
         public void UpdateVisibility(Visibility vis)
