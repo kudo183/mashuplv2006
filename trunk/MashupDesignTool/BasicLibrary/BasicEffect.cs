@@ -63,10 +63,16 @@ namespace BasicLibrary
         }
         #endregion
 
+        public BasicEffect(EffectableControl control)
+        {
+            this.control = control;
+        }
+
         protected EffectableControl control;
         protected List<string> parameterNameList = new List<string>();
 
         public abstract void Start();
         public abstract void Stop();
+        public abstract void DetachEffect();
     }
 }
