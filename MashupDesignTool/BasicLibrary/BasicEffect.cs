@@ -41,7 +41,7 @@ namespace BasicLibrary
         public Type GetParameterType(string parameterName)
         {
             if (parameterNameList.Contains(parameterName))
-                return this.GetType().GetProperty(parameterName).GetType();
+                return this.GetType().GetProperty(parameterName).PropertyType;
             return null;
         }
 
