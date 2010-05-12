@@ -17,7 +17,7 @@ namespace BasicLibrary
         public abstract string GetParameterNames();
         public abstract Type GetParameterType(string parameterName);
         public abstract object GetParameterValue(string parameterName);
-        public abstract void SetParameterValue(string parameterName, object value);
+        public abstract bool SetParameterValue(string parameterName, object value);
         #endregion
     }   
 }
