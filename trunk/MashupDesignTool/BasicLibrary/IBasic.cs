@@ -16,6 +16,6 @@ namespace BasicLibrary
         string GetParameterNames();
         Type GetParameterType(string parameterName);
         object GetParameterValue(string parameterName);
-        void SetParameterValue(string parameterName, object value);
+        bool SetParameterValue(string parameterName, object value);
     }
 }
