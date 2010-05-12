@@ -35,6 +35,7 @@ namespace SL30PropertyGrid
         #region Fields
         private PropertyInfo _propertyInfo;
         private object _instance;
+        private object _instanceForAttachProperty;
         private bool _readOnly = false;
         private bool _attached = false;
         private string _name;
@@ -61,7 +62,15 @@ namespace SL30PropertyGrid
             _get = g;
             _set = s;
             _propertyType = (value == null) ? null : value.GetType();
-
+            if (_attached == true)
+            {
+                FrameworkElement fe = _instance as FrameworkElement;
+                while (fe != null && fe.Parent != _parent)
+                {
+                    fe = fe.Parent as FrameworkElement;
+                }
+                _instanceForAttachProperty = fe;
+            }
             if (instance is INotifyPropertyChanged)
                 ((INotifyPropertyChanged)instance).PropertyChanged += new PropertyChangedEventHandler(PropertyItem_PropertyChanged);
         }
@@ -149,7 +158,7 @@ namespace SL30PropertyGrid
                     if (propertyType.IsEnum)
                     {
                         object val = Enum.Parse(propertyType, value.ToString(), false);
-                        _set.Invoke(null, new object[] { _instance, val });
+                        _set.Invoke(null, new object[] { _instanceForAttachProperty, val });
                         OnPropertyChanged("Value");
                     }
                     else
@@ -160,13 +169,13 @@ namespace SL30PropertyGrid
                             if (tc != null)
                             {
                                 object val = tc.ConvertFrom(value);
-                                _set.Invoke(null, new object[] { _instance, val });
+                                _set.Invoke(null, new object[] { _instanceForAttachProperty, val });
                                 OnPropertyChanged("Value");
                             }
                             else
                             {
                                 // try direct setting as a string...
-                                _set.Invoke(null, new object[] { _instance, value.ToString() });
+                                _set.Invoke(null, new object[] { _instanceForAttachProperty, value.ToString() });
                                 OnPropertyChanged("Value");
                             }
                         }
@@ -303,12 +312,8 @@ namespace SL30PropertyGrid
         {
             if (_attached == true)
             {
-                FrameworkElement fe = _instance as FrameworkElement;
-                while (fe != null && fe.Parent != _parent)
-                {
-                    fe = fe.Parent as FrameworkElement;
-                }
-                _value = _get.Invoke(null, new object[] {fe });
+                
+                _value = _get.Invoke(null, new object[] {_instanceForAttachProperty });
                 return;
             }
             _value = _propertyInfo.GetValue(_instance, null);
