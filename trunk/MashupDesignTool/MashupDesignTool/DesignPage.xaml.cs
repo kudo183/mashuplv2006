@@ -36,6 +36,7 @@ namespace MashupDesignTool
             propertiesGrid.SelectedObjectParent = designCanvas1.ControlContainer;
             designCanvas1.PositionChanged += new DesignCanvas.PositionChangedHander(designCanvas1_PositionChanged);
             designCanvas1.ZIndexChanged += new DesignCanvas.ZIndexChangedHandler(designCanvas1_ZIndexChanged);
+
             propertiesGrid.PropertyValueChange += new SL30PropertyGrid.PropertyGrid.OnPropertyValueChange(propertiesGrid_PropertyValueChange);
         }
 
@@ -57,6 +58,10 @@ namespace MashupDesignTool
                     break;
                 case "ZIndex":
                     designCanvas1.SetZindex(pc, int.Parse((string)value));
+                    propertiesGrid.UpdatePropertyValue("Left");
+                    propertiesGrid.UpdatePropertyValue("Top");
+                    propertiesGrid.UpdatePropertyValue("Width");
+                    propertiesGrid.UpdatePropertyValue("Height");
                     break;
                 case "Width":
                     if (dt == DockCanvas.DockCanvas.DockType.None
@@ -82,6 +87,10 @@ namespace MashupDesignTool
                     DockCanvas.DockCanvas.SetDockType(designCanvas1.SelectedControls[0], (DockCanvas.DockCanvas.DockType)Enum.Parse(typeof(DockCanvas.DockCanvas.DockType), (string)value, true));
                     designCanvas1.ControlContainer.UpdateChildrenPosition();
                     designCanvas1.UpdateAllProxyControlPosition();
+                    propertiesGrid.UpdatePropertyValue("Left");
+                    propertiesGrid.UpdatePropertyValue("Top");
+                    propertiesGrid.UpdatePropertyValue("Width");
+                    propertiesGrid.UpdatePropertyValue("Height");
                     break;
                 default:
                     break;
@@ -91,13 +100,17 @@ namespace MashupDesignTool
         void designCanvas1_ZIndexChanged(object sender, int zindex)
         {
             propertiesGrid.UpdatePropertyValue("ZIndex");
+            propertiesGrid.UpdatePropertyValue("Left");
+            propertiesGrid.UpdatePropertyValue("Top");
+            propertiesGrid.UpdatePropertyValue("Width");
+            propertiesGrid.UpdatePropertyValue("Height");
         }
 
         void designCanvas1_PositionChanged(object sender, bool multiControl)
         {
             if (multiControl)
                 return;
-           
+
             propertiesGrid.UpdatePropertyValue("Left");
             propertiesGrid.UpdatePropertyValue("Top");
         }
