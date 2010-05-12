@@ -46,21 +46,21 @@ namespace SL30PropertyGrid
 				return;
 
 			base.OnLostFocus(e);
+            UpdateLabelColor();
+            //if (this.IsSelected)
+            //    this.Label.Background = new SolidColorBrush(PropertyGrid.labelBackgroundColorFocused);
+            //else
+            //    this.Label.Background = new SolidColorBrush(PropertyGrid.labelBackgroundColor);
 
-			if (this.IsSelected)
-				this.Label.Background = new SolidColorBrush(PropertyGrid.labelBackgroundColorFocused);
-			else
-				this.Label.Background = new SolidColorBrush(PropertyGrid.labelBackgroundColor);
-
-            if (this.Property.CanWrite)
-            {
-                if(this.IsSelected)
-                    this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorFocused);
-                else
-                    this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColor);
-            }
-            else
-                this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorReadOnly);
+            //if (this.Property.CanWrite)
+            //{
+            //    if(this.IsSelected)
+            //        this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorFocused);
+            //    else
+            //        this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColor);
+            //}
+            //else
+            //    this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorReadOnly);
 		}
 
 		private void Label_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -88,23 +88,7 @@ namespace SL30PropertyGrid
 				{
 					_isSelected = value;
 
-					if (value)
-					{
-						this.Label.Background = new SolidColorBrush(PropertyGrid.labelBackgroundColorFocused);
-                        if (this.Property.CanWrite)
-                            this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorFocused);
-                        else
-                            this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorReadOnly);
-					}
-					else
-					{
-                        this.Label.Background = new SolidColorBrush(PropertyGrid.labelBackgroundColor);
-                        //this.Label.Background = new SolidColorBrush(PropertyGrid.backgroundColor);
-						if (this.Property.CanWrite)
-							this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColor);
-						else
-							this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorReadOnly);
-					}
+                    UpdateLabelColor();
 				}
 			}
 		} bool _isSelected;
@@ -120,9 +104,30 @@ namespace SL30PropertyGrid
 		public PropertyItem Property { get; private set; }
 		#endregion
 
+        public void UpdateLabelColor()
+        {
+            if (_isSelected)
+            {
+                this.Label.Background = new SolidColorBrush(PropertyGrid.labelBackgroundColorFocused);
+                if (this.Property.CanWrite)
+                    this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorFocused);
+                else
+                    this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorReadOnly);
+            }
+            else
+            {
+                this.Label.Background = new SolidColorBrush(PropertyGrid.labelBackgroundColor);
+                
+                if (this.Property.CanWrite)
+                    this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColor);
+                else
+                    this.Label.Foreground = new SolidColorBrush(PropertyGrid.labelForegroundColorReadOnly);
+            }
+        }
+
         virtual public void UpdatePropertyValue()
         {
             Property.updateValue();
-        }
+        }        
 	}
 }
