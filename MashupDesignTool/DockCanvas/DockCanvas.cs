@@ -31,21 +31,21 @@ namespace DockCanvas
             get { return preventUpdateChildrenPosition; }
             set { preventUpdateChildrenPosition = value; }
         }
-        
+
         private List<int> lstZIndex = new List<int>();
         private List<int> lstArrayIndex = new List<int>();
         private List<Rect> lstControlOrginRect = new List<Rect>();
-        
+
         #region DockTypeProperty
         public static readonly DependencyProperty DockTypeProperty =
             DependencyProperty.RegisterAttached("DockType", typeof(DockType), typeof(DockCanvas), new PropertyMetadata(DockType.None, OnDockTypeChanged));
         private static void OnDockTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {            
+        {
             DockCanvas dc = VisualTreeHelper.GetParent(d) as DockCanvas;
             if (dc != null)
                 dc.OnDockTypeChanged((FrameworkElement)d, (DockType)e.OldValue, (DockType)e.NewValue);
         }
-        
+
         private void OnDockTypeChanged(FrameworkElement element, DockType oldValue, DockType newValue)
         {
             if (newValue == DockType.None)
@@ -54,7 +54,7 @@ namespace DockCanvas
                 element.Height = 50;
             }
             if (preventUpdateChildrenPosition == true)
-                return;            
+                return;
             UpdateChildrenPosition();
         }
 
@@ -62,7 +62,7 @@ namespace DockCanvas
         {
             element.SetValue(DockTypeProperty, dockType);
         }
-        
+
         public static DockType GetDockType(FrameworkElement element)
         {
             return (DockType)element.GetValue(DockTypeProperty);
@@ -106,7 +106,7 @@ namespace DockCanvas
             UpdateChildrenPosition();
         }
         #endregion
-        
+
         private void UpdateIndex()
         {
             lstArrayIndex.Clear();
@@ -154,14 +154,15 @@ namespace DockCanvas
             }
 
             Rect remainRect = new Rect(0, 0, width, height);
-            
+
             for (int i = 0; i < lstZIndex.Count; i++)
             {
                 FrameworkElement element = this.Children[lstArrayIndex[i]] as FrameworkElement;
                 DockType dockType = DockCanvas.GetDockType(element);
+                double temp;
                 switch (dockType)
                 {
-                    case DockType.None:                       
+                    case DockType.None:
                         break;
                     case DockType.Left:
                         Canvas.SetLeft(element, remainRect.Left);
@@ -169,7 +170,8 @@ namespace DockCanvas
                         element.Height = remainRect.Height;
 
                         remainRect.X += element.Width;
-                        remainRect.Width -= element.Width;                                               
+                        temp = remainRect.Width - element.Width;
+                        remainRect.Width = (temp > 3) ? temp : 3;
                         break;
                     case DockType.Top:
                         Canvas.SetTop(element, remainRect.Top);
@@ -177,25 +179,28 @@ namespace DockCanvas
                         element.Width = remainRect.Width;
 
                         remainRect.Y += element.Height;
-                        remainRect.Height -= element.Height;
+                        temp = remainRect.Height - element.Height;
+                        remainRect.Height = (temp > 3) ? temp : 3;
                         break;
                     case DockType.Right:
                         Canvas.SetLeft(element, remainRect.Right - element.Width);
                         Canvas.SetTop(element, remainRect.Top);
                         element.Height = remainRect.Height;
-                        
-                        remainRect.Width -= element.Width;
+
+                        temp = remainRect.Width - element.Width;
+                        remainRect.Width = (temp > 3) ? temp : 3;
                         break;
                     case DockType.Bottom:
                         Canvas.SetTop(element, remainRect.Bottom - element.Height);
                         Canvas.SetLeft(element, remainRect.Left);
                         element.Width = remainRect.Width;
 
-                        remainRect.Height -= element.Height;                        
+                        temp = remainRect.Height - element.Height;
+                        remainRect.Height = (temp > 3) ? temp : 3;
                         break;
                     case DockType.Fill:
-                        Canvas.SetLeft(element, 0);
-                        Canvas.SetTop(element, 0);
+                        Canvas.SetLeft(element, remainRect.Left);
+                        Canvas.SetTop(element, remainRect.Top);
                         element.Width = remainRect.Width;
                         element.Height = remainRect.Height;
                         break;
@@ -205,7 +210,7 @@ namespace DockCanvas
             UpdateLayout();
             preventUpdateChildrenPosition = false;
         }
-        
+
         //public DockCanvas()
         //    : base()
         //{
