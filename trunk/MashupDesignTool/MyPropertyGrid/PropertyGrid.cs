@@ -327,6 +327,33 @@ namespace SL30PropertyGrid
                 PropertyItem pi = sender as PropertyItem;
                 UIElement ui = pi.Instant as UIElement;
                 PropertyValueChange(ui, pi.Name, pi.Value);
+                
+                if (pi.Name == "DockType")
+                {
+                    string dock = pi.Value.ToString();
+                                        
+                    if (dock == "Left" || dock == "Right")
+                    {
+                        SetPropertyReadonly("Height", true);
+                        SetPropertyReadonly("Width", false);
+                    }
+                    else if (dock == "Top" || dock == "Bottom")
+                    {
+                        SetPropertyReadonly("Width", true);
+                        SetPropertyReadonly("Height", false);
+                    }
+                    else if(dock == "Fill")
+                    {
+                        SetPropertyReadonly("Height", true);
+                        SetPropertyReadonly("Width", true);
+                    }
+                    else
+                    {
+                        SetPropertyReadonly("Height", false);
+                        SetPropertyReadonly("Width", false);
+                    }
+                }
+                
             }
 
         }
@@ -705,6 +732,19 @@ namespace SL30PropertyGrid
         }
         #endregion
 
+        public void SetPropertyReadonly(string propertyName, bool isReadonly)
+        {
+            for (int i = 0; i < editors.Count; i++)
+            {
+                if (editors[i].Property.Name == propertyName)
+                {
+                    editors[i].Property.ReadOnly = isReadonly;
+                    editors[i].UpdateLabelColor();
+                    break;
+                }
+            }
+        }
+
         public void UpdatePropertyValue(string propertyName)
         {
             for (int i = 0; i < editors.Count; i++)
@@ -712,6 +752,7 @@ namespace SL30PropertyGrid
                 if (editors[i].Property.Name == propertyName)
                 {
                     editors[i].UpdatePropertyValue();
+                    break;
                 }
             }
         }
@@ -722,7 +763,6 @@ namespace SL30PropertyGrid
             {
                 Border brd = GetItemEditor(editors[i], editors[i].Property.Category);
                 MainGrid.Children[i * 3 - 1] = brd;
-
             }
         }
     }
