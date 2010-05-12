@@ -6,15 +6,8 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400" xmlns:my="clr-namespace:NewsReaderControl;assembly=NewsReaderControl" Loaded="UserControl_Loaded" xmlns:my1="clr-namespace:Liquid;assembly=Liquid.HtmlRichTextArea" xmlns:my2="clr-namespace:HienThiListTinTucControl;assembly=HienThiListTinTucControl">
 
-    <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="250"></RowDefinition>
-        </Grid.RowDefinitions>
-        <my:NewsReader Grid.Row="0" HorizontalAlignment="Stretch" Name="newsReader1" VerticalAlignment="Stretch" Loaded="newsReader1_Loaded" />
-        <!--<my2:RssItemListControl Grid.Row="1" HorizontalAlignment="Stretch" Name="rssItemListControl1" VerticalAlignment="Stretch" RssURL="http://vnexpress.net/rss/gl/trang-chu.rss" LinkClicked="rssItemListControl1_LinkClicked" ContentChoise="rssItemListControl1_ContentChoise" />-->
-
-        <Image Source="http://www.bongda.24h.com.vn/forum/imagehosting3/2-2009/856084a00716563d40.jpg"></Image>
+    <Canvas x:Name="LayoutRoot" Background="White">
+        
         
         <!--<Button Content="Button" Height="23" HorizontalAlignment="Left" Margin="325,277,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
         <my:NewsPage HorizontalAlignment="Left" Margin="312,7,0,0" Name="newsPage1" VerticalAlignment="Top" Height="200" Width="216" />
@@ -29,5 +22,5 @@
             </ComboBoxItem>-->
         <!--</ComboBox>
         <TextBox Height="58" HorizontalAlignment="Left" Margin="528,268,0,0" Name="textBox1" VerticalAlignment="Top" Width="136" />-->
-    </Grid>
+    </Canvas>
 </UserControl>

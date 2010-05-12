@@ -27,6 +27,9 @@ namespace Testcontrol1
         {
             InitializeComponent();
             i = 0;
+
+            
+           
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -57,6 +60,22 @@ namespace Testcontrol1
 
             //htmlRichTextArea1.SetDefaultStyles();
             //htmlRichTextArea1.Load("<p><img src='http://www.google.com.vn/images/firefox/sprite2.png'/></p>");
+
+            UserControl btn = new SilverlightControl1();
+            btn.Width = 200;
+            btn.Height = 50;
+
+            BasicLibrary.EffectableControl ec = new BasicLibrary.EffectableControl(btn);
+
+            EffectLibrary.SplitScreenEffect effect
+                 = new EffectLibrary.SplitScreenEffect(ec);
+            Canvas.SetLeft(ec, 100);
+            Canvas.SetTop(ec, 100);
+
+            LayoutRoot.Children.Add(ec);
+
+            effect.SetParameterValue("Speed", EffectLibrary.SplitScreenEffect.SplitSpeed.SLOW);
+            effect.SetParameterValue("Direction", EffectLibrary.SplitScreenEffect.SplitDirection.HORIZONTAL);
         }
 
         private void newsReader1_Loaded(object sender, RoutedEventArgs e)
@@ -76,7 +95,6 @@ namespace Testcontrol1
 
         private void rssItemListControl1_ContentChoise(object sender, string data)
         {
-            newsReader1.LoadHTML("<p>" + data + "</p>");
         }
     }
 }

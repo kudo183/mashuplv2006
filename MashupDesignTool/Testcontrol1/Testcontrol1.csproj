@@ -79,6 +79,9 @@
     </Compile>
     <Compile Include="MyXmlSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SilverlightControl1.xaml.cs">
+      <DependentUpon>SilverlightControl1.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -89,12 +92,24 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SilverlightControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
+      <Project>{CAC33183-F531-43AD-A288-6575775B4BE1}</Project>
+      <Name>BasicLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EffectLibrary\EffectLibrary.csproj">
+      <Project>{6425CF3D-F24F-458D-ABEC-604AAA44B894}</Project>
+      <Name>EffectLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HienThiListTinTucControl\HienThiListTinTucControl.csproj">
       <Project>{F91522CB-C32D-497C-8980-4393C4265464}</Project>
       <Name>HienThiListTinTucControl</Name>
