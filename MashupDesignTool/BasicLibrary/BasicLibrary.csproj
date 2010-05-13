@@ -61,6 +61,7 @@
       <DependentUpon>EffectableControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="IBasic.cs" />
+    <Compile Include="CustomPixelShaderBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
