@@ -29,7 +29,7 @@ namespace EffectLibrary
             throw new NotImplementedException();
         }
 
-        public override void SetSelfHandle()
+        protected override void SetSelfHandle()
         {
             throw new NotImplementedException();
         }
