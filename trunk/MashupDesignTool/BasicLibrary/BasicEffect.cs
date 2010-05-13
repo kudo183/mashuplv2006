@@ -89,6 +89,6 @@ namespace BasicLibrary
         public abstract void Start();
         public abstract void Stop();
         public abstract void DetachEffect();
-        public abstract void SetSelfHandle();
+        protected abstract void SetSelfHandle();
     }
 }
