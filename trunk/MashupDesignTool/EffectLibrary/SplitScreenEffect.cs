@@ -121,8 +121,24 @@ namespace EffectLibrary
             control.CanvasRoot.Children.Remove(rectangle);
             control.CanvasRoot.Children.Remove(topHalf);
             control.CanvasRoot.Children.Remove(bottomHalf);
+            IsSelfHande = false;
         }
 
+        public override void SetSelfHandle()
+        {
+            if (_isSelfHande == true)
+            {
+                control.MouseEnter += new MouseEventHandler(control_MouseEnter);
+                control.MouseLeave += new MouseEventHandler(control_MouseLeave);
+                control.SizeChanged += new SizeChangedEventHandler(control_SizeChanged);
+            }
+            else
+            {
+                control.MouseEnter -= new MouseEventHandler(control_MouseEnter);
+                control.MouseLeave -= new MouseEventHandler(control_MouseLeave);
+                control.SizeChanged -= new SizeChangedEventHandler(control_SizeChanged);
+            }
+        }
         public SplitScreenEffect(EffectableControl control) : base(control)
         {
             parameterNameList.Add("MaskOpacity");
@@ -156,10 +172,6 @@ namespace EffectLibrary
             Speed = SplitSpeed.MEDIUM;
 
             //InitStoryboard();           //da duoc goi luc gan speed
-
-            control.SizeChanged += new SizeChangedEventHandler(control_SizeChanged);
-            control.MouseEnter += new MouseEventHandler(control_MouseEnter);
-            control.MouseLeave += new MouseEventHandler(control_MouseLeave);
         }
 
         void control_MouseLeave(object sender, MouseEventArgs e)

@@ -56,6 +56,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircumductionEffect.cs" />
+    <Compile Include="Ripple.cs" />
+    <Compile Include="CustomPixelShader\ReflectionShader.cs" />
+    <Compile Include="CustomPixelShader\RippleShader.cs" />
+    <Compile Include="CustomPixelShader\Ultily.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SplitScreenEffect.cs" />
     <Compile Include="Zoom.cs" />
@@ -65,6 +69,13 @@
       <Project>{CAC33183-F531-43AD-A288-6575775B4BE1}</Project>
       <Name>BasicLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="CustomPixelShader\HLSL\Reflection.fx" />
+    <Resource Include="CustomPixelShader\HLSL\Reflection.ps" />
+    <None Include="CustomPixelShader\HLSL\Ripple.fx" />
+    <Resource Include="CustomPixelShader\HLSL\Ripple.ps" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

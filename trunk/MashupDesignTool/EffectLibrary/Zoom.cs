@@ -61,10 +61,28 @@ namespace EffectLibrary
 
         public override void DetachEffect()
         {
+            IsSelfHande = false;
+            control.RenderTransform = null;
         }
 
+        public override void SetSelfHandle()
+        {
+            if (_isSelfHande == true)
+            {
+                control.MouseEnter += new MouseEventHandler(control_MouseEnter);
+                control.MouseLeave += new MouseEventHandler(control_MouseLeave);
+                control.SizeChanged += new SizeChangedEventHandler(control_SizeChanged);
+            }
+            else
+            {
+                control.MouseEnter -= new MouseEventHandler(control_MouseEnter);
+                control.MouseLeave -= new MouseEventHandler(control_MouseLeave);
+                control.SizeChanged -= new SizeChangedEventHandler(control_SizeChanged);
+            }
+        }
         Storyboard sbEnter, sbLeave;
         ScaleTransform tt;
+
         public Zoom(EffectableControl control)
             : base(control)
         {
@@ -86,10 +104,6 @@ namespace EffectLibrary
 
             sbLeave.Children.Add(CreateDoubleAnimationUsingKeyFrames(tt, "ScaleX", 1, _speed));
             sbLeave.Children.Add(CreateDoubleAnimationUsingKeyFrames(tt, "ScaleY", 1, _speed));
-
-            control.MouseEnter += new MouseEventHandler(control_MouseEnter);
-            control.MouseLeave += new MouseEventHandler(control_MouseLeave);
-            control.SizeChanged += new SizeChangedEventHandler(control_SizeChanged);
         }
 
         void control_SizeChanged(object sender, SizeChangedEventArgs e)

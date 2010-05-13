@@ -29,6 +29,10 @@ namespace EffectLibrary
             throw new NotImplementedException();
         }
 
+        public override void SetSelfHandle()
+        {
+            throw new NotImplementedException();
+        }
         public CircumductionEffect(EffectableControl control) : base(control)
         {
         }
