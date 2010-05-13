@@ -94,13 +94,13 @@ namespace EffectLibrary
 
         public override void DetachEffect()
         {
-            IsSelfHande = false;
+            IsSelfHandle = false;
             control.RenderTransform = null;
         }
 
         protected override void SetSelfHandle()
         {
-            if (_isSelfHande == true)
+            if (_isSelfHandle == true)
             {
                 control.MouseLeftButtonDown += new MouseButtonEventHandler(control_MouseLeftButtonDown);
             }

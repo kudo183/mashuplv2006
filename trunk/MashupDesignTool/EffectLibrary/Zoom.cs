@@ -61,13 +61,13 @@ namespace EffectLibrary
 
         public override void DetachEffect()
         {
-            IsSelfHande = false;
+            IsSelfHandle = false;
             control.RenderTransform = null;
         }
 
         protected override void SetSelfHandle()
         {
-            if (_isSelfHande == true)
+            if (_isSelfHandle == true)
             {
                 control.MouseEnter += new MouseEventHandler(control_MouseEnter);
                 control.MouseLeave += new MouseEventHandler(control_MouseLeave);

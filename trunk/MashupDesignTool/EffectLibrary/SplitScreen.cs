@@ -12,7 +12,7 @@ using BasicLibrary;
 
 namespace EffectLibrary
 {
-    public class SplitScreenEffect : BasicEffect
+    public class SplitScreen : BasicEffect
     {
         public enum SplitDirection
         {
@@ -121,25 +121,23 @@ namespace EffectLibrary
             control.CanvasRoot.Children.Remove(rectangle);
             control.CanvasRoot.Children.Remove(topHalf);
             control.CanvasRoot.Children.Remove(bottomHalf);
-            IsSelfHande = false;
+            IsSelfHandle = false;
         }
 
         protected override void SetSelfHandle()
         {
-            if (_isSelfHande == true)
+            if (_isSelfHandle == true)
             {
                 control.MouseEnter += new MouseEventHandler(control_MouseEnter);
                 control.MouseLeave += new MouseEventHandler(control_MouseLeave);
-                control.SizeChanged += new SizeChangedEventHandler(control_SizeChanged);
             }
             else
             {
                 control.MouseEnter -= new MouseEventHandler(control_MouseEnter);
                 control.MouseLeave -= new MouseEventHandler(control_MouseLeave);
-                control.SizeChanged -= new SizeChangedEventHandler(control_SizeChanged);
             }
         }
-        public SplitScreenEffect(EffectableControl control) : base(control)
+        public SplitScreen(EffectableControl control) : base(control)
         {
             parameterNameList.Add("MaskOpacity");
             parameterNameList.Add("MaskColor");
@@ -157,14 +155,17 @@ namespace EffectLibrary
             rectangle = new Rectangle();
             rectangle.Visibility = System.Windows.Visibility.Visible;
             control.CanvasRoot.Children.Add(rectangle);
+            Canvas.SetZIndex(rectangle, 63000);
 
             topHalf = new Rectangle();
             topHalf.Visibility = System.Windows.Visibility.Collapsed;
             control.CanvasRoot.Children.Add(topHalf);
+            Canvas.SetZIndex(topHalf, 63000);
 
             bottomHalf = new Rectangle();
             bottomHalf.Visibility = System.Windows.Visibility.Collapsed;
             control.CanvasRoot.Children.Add(bottomHalf);
+            Canvas.SetZIndex(bottomHalf, 63000);
 
             direction = SplitDirection.VERTICAL;
             MaskOpacity = maskOpacity;
@@ -172,6 +173,7 @@ namespace EffectLibrary
             Speed = SplitSpeed.MEDIUM;
 
             //InitStoryboard();           //da duoc goi luc gan speed
+            control.SizeChanged += new SizeChangedEventHandler(control_SizeChanged);
         }
 
         void control_MouseLeave(object sender, MouseEventArgs e)

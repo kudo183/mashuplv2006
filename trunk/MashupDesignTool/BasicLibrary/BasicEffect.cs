@@ -66,22 +66,22 @@ namespace BasicLibrary
         public BasicEffect(EffectableControl control)
         {
             this.control = control;
-            IsSelfHande = true;
+            IsSelfHandle = true;
         }
 
         protected EffectableControl control;
         protected List<string> parameterNameList = new List<string>();
-        protected bool _isSelfHande;
+        protected bool _isSelfHandle;
 
-        public bool IsSelfHande
+        public bool IsSelfHandle
         {
-            get { return _isSelfHande; }
+            get { return _isSelfHandle; }
             set 
             {
-                if (_isSelfHande == value)
+                if (_isSelfHandle == value)
                     return;
 
-                _isSelfHande = value;
+                _isSelfHandle = value;
                 SetSelfHandle();
             }
         }

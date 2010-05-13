@@ -9,11 +9,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Media.Imaging;
 
 namespace Testcontrol1
 {
     public partial class MainPage : UserControl
     {
+        BasicLibrary.BasicEffect effect;
+        UserControl btn;
         string[] htmls = new string[] 
                         { 
                             "<p><strong>hello world</strong></p>",
@@ -61,21 +64,27 @@ namespace Testcontrol1
             //htmlRichTextArea1.SetDefaultStyles();
             //htmlRichTextArea1.Load("<p><img src='http://www.google.com.vn/images/firefox/sprite2.png'/></p>");
 
-            UserControl btn = new SilverlightControl1();
-            btn.Width = 200;
-            btn.Height = 50;
+            btn = new SilverlightControl1();
+            btn.Width = 600;
+            btn.Height = 400;
 
             BasicLibrary.EffectableControl ec = new BasicLibrary.EffectableControl(btn);
 
-            EffectLibrary.SplitScreenEffect effect
-                 = new EffectLibrary.SplitScreenEffect(ec);
+            //EffectLibrary.SplitScreen effect
+            //     = new EffectLibrary.SplitScreen(ec);
             Canvas.SetLeft(ec, 100);
             Canvas.SetTop(ec, 100);
 
+            effect = new EffectLibrary.Checkerboard(ec);
+
             LayoutRoot.Children.Add(ec);
 
-            effect.SetParameterValue("Speed", EffectLibrary.SplitScreenEffect.SplitSpeed.SLOW);
-            effect.SetParameterValue("Direction", EffectLibrary.SplitScreenEffect.SplitDirection.HORIZONTAL);
+            effect.SetParameterValue("Speed", EffectLibrary.Push.PushSpeed.SLOW);
+            effect.SetParameterValue("Orientation", EffectLibrary.Push.PushOrientation.LEFT_TO_RIGHT);
+
+            effect.SetParameterValue("BeginPos", EffectLibrary.Wipe.BeginWipe.LEFT);
+
+            
         }
 
         private void newsReader1_Loaded(object sender, RoutedEventArgs e)
@@ -95,6 +104,13 @@ namespace Testcontrol1
 
         private void rssItemListControl1_ContentChoise(object sender, string data)
         {
+        }
+
+        private void button1_Click_1(object sender, RoutedEventArgs e)
+        {
+            effect.Start();
+            WriteableBitmap bitmap = new WriteableBitmap(btn, rectangle1.RenderTransform);
+            image1.Source = bitmap;
         }
     }
 }
