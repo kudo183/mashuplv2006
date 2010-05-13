@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircumductionEffect.cs" />
+    <Compile Include="Jump.cs" />
     <Compile Include="Ripple.cs" />
     <Compile Include="CustomPixelShader\ReflectionShader.cs" />
     <Compile Include="CustomPixelShader\RippleShader.cs" />
