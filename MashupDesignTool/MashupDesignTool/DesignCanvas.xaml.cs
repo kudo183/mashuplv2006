@@ -240,7 +240,7 @@ namespace MashupDesignTool
         {
             DockCanvas.DockCanvas.SetZIndex(pc, zindex);
             DockCanvas.DockCanvas.SetZIndex(pc.RealControl, zindex);
-            DockCanvas.DockCanvas.SetZIndex(pc.RealControl.Control, zindex);
+            //DockCanvas.DockCanvas.SetZIndex(pc.RealControl.Control, zindex);
         }
 
         void miDelete_SelectMenuItem(object sender, MenuItemEventArgs e)

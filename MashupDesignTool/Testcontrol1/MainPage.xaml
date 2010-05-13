@@ -6,7 +6,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400" xmlns:my="clr-namespace:NewsReaderControl;assembly=NewsReaderControl" Loaded="UserControl_Loaded" xmlns:my1="clr-namespace:Liquid;assembly=Liquid.HtmlRichTextArea" xmlns:my2="clr-namespace:HienThiListTinTucControl;assembly=HienThiListTinTucControl">
 
-    <Canvas x:Name="LayoutRoot" Background="White">
+    <Canvas x:Name="LayoutRoot">
         
         
         <!--<Button Content="Button" Height="23" HorizontalAlignment="Left" Margin="325,277,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
@@ -22,5 +22,27 @@
             </ComboBoxItem>-->
         <!--</ComboBox>
         <TextBox Height="58" HorizontalAlignment="Left" Margin="528,268,0,0" Name="textBox1" VerticalAlignment="Top" Width="136" />-->
+        <Button Canvas.Left="19" Canvas.Top="25" Content="Button" Height="23" Name="button1" Width="75" Click="button1_Click_1" >
+            <Button.Projection>
+                <PlaneProjection RotationY="75"></PlaneProjection>
+            </Button.Projection>
+        </Button>
+        <Rectangle Canvas.Left="138" Canvas.Top="0" Height="100" Name="rectangle1" Stroke="Black" StrokeThickness="1" Width="200" Fill="#FFAA4646" >
+            <Rectangle.Projection>
+                <PlaneProjection RotationX="75"></PlaneProjection>
+            </Rectangle.Projection>
+        </Rectangle>
+        <Button Canvas.Left="0" Canvas.Top="0" Content="Button" Height="23" Name="button2" Width="80">
+            <Button.RenderTransformOrigin>
+                <Point X="0.5" Y ="0.5"></Point>
+            </Button.RenderTransformOrigin>
+        </Button>
+        <Image Canvas.Left="662" Canvas.Top="0" Height="400" Name="image1" Stretch="Fill" Width="500" />
+        <Canvas.Background>
+            <RadialGradientBrush>
+                <GradientStop Color="Black" Offset="0" />
+                <GradientStop Color="White" Offset="1" />
+            </RadialGradientBrush>
+        </Canvas.Background>
     </Canvas>
 </UserControl>
