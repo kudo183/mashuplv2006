@@ -58,6 +58,7 @@
     <Compile Include="CircumductionEffect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SplitScreenEffect.cs" />
+    <Compile Include="Zoom.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
