@@ -65,7 +65,7 @@ namespace EffectLibrary
             control.RenderTransform = null;
         }
 
-        public override void SetSelfHandle()
+        protected override void SetSelfHandle()
         {
             if (_isSelfHande == true)
             {
