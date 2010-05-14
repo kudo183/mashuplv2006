@@ -272,7 +272,7 @@ namespace MashupDesignTool
                 doubleClickTimer.Stop();
                 if (!LoadedAssembly.ContainsKey(item.ControlInfo.ControlName))
                     return;
-                UserControl uc = LoadedAssembly[item.ControlInfo.ControlName].CreateInstance(item.ControlInfo.ControlName) as UserControl;
+                FrameworkElement uc = LoadedAssembly[item.ControlInfo.ControlName].CreateInstance(item.ControlInfo.ControlName) as FrameworkElement;
                 if (uc == null)
                     return;
                 designCanvas1.AddControl(uc, 100.0, 100.0, 400, 300);

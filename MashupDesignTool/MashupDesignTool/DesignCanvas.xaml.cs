@@ -64,11 +64,11 @@ namespace MashupDesignTool
         ContextMenu contextMenu = new ContextMenu();
         TextImageMenuItem miBringToFront, miBringForward, miSendToBack, miSendBackward, miProperties, miDelete;
 
-        public List<UserControl> Controls
+        public List<FrameworkElement> Controls
         {
             get 
             {
-                List<UserControl> list = new List<UserControl>();
+                List<FrameworkElement> list = new List<FrameworkElement>();
                 foreach (EffectableControl ec in controls)
                     list.Add(ec.Control);
                 return list; 
@@ -256,7 +256,7 @@ namespace MashupDesignTool
         #endregion context menu
 
         #region add new control to canvas
-        public void AddControl(UserControl uc, double x, double y, int width, int height)
+        public void AddControl(FrameworkElement uc, double x, double y, int width, int height)
         {
             EffectableControl ec = new EffectableControl(uc);
             uc.Margin = new Thickness(0, 0, 0, 0);
@@ -396,7 +396,7 @@ namespace MashupDesignTool
                 double x = pt.X - clickPoints[i].X;
                 double y = pt.Y - clickPoints[i].Y;
                 ProxyControl pc = selectedProxyControls[i];
-                UserControl uc = pc.RealControl;
+                FrameworkElement uc = pc.RealControl;
 
                 pts[i].X = x;
                 pts[i].Y = y;
@@ -527,7 +527,7 @@ namespace MashupDesignTool
 
         private void CheckCanResize(MouseEventArgs e)
         {
-            UserControl selectedControl = selectedControls[0];
+            FrameworkElement selectedControl = selectedControls[0];
             Point pt = e.GetPosition(selectedControl);
             canResize = false;
 
@@ -738,7 +738,7 @@ namespace MashupDesignTool
 
         private void ResizeControl(Point pt)
         {
-            UserControl selectedControl = selectedControls[0];
+            FrameworkElement selectedControl = selectedControls[0];
             ProxyControl selectedProxyControl = selectedProxyControls[0];
 
             double x, y;
@@ -860,7 +860,7 @@ namespace MashupDesignTool
                 int zindex = -1;
                 foreach (ProxyControl pc in proxyControls)
                 {
-                    UserControl uc = pc.RealControl;
+                    FrameworkElement uc = pc.RealControl;
                     Rect rect = new Rect((double)uc.GetValue(Canvas.LeftProperty), (double)uc.GetValue(Canvas.TopProperty), uc.ActualWidth, uc.ActualHeight);
                     if (rect.Contains(pt))
                     {
@@ -987,7 +987,7 @@ namespace MashupDesignTool
                 }
 
                 ProxyControl pc = selectedProxyControls[i];
-                UserControl uc = pc.RealControl;
+                FrameworkElement uc = pc.RealControl;
                 double x = (double)uc.GetValue(Canvas.LeftProperty) + pt.X;
                 double y = (double)uc.GetValue(Canvas.TopProperty) + pt.Y;
                 
