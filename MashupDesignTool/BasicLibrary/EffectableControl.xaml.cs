@@ -15,7 +15,7 @@ namespace BasicLibrary
 {
     public partial class EffectableControl : UserControl
     {
-        private UserControl control;
+        private FrameworkElement control;
         private BasicEffect effect;
 
         public EffectableControl()
@@ -23,7 +23,7 @@ namespace BasicLibrary
             InitializeComponent();
         }
 
-        public EffectableControl(UserControl control) : this()
+        public EffectableControl(FrameworkElement control) : this()
         {
             //control.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             //control.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
@@ -49,7 +49,7 @@ namespace BasicLibrary
             this.Height = LayoutRoot.Height;
         }
 
-        public UserControl Control
+        public FrameworkElement Control
         {
             get { return control; }
         }
