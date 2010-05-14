@@ -83,7 +83,8 @@ namespace Testcontrol1
             effect.SetParameterValue("Orientation", EffectLibrary.Push.PushOrientation.LEFT_TO_RIGHT);
 
             effect.SetParameterValue("BeginPos", EffectLibrary.Wipe.BeginWipe.LEFT);
-
+            effect.SetParameterValue("Direction", EffectLibrary.Checkerboard.CheckDirection.FROM_TOP);
+            effect.SetParameterValue("CellDuration", TimeSpan.FromMilliseconds(1400));
             
         }
 
