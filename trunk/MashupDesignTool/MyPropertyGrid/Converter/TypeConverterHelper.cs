@@ -178,6 +178,10 @@ namespace SL30PropertyGrid.Converters
             {
                 return new ThicknessConverter();
             }
+            if (typeof(Uri).IsAssignableFrom(type))
+            {
+                return new UriConverter();
+            }
 			if (typeof(string).IsAssignableFrom(type))
 			{
 				return new StringConverter();
