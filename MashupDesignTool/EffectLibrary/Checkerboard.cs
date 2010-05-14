@@ -15,21 +15,83 @@ namespace EffectLibrary
 {
     public class Checkerboard : BasicEffect
     {
+        public enum CheckDirection
+        {
+            FROM_LEFT,
+            FROM_TOP
+        }
+
         private const int MIN = 20;
+        private const int MAX_NUM_CELLS = 8;
         #region attributes
-        private TimeSpan cellDuration;
+        private CheckDirection direction;
+        private TimeSpan cellDuration = TimeSpan.FromMilliseconds(600);
+        private Color cellColor = Colors.Black;
         private Storyboard sb;
         double width, height, cellWidth, cellHeight;
         Rectangle[][] cells = new Rectangle[0][];
         Rectangle[][] blackCells = new Rectangle[0][];
+        double centerOfRotationX, centerOfRotationY, rotationX, rotationY;
+        string rotationPath;
         #endregion attributes
 
         #region properties
+        public CheckDirection Direction
+        {
+            get { return direction; }
+            set
+            {
+                direction = value;
+                if (direction == CheckDirection.FROM_LEFT)
+                {
+                    centerOfRotationX = 0.5;
+                    centerOfRotationY = 0;
+                    rotationX = 0;
+                    rotationY = 90;
+                    rotationPath = "RotationY";
+                }
+                else
+                {
+                    centerOfRotationX = 0;
+                    centerOfRotationY = 0.5;
+                    rotationX = 90;
+                    rotationY = 0;
+                    rotationPath = "RotationX";
+                }
+                InitStoryboard();
+            }
+        }
+
+        public Color CellColor
+        {
+            get { return cellColor; }
+            set
+            {
+                cellColor = value;
+                for (int i = 0; i < blackCells.Length; i++)
+                    for (int j = 0; j < blackCells[i].Length; j++)
+                        blackCells[i][j].Fill = new SolidColorBrush(cellColor);
+            }
+        }
+
+        public TimeSpan CellDuration
+        {
+            get { return cellDuration; }
+            set
+            {
+                cellDuration = value;
+                InitStoryboard();
+            }
+        }
         #endregion properties
 
         public Checkerboard(EffectableControl control)
             : base(control)
         {
+            parameterNameList.Add("Direction");
+            parameterNameList.Add("CellColor");
+            parameterNameList.Add("CellDuration");
+
             width = control.Width;
             height = control.Height;
             if (((double.IsNaN(width) && double.IsNaN(height)) || (width == 0 && height == 0)) && !double.IsNaN(control.ActualWidth) && !double.IsNaN(control.ActualHeight))
@@ -38,7 +100,12 @@ namespace EffectLibrary
                 height = control.ActualHeight;
             }
 
-            cellDuration = TimeSpan.FromMilliseconds(600);
+            direction = CheckDirection.FROM_LEFT;
+            centerOfRotationX = 0.5;
+            centerOfRotationY = 0;
+            rotationX = 0;
+            rotationY = 90;
+            rotationPath = "RotationY";
             InitStoryboard();
 
             control.SizeChanged += new SizeChangedEventHandler(control_SizeChanged);
@@ -62,8 +129,6 @@ namespace EffectLibrary
             cellWidth = width / col;
             cellHeight = height / row;
 
-            Random random = new Random();
-            int max = (int)(cellDuration.TotalMilliseconds * 3);
             sb = new Storyboard();
             double x, y;
             x = y = 0;
@@ -78,27 +143,146 @@ namespace EffectLibrary
                 for (int j = 0; j < row; j++)
                 {
                     blackCells[i][j] = new Rectangle();
-                    blackCells[i][j].Width = cellWidth;
-                    blackCells[i][j].Height = cellHeight;
-                    blackCells[i][j].Fill = new SolidColorBrush(Colors.Black);
-                    blackCells[i][j].Visibility = Visibility.Visible;
+                    blackCells[i][j].Width = cellWidth + 1;
+                    blackCells[i][j].Height = cellHeight + 1;
+                    blackCells[i][j].Fill = new SolidColorBrush(cellColor);
+                    blackCells[i][j].Visibility = Visibility.Collapsed;
                     Canvas.SetLeft(blackCells[i][j], x);
                     Canvas.SetTop(blackCells[i][j], y);
                     control.CanvasRoot.Children.Add(blackCells[i][j]);
 
                     cells[i][j] = new Rectangle();
-                    cells[i][j].Width = cellWidth;
-                    cells[i][j].Height = cellHeight;
-                    PlaneProjection pp = new PlaneProjection() { CenterOfRotationY = 0.5, RotationY = 90 };
+                    cells[i][j].Width = cellWidth + 1;
+                    cells[i][j].Height = cellHeight + 1;
+                    PlaneProjection pp = new PlaneProjection() { CenterOfRotationX = centerOfRotationX, CenterOfRotationY = centerOfRotationY, RotationX = rotationX, RotationY = rotationY };
                     cells[i][j].Projection = pp;
                     Canvas.SetLeft(cells[i][j], x);
                     Canvas.SetTop(cells[i][j], y);
                     control.CanvasRoot.Children.Add(cells[i][j]);
 
-                    TimeSpan ts = TimeSpan.FromMilliseconds(random.Next(10, max));
+                    y += cellHeight;
+                }
+                x += cellWidth;
+            }
+        }
+
+        #region calculate paramter
+        private int CalculateNum(double value)
+        {
+            if (value < MIN)
+                return 1;
+
+            double size = MIN;
+            int temp = (int)(value / size);
+
+            while (temp > MAX_NUM_CELLS)
+            {
+                size += MIN;
+                temp = (int)(value / size);
+            }
+
+            return temp;
+        }
+
+        private double[][] CalculateBeginTime()
+        {
+            double[][] begins = new double[cells.Length][];
+            for (int i = 0; i < cells.Length; i++)
+                begins[i] = new double[cells[i].Length];
+            
+            int cd = (int)cellDuration.TotalMilliseconds;
+            int min1 = 10;
+            int max1 = min1 + cd;
+            int min2 = 4 * cd / 5;
+            int max2 = min2 + cd;
+            Random random = new Random();
+
+            if (direction == CheckDirection.FROM_LEFT)
+            {
+                if (begins.Length > 1)
+                {
+                    for (int j = 0; j < begins[0].Length; j++)
+                    {
+                        begins[0][j] = random.Next(min1, max1);
+                        for (int i = 2; i < begins.Length; i += 2)
+                            begins[i][j] = begins[i - 2][j] + cd;
+                    }
+
+                }
+                if (begins[1].Length > 2)
+                {
+                    for (int j = 0; j < begins[1].Length; j++)
+                    {
+                        begins[1][j] = random.Next(min2, max2);
+                        for (int i = 3; i < begins.Length; i += 2)
+                            begins[i][j] = begins[i - 2][j] + cd;
+                    }
+                }
+            }
+            else
+            {
+                if (begins.Length > 0)
+                {
+                    if (begins[0].Length > 1)
+                    {
+                        for (int i = 0; i < begins.Length; i++)
+                        {
+                            begins[i][0] = random.Next(min1, max1);
+                            for (int j = 2; j < begins[0].Length; j += 2)
+                                begins[i][j] = begins[i][j - 2] + cd;
+                        }
+
+                    }
+                    if (begins[0].Length > 2)
+                    {
+                        for (int i = 0; i < begins.Length; i++)
+                        {
+                            begins[i][1] = random.Next(min2, max2);
+                            for (int j = 3; j < begins[0].Length; j += 2)
+                                begins[i][j] = begins[i][j - 2] + cd;
+                        }
+                    }
+                }
+            }
+
+            return begins;
+        }
+        #endregion calculate paramter
+
+        #region override methods
+        public override void Start()
+        {
+            sb = new Storyboard();
+            double x, y;
+            x = y = 0;
+            double[][] begins = CalculateBeginTime();
+
+            WriteableBitmap bitmap = new WriteableBitmap(control.Control, null);
+            for (int i = 0; i < cells.Length; i++)
+            {
+                y = 0;
+                for (int j = 0; j < cells[i].Length; j++)
+                {
+                    cells[i][j].Fill = new ImageBrush()
+                                        {
+                                            ImageSource = bitmap,
+                                            AlignmentX = AlignmentX.Left,
+                                            AlignmentY = AlignmentY.Top,
+                                            Transform = new TranslateTransform() { X = -x, Y = -y },
+                                            Stretch = Stretch.None
+                                        };
+
+                    blackCells[i][j].Visibility = Visibility.Visible;
+                    cells[i][j].Visibility = Visibility.Visible;
+
+                    PlaneProjection pp = (PlaneProjection)cells[i][j].Projection;
+                    pp.RotationX = rotationX;
+                    pp.RotationY = rotationY;
+
+                    TimeSpan ts = TimeSpan.FromMilliseconds(begins[i][j]);
                     DoubleAnimation doubleAnimation1 = new DoubleAnimation() { BeginTime = ts, Duration = cellDuration, From = 90, To = 0 };
                     Storyboard.SetTarget(doubleAnimation1, pp);
-                    Storyboard.SetTargetProperty(doubleAnimation1, new PropertyPath("RotationY"));
+                    Storyboard.SetTargetProperty(doubleAnimation1, new PropertyPath(rotationPath));
                     sb.Children.Add(doubleAnimation1);
 
                     TimeSpan ts1 = ts.Add(cellDuration);
@@ -116,58 +300,6 @@ namespace EffectLibrary
                     Storyboard.SetTargetProperty(oaufk2, new PropertyPath("(Rectangle.Visibility)"));
                     sb.Children.Add(oaufk2);
 
-                    y += cellHeight;
-                }
-                x += cellWidth;
-            }
-        }
-
-        private int CalculateNum(double value)
-        {
-            if (value < MIN)
-                return 1;
-
-            double size = MIN;
-            int temp = (int)(value / size);
-
-            while (temp > 10)
-            {
-                size += MIN;
-                temp = (int)(value / size);
-            }
-
-            return temp;
-        }
-
-        void sb_Completed(object sender, EventArgs e)
-        {
-        }
-
-        #region override methods
-        public override void Start()
-        {
-            double x, y;
-            x = y = 0;
-            for (int i = 0; i < cells.Length; i++)
-            {
-                y = 0;
-                for (int j = 0; j < cells[i].Length; j++)
-                {
-                    WriteableBitmap bitmap = new WriteableBitmap(control.Control, null);
-                    Canvas.SetLeft(cells[i][j], x);
-                    Canvas.SetTop(cells[i][j], y);
-                    cells[i][j].Width = cellWidth;
-                    cells[i][j].Height = cellHeight;
-
-                    TranslateTransform rt = new TranslateTransform();
-                    rt.X = -x;
-                    rt.Y = -y;
-                    cells[i][j].Fill = new ImageBrush() { ImageSource = bitmap, AlignmentX = AlignmentX.Left, AlignmentY = AlignmentY.Top, Transform = rt, Stretch = Stretch.None };
-
-                    blackCells[i][j].Visibility = Visibility.Visible;
-                    cells[i][j].Visibility = Visibility.Visible;
-
-                    ((PlaneProjection)cells[i][j].Projection).RotationY = 90;
                     y += cellHeight;
                 }
                 x += cellWidth;

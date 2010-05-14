@@ -27,9 +27,9 @@ namespace EffectLibrary
         }
 
         #region attributes
-        private BeginWipe beginPos;
+        private BeginWipe beginPos = BeginWipe.TOP;
         private Storyboard sb;
-        private TimeSpan duration = new TimeSpan();
+        private TimeSpan duration = TimeSpan.FromMilliseconds(500);
         double width, height;
         private Rectangle rectangle;
         private GradientStop gs1, gs2;
@@ -78,9 +78,7 @@ namespace EffectLibrary
             brush.GradientStops.Add(gs2);
             rectangle.Fill = brush;
 
-            beginPos = BeginWipe.TOP;
             UpdateRectangle();
-            duration = TimeSpan.FromMilliseconds(500);
             InitStoryboard();
 
             control.CanvasRoot.Children.Add(rectangle);

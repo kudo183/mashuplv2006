@@ -15,19 +15,45 @@ namespace EffectLibrary
     public class Dissolve : BasicEffect
     {
         private const int MIN = 20;
+        private const int MAX_NUM_CELLS = 10;
         #region attributes
-        private TimeSpan cellDuration;
+        private TimeSpan cellDuration = TimeSpan.FromMilliseconds(600);
+        private Color cellColor = Colors.Black;
         private Storyboard sb;
         double width, height, cellWidth, cellHeight;
         Rectangle[][] cells = new Rectangle[0][];
         #endregion attributes
 
         #region properties
+        public Color CellColor
+        {
+            get { return cellColor; }
+            set
+            {
+                cellColor = value;
+                for (int i = 0; i < cells.Length; i++)
+                    for (int j = 0; j < cells[i].Length; j++)
+                        cells[i][j].Fill = new SolidColorBrush(cellColor);
+            }
+        }
+
+        public TimeSpan CellDuration
+        {
+            get { return cellDuration; }
+            set
+            {
+                cellDuration = value;
+                InitStoryboard();
+            }
+        }
         #endregion properties
 
         public Dissolve(EffectableControl control)
             : base(control)
         {
+            parameterNameList.Add("CellColor");
+            parameterNameList.Add("CellDuration");
+
             width = control.Width;
             height = control.Height;
             if (((double.IsNaN(width) && double.IsNaN(height)) || (width == 0 && height == 0)) && !double.IsNaN(control.ActualWidth) && !double.IsNaN(control.ActualHeight))
@@ -36,9 +62,7 @@ namespace EffectLibrary
                 height = control.ActualHeight;
             }
 
-            cellDuration = TimeSpan.FromMilliseconds(600);
             InitStoryboard();
-
             control.SizeChanged += new SizeChangedEventHandler(control_SizeChanged);
         }
 
@@ -73,7 +97,7 @@ namespace EffectLibrary
                 for (int j = 0; j < row; j++)
                 {
                     cells[i][j] = new Rectangle();
-                    cells[i][j].Fill = new SolidColorBrush(Colors.Black);
+                    cells[i][j].Fill = new SolidColorBrush(cellColor);
                     cells[i][j].Width = 0;
                     cells[i][j].Height = 0;
                     Canvas.SetLeft(cells[i][j], x);
@@ -115,17 +139,13 @@ namespace EffectLibrary
             double size = MIN;
             int temp = (int)(value / size);
 
-            while (temp > 10)
+            while (temp > MAX_NUM_CELLS)
             {
                 size += MIN;
                 temp = (int)(value / size);
             }
 
             return temp;
-        }
-
-        void sb_Completed(object sender, EventArgs e)
-        {
         }
 
         #region override methods
@@ -140,8 +160,8 @@ namespace EffectLibrary
                 {
                     Canvas.SetLeft(cells[i][j], x);
                     Canvas.SetTop(cells[i][j], y);
-                    cells[i][j].Width = cellWidth;
-                    cells[i][j].Height = cellHeight;
+                    cells[i][j].Width = cellWidth + 1;
+                    cells[i][j].Height = cellHeight + 1;
                     y += cellHeight;
                 }
                 x += cellWidth;
