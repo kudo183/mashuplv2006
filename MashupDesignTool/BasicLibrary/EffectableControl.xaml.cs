@@ -16,7 +16,6 @@ namespace BasicLibrary
     public partial class EffectableControl : UserControl
     {
         private FrameworkElement control;
-        private BasicEffect effect;
 
         public EffectableControl()
         {
@@ -58,13 +57,6 @@ namespace BasicLibrary
         public Canvas CanvasRoot
         {
             get { return LayoutRoot; }
-        }
-
-        public void ChangeEffect(BasicEffect be)
-        {
-            if (effect != null)
-                effect.DetachEffect();
-            effect = be;
         }
     }
 }

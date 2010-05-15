@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows.Threading;
 using Effect;
+using System.ServiceModel;
 
 namespace HienThiListTinTucControl
 {
@@ -46,7 +47,9 @@ namespace HienThiListTinTucControl
             set
             {
                 rssURL = value;
-                ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+                BasicHttpBinding basicHttpBinding = new BasicHttpBinding();
+                EndpointAddress endpointAddress = new EndpointAddress("http://localhost:1728/Service1.svc");
+                ServiceReference1.Service1Client client = new ServiceReference1.Service1Client(basicHttpBinding, endpointAddress);
                 client.GetStringFromURLCompleted += new EventHandler<ServiceReference1.GetStringFromURLCompletedEventArgs>(client_GetStringFromURLCompleted);
                 client.GetStringFromURLAsync(rssURL);
             }
