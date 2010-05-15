@@ -77,7 +77,11 @@ namespace Testcontrol1
 
             effect = new EffectLibrary.Checkerboard(ec);
 
-            LayoutRoot.Children.Add(ec);
+            ((BasicLibrary.BasicControl)ec.Control).ChangeMainEffect(effect);
+            effect = new EffectLibrary.Fade(ec);
+            ((BasicLibrary.BasicControl)ec.Control).ChangeMainEffect(effect);
+
+                LayoutRoot.Children.Add(ec);
 
             effect.SetParameterValue("Speed", EffectLibrary.Push.PushSpeed.SLOW);
             effect.SetParameterValue("Orientation", EffectLibrary.Push.PushOrientation.LEFT_TO_RIGHT);
@@ -112,6 +116,11 @@ namespace Testcontrol1
             effect.Start();
             WriteableBitmap bitmap = new WriteableBitmap(btn, rectangle1.RenderTransform);
             image1.Source = bitmap;
+        }
+
+        private void rssItemListControl1_Loaded_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

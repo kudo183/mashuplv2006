@@ -19,5 +19,19 @@ namespace BasicLibrary
         public abstract object GetParameterValue(string parameterName);
         public abstract bool SetParameterValue(string parameterName, object value);
         #endregion
+
+        protected BasicEffect mainEffect;
+        public BasicEffect MainEffect
+        {
+            get { return mainEffect; }
+            set { ChangeMainEffect(value); }
+        }
+
+        public void ChangeMainEffect(BasicEffect be)
+        {
+            if (mainEffect != null)
+                mainEffect.DetachEffect();
+            mainEffect = be;
+        }
     }   
 }

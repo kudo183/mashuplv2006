@@ -27,7 +27,7 @@
                 <PlaneProjection RotationY="75"></PlaneProjection>
             </Button.Projection>
         </Button>
-        <Rectangle Canvas.Left="138" Canvas.Top="0" Height="100" Name="rectangle1" Stroke="Black" StrokeThickness="1" Width="200" Fill="#FFAA4646" >
+        <Rectangle Canvas.Left="138" Canvas.Top="121" Height="100" Name="rectangle1" Stroke="Black" StrokeThickness="1" Width="200" Fill="#FFAA4646" >
             <Rectangle.Projection>
                 <PlaneProjection RotationX="75"></PlaneProjection>
             </Rectangle.Projection>
@@ -38,6 +38,7 @@
             </Button.RenderTransformOrigin>
         </Button>
         <Image Canvas.Left="662" Canvas.Top="0" Height="400" Name="image1" Stretch="Fill" Width="500" />
+        <my2:RssItemListControl Canvas.Left="131" Canvas.Top="0" Name="rssItemListControl1" Height="136" Width="511" Loaded="rssItemListControl1_Loaded_1" RssURL="http://vnexpress.net/rss/gl/trang-chu.rss" />
         <Canvas.Background>
             <RadialGradientBrush>
                 <GradientStop Color="Black" Offset="0" />
