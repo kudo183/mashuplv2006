@@ -58,6 +58,7 @@
     <Compile Include="Checkerboard.cs" />
     <Compile Include="Dissolve.cs" />
     <Compile Include="Fade.cs" />
+    <Compile Include="ListEffect\MenuMac.cs" />
     <Compile Include="Push.cs" />
     <Compile Include="Jump.cs" />
     <Compile Include="Ripple.cs" />
