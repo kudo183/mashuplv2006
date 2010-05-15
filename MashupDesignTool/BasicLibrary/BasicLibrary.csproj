@@ -57,6 +57,8 @@
   <ItemGroup>
     <Compile Include="BasicEffect.cs" />
     <Compile Include="BasicControl.cs" />
+    <Compile Include="BasicListControl.cs" />
+    <Compile Include="BasicListEffect.cs" />
     <Compile Include="EffectableControl.xaml.cs">
       <DependentUpon>EffectableControl.xaml</DependentUpon>
     </Compile>
