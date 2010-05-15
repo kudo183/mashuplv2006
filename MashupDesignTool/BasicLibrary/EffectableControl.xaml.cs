@@ -30,7 +30,8 @@ namespace BasicLibrary
             LayoutRoot.Children.Add(control);
             control.SizeChanged += new SizeChangedEventHandler(control_SizeChanged);
             this.control = control;
-
+            this.Width = control.Width;
+            this.Height = control.Height;
             this.SizeChanged += new SizeChangedEventHandler(LayoutRoot_SizeChanged);
         }
 
