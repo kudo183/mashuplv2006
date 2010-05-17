@@ -60,8 +60,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ImageTools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fb8ec453a8e30e6c, processorArchitecture=MSIL" />
-    <Reference Include="ImageTools.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fb8ec453a8e30e6c, processorArchitecture=MSIL" />
+    <Reference Include="BasicLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="ImageTools">
+      <HintPath>..\AnimatedGifImage\dll\ImageTools.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.Controls">
+      <HintPath>..\AnimatedGifImage\dll\ImageTools.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -94,9 +99,9 @@
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AnimatedGifImage\AnimatedGifImage.csproj">
+    <ProjectReference Include="..\AnimatedGifImage\ControlLibrary.csproj">
       <Project>{E542D096-228A-465E-B55E-2628B178551E}</Project>
-      <Name>AnimatedGifImage</Name>
+      <Name>ControlLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
