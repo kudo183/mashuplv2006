@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimatedGifImage", "AnimatedGifImage\AnimatedGifImage.csproj", "{E542D096-228A-465E-B55E-2628B178551E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlLibrary", "AnimatedGifImage\ControlLibrary.csproj", "{E542D096-228A-465E-B55E-2628B178551E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{6CCD3F5A-2C47-48AA-8BB5-73FA75B83035}"
 EndProject
