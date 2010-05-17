@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("HienThiListTinTucControl")]
+[assembly: AssemblyTitle("RssSlideshowControl")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("HienThiListTinTucControl")]
+[assembly: AssemblyProduct("RssSlideshowControl")]
 [assembly: AssemblyCopyright("Copyright ©  2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("0195fb18-76b5-4d94-88fa-52dc3cf46a43")]
+[assembly: Guid("1b06cbbb-f866-4352-bcfa-ede69e48288f")]
 
 // Version information for an assembly consists of the following four values:
 //

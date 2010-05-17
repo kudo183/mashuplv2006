@@ -208,10 +208,6 @@
       <Project>{EBE7ECFD-0942-49A9-BF98-0FE9378C1472}</Project>
       <Name>MyPropertyGrid</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NewsReaderControl\NewsReaderControl.csproj">
-      <Project>{B6062C93-78FB-4DD9-B6E0-3A41687FCFD9}</Project>
-      <Name>NewsReaderControl</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

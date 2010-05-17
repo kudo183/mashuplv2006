@@ -65,31 +65,47 @@ namespace Testcontrol1
             //htmlRichTextArea1.Load("<p><img src='http://www.google.com.vn/images/firefox/sprite2.png'/></p>");
 
             btn = new SilverlightControl1();
-            btn.Width = 600;
-            btn.Height = 400;
+            //btn.Width = 600;
+            //btn.Height = 400;
 
             BasicLibrary.EffectableControl ec = new BasicLibrary.EffectableControl(btn);
 
             //EffectLibrary.SplitScreen effect
             //     = new EffectLibrary.SplitScreen(ec);
-            Canvas.SetLeft(ec, 100);
-            Canvas.SetTop(ec, 100);
+            Canvas.SetLeft(ec, 300);
+            Canvas.SetTop(ec, 300);
 
-            effect = new EffectLibrary.Checkerboard(ec);
+            effect = new EffectLibrary.Jump(ec);
 
             ((BasicLibrary.BasicControl)ec.Control).ChangeMainEffect(effect);
-            effect = new EffectLibrary.Fade(ec);
-            ((BasicLibrary.BasicControl)ec.Control).ChangeMainEffect(effect);
+            //effect = new EffectLibrary.Fade(ec);
+            //((BasicLibrary.BasicControl)ec.Control).ChangeMainEffect(effect);
 
-                LayoutRoot.Children.Add(ec);
+            LayoutRoot.Children.Add(ec);
 
-            effect.SetParameterValue("Speed", EffectLibrary.Push.PushSpeed.SLOW);
-            effect.SetParameterValue("Orientation", EffectLibrary.Push.PushOrientation.LEFT_TO_RIGHT);
+            //effect.SetParameterValue("Speed", EffectLibrary.Push.PushSpeed.SLOW);
+            //effect.SetParameterValue("Orientation", EffectLibrary.Push.PushOrientation.LEFT_TO_RIGHT);
 
-            effect.SetParameterValue("BeginPos", EffectLibrary.Wipe.BeginWipe.LEFT);
-            effect.SetParameterValue("Direction", EffectLibrary.Checkerboard.CheckDirection.FROM_TOP);
-            effect.SetParameterValue("CellDuration", TimeSpan.FromMilliseconds(1400));
-            
+            //effect.SetParameterValue("BeginPos", EffectLibrary.Wipe.BeginWipe.LEFT);
+            effect.SetParameterValue("Direction", EffectLibrary.Jump.DIRECTION.DOWN);
+            //effect.SetParameterValue("CellDuration", TimeSpan.FromMilliseconds(1400));
+
+            //rssSlideshow1.RssUrl = "http://vnexpress.net/rss/gl/trang-chu.rss";
+            //rssSlideshow1.MainEffect = effect;
+            //rssSlideshow1.DelaySeconds = 1;
+
+            RssSlideshowControl.RssSlideshow rss = new RssSlideshowControl.RssSlideshow();
+            rss.Width = 200;
+            rss.Height = 300;
+            BasicLibrary.EffectableControl ec1 = new BasicLibrary.EffectableControl(rss);
+            ec1.Width = 200;
+            ec1.Height = 300;
+            rss.RssUrl = "http://vnexpress.net/rss/gl/trang-chu.rss";
+            rss.MainEffect = new EffectLibrary.Fade(ec1);
+            rss.DelaySeconds = 2;
+            Canvas.SetLeft(ec1, 0);
+            Canvas.SetTop(ec1, 100);
+            LayoutRoot.Children.Add(ec1);
         }
 
         private void newsReader1_Loaded(object sender, RoutedEventArgs e)
@@ -113,7 +129,7 @@ namespace Testcontrol1
 
         private void button1_Click_1(object sender, RoutedEventArgs e)
         {
-            effect.Start();
+            ((BasicLibrary.BasicControl)btn).MainEffect.Start();
             WriteableBitmap bitmap = new WriteableBitmap(btn, rectangle1.RenderTransform);
             image1.Source = bitmap;
         }

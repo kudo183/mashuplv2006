@@ -62,7 +62,7 @@ namespace EffectLibrary
         #region override methods
         public override void Start()
         {
-            control.CanvasRoot.Background = new SolidColorBrush(Colors.Black);
+            control.CanvasRoot.Background = new SolidColorBrush(Colors.Transparent);
             sb.Begin();
         }
 
