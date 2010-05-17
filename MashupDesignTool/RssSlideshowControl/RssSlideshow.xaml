@@ -10,7 +10,12 @@
     d:DesignHeight="300" d:DesignWidth="200" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" Loaded="root_Loaded">
 
     <UserControl.Resources>
-        <Style x:Key="MyButton" TargetType="Button">
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Name="BackgroundBrush">
+            <GradientStop Color="#FFDFDFDF" Offset="0.361" />
+            <GradientStop Color="#FF6F6F6F" Offset="0.992" />
+        </LinearGradientBrush>
+        
+        <Style x:Key="MyButton" TargetType="Button" x:Name="MyButton">
             <Setter Property="Cursor" Value="Hand"></Setter>
             <Setter Property="Foreground" Value="#FF349AFF"></Setter>
             <Setter Property="FontWeight" Value="Bold"></Setter>
@@ -37,7 +42,7 @@
                                 </vsm:VisualStateGroup>
                             </vsm:VisualStateManager.VisualStateGroups>
                             <Border CornerRadius="90"
-                                       BorderBrush="#FF349AFF" BorderThickness="2" 
+                                       BorderBrush="{TemplateBinding Foreground}" BorderThickness="2" 
                                        x:Name="border" RenderTransformOrigin="0.5,0.5">
                                 <Border.RenderTransform>
                                     <ScaleTransform x:Name="scaleTransform"/>
@@ -51,10 +56,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Name="BackgroundBrush">
-            <GradientStop Color="#FFDFDFDF" Offset="0.361" />
-            <GradientStop Color="#FF6F6F6F" Offset="0.992" />
-        </LinearGradientBrush>
     </UserControl.Resources>
 
     <Border Grid.Row="1" CornerRadius="15" 

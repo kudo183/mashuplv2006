@@ -106,6 +106,19 @@ namespace Testcontrol1
             Canvas.SetLeft(ec1, 0);
             Canvas.SetTop(ec1, 100);
             LayoutRoot.Children.Add(ec1);
+
+            rss.LinkClicked += new RssSlideshowControl.RssSlideshow.LinkClickedHander(rss_LinkClicked);
+
+        }
+
+        void rss_LinkClicked(object sender, string url)
+        {
+            ((RssSlideshowControl.RssSlideshow)sender).LinkColor = Colors.Red;
+            ((RssSlideshowControl.RssSlideshow)sender).IndexColor = Colors.Red;
+            ((RssSlideshowControl.RssSlideshow)sender).SummaryColor = Colors.Red;
+            ((RssSlideshowControl.RssSlideshow)sender).TimeLabelColor = Colors.Red;
+            ((RssSlideshowControl.RssSlideshow)sender).ButtonColor = Colors.Red;
+            MessageBox.Show("SDF");
         }
 
         private void newsReader1_Loaded(object sender, RoutedEventArgs e)

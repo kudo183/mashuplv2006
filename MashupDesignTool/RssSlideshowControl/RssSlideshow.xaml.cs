@@ -54,6 +54,44 @@ namespace RssSlideshowControl
             }
         }
 
+        public Color LinkColor
+        {
+            get { return ((SolidColorBrush)hlbLink.Foreground).Color; }
+            set
+            {
+                hlbLink.Foreground = new SolidColorBrush(value);
+                hlbTitle.Foreground = new SolidColorBrush(value);
+            }
+        }
+
+        public Color SummaryColor
+        {
+            get { return ((SolidColorBrush)rtbSummary.Foreground).Color; }
+            set { rtbSummary.Foreground = new SolidColorBrush(value); }
+        }
+
+        public Color TimeLabelColor
+        {
+            get { return ((SolidColorBrush)lbPubDate.Foreground).Color; }
+            set { lbPubDate.Foreground = new SolidColorBrush(value); }
+        }
+
+        public Color IndexColor
+        {
+            get { return ((SolidColorBrush)lbIndex.Foreground).Color; }
+            set { lbIndex.Foreground = new SolidColorBrush(value); }
+        }
+
+        public Color ButtonColor
+        {
+            get { return ((SolidColorBrush)btnToNext.Foreground).Color; }
+            set
+            {
+                btnToNext.Foreground = new SolidColorBrush(value);
+                btnToPrevious.Foreground = new SolidColorBrush(value);
+            }
+        }
+
         //public string FeedProxy
         //{
         //    get { return feedProxy; }
