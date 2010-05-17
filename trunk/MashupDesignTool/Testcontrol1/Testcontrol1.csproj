@@ -110,13 +110,9 @@
       <Project>{6425CF3D-F24F-458D-ABEC-604AAA44B894}</Project>
       <Name>EffectLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HienThiListTinTucControl\HienThiListTinTucControl.csproj">
-      <Project>{F91522CB-C32D-497C-8980-4393C4265464}</Project>
-      <Name>HienThiListTinTucControl</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NewsReaderControl\NewsReaderControl.csproj">
-      <Project>{B6062C93-78FB-4DD9-B6E0-3A41687FCFD9}</Project>
-      <Name>NewsReaderControl</Name>
+    <ProjectReference Include="..\RssSlideshowControl\RssSlideshowControl.csproj">
+      <Project>{68C26FE2-0A06-4C0A-AD42-D738A0885E2E}</Project>
+      <Name>RssSlideshowControl</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />

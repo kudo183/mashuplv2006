@@ -11,13 +11,28 @@ using System.Windows.Shapes;
 
 namespace BasicLibrary
 {
-    public abstract class BasicControl : UserControl, IBasic
+    public class BasicControl : UserControl, IBasic
     {
         #region IBasic Members
-        public abstract string GetParameterNames();
-        public abstract Type GetParameterType(string parameterName);
-        public abstract object GetParameterValue(string parameterName);
-        public abstract bool SetParameterValue(string parameterName, object value);
+        public virtual string GetParameterNames()
+        {
+            return "";
+        }
+
+        public virtual Type GetParameterType(string parameterName)
+        {
+            return null;
+        }
+
+        public virtual object GetParameterValue(string parameterName)
+        {
+            return null;
+        }
+
+        public virtual bool SetParameterValue(string parameterName, object value)
+        {
+            return false;
+        }
         #endregion
 
         protected BasicEffect mainEffect;
@@ -32,6 +47,11 @@ namespace BasicLibrary
             if (mainEffect != null)
                 mainEffect.DetachEffect();
             mainEffect = be;
+        }
+
+        public BasicControl()
+            : base()
+        {
         }
     }   
 }

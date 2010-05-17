@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B6062C93-78FB-4DD9-B6E0-3A41687FCFD9}</ProjectGuid>
+    <ProjectGuid>{68C26FE2-0A06-4C0A-AD42-D738A0885E2E}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NewsReaderControl</RootNamespace>
-    <AssemblyName>NewsReaderControl</AssemblyName>
+    <RootNamespace>RssSlideshowControl</RootNamespace>
+    <AssemblyName>RssSlideshowControl</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -46,24 +46,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Liquid.RichText, Version=5.3.1.31638, Culture=neutral, PublicKeyToken=7fbdd25c3fcc3919, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Syndication, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls.Data.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NewsReader.xaml.cs">
-      <DependentUpon>NewsReader.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="NewsPage.xaml.cs">
-      <DependentUpon>NewsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RssItem.cs" />
+    <Compile Include="RssSlideshow.xaml.cs">
+      <DependentUpon>RssSlideshow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Service References\ServiceReference1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -71,23 +72,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="NewsReader.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="NewsPage.xaml">
+    <Page Include="RssSlideshow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Effect\Effect.csproj">
-      <Project>{D7CD730C-B3EF-4558-AC0C-F24DDF19099D}</Project>
-      <Name>Effect</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Liquid.HtmlRichTextArea\Liquid.HtmlRichTextArea.csproj">
-      <Project>{3631374F-4860-4C3A-A99B-A27088926FB2}</Project>
-      <Name>Liquid.HtmlRichTextArea</Name>
+    <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
+      <Project>{CAC33183-F531-43AD-A288-6575775B4BE1}</Project>
+      <Name>BasicLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -101,10 +94,15 @@
     <None Include="Service References\ServiceReference1\Service11.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Resource Include="Images\RSS Icon.png" />
+    <Content Include="Liquid.RichText.dll" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ServiceReference1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServiceReference1\Service1.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ServiceReference1\configuration91.svcinfo" />
