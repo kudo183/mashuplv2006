@@ -12,12 +12,27 @@ using BasicLibrary;
 using System.ServiceModel;
 using System.IO;
 using System.Windows.Media.Imaging;
-
+using System.ComponentModel;
 namespace ControlLibrary
 {
     public class AnimatedGifImage : BasicControl
     {
+        private Stretch _StretchMode;
+
+        [Category("AnimatedGifImage")]
+        public Stretch StretchMode
+        {
+            get { return _StretchMode; }
+            set 
+            { 
+                _StretchMode = value;
+                ai.Stretch = _StretchMode;
+            }
+        }
+        
         private string _ImageURL;
+
+        [Category("AnimatedGifImage")]
         public string ImageURL
         {
             get { return _ImageURL; }
@@ -33,28 +48,39 @@ namespace ControlLibrary
         }
 
         private bool _IsAnimated;
+
+        [Category("AnimatedGifImage")]
         public bool IsAnimated
         {
             get { return _IsAnimated; }
         }
 
+        private int _AnimationSpeed;
+        [Category("AnimatedGifImage")]
         public int AnimationSpeed
         {
             get
             {
                 if (_IsAnimated == true)
-                    return img.AnimationSpeed;
+                    return _AnimationSpeed;
                 return 0;
             }
             set
             {
                 if (_IsAnimated == true)
-                    img.AnimationSpeed = value;
+                {
+                    _AnimationSpeed = (value == 0) ? 1 : 1000 / value;
+                    img = new ImageTools.Image();
+                    img.AnimationSpeed = _AnimationSpeed;
+                    img.SetSource(new MemoryStream(buffer));
+                    img.LoadingCompleted += new EventHandler(img_LoadingCompleted);
+                }
             }
         }
 
         void client_GetDataFromURLCompleted(object sender, ServiceReference1.GetDataFromURLCompletedEventArgs e)
         {
+            buffer = e.Result;
             try
             {
                 BitmapImage bm = new BitmapImage();
@@ -65,8 +91,7 @@ namespace ControlLibrary
             }
             catch (Exception ex)
             {
-                img = new ImageTools.Image();
-
+                img = new ImageTools.Image();                
                 img.SetSource(new MemoryStream(e.Result));
                 img.LoadingCompleted += new EventHandler(img_LoadingCompleted);
             }
@@ -85,6 +110,7 @@ namespace ControlLibrary
         ImageTools.Controls.AnimatedImage ai = new ImageTools.Controls.AnimatedImage();
         ImageTools.Image img;
         ServiceReference1.Service1Client client;
+        byte[] buffer;
 
         public AnimatedGifImage()
         {
@@ -93,7 +119,11 @@ namespace ControlLibrary
             parameterNameList.Add("IsAnimated");
 
             Content = ai;
-            ai.Width = ai.Height = 100;
+            Width = Height = 200;
+            _AnimationSpeed = 300;
+            
+            _StretchMode = Stretch.Fill;
+
             ImageTools.IO.Decoders.AddDecoder<ImageTools.IO.Gif.GifDecoder>();
             ImageTools.IO.Decoders.AddDecoder<ImageTools.IO.Bmp.BmpDecoder>();
 
