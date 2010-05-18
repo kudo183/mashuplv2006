@@ -28,6 +28,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RssSlideshowControl", "RssS
 		{A030D202-0053-498B-958C-CAA017926C05} = {A030D202-0053-498B-958C-CAA017926C05}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacStyleContactFormControl", "MacStyleContactForm\MacStyleContactFormControl.csproj", "{F5482342-F4A3-49C0-94DE-E61C9A21853C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A030D202-0053-498B-958C-CAA017926C05} = {A030D202-0053-498B-958C-CAA017926C05}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +87,10 @@ Global
 		{68C26FE2-0A06-4C0A-AD42-D738A0885E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68C26FE2-0A06-4C0A-AD42-D738A0885E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68C26FE2-0A06-4C0A-AD42-D738A0885E2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5482342-F4A3-49C0-94DE-E61C9A21853C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5482342-F4A3-49C0-94DE-E61C9A21853C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5482342-F4A3-49C0-94DE-E61C9A21853C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5482342-F4A3-49C0-94DE-E61C9A21853C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
