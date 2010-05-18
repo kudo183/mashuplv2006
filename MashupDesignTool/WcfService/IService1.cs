@@ -18,5 +18,8 @@ namespace WcfService
 
         [OperationContract]
         byte[] GetDataFromURL(string url);
+
+        [OperationContract]
+        bool SendMail(string fromName, string fromAddress, string toAddresses, string subject, string body);
     }
 }

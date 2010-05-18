@@ -109,6 +109,22 @@ namespace Testcontrol1
 
             rss.LinkClicked += new RssSlideshowControl.RssSlideshow.LinkClickedHander(rss_LinkClicked);
 
+
+            MacStyleContactFormControl.MacStyleContactForm frm = new MacStyleContactFormControl.MacStyleContactForm();
+            frm.Width = 400;
+            frm.Height = 300;
+            BasicLibrary.EffectableControl ec2 = new BasicLibrary.EffectableControl(frm);
+            ec2.Width = 400;
+            ec2.Height = 300;
+            frm.ReceiveEmail = "tranphuonghai144@yahoo.com";
+            frm.MainEffect = new EffectLibrary.Jump(ec2);
+            //frm.ContentBackgroundColor = Colors.Blue;
+            //frm.ContentColor = Colors.Red;
+            //frm.LabelColor = Colors.Yellow;
+            //frm.ButtonColor = Colors.Purple;
+            Canvas.SetLeft(ec2, 300);
+            Canvas.SetTop(ec2, 100);
+            LayoutRoot.Children.Add(ec2);
         }
 
         void rss_LinkClicked(object sender, string url)
