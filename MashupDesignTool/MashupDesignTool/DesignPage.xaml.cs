@@ -42,58 +42,79 @@ namespace MashupDesignTool
 
         void propertiesGrid_PropertyValueChange(UIElement ui, string name, object value)
         {
-            ProxyControl pc = designCanvas1.SelectedProxyControls[0];
-            EffectableControl ec = designCanvas1.SelectedControls[0];
-            DockCanvas.DockCanvas.DockType dt = DockCanvas.DockCanvas.GetDockType(ec);
-
-            switch (name)
+            if (ui.Equals(designCanvas1.ControlContainer))
             {
-                case "Left":
-                    if (dt == DockCanvas.DockCanvas.DockType.None)
-                        pc.SetX(double.Parse((string)value));
-                    break;
-                case "Top":
-                    if (dt == DockCanvas.DockCanvas.DockType.None)
-                        pc.SetY(double.Parse((string)value));
-                    break;
-                case "ZIndex":
-                    designCanvas1.SetZindex(pc, int.Parse((string)value));
-                    propertiesGrid.UpdatePropertyValue("Left");
-                    propertiesGrid.UpdatePropertyValue("Top");
-                    propertiesGrid.UpdatePropertyValue("Width");
-                    propertiesGrid.UpdatePropertyValue("Height");
-                    break;
-                case "Width":
-                    if (dt == DockCanvas.DockCanvas.DockType.None
-                        || dt == DockCanvas.DockCanvas.DockType.Left
-                        || dt == DockCanvas.DockCanvas.DockType.Right)
-                    {
-                        pc.SetWidth(double.Parse((string)value));
+                switch (name)
+                {
+                    case "Width":
+                        //designCanvas1.Width = (designCanvas1.ActualWidth - designCanvas1.ControlContainer.ActualWidth) + designCanvas1.ControlContainer.Width;
+                        designCanvas1.LayoutRoot.Width = designCanvas1.ControlContainer.Width;
+                        designCanvas1.ControlContainer.UpdateChildrenPosition();
+                        break;
+                    case "Height":
+                        designCanvas1.LayoutRoot.Height = designCanvas1.ControlContainer.Height;
+                        designCanvas1.ControlContainer.UpdateChildrenPosition();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            else
+            {
+                ProxyControl pc = designCanvas1.SelectedProxyControls[0];
+                EffectableControl ec = designCanvas1.SelectedControls[0];
+                DockCanvas.DockCanvas.DockType dt = DockCanvas.DockCanvas.GetDockType(ec);
+
+                switch (name)
+                {
+                    case "Left":
+                        if (dt == DockCanvas.DockCanvas.DockType.None)
+                            pc.SetX(double.Parse((string)value));
+                        break;
+                    case "Top":
+                        if (dt == DockCanvas.DockCanvas.DockType.None)
+                            pc.SetY(double.Parse((string)value));
+                        break;
+                    case "ZIndex":
+                        designCanvas1.SetZindex(pc, int.Parse((string)value));
+                        propertiesGrid.UpdatePropertyValue("Left");
+                        propertiesGrid.UpdatePropertyValue("Top");
+                        propertiesGrid.UpdatePropertyValue("Width");
+                        propertiesGrid.UpdatePropertyValue("Height");
+                        break;
+                    case "Width":
+                        if (dt == DockCanvas.DockCanvas.DockType.None
+                            || dt == DockCanvas.DockCanvas.DockType.Left
+                            || dt == DockCanvas.DockCanvas.DockType.Right)
+                        {
+                            pc.SetWidth(double.Parse((string)value));
+                            designCanvas1.ControlContainer.UpdateChildrenPosition();
+                            designCanvas1.UpdateAllProxyControlPosition();
+                        }
+                        break;
+                    case "Height":
+                        if (dt == DockCanvas.DockCanvas.DockType.None
+                            || dt == DockCanvas.DockCanvas.DockType.Top
+                            || dt == DockCanvas.DockCanvas.DockType.Bottom)
+                        {
+                            pc.SetHeight(double.Parse((string)value));
+                            designCanvas1.ControlContainer.UpdateChildrenPosition();
+                            designCanvas1.UpdateAllProxyControlPosition();
+                        }
+                        break;
+                    case "DockType":
+                        DockCanvas.DockCanvas.SetDockType(designCanvas1.SelectedControls[0], (DockCanvas.DockCanvas.DockType)Enum.Parse(typeof(DockCanvas.DockCanvas.DockType), (string)value, true));
                         designCanvas1.ControlContainer.UpdateChildrenPosition();
                         designCanvas1.UpdateAllProxyControlPosition();
-                    }
-                    break;
-                case "Height":
-                    if (dt == DockCanvas.DockCanvas.DockType.None
-                        || dt == DockCanvas.DockCanvas.DockType.Top
-                        || dt == DockCanvas.DockCanvas.DockType.Bottom)
-                    {
-                        pc.SetHeight(double.Parse((string)value));
-                        designCanvas1.ControlContainer.UpdateChildrenPosition();
-                        designCanvas1.UpdateAllProxyControlPosition();
-                    }
-                    break;
-                case "DockType":
-                    DockCanvas.DockCanvas.SetDockType(designCanvas1.SelectedControls[0], (DockCanvas.DockCanvas.DockType)Enum.Parse(typeof(DockCanvas.DockCanvas.DockType), (string)value, true));
-                    designCanvas1.ControlContainer.UpdateChildrenPosition();
-                    designCanvas1.UpdateAllProxyControlPosition();
-                    propertiesGrid.UpdatePropertyValue("Left");
-                    propertiesGrid.UpdatePropertyValue("Top");
-                    propertiesGrid.UpdatePropertyValue("Width");
-                    propertiesGrid.UpdatePropertyValue("Height");
-                    break;
-                default:
-                    break;
+                        propertiesGrid.UpdatePropertyValue("Left");
+                        propertiesGrid.UpdatePropertyValue("Top");
+                        propertiesGrid.UpdatePropertyValue("Width");
+                        propertiesGrid.UpdatePropertyValue("Height");
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 

@@ -55,7 +55,9 @@
     <Content Include="ClientAccessPolicy.xml" />
     <Content Include="crossdomain.xml" />
     <Content Include="Service1.svc" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

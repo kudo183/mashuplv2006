@@ -403,13 +403,13 @@ namespace MashupDesignTool
 
                 if (x < 0 && x < delta.X)
                     delta.X = x;
-                else if (x + uc.Width >= this.ActualWidth && x + uc.Width - this.ActualWidth + 1 > delta.X)
-                    delta.X = x + uc.Width - this.ActualWidth + 1;
+                else if (x + uc.Width >= ControlContainer.ActualWidth && x + uc.Width - ControlContainer.ActualWidth + 1 > delta.X)
+                    delta.X = x + uc.Width - ControlContainer.ActualWidth + 1;
 
                 if (y < 0 && y < delta.Y)
                     delta.Y = y;
-                else if (y + uc.Height >= this.ActualHeight && y + uc.Height - this.ActualHeight + 1 > delta.Y)
-                    delta.Y = y + uc.Height - this.ActualHeight + 1;
+                else if (y + uc.Height >= ControlContainer.ActualHeight && y + uc.Height - ControlContainer.ActualHeight + 1 > delta.Y)
+                    delta.Y = y + uc.Height - ControlContainer.ActualHeight + 1;
             }
 
             bool b = true;
@@ -707,20 +707,20 @@ namespace MashupDesignTool
                 b = true;
                 pt.X = 0;
             }
-            else if (pt.X >= this.ActualWidth + beginResizedPoint.X)
+            else if (pt.X >= ControlContainer.ActualWidth + beginResizedPoint.X)
             {
                 b = true;
-                pt.X = this.ActualWidth - 1;
+                pt.X = ControlContainer.ActualWidth - 1;
             }
             if (pt.Y < beginResizedPoint.Y)
             {
                 b = true;
                 pt.Y = 0;
             }
-            else if (pt.Y >= this.ActualHeight + beginResizedPoint.Y)
+            else if (pt.Y >= ControlContainer.ActualHeight + beginResizedPoint.Y)
             {
                 b = true;
-                pt.Y = this.ActualHeight - 1;
+                pt.Y = ControlContainer.ActualHeight - 1;
             }
 
             ResizeControl(pt);
@@ -996,13 +996,13 @@ namespace MashupDesignTool
 
                 if (x < 0 && x < delta.X)
                     delta.X = x;
-                else if (x + uc.Width >= this.ActualWidth && x + uc.Width - this.ActualWidth + 1 > delta.X)
-                    delta.X = x + uc.Width - this.ActualWidth + 1;
+                else if (x + uc.Width >= ControlContainer.ActualWidth && x + uc.Width - ControlContainer.ActualWidth + 1 > delta.X)
+                    delta.X = x + uc.Width - ControlContainer.ActualWidth + 1;
 
                 if (y < 0 && y < delta.Y)
                     delta.Y = y;
-                else if (y + uc.Height >= this.ActualHeight && y + uc.Height - this.ActualHeight + 1 > delta.Y)
-                    delta.Y = y + uc.Height - this.ActualHeight + 1;
+                else if (y + uc.Height >= ControlContainer.ActualHeight && y + uc.Height - ControlContainer.ActualHeight + 1 > delta.Y)
+                    delta.Y = y + uc.Height - ControlContainer.ActualHeight + 1;
             }
 
             bool b = true;

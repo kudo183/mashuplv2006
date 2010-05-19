@@ -7,20 +7,22 @@
     mc:Ignorable="d" xmlns:my="clr-namespace:MashupDesignTool" xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" d:DesignHeight="300" d:DesignWidth="400" xmlns:dataInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input" KeyDown="LayoutRoot_KeyDown" KeyUp="LayoutRoot_KeyUp" LostFocus="UserControl_LostFocus" x:Name="root" Loaded="root_Loaded">
 
     <Border BorderBrush="{Binding BorderBrush, ElementName=root}" BorderThickness="{Binding BorderThickness, ElementName=root}" CornerRadius="3" Background="{Binding Background, ElementName=root}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <dc:DockCanvas x:Name="ControlContainer" Background="White" MouseMove="LayoutRoot_MouseMove">
-                <TextBox Canvas.Left="-10000" Canvas.Top="-10000" Height="20" Name="textBox1" Width="100" TextChanged="textBox1_TextChanged" />
-            </dc:DockCanvas>
-            <Canvas x:Name="LayoutRoot" Background="Transparent" MouseMove="LayoutRoot_MouseMove" MouseLeftButtonDown="LayoutRoot_MouseLeftButtonDown" MouseLeftButtonUp="LayoutRoot_MouseLeftButtonUp" KeyDown="LayoutRoot_KeyDown" KeyUp="LayoutRoot_KeyUp" MouseRightButtonDown="LayoutRoot_MouseRightButtonDown">
-                <Rectangle Canvas.Left="198" Canvas.Top="105" Height="100" Name="multipleSelectRect" Stroke="SteelBlue" StrokeThickness="2" Width="121" Visibility="Collapsed" Fill="LightBlue" Opacity="0.4" />
-                <Button Content="Button" Height="0" Name="button1" Width="0" Canvas.Left="6" Canvas.Top="6" />
-            </Canvas>
-        </Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <dc:DockCanvas x:Name="ControlContainer" Background="White" MouseMove="LayoutRoot_MouseMove">
+                    <TextBox Canvas.Left="-10000" Canvas.Top="-10000" Height="20" Name="textBox1" Width="100" TextChanged="textBox1_TextChanged" />
+                </dc:DockCanvas>
+                <Canvas x:Name="LayoutRoot" Background="Transparent" MouseMove="LayoutRoot_MouseMove" MouseLeftButtonDown="LayoutRoot_MouseLeftButtonDown" MouseLeftButtonUp="LayoutRoot_MouseLeftButtonUp" KeyDown="LayoutRoot_KeyDown" KeyUp="LayoutRoot_KeyUp" MouseRightButtonDown="LayoutRoot_MouseRightButtonDown">
+                    <Rectangle Canvas.Left="198" Canvas.Top="105" Height="100" Name="multipleSelectRect" Stroke="SteelBlue" StrokeThickness="2" Width="121" Visibility="Collapsed" Fill="LightBlue" Opacity="0.4" />
+                    <Button Content="Button" Height="0" Name="button1" Width="0" Canvas.Left="6" Canvas.Top="6" />
+                </Canvas>
+            </Grid>
+        </ScrollViewer>
     </Border>
 </UserControl>
