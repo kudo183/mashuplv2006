@@ -60,6 +60,7 @@
     <Compile Include="Dissolve.cs" />
     <Compile Include="Fade.cs" />
     <Compile Include="ListEffect\Carousel.cs" />
+    <Compile Include="ListEffect\CoverFlow.cs" />
     <Compile Include="ListEffect\MenuMac.cs" />
     <Compile Include="Push.cs" />
     <Compile Include="Jump.cs" />
