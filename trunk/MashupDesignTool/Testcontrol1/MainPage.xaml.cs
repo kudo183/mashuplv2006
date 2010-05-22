@@ -59,72 +59,95 @@ namespace Testcontrol1
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //newsPage1.LoadHTML("<strong>hello world</strong>");
+            //BasicLibrary.BasicListControl listControl = new BasicLibrary.BasicListControl();
+            //BasicLibrary.EffectableControl effectControl = new BasicLibrary.EffectableControl(listControl);
+            //listControl.Width = 400;
+            //listControl.Height = 400;
+            //EffectLibrary.CoverFlow mm = new EffectLibrary.CoverFlow(listControl);
+            //listControl.AddItem(new BasicLibrary.EffectableControl(new Button() { Width=200, Height=200, Content="fdasfasf"}));
+            //listControl.AddItem(new BasicLibrary.EffectableControl(new Button() { Width=200, Height=200, Content="fdasfasf"}));
+            //listControl.AddItem(new BasicLibrary.EffectableControl(new Button() { Width=200, Height=200, Content="fdasfasf"}));
+            //listControl.AddItem(new BasicLibrary.EffectableControl(new Button() { Width=200, Height=200, Content="fdasfasf"}));
+            //listControl.AddItem(new BasicLibrary.EffectableControl(new Button() { Width=200, Height=200, Content="fdasfasf"}));
+            //listControl.AddItem(new BasicLibrary.EffectableControl(new Button() { Width=200, Height=200, Content="fdasfasf"}));
+            //listControl.AddItem(new BasicLibrary.EffectableControl(new Button() { Width=200, Height=200, Content="fdasfasf"}));
+            //listControl.AddItem(new BasicLibrary.EffectableControl(new Button() { Width=200, Height=200, Content="fdasfasf"}));
+            //listControl.AddItem(new BasicLibrary.EffectableControl(new Button() { Width = 200, Height = 200, Content = "fdasfasf" }));
 
-            //htmlRichTextArea1.SetDefaultStyles();
-            //htmlRichTextArea1.Load("<p><img src='http://www.google.com.vn/images/firefox/sprite2.png'/></p>");
+            //mm.Start();
+            //Canvas.SetLeft(effectControl, 200);
+            //Canvas.SetTop(effectControl, 200);
+            
+            
+            ////newsPage1.LoadHTML("<strong>hello world</strong>");
 
-            btn = new SilverlightControl1();
-            //btn.Width = 600;
-            //btn.Height = 400;
+            ////htmlRichTextArea1.SetDefaultStyles();
+            ////htmlRichTextArea1.Load("<p><img src='http://www.google.com.vn/images/firefox/sprite2.png'/></p>");
 
-            BasicLibrary.EffectableControl ec = new BasicLibrary.EffectableControl(btn);
+            //btn = new SilverlightControl1();
+            ////btn.Width = 600;
+            ////btn.Height = 400;
 
-            //EffectLibrary.SplitScreen effect
-            //     = new EffectLibrary.SplitScreen(ec);
-            Canvas.SetLeft(ec, 300);
-            Canvas.SetTop(ec, 300);
+            //BasicLibrary.EffectableControl ec = new BasicLibrary.EffectableControl(btn);
 
-            effect = new EffectLibrary.Jump(ec);
+            ////EffectLibrary.SplitScreen effect
+            ////     = new EffectLibrary.SplitScreen(ec);
+            //Canvas.SetLeft(ec, 300);
+            //Canvas.SetTop(ec, 300);
 
-            ((BasicLibrary.BasicControl)ec.Control).ChangeMainEffect(effect);
-            //effect = new EffectLibrary.Fade(ec);
+            //effect = new EffectLibrary.Jump(ec);
+
             //((BasicLibrary.BasicControl)ec.Control).ChangeMainEffect(effect);
+            ////effect = new EffectLibrary.Fade(ec);
+            ////((BasicLibrary.BasicControl)ec.Control).ChangeMainEffect(effect);
 
-            LayoutRoot.Children.Add(ec);
+            //LayoutRoot.Children.Add(ec);
 
-            //effect.SetParameterValue("Speed", EffectLibrary.Push.PushSpeed.SLOW);
-            //effect.SetParameterValue("Orientation", EffectLibrary.Push.PushOrientation.LEFT_TO_RIGHT);
+            ////effect.SetParameterValue("Speed", EffectLibrary.Push.PushSpeed.SLOW);
+            ////effect.SetParameterValue("Orientation", EffectLibrary.Push.PushOrientation.LEFT_TO_RIGHT);
 
-            //effect.SetParameterValue("BeginPos", EffectLibrary.Wipe.BeginWipe.LEFT);
-            effect.SetParameterValue("Direction", EffectLibrary.Jump.DIRECTION.DOWN);
-            //effect.SetParameterValue("CellDuration", TimeSpan.FromMilliseconds(1400));
+            ////effect.SetParameterValue("BeginPos", EffectLibrary.Wipe.BeginWipe.LEFT);
+            //effect.SetParameterValue("Direction", EffectLibrary.Jump.DIRECTION.DOWN);
+            ////effect.SetParameterValue("CellDuration", TimeSpan.FromMilliseconds(1400));
 
-            //rssSlideshow1.RssUrl = "http://vnexpress.net/rss/gl/trang-chu.rss";
-            //rssSlideshow1.MainEffect = effect;
-            //rssSlideshow1.DelaySeconds = 1;
+            ////rssSlideshow1.RssUrl = "http://vnexpress.net/rss/gl/trang-chu.rss";
+            ////rssSlideshow1.MainEffect = effect;
+            ////rssSlideshow1.DelaySeconds = 1;
 
-            RssSlideshowControl.RssSlideshow rss = new RssSlideshowControl.RssSlideshow();
-            rss.Width = 200;
-            rss.Height = 300;
-            BasicLibrary.EffectableControl ec1 = new BasicLibrary.EffectableControl(rss);
-            ec1.Width = 200;
-            ec1.Height = 300;
-            rss.RssUrl = "http://vnexpress.net/rss/gl/trang-chu.rss";
-            rss.MainEffect = new EffectLibrary.Fade(ec1);
-            rss.DelaySeconds = 2;
-            Canvas.SetLeft(ec1, 0);
-            Canvas.SetTop(ec1, 100);
-            LayoutRoot.Children.Add(ec1);
+            //RssSlideshowControl.RssSlideshow rss = new RssSlideshowControl.RssSlideshow();
+            //rss.Width = 200;
+            //rss.Height = 300;
+            //BasicLibrary.EffectableControl ec1 = new BasicLibrary.EffectableControl(rss);
+            //ec1.Width = 200;
+            //ec1.Height = 300;
+            //rss.RssUrl = "http://vnexpress.net/rss/gl/trang-chu.rss";
+            //rss.MainEffect = new EffectLibrary.Fade(ec1);
+            //rss.DelaySeconds = 2;
+            //Canvas.SetLeft(ec1, 0);
+            //Canvas.SetTop(ec1, 100);
+            //LayoutRoot.Children.Add(ec1);
 
-            rss.LinkClicked += new RssSlideshowControl.RssSlideshow.LinkClickedHander(rss_LinkClicked);
+            //rss.LinkClicked += new RssSlideshowControl.RssSlideshow.LinkClickedHander(rss_LinkClicked);
 
 
-            MacStyleContactFormControl.MacStyleContactForm frm = new MacStyleContactFormControl.MacStyleContactForm();
-            frm.Width = 400;
-            frm.Height = 300;
-            BasicLibrary.EffectableControl ec2 = new BasicLibrary.EffectableControl(frm);
-            ec2.Width = 400;
-            ec2.Height = 300;
-            frm.ReceiveEmail = "tranphuonghai144@yahoo.com";
-            frm.MainEffect = new EffectLibrary.Jump(ec2);
-            //frm.ContentBackgroundColor = Colors.Blue;
-            //frm.ContentColor = Colors.Red;
-            //frm.LabelColor = Colors.Yellow;
-            //frm.ButtonColor = Colors.Purple;
-            Canvas.SetLeft(ec2, 300);
-            Canvas.SetTop(ec2, 100);
-            LayoutRoot.Children.Add(ec2);
+            //MacStyleContactFormControl.MacStyleContactForm frm = new MacStyleContactFormControl.MacStyleContactForm();
+            //frm.Width = 400;
+            //frm.Height = 300;
+            //BasicLibrary.EffectableControl ec2 = new BasicLibrary.EffectableControl(frm);
+            //ec2.Width = 400;
+            //ec2.Height = 300;
+            //frm.ReceiveEmail = "tranphuonghai144@yahoo.com";
+            //frm.MainEffect = new EffectLibrary.Jump(ec2);
+            ////frm.ContentBackgroundColor = Colors.Blue;
+            ////frm.ContentColor = Colors.Red;
+            ////frm.LabelColor = Colors.Yellow;
+            ////frm.ButtonColor = Colors.Purple;
+            //Canvas.SetLeft(ec2, 300);
+            //Canvas.SetTop(ec2, 100);
+            //LayoutRoot.Children.Add(ec2);
+
+            //LayoutRoot.Children.Add(effectControl);
+
         }
 
         void rss_LinkClicked(object sender, string url)
@@ -166,6 +189,11 @@ namespace Testcontrol1
         private void rssItemListControl1_Loaded_1(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(typeof(EffectLibrary.Fade).Namespace + " " + typeof(EffectLibrary.Fade).FullName);
         }
     }
 }

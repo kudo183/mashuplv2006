@@ -60,6 +60,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Liquid.Menu, Version=5.3.1.31637, Culture=neutral, PublicKeyToken=7fbdd25c3fcc3919, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -77,9 +78,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ContextMenu.xaml.cs">
-      <DependentUpon>ContextMenu.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ControlInfo.cs" />
     <Compile Include="ControlTreeViewItem.xaml.cs">
       <DependentUpon>ControlTreeViewItem.xaml</DependentUpon>
@@ -94,10 +92,7 @@
     <Compile Include="DesignPage.xaml.cs">
       <DependentUpon>DesignPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MenuItem.xaml.cs">
-      <DependentUpon>MenuItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MenuItemEventArgs.cs" />
+    <Compile Include="EffectInfo.cs" />
     <Compile Include="MyXmlSerializer.cs" />
     <Compile Include="ObjectConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,22 +100,12 @@
       <DependentUpon>ProxyControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="SampleTreeItem.cs" />
-    <Compile Include="SeparatorMenuItem.xaml.cs">
-      <DependentUpon>SeparatorMenuItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TextImageMenuItem.xaml.cs">
-      <DependentUpon>TextImageMenuItem.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="ContextMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="ControlTreeViewItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -137,19 +122,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MenuItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="ProxyControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SeparatorMenuItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TextImageMenuItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -175,9 +148,8 @@
     <None Include="Images\.svn\text-base\SizeENWS.png.svn-base" />
     <None Include="Images\.svn\text-base\SizeWNES.png.svn-base" />
     <None Include="Images\.svn\text-base\Thumbs.db.svn-base" />
-    <None Include="Images\Thumbs.db" />
     <None Include="Properties\AppManifest.xml" />
-    <Content Include="ServiceReferences.ClientConfig" />
+    <Content Include="Liquid.Menu.dll" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\BringForward.png" />
@@ -203,6 +175,10 @@
     <ProjectReference Include="..\DockCanvas\DockCanvas.csproj">
       <Project>{C38EEC60-122E-4002-A7B1-E6465DC41201}</Project>
       <Name>DockCanvas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MapulRibbon\MapulRibbon.csproj">
+      <Project>{E6875CC4-6311-41E3-B8F0-F4E3B27E8A59}</Project>
+      <Name>MapulRibbon</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyPropertyGrid\MyPropertyGrid.csproj">
       <Project>{EBE7ECFD-0942-49A9-BF98-0FE9378C1472}</Project>

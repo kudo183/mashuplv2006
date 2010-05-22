@@ -7,7 +7,7 @@
     xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
     xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
     mc:Ignorable="d" x:Name="root"
-    d:DesignHeight="300" d:DesignWidth="400" xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" Loaded="UserControl_Loaded" xmlns:my="clr-namespace:MashupDesignTool">
+    d:DesignHeight="300" d:DesignWidth="400" xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" Loaded="UserControl_Loaded" xmlns:my="clr-namespace:MashupDesignTool" xmlns:MapulRibbon="clr-namespace:MapulRibbon;assembly=MapulRibbon">
     
     <UserControl.Resources>
         <Style x:Key="ExpanderButtonStyle" TargetType="Button">
@@ -230,7 +230,7 @@
                              Storyboard.TargetProperty="ColumnPropertiesGridWidth"></DoubleAnimation>
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
                                            BeginTime="00:00:00.3" Duration="0:0:0"
-                                           Storyboard.TargetName="propertiesGrid">
+                                           Storyboard.TargetName="propertiesTabs">
                 <ObjectAnimationUsingKeyFrames.KeyFrames>
                     <DiscreteObjectKeyFrame KeyTime="00:00:00">
                         <DiscreteObjectKeyFrame.Value>
@@ -289,7 +289,7 @@
                              Storyboard.TargetProperty="ColumnPropertiesGridWidth"></DoubleAnimation>
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
                                            BeginTime="00:00:00.3" Duration="0:0:0"
-                                           Storyboard.TargetName="propertiesGrid">
+                                           Storyboard.TargetName="propertiesTabs">
                 <ObjectAnimationUsingKeyFrames.KeyFrames>
                     <DiscreteObjectKeyFrame KeyTime="00:00:00">
                         <DiscreteObjectKeyFrame.Value>
@@ -332,39 +332,84 @@
         </Storyboard>
     </UserControl.Resources>
 
-    <controlsToolkit:DockPanel LastChildFill="True">
-        <controlsToolkit:DockPanel.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="8"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#FF2B3151" Offset="0.008" />
                 <GradientStop Color="#FF2B3151" Offset="0.4" />
                 <GradientStop Color="#FF191D30" Offset="0.7" />
                 <GradientStop Color="Black" Offset="1" />
             </LinearGradientBrush>
-        </controlsToolkit:DockPanel.Background>
-        <Grid Height="100" controlsToolkit:DockPanel.Dock="Top">
-            <Grid.Background>
-                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-                    <GradientStop Color="#FF131522" Offset="0.006" />
-                    <GradientStop Color="#FF06070B" Offset="0.975" />
-                    <GradientStop Color="#FF4C569B" Offset="0.156" />
-                    <GradientStop Color="#FF4C569B" Offset="0.787" />
-                    <GradientStop Color="#FF767CAA" Offset="0.451" />
-                </LinearGradientBrush>
-            </Grid.Background>
-        </Grid>
+        </Grid.Background>
         
-        <Grid Height="15" controlsToolkit:DockPanel.Dock="Top">
-            <Grid.Background>
-                <SolidColorBrush Color="#232842"></SolidColorBrush>
-            </Grid.Background>
+        <Popup x:Name="popupLoading" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalOffset="-150" VerticalOffset="-75" Grid.RowSpan="3">
+            <Popup.Child>
+                <StackPanel Orientation="Vertical" Width="300" Height="150" Background="LightBlue" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Source="" Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
+                    <TextBlock x:Name="popupText" Text="Loading ..." VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                    <Button Content="Cancel" Width="60" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click"></Button>
+                </StackPanel>
+            </Popup.Child>
+        </Popup>
+        
+        <MapulRibbon:Ribbon HorizontalAlignment="Stretch" Name="menu" VerticalAlignment="Stretch" Margin="0,-30,0,0" Grid.Row="0" Height="145" OnSelectionTabChanged="menu_OnSelectionTabChanged">
+            <MapulRibbon:Tabs>
+                <MapulRibbon:Tabs.Items>
+                    <!-- Home TabItem -->
+                    <MapulRibbon:TabsItem Header="Home">
+                        <MapulRibbon:TabsItem.Content>
+                            <MapulRibbon:RibbonItems>
+                                <!-- Clipboard RibbonItem -->
+                                <MapulRibbon:RibbonItem Title="Clipboard">
+                                    <MapulRibbon:RibbonItem.Content>
+                                        <MapulRibbon:RibbonButtonsGroup>
+                                            <MapulRibbon:RibbonButton x:Name="btnPaste" ImageUrl="img/paste.png" Text="Paste" Height="20" Width="20"
+                                                                    TooltipTitle="Paste (CTRL + V)" 
+                                                                    TooltipText="Paste from clipboard.">
+                                            </MapulRibbon:RibbonButton>
+                                        </MapulRibbon:RibbonButtonsGroup>
+                                    </MapulRibbon:RibbonItem.Content>
+                                </MapulRibbon:RibbonItem>
+                                <MapulRibbon:RibbonItem Title="Clipboard">
+                                    <MapulRibbon:RibbonItem.Content>
+                                        <MapulRibbon:RibbonButtonsGroup>
+                                            <MapulRibbon:RibbonList hAlignment="Left" vAlignment="Top">
+                                                <MapulRibbon:RibbonListItem Text="abc" ImageSource="Images/Delete.png">
+
+                                                </MapulRibbon:RibbonListItem>
+                                                <MapulRibbon:RibbonListItem Text="def" ImageSource="Images/Properties.png">
+                                                </MapulRibbon:RibbonListItem>
+                                                <MapulRibbon:RibbonListItem Text="def" ImageSource="Images/Properties.png">
+                                                </MapulRibbon:RibbonListItem>
+
+                                                <MapulRibbon:RibbonListItem Text="def" ImageSource="Images/Properties.png">
+                                                </MapulRibbon:RibbonListItem>
+
+                                            </MapulRibbon:RibbonList>
+                                        </MapulRibbon:RibbonButtonsGroup>
+                                    </MapulRibbon:RibbonItem.Content>
+                                </MapulRibbon:RibbonItem>
+                            </MapulRibbon:RibbonItems>
+                        </MapulRibbon:TabsItem.Content>
+                    </MapulRibbon:TabsItem>
+                </MapulRibbon:Tabs.Items>
+            </MapulRibbon:Tabs>
+        </MapulRibbon:Ribbon>
+        
+        <Grid Height="8" Background="#232842" Grid.Row="1">
         </Grid>
 
-        <Grid>
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150" x:Name="ToolbarColumn"></ColumnDefinition>
-                <ColumnDefinition Width="5"></ColumnDefinition>
+                <ColumnDefinition Width="3"></ColumnDefinition>
                 <ColumnDefinition Width="6*"></ColumnDefinition>
-                <ColumnDefinition Width="5"></ColumnDefinition>
+                <ColumnDefinition Width="3"></ColumnDefinition>
                 <ColumnDefinition Width="250" x:Name="PropertiesGridColumn"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
@@ -405,15 +450,11 @@
                                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             </controls:GridSplitter>
 
-            <!--<ScrollViewer Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                          VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                          Background="LightGray" >-->
-                <my:DesignCanvas Grid.Column="2" x:Name="designCanvas1" IsHitTestVisible="True"
-                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                                 SelectPropertiesMenu="designCanvas1_SelectPropertiesMenu" SelectionChanged="designCanvas1_SelectionChanged"
-                                 BorderBrush="#FF885A2C" Background="#2D355C" BorderThickness="3" Margin="5,5,5,5">
-                </my:DesignCanvas>
-            <!--</ScrollViewer>-->
+            <my:DesignCanvas Grid.Column="2" x:Name="designCanvas1" IsHitTestVisible="True"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                SelectPropertiesMenu="designCanvas1_SelectPropertiesMenu" SelectionChanged="designCanvas1_SelectionChanged"
+                                BorderBrush="#FF885A2C" Background="#2D355C" BorderThickness="3" Margin="0">
+            </my:DesignCanvas>
 
             <controls:GridSplitter Grid.Column="3" Background="Transparent" x:Name="spliter2"
                                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -429,17 +470,35 @@
                         <RowDefinition Height="20"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <propertyGrid:PropertyGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="propertiesGrid" 
-                                       VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                                       GridBorderThickness="0,1,0,0" Foreground="White" GridBorderBrush="#FF885A2C">
-                        <propertyGrid:PropertyGrid.GridBackgroundBrush>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF151E38" Offset="0" />
-                                <GradientStop Color="#FF161E34" Offset="0.6" />
-                                <GradientStop Color="Black" Offset="1" />
-                            </LinearGradientBrush>
-                        </propertyGrid:PropertyGrid.GridBackgroundBrush>
-                    </propertyGrid:PropertyGrid>
+                    <controls:TabControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="propertiesTabs"
+                                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TabStripPlacement="Bottom">
+                        <controls:TabItem Header="Properties">
+                            <propertyGrid:PropertyGrid x:Name="propertiesGrid" 
+                                           VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                           GridBorderThickness="0" Foreground="Black">
+                                <propertyGrid:PropertyGrid.GridBackgroundBrush>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FF151E38" Offset="0" />
+                                        <GradientStop Color="#FF161E34" Offset="0.6" />
+                                        <GradientStop Color="Black" Offset="1" />
+                                    </LinearGradientBrush>
+                                </propertyGrid:PropertyGrid.GridBackgroundBrush>
+                            </propertyGrid:PropertyGrid>
+                        </controls:TabItem>
+                        <controls:TabItem Header="Effect options">
+                            <propertyGrid:PropertyGrid x:Name="effectPropertiesGrid" 
+                                           VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                           GridBorderThickness="0" Foreground="Black">
+                                <propertyGrid:PropertyGrid.GridBackgroundBrush>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FF151E38" Offset="0" />
+                                        <GradientStop Color="#FF161E34" Offset="0.6" />
+                                        <GradientStop Color="Black" Offset="1" />
+                                    </LinearGradientBrush>
+                                </propertyGrid:PropertyGrid.GridBackgroundBrush>
+                            </propertyGrid:PropertyGrid>
+                        </controls:TabItem>
+                    </controls:TabControl>
                     <Button Grid.Column="0" x:Name="PropertiesGridExpander" Foreground="White" 
                             Style="{StaticResource ExpanderButtonStyle}" Content="&gt;" Padding="0" FontWeight="Bold" Click="PropertiesGridExpander_Click">
                     </Button>
@@ -468,5 +527,5 @@
                 </sdk:Label.RenderTransform>
             </sdk:Label>
         </Grid>
-    </controlsToolkit:DockPanel>
+    </Grid>
 </UserControl>

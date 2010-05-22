@@ -57,7 +57,7 @@ namespace SL30PropertyGrid
                 return new FontFamilyValueEditor(label, property);
 
             if (typeof(SolidColorBrush).IsAssignableFrom(propertyType))
-                return new ColorValueEditor(label, property);
+                return new SolidBrushValueEditor(label, property);
 
             if (typeof(LinearGradientBrush).IsAssignableFrom(propertyType))
                 return null;
@@ -67,6 +67,9 @@ namespace SL30PropertyGrid
 
             if (typeof(Brush).IsAssignableFrom(propertyType))
                 return null;
+
+            if (typeof(Color).IsAssignableFrom(propertyType))
+                return new ColorValueEditor(label, property);
 
 			if (typeof(ValueType).IsAssignableFrom(propertyType))
 				return new StringValueEditor(label, property);
