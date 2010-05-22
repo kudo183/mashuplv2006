@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Xml;
 using System.Windows.Threading;
 using BasicLibrary;
+using Liquid;
 
 namespace MashupDesignTool
 {
@@ -61,8 +62,8 @@ namespace MashupDesignTool
         List<ProxyControl> selectedProxyControls;
         DispatcherTimer timer;
         List<Key> arrowKeyPressed;
-        ContextMenu contextMenu = new ContextMenu();
-        TextImageMenuItem miBringToFront, miBringForward, miSendToBack, miSendBackward, miProperties, miDelete;
+        Menu menu = new Menu();
+        Liquid.MenuItem lmiBringToFront, lmiBringForward, lmiSendToBack, lmiSendBackward, lmiProperties, lmiDelete;
 
         public List<FrameworkElement> Controls
         {
@@ -121,36 +122,36 @@ namespace MashupDesignTool
         #region context menu
         private void CreateContextMenu()
         {
-            contextMenu = new ContextMenu();
+            menu = new Menu();
+            menu.Hide();
+            menu.RenderTransform = new ScaleTransform() { ScaleX = 0.9, ScaleY = 0.9 };
+            lmiBringToFront = new Liquid.MenuItem("Bring to Front", @"Images/BringToFront.png");
+            lmiBringForward = new Liquid.MenuItem("Bring Forward", @"Images/BringForward.png");
+            lmiSendToBack = new Liquid.MenuItem("Send to Back", @"Images/SendToBack.png");
+            lmiSendBackward = new Liquid.MenuItem("Send Backward", @"Images/SendBackward.png");
+            lmiDelete = new Liquid.MenuItem("Delete", @"Images/Delete.png");
+            lmiProperties = new Liquid.MenuItem("Properties", @"Images/Properties.png");
 
-            miBringToFront = new TextImageMenuItem("Bring to Front", @"Images/BringToFront.png");
-            miBringForward = new TextImageMenuItem("Bring Forward", @"Images/BringForward.png");
-            miSendToBack = new TextImageMenuItem("Send to Back", @"Images/SendToBack.png");
-            miSendBackward = new TextImageMenuItem("Send Backward", @"Images/SendBackward.png");
-            miDelete = new TextImageMenuItem("Delete", @"Images/Delete.png");
-            miProperties = new TextImageMenuItem("Properties", @"Images/Properties.png");
+            lmiBringToFront.MouseLeftButtonDown += new MouseButtonEventHandler(lmiBringToFront_MouseLeftButtonDown);
+            lmiBringForward.MouseLeftButtonDown += new MouseButtonEventHandler(lmiBringForward_MouseLeftButtonDown);
+            lmiSendToBack.MouseLeftButtonDown += new MouseButtonEventHandler(lmiSendToBack_MouseLeftButtonDown);
+            lmiSendBackward.MouseLeftButtonDown += new MouseButtonEventHandler(lmiSendBackward_MouseLeftButtonDown);
+            lmiDelete.MouseLeftButtonDown += new MouseButtonEventHandler(lmiDelete_MouseLeftButtonDown);
+            lmiProperties.MouseLeftButtonDown += new MouseButtonEventHandler(lmiProperties_MouseLeftButtonDown);
 
-            miBringToFront.SelectMenuItem += new TextImageMenuItem.OnSelectMenuItem(miBringToFront_SelectMenuItem);
-            miBringForward.SelectMenuItem += new TextImageMenuItem.OnSelectMenuItem(miBringForward_SelectMenuItem);
-            miSendToBack.SelectMenuItem += new TextImageMenuItem.OnSelectMenuItem(miSendToBack_SelectMenuItem);
-            miSendBackward.SelectMenuItem += new TextImageMenuItem.OnSelectMenuItem(miSendBackward_SelectMenuItem);
-            miDelete.SelectMenuItem += new TextImageMenuItem.OnSelectMenuItem(miDelete_SelectMenuItem);
-            miProperties.SelectMenuItem += new TextImageMenuItem.OnSelectMenuItem(miProperties_SelectMenuItem);
-
-            contextMenu.AddMenuItem(miBringToFront);
-            contextMenu.AddMenuItem(miBringForward);
-            contextMenu.AddMenuItem(miSendToBack);
-            contextMenu.AddMenuItem(miSendBackward);
-            contextMenu.AddMenuItem(new SeparatorMenuItem());
-            contextMenu.AddMenuItem(miDelete);
-            contextMenu.AddMenuItem(new SeparatorMenuItem());
-            contextMenu.AddMenuItem(miProperties);
-
-            DockCanvas.DockCanvas.SetZIndex(contextMenu, 9999);
-            LayoutRoot.Children.Add(contextMenu);
+            menu.Items.Add(lmiBringToFront);
+            menu.Items.Add(lmiBringForward);
+            menu.Items.Add(lmiSendToBack);
+            menu.Items.Add(lmiSendBackward);
+            menu.Items.Add(new Liquid.MenuDivider());
+            menu.Items.Add(lmiDelete);
+            menu.Items.Add(new Liquid.MenuDivider());
+            menu.Items.Add(lmiProperties);
+            LayoutRoot.Children.Add(menu);
+            DockCanvas.DockCanvas.SetZIndex(menu, 63000);
         }
 
-        void miBringToFront_SelectMenuItem(object sender, MenuItemEventArgs e)
+        void lmiBringToFront_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             int zindex = DockCanvas.DockCanvas.GetZIndex(selectedProxyControls[0]);
             int newZindex = zindex;
@@ -167,9 +168,11 @@ namespace MashupDesignTool
 
             if (ZIndexChanged != null)
                 ZIndexChanged(selectedControls[0].Control, newZindex);
+
+            HideContextMenu();
         }
 
-        void miBringForward_SelectMenuItem(object sender, MenuItemEventArgs e)
+        void lmiBringForward_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             int zindex = DockCanvas.DockCanvas.GetZIndex(selectedProxyControls[0]);
             int newZindex = zindex;
@@ -191,9 +194,11 @@ namespace MashupDesignTool
 
             if (ZIndexChanged != null)
                 ZIndexChanged(selectedControls[0].Control, newZindex);
+
+            HideContextMenu();
         }
 
-        void miSendToBack_SelectMenuItem(object sender, MenuItemEventArgs e)
+        void lmiSendToBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             int zindex = DockCanvas.DockCanvas.GetZIndex(selectedProxyControls[0]);
             int newZindex = zindex;
@@ -210,9 +215,11 @@ namespace MashupDesignTool
 
             if (ZIndexChanged != null)
                 ZIndexChanged(selectedControls[0].Control, newZindex);
+            
+            HideContextMenu();
         }
 
-        void miSendBackward_SelectMenuItem(object sender, MenuItemEventArgs e)
+        void lmiSendBackward_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             int zindex = DockCanvas.DockCanvas.GetZIndex(selectedProxyControls[0]);
             int newZindex = zindex;
@@ -234,6 +241,26 @@ namespace MashupDesignTool
 
             if (ZIndexChanged != null)
                 ZIndexChanged(selectedControls[0].Control, newZindex);
+
+            HideContextMenu();
+        }
+
+        void lmiDelete_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DeleteSelectedControl();
+            HideContextMenu();
+        }
+
+        void lmiProperties_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (SelectPropertiesMenu != null)
+            {
+                if (selectedControls.Count != 0)
+                    SelectPropertiesMenu(sender, selectedControls[0].Control);
+                else
+                    SelectPropertiesMenu(sender, ControlContainer);
+            }
+            HideContextMenu();
         }
 
         public void SetZindex(ProxyControl pc, int zindex)
@@ -243,20 +270,10 @@ namespace MashupDesignTool
             //DockCanvas.DockCanvas.SetZIndex(pc.RealControl.Control, zindex);
         }
 
-        void miDelete_SelectMenuItem(object sender, MenuItemEventArgs e)
-        {
-            DeleteSelectedControl();
-        }
-
-        void miProperties_SelectMenuItem(object sender, MenuItemEventArgs e)
-        {
-            if (SelectPropertiesMenu != null)
-                SelectPropertiesMenu(sender, selectedControls[0].Control);
-        }
         #endregion context menu
 
         #region add new control to canvas
-        public void AddControl(FrameworkElement uc, double x, double y, int width, int height)
+        public void AddControl(BasicControl uc, double x, double y, int width, int height)
         {
             EffectableControl ec = new EffectableControl(uc);
             uc.Margin = new Thickness(0, 0, 0, 0);
@@ -283,6 +300,7 @@ namespace MashupDesignTool
                 SelectionChanged(this, uc);
 
             this.Focus();
+            HideContextMenu();
         }
 
         private int FindTopProxyControlIndex()
@@ -365,10 +383,15 @@ namespace MashupDesignTool
                         selectedProxyControl.CaptureMouse();
                     }
                 }
-                if (selectedControls.Count == 1)
-                    if (SelectionChanged != null)
-                        SelectionChanged(this, selectedControls[0].Control);
-            } 
+            }
+
+            if (SelectionChanged != null)
+            {
+                if (selectedControls.Count != 0)
+                    SelectionChanged(this, selectedControls[selectedControls.Count - 1].Control);
+                else
+                    SelectionChanged(this, ControlContainer);
+            }
 
             if (isShowingContextMenu)
             {
@@ -465,6 +488,15 @@ namespace MashupDesignTool
 
         private void LayoutRoot_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (isShowingContextMenu)
+            {
+                Rect rect = new Rect(Canvas.GetLeft(menu), Canvas.GetTop(menu), menu.ActualWidth * 0.9, menu.ActualHeight * 0.9);
+                if (!rect.Contains(e.GetPosition(LayoutRoot)))
+                {
+                    HideContextMenu();
+                    return;
+                }
+            }
             this.Focus();
             if (canResize)
             {
@@ -479,11 +511,6 @@ namespace MashupDesignTool
 
                 if (SelectionChanged != null)
                     SelectionChanged(this, ControlContainer);
-            }
-            
-            if (isShowingContextMenu)
-            {
-                HideContextMenu();
             }
         }
 
@@ -513,6 +540,14 @@ namespace MashupDesignTool
                 }
                 multipleSelectRect.Visibility = System.Windows.Visibility.Collapsed;
                 canvasClick = false;
+
+                if (SelectionChanged != null)
+                {
+                    if (selectedControls.Count != 0)
+                        SelectionChanged(this, selectedControls[selectedControls.Count - 1].Control);
+                    else
+                        SelectionChanged(this, ControlContainer);
+                }
             }
         }
 
@@ -816,16 +851,22 @@ namespace MashupDesignTool
         private void PositionContextMenu(Point p)
         {
             Point pt = new Point(0, 0);
-            pt.X = p.X + contextMenu.ActualWidth > LayoutRoot.ActualWidth ? p.X + contextMenu.ActualWidth - LayoutRoot.ActualWidth : 0;
-            pt.Y = p.Y + contextMenu.ActualHeight > LayoutRoot.ActualHeight ? p.Y + contextMenu.ActualHeight - LayoutRoot.ActualHeight : 0;
-            contextMenu.SetValue(Canvas.LeftProperty, p.X - pt.X);
-            contextMenu.SetValue(Canvas.TopProperty, p.Y - pt.Y);
+            pt.X = p.X + menu.ActualWidth * 0.9 > LayoutRoot.ActualWidth ? p.X + menu.ActualWidth * 0.9 - LayoutRoot.ActualWidth : 0;
+            pt.Y = p.Y + menu.ActualHeight * 0.9 > LayoutRoot.ActualHeight ? p.Y + menu.ActualHeight * 0.9 - LayoutRoot.ActualHeight : 0;
+            menu.SetValue(Canvas.LeftProperty, p.X - pt.X);
+            menu.SetValue(Canvas.TopProperty, p.Y - pt.Y);
         }
 
         private void HideContextMenu()
         {
-            contextMenu.HideContextMenu();
+            menu.Hide();
             isShowingContextMenu = false;
+        }
+
+        private void ShowContextMenu()
+        {
+            menu.Show();
+            isShowingContextMenu = true;
         }
 
         private void lbContextMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -873,7 +914,11 @@ namespace MashupDesignTool
                     }
                 }
                 if (temp != null)
+                {
                     AddSelectedControl(temp);
+                    if (SelectionChanged != null)
+                        SelectionChanged(this, selectedControls[0].Control);
+                }
             }
 
             bool order, delete, properties;
@@ -892,16 +937,20 @@ namespace MashupDesignTool
                 order = false;
                 delete = true;
             }
-            miBringForward.Enabled = order;
-            miBringToFront.Enabled = order;
-            miSendBackward.Enabled = order;
-            miSendToBack.Enabled = order;
-            miDelete.Enabled = delete;
 
+            UpdateMenuItem(order, delete);
             PositionContextMenu(pt);
             e.Handled = true;
-            contextMenu.ShowContextMenu();
-            isShowingContextMenu = true;
+            ShowContextMenu();
+        }
+
+        private void UpdateMenuItem(bool order, bool delete)
+        {
+            lmiBringForward.IsEnabled = order;
+            lmiBringToFront.IsEnabled = order;
+            lmiSendBackward.IsEnabled = order;
+            lmiSendToBack.IsEnabled = order;
+            lmiDelete.IsEnabled = delete;
         }
         #endregion rightclick
 
@@ -1069,6 +1118,10 @@ namespace MashupDesignTool
 
         private void root_Loaded(object sender, RoutedEventArgs e)
         {
+            ControlContainer.Width = 600;
+            ControlContainer.Height = 400;
+            LayoutRoot.Width = 600;
+            LayoutRoot.Height = 400;
         }
 
         private void textBox1_TextChanged(object sender, TextChangedEventArgs e)

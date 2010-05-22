@@ -1,55 +1,31 @@
 <Controls>
   <Control>
-    <Name>control.Control1</Name>
-    <DllFilename>control1.dll</DllFilename>
-    <DisplayName>Textbox</DisplayName>
-    <Description>This is control 1</Description>
-    <IconName>control1.png</IconName>
-    <Group>Group 1</Group>
-  </Control>
-  <Control>
-    <Name>control.Control2</Name>
-    <DllFilename>control2.dll</DllFilename>
-    <DisplayName>Calendar</DisplayName>
-    <Description>This is control 2</Description>
-    <IconName>control2.png</IconName>
-    <Group>Group 1</Group>
-  </Control>
-  <Control>
-    <Name>control.Control3</Name>
-    <DllFilename>control3.dll</DllFilename>
-    <DisplayName>Control button 1</DisplayName>
-    <Description>This is control 3</Description>
-    <IconName>control3.png</IconName>
-    <Group>Group 2</Group>
-  </Control>
-  <Control>
-    <Name>control.Control4</Name>
-    <DllFilename>control4.dll</DllFilename>
-    <DisplayName>Control button 2</DisplayName>
-    <Description>This is control 4</Description>
-    <IconName>control4.png</IconName>
-    <Group>Group 2</Group>
-  </Control>
-  <Control>
-    <Name>HienThiListTinTucControl.RssItemListControl</Name>
-    <DllFilename>control5.dll</DllFilename>
+    <Name>MacStyleContactFormControl.MacStyleContactForm</Name>
+    <DllFilename>MacStyleContactFormControl.dll</DllFilename>
     <DllReferences>
-      <Dll>Liquid.RichText.dll</Dll>
-      <Dll>MoveAndScaleEffect.dll</Dll>
-      <Dll>SplitEffect.dll</Dll>
-      <Dll>Effect.dll</Dll>
+      <Dll>DockCanvas.dll</Dll>
       <Dll>System.ComponentModel.DataAnnotations.dll</Dll>
-      <Dll>System.ServiceModel.DomainServices.Client.dll</Dll>
-      <Dll>System.ServiceModel.DomainServices.Client.Web.dll</Dll>
-      <Dll>System.ServiceModel.Syndication.dll</Dll>
-      <Dll>System.ServiceModel.Web.Extensions.dll</Dll>
       <Dll>System.Windows.Controls.Data.Input.dll</Dll>
+    </DllReferences>
+    <DisplayName>Basic contact form</DisplayName>
+    <Description>Basic contact form control</Description>
+    <IconName>control4.png</IconName>
+    <Group>Contact form</Group>
+  </Control>
+  <Control>
+    <Name>RssSlideshowControl.RssSlideshow</Name>
+    <DllFilename>RssSlideshowControl.dll</DllFilename>
+    <DllReferences>
+      <Dll>DockCanvas.dll</Dll>
+      <Dll>System.ComponentModel.DataAnnotations.dll</Dll>
+      <Dll>System.Windows.Controls.Data.Input.dll</Dll>
+      <Dll>Liquid.RichText.dll</Dll>
+      <Dll>System.ServiceModel.Syndication.dll</Dll>
       <Dll>System.Xml.Serialization.dll</Dll>
     </DllReferences>
-    <DisplayName>Rss Viewer</DisplayName>
-    <Description>Control để xem rss</Description>
+    <DisplayName>Rss Slideshow</DisplayName>
+    <Description>Rss Slideshow view</Description>
     <IconName>control4.png</IconName>
-    <Group>Group 2</Group>
+    <Group>Rss</Group>
   </Control>
 </Controls>

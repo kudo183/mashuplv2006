@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.Xml;
 using System.Text;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace BasicLibrary
 {
@@ -63,18 +64,23 @@ namespace BasicLibrary
             return false;
         }
         #endregion
+
         protected BasicEffect mainEffect;
+
         public BasicEffect MainEffect
         {
             get { return mainEffect; }
-            set { ChangeMainEffect(value); }
         }
 
-        public void ChangeMainEffect(BasicEffect be)
+        public virtual void ChangeEffect(string propertyName, Type effectType, EffectableControl owner)
         {
-            if (mainEffect != null)
-                mainEffect.DetachEffect();
-            mainEffect = be;
+            if (propertyName == "MainEffect")
+            {
+                if (mainEffect != null)
+                    mainEffect.DetachEffect();
+                ConstructorInfo ci = effectType.GetConstructor(new Type[] { typeof(EffectableControl) });
+                mainEffect = (BasicEffect)ci.Invoke(new object[] { owner});
+            }
         }
 
         public BasicControl()

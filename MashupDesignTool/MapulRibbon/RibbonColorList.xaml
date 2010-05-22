@@ -1,0 +1,36 @@
+﻿<StackPanel x:Class="MapulRibbon.RibbonColorList"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"    
+    xmlns:local="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:colorpicker="clr-namespace:SilverlightColorPicker" Background="White" Width="152" Height="262">
+    <Border BorderBrush="#FF868686" BorderThickness="1">
+        <Grid x:Name="_rootGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid x:Name="_staticColors" Background="#FFFAFAFA" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />                    
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">                    
+                    <StackPanel Background="#FFFF6E00" Width="25" Height="25" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown" Margin="4,2,2,2" />                                        
+                    <StackPanel Background="#FFFFD500" Width="25" Height="25" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown" Margin="2"  />                                        
+                    <StackPanel Background="#FF92D400" Width="25" Height="25" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown" Margin="2"  />                                        
+                    <StackPanel Background="#FF00AF3F" Width="25" Height="25" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown" Margin="2"  />
+                    <StackPanel Background="#FF0088CE" Width="25" Height="25" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown" Margin="2" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <StackPanel Background="#FF2526A9" Width="25" Height="25" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown" Margin="4,2,2,2" />
+                    <StackPanel Background="#FF6E2585" Width="25" Height="25" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown" Margin="2"  />
+                    <StackPanel Background="#FFC50084" Width="25" Height="25" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown" Margin="2" />
+                    <StackPanel Background="#FFD0103A" Width="25" Height="25" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown" Margin="2" />
+                    <StackPanel Background="#FFAD5833" Width="25" Height="25" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown" Margin="2" />
+                </StackPanel>
+            </Grid>
+            <colorpicker:ColorPicker x:Name="_colorPicker" Grid.Row="1" />
+        </Grid>            
+    </Border>
+</StackPanel>

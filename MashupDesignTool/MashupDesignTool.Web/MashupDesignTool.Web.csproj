@@ -54,6 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientBin\Controls\ControlDll\control1.dll" />
+    <Content Include="ClientBin\Controls\Images\control4.png" />
+    <Content Include="ClientBin\Controls\info.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="ClientBin\Controls\ReferenceDll\Liquid.RichText.dll" />
     <Content Include="ClientBin\Controls\ReferenceDll\System.ComponentModel.DataAnnotations.dll" />
     <Content Include="ClientBin\Controls\ReferenceDll\System.ServiceModel.Syndication.dll" />
@@ -65,9 +69,9 @@
     <Content Include="ClientBin\Controls\ControlDll\control3.dll" />
     <Content Include="ClientBin\Controls\Images\control3.png" />
     <Content Include="ClientBin\Controls\ControlDll\control4.dll" />
-    <Content Include="ClientBin\Controls\Images\control4.png" />
+    <Content Include="ClientBin\Effects\Images\control4.png" />
     <Content Include="ClientBin\Controls\ControlDll\control5.dll" />
-    <Content Include="ClientBin\Controls\info.xml">
+    <Content Include="ClientBin\Effects\info.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="ClientBin\MashupDesignTool.xap" />
@@ -91,6 +95,10 @@
       <DependentUpon>MashupToolWCFService.svc</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClientBin\Effects\EffectDll\" />
+    <Folder Include="ClientBin\Effects\ReferenceDll\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

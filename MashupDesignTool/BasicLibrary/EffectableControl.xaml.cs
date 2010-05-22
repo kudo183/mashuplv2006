@@ -24,8 +24,8 @@ namespace BasicLibrary
 
         public EffectableControl(FrameworkElement control) : this()
         {
-            //control.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-            //control.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+            control.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+            control.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
             LayoutRoot.Children.Add(control);
             control.SizeChanged += new SizeChangedEventHandler(control_SizeChanged);
             this.control = control;
@@ -36,17 +36,23 @@ namespace BasicLibrary
 
         void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            control.Width = e.NewSize.Width;
-            control.Height = e.NewSize.Height;
-            LayoutRoot.Clip = new RectangleGeometry() { Rect = new Rect(new Point(0, 0), e.NewSize) };
+            if (control.Width != e.NewSize.Width || control.Height != e.NewSize.Height)
+            {
+                control.Width = e.NewSize.Width;
+                control.Height = e.NewSize.Height;
+                LayoutRoot.Clip = new RectangleGeometry() { Rect = new Rect(new Point(0, 0), e.NewSize) };
+            }
         }
 
         void control_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            LayoutRoot.Width = e.NewSize.Width;
-            LayoutRoot.Height = e.NewSize.Height;
-            this.Width = LayoutRoot.Width;
-            this.Height = LayoutRoot.Height;
+            if (LayoutRoot.Width != e.NewSize.Width || LayoutRoot.Height != e.NewSize.Height)
+            {
+                LayoutRoot.Width = e.NewSize.Width;
+                LayoutRoot.Height = e.NewSize.Height;
+                this.Width = LayoutRoot.Width;
+                this.Height = LayoutRoot.Height;
+            }
         }
 
         public FrameworkElement Control
