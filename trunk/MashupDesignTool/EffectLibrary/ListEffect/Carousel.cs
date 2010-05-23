@@ -15,7 +15,7 @@ namespace EffectLibrary
 {
     public class Carousel : BasicListEffect
     {
-        private class CarouselItem : DependencyObject
+        public class CarouselItem : DependencyObject
         {
             #region center
             public static readonly DependencyProperty CenterProperty = DependencyProperty.Register("Center", typeof(Point), typeof(CarouselItem), new PropertyMetadata(OnCenterPropertyChanged));
@@ -156,17 +156,22 @@ namespace EffectLibrary
             }
 
             private Storyboard sb;
-            public CarouselItem(Point center, Size axis, double duration, double perAngle, FrameworkElement element)
+
+            public CarouselItem(Point center, Size axis, double duration, FrameworkElement element)
             {
                 Center = center;
                 Axis = axis;
                 Duration = duration;
-                PerAngle = perAngle;
                 _Element = element;
-                sb = CreateStoryBoard(PerAngle, Duration);
+                sb = CreateStoryBoard(Duration);
             }
 
-            public void BeginTurn()
+            public void Next()
+            {
+                sb.Begin();
+            }
+
+            public void Prev()
             {
                 sb.Begin();
             }
@@ -193,13 +198,12 @@ namespace EffectLibrary
                 sb.Pause();
             }
 
-            private Storyboard CreateStoryBoard(double perAngle, double duration)
+            private Storyboard CreateStoryBoard(double duration)
             {
                 Storyboard storyboard = new Storyboard();
 
                 // Angle animation
                 DoubleAnimation doubleAnimation = new DoubleAnimation();
-                doubleAnimation.By = perAngle;
                 doubleAnimation.Duration = TimeSpan.FromMilliseconds(duration);
 
                 // Set storyboard target property
@@ -247,10 +251,10 @@ namespace EffectLibrary
             set { _ItemHeight = value; }
         }
 
-        private Canvas LayoutRoot;
-        private Point _Center;
-        private double _PerAngel = Math.PI;
-        private Size _Axis;
+        public Canvas LayoutRoot;
+        public Point _Center;
+        public double _PerAngel = Math.PI;
+        public Size _Axis;
         #endregion
 
         #region implement abstact method
@@ -261,15 +265,20 @@ namespace EffectLibrary
         }
         public override void Stop()
         {
+            foreach (CarouselItem i in carouselItems)
+                i.StopTurn();
         }
         public override void DetachEffect()
         {
             foreach (CarouselItem ca in carouselItems)
                 ca.Element.RenderTransform = null;
             LayoutRoot.Children.Clear();
+            control.Content = null;
         }
         public override void Next()
         {
+            foreach (CarouselItem i in carouselItems)
+                i.Next();
         }
         public override void Prev()
         {
@@ -277,6 +286,14 @@ namespace EffectLibrary
 
         protected override void SetSelfHandle()
         {
+            if (_isSelfHandle == true)
+            {
+                control.OnListChange += new BasicListControl.ListChangeHandler(control_OnListChange);
+            }
+            else
+            {
+                control.OnListChange -= new BasicListControl.ListChangeHandler(control_OnListChange);
+            }
         }
         #endregion
 
@@ -284,39 +301,54 @@ namespace EffectLibrary
         List<CarouselItem> carouselItems = new List<CarouselItem>();
         public void AddItem(FrameworkElement element)
         {
-            CarouselItem item = new CarouselItem(_Center, _Axis, _Duration, _PerAngel, element);
-            LayoutRoot.Children.Add(element);
-            carouselItems.Add(item);
-            _PerAngel = Math.PI * 2 / carouselItems.Count;
-            for (int i = 0; i < carouselItems.Count; i++)
-            {
-                carouselItems[i].Angle = i * _PerAngel;
-                carouselItems[i].PerAngle = _PerAngel;
-            }
+            InsertItem(LayoutRoot.Children.Count, element);
         }
 
         public void InsertItem(int index, FrameworkElement element)
         {
-
+            CarouselItem item = new CarouselItem(_Center, _Axis, _Duration, element);
+            LayoutRoot.Children.Insert(index, element);
+            carouselItems.Insert(index, item);
+            UpdateItem();
         }
 
         public void Swap(int index1, int index2)
         {
+            int min = Math.Min(index1, index2);
+            int max = Math.Max(index1, index2);
+
+            UIElement temp1 = LayoutRoot.Children[min];
+            UIElement temp2 = LayoutRoot.Children[max];
+            
+            LayoutRoot.Children.RemoveAt(max);
+            LayoutRoot.Children[min] = temp2;
+            LayoutRoot.Children.Insert(max, temp1);
+
+            CarouselItem temp3 = carouselItems[min];
+            CarouselItem temp4 = carouselItems[max];
+
+            carouselItems.RemoveAt(max);
+            carouselItems[min] = temp4;
+            carouselItems.Insert(max, temp3);
+
+            UpdateItem();
         }
 
         public void RemoveItemAt(int index)
         {
-
-
+            LayoutRoot.Children.RemoveAt(index);
+            carouselItems.RemoveAt(index);
+            UpdateItem();
         }
         public void RemoveItem(FrameworkElement ui)
         {
-
-
+            int index = LayoutRoot.Children.IndexOf(ui);
+            RemoveItemAt(index);
         }
         public void RemoveAllItem()
         {
-
+            LayoutRoot.Children.Clear();
+            carouselItems.Clear();
         }
         #endregion
 
@@ -328,12 +360,12 @@ namespace EffectLibrary
             LayoutRoot.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
             control.Content = LayoutRoot;
 
-            control.OnListChange += new BasicListControl.ListChangeHandler(control_OnListChange);
             control.Width = 200;
             control.Height = 200;
             Duration = 5000;
 
             control.Background = new SolidColorBrush(Colors.Red);
+
             ItemWidth = ItemHeight = 20;
 
             // X and Y axis of the ellipse
@@ -353,24 +385,41 @@ namespace EffectLibrary
             switch (action)
             {
                 case "ADD":
+                    Stop();
                     AddItem(control);
                     break;
                 case "INSERT":
+                    Stop();
                     InsertItem(index1, control);
                     break;
                 case "SWAP":
+                    Stop();
                     Swap(index1, index2);
                     break;
                 case "REMOVEAT":
+                    Stop();
                     RemoveItemAt(index1);
                     break;
                 case "REMOVE":
+                    Stop();
                     RemoveItem(control);
                     break;
                 case "REMOVEALL":
+                    Stop();           
                     RemoveAllItem();
                     break;
             }
+        }
+
+        private void UpdateItem()
+        {
+            _PerAngel = Math.PI * 2 / carouselItems.Count;
+            for (int i = 0; i < carouselItems.Count; i++)
+            {
+                carouselItems[i].Angle = i * _PerAngel;
+                carouselItems[i].PerAngle = _PerAngel;
+            }
+            Start();
         }
     }
 }

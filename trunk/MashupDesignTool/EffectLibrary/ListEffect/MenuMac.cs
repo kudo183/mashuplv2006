@@ -20,7 +20,8 @@ namespace EffectLibrary
         List<Storyboard> lstStoryEnter = new List<Storyboard>();
         List<Storyboard> lstStoryLeave = new List<Storyboard>();
         List<SplineDoubleKeyFrame> lstSDKFWidth = new List<SplineDoubleKeyFrame>();
-        List<SplineDoubleKeyFrame> lstSDKFHeight = new List<SplineDoubleKeyFrame>();
+        List<SplineDoubleKeyFrame> lstSDKFHeight = new List<SplineDoubleKeyFrame>();        
+
         double size = 40;
 
         #region implement abstact method
@@ -32,6 +33,9 @@ namespace EffectLibrary
         }
         public override void DetachEffect()
         {
+            LayoutRoot.Children.Clear();
+            control.Content = null;
+            IsSelfHandle = false;
         }
         public override void Next()
         {
@@ -42,6 +46,20 @@ namespace EffectLibrary
 
         protected override void SetSelfHandle()
         {
+            if (_isSelfHandle == true)
+            {
+                control.MouseEnter += new MouseEventHandler(MenuMacOS_MouseEnter);
+                control.MouseMove += new MouseEventHandler(MenuMacOS_MouseEnter);
+                control.MouseLeave += new MouseEventHandler(MenuMacOS_MouseLeave);
+                control.OnListChange += new BasicListControl.ListChangeHandler(control_OnListChange);
+            }
+            else
+            {
+                control.MouseEnter -= new MouseEventHandler(MenuMacOS_MouseEnter);
+                control.MouseMove -= new MouseEventHandler(MenuMacOS_MouseEnter);
+                control.MouseLeave -= new MouseEventHandler(MenuMacOS_MouseLeave);
+                control.OnListChange -= new BasicListControl.ListChangeHandler(control_OnListChange);
+            }
         }
         #endregion
 
@@ -60,6 +78,7 @@ namespace EffectLibrary
             DoubleAnimationUsingKeyFrames dakf;
             SplineDoubleKeyFrame sdkf;
 
+            //create storyboard for mouse leave animation
             sb = new Storyboard();
             dakf = new DoubleAnimationUsingKeyFrames();
             dakf.BeginTime = TimeSpan.FromSeconds(0);
@@ -83,6 +102,7 @@ namespace EffectLibrary
 
             lstStoryLeave.Insert(index, sb);
 
+            //create storyboard for mouse enter animation
             sb = new Storyboard();
             dakf = new DoubleAnimationUsingKeyFrames();
             dakf.BeginTime = TimeSpan.FromSeconds(0);
@@ -111,16 +131,45 @@ namespace EffectLibrary
 
         public void Swap(int index1, int index2)
         {
+            int min = Math.Min(index1, index2);
+            int max = Math.Max(index1, index2);
+
+            UIElement temp1 = LayoutRoot.Children[min];
+            UIElement temp2 = LayoutRoot.Children[max];
+
+            LayoutRoot.Children.RemoveAt(max);
+            LayoutRoot.Children[min] = temp2;
+            LayoutRoot.Children.Insert(max, temp1);
+
+            SplineDoubleKeyFrame temp3 = lstSDKFWidth[min];
+            lstSDKFWidth[min] = lstSDKFWidth[max];
+            lstSDKFWidth[max] = temp3;
+
+            SplineDoubleKeyFrame temp4 = lstSDKFHeight[min];
+            lstSDKFHeight[min] = lstSDKFHeight[max];
+            lstSDKFHeight[max] = temp4;
+
+            Storyboard temp5 = lstStoryEnter[min];
+            lstStoryEnter[min] = lstStoryEnter[max];
+            lstStoryEnter[max] = temp5;
+
+            Storyboard temp6 = lstStoryLeave[min];
+            lstStoryLeave[min] = lstStoryLeave[max];
+            lstStoryLeave[max] = temp6;
         }
 
         public void RemoveItemAt(int index)
         {
             LayoutRoot.Children.RemoveAt(index);
-
+            lstSDKFHeight.RemoveAt(index);
+            lstSDKFWidth.RemoveAt(index);
+            lstStoryEnter.RemoveAt(index);
+            lstStoryLeave.RemoveAt(index);
         }
         public void RemoveItem(FrameworkElement ui)
         {
-            LayoutRoot.Children.Remove(ui);            
+            int index = LayoutRoot.Children.IndexOf(ui);
+            RemoveItemAt(index);
                 
         }
         public void RemoveAllItem()
@@ -135,11 +184,7 @@ namespace EffectLibrary
 
         StackPanel LayoutRoot;
         public MenuMac(BasicListControl control):base(control)
-        {
-            control.MouseEnter += new MouseEventHandler(MenuMacOS_MouseEnter);
-            control.MouseMove += new MouseEventHandler(MenuMacOS_MouseEnter);
-            control.MouseLeave += new MouseEventHandler(MenuMacOS_MouseLeave);
-            control.OnListChange += new BasicListControl.ListChangeHandler(control_OnListChange);
+        {           
             LayoutRoot = new StackPanel();
             control.Content = LayoutRoot;
 
@@ -147,21 +192,10 @@ namespace EffectLibrary
             LayoutRoot.Orientation = Orientation.Horizontal;
             LayoutRoot.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
 
-            //Button bt;
-            //bt = new Button();
-            //bt.Content = "text";
-            //bt.Width = bt.Height = 40;
-
-            //BasicLibrary.EffectableControl ec = new BasicLibrary.EffectableControl(bt);
-            //ec.Width = ec.Height = 40;
-            //AddItem(ec);
-           
-            //bt = new Button();
-            //bt.Content = "text";
-            //bt.Width = bt.Height = 40;
-
-            ////AddItem(new BasicLibrary.EffectableControl(bt));
-            //AddItem(bt);
+            foreach (EffectableControl c in control.Items)
+            {
+                AddItem(c);
+            }
         }
 
         void control_OnListChange(string action, int index1, EffectableControl control, int index2)
@@ -209,7 +243,6 @@ namespace EffectLibrary
                 {
                     lstSDKFWidth[i].Value = lstSDKFHeight[i].Value = size + 88 * (Math.Sin(Math.PI * ((offset.X - rangeMin) / 500)));
                     lstStoryEnter[i].Begin();
-                    //MarginAnimation.Begin();
                 }
                 else
                 {
