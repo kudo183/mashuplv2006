@@ -12,12 +12,12 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Text;
 using System.Xml;
-
+using System.Reflection;
 namespace BasicLibrary
 {
     public class BasicListControl : BasicControl
     {
-       
+
         public delegate void ListChangeHandler(string action, int index1, EffectableControl control, int index2);
         public event ListChangeHandler OnListChange;
 
@@ -70,6 +70,28 @@ namespace BasicLibrary
             if (OnListChange != null)
                 OnListChange("REMOVEALL", -1, null, -1);
             _items.Clear();
+        }
+        public virtual EffectableControl GetAt(int index)
+        {
+            return _items[index];
+        }
+        
+        protected BasicListEffect listEffect;
+
+        public BasicListEffect ListEffect
+        {
+            get { return listEffect; }            
+        }
+
+        public virtual void ChangeListEffect(string propertyName, Type effectType)
+        {
+            if (propertyName == "ListEffect")
+            {
+                if (listEffect != null)
+                    listEffect.DetachEffect();
+                ConstructorInfo ci = effectType.GetConstructor(new Type[] { typeof(BasicListControl) });
+                listEffect = (BasicListEffect)ci.Invoke(new object[] { this });
+            }
         }
     }
 }
