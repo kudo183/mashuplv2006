@@ -59,11 +59,13 @@
     <Compile Include="BasicControl.cs" />
     <Compile Include="BasicListControl.cs" />
     <Compile Include="BasicListEffect.cs" />
+    <Compile Include="ImageListControl.cs" />
     <Compile Include="EffectableControl.xaml.cs">
       <DependentUpon>EffectableControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="IBasic.cs" />
     <Compile Include="CustomPixelShaderBase.cs" />
+    <Compile Include="ImageListControlItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +79,9 @@
       <Project>{C38EEC60-122E-4002-A7B1-E6465DC41201}</Project>
       <Name>DockCanvas</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\default.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
