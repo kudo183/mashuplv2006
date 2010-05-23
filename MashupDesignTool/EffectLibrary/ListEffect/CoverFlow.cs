@@ -25,7 +25,9 @@ namespace EffectLibrary
         }
         public override void DetachEffect()
         {
-           
+            LayoutRoot.Children.Clear();
+            control.Content = null;
+            IsSelfHandle = false;
         }
         public override void Next()
         {
@@ -36,12 +38,25 @@ namespace EffectLibrary
 
         protected override void SetSelfHandle()
         {
+            if (_isSelfHandle == true)
+            {
+                control.OnListChange += new BasicListControl.ListChangeHandler(control_OnListChange);
+            }
+            else
+            {
+                control.OnListChange -= new BasicListControl.ListChangeHandler(control_OnListChange);
+            }
         }
         #endregion
 
         #region method for list change event
        
         public void AddItem(FrameworkElement element)
+        {
+            InsertItem(LayoutRoot.Children.Count, element);
+        }
+
+        public void InsertItem(int index, FrameworkElement element)
         {
             CoverFlowItem item = new CoverFlowItem(element);
             element.Width = ItemWidth;
@@ -53,28 +68,43 @@ namespace EffectLibrary
             LayoutChildren();
         }
 
-        public void InsertItem(int index, FrameworkElement element)
-        {
-
-        }
-
         public void Swap(int index1, int index2)
         {
+            int min = Math.Min(index1, index2);
+            int max = Math.Max(index1, index2);
+
+            UIElement temp1 = LayoutRoot.Children[min];
+            UIElement temp2 = LayoutRoot.Children[max];
+
+            LayoutRoot.Children.RemoveAt(max);
+            LayoutRoot.Children[min] = temp2;
+            LayoutRoot.Children.Insert(max, temp1);
+
+            CoverFlowItem temp3 = coverFlowItems[min];
+            CoverFlowItem temp4 = coverFlowItems[max];
+
+            coverFlowItems.RemoveAt(max);
+            coverFlowItems[min] = temp4;
+            coverFlowItems.Insert(max, temp3);
+
+            LayoutChildren();
         }
 
         public void RemoveItemAt(int index)
         {
-
-
+            LayoutRoot.Children.RemoveAt(index);
+            coverFlowItems.RemoveAt(index);
+            LayoutChildren();
         }
         public void RemoveItem(FrameworkElement ui)
         {
-
-
+            int index = LayoutRoot.Children.IndexOf(ui);
+            RemoveItemAt(index);            
         }
         public void RemoveAllItem()
         {
-
+            LayoutRoot.Children.Clear();
+            coverFlowItems.Clear();
         }
         #endregion
 
@@ -427,10 +457,7 @@ namespace EffectLibrary
             LayoutRoot.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
             control.Content = LayoutRoot;
             LayoutRoot.Background = new SolidColorBrush(Colors.Red);
-            control.OnListChange += new BasicListControl.ListChangeHandler(control_OnListChange);
-            //control.Width = 200;
-            //control.Height = 200;
-                        
+            LayoutRoot.Width = 400;                        
             ItemWidth = ItemHeight = 150;
 
             coverFlowItems = new List<CoverFlowItem>();
@@ -448,12 +475,6 @@ namespace EffectLibrary
             {
                 AddItem(element);
             }
-
-            LayoutRoot.Width = LayoutRoot.Height = 400;
-            //RectangleGeometry rect = new RectangleGeometry();
-            //rect.Rect = new Rect(0, 0, 800, 800);
-            //LayoutRoot.Clip = rect;
-
         }
 
         void control_OnListChange(string action, int index1, EffectableControl control, int index2)
@@ -509,7 +530,7 @@ namespace EffectLibrary
                 mu = -1;
             else if (b > 0)
                 mu = 1;
-            double x = (m + ((double)b * SpaceBetweenItems + (SpaceBetweenSelectedItemAndItems * mu))) - item.Element.ActualWidth / 2;
+            double x = (m + ((double)b * SpaceBetweenItems + (SpaceBetweenSelectedItemAndItems * mu))) - item.Element.Width / 2;
 
             double s = mu == 0 ? 1 : Scale;
 
