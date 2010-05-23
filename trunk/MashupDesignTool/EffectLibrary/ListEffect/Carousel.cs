@@ -378,6 +378,11 @@ namespace EffectLibrary
 
             _Center = new Point(centerX, centerY);
             _Axis = new Size(radiusX, radiusY);
+
+            foreach (EffectableControl c in control.Items)
+            {
+                AddItem(c);
+            }
         }
 
         void control_OnListChange(string action, int index1, EffectableControl control, int index2)
