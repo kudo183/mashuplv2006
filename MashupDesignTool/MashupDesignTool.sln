@@ -35,6 +35,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacStyleContactFormControl"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapulRibbon", "MapulRibbon\MapulRibbon.csproj", "{E6875CC4-6311-41E3-B8F0-F4E3B27E8A59}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageListEditor", "ImageListEditor\ImageListEditor.csproj", "{3E104867-6004-47A1-AB24-8158A307EDB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloatableWindow", "FloatableWindow\FloatableWindow.csproj", "{018E725A-830D-4913-B646-067E2222B4EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +101,14 @@ Global
 		{E6875CC4-6311-41E3-B8F0-F4E3B27E8A59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6875CC4-6311-41E3-B8F0-F4E3B27E8A59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6875CC4-6311-41E3-B8F0-F4E3B27E8A59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E104867-6004-47A1-AB24-8158A307EDB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E104867-6004-47A1-AB24-8158A307EDB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E104867-6004-47A1-AB24-8158A307EDB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E104867-6004-47A1-AB24-8158A307EDB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{018E725A-830D-4913-B646-067E2222B4EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{018E725A-830D-4913-B646-067E2222B4EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{018E725A-830D-4913-B646-067E2222B4EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{018E725A-830D-4913-B646-067E2222B4EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
