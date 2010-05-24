@@ -21,8 +21,9 @@ namespace BasicLibrary
             : base()
         {
             int count = 5;
+            Width = Height = 150;
             for (int i = 0; i < count; i++)
-                AddItem(new ImageListControlItems());
+                AddItem(new ImageListControlItems() { Width = 50, Height = 50 });
         }
     }
 }
