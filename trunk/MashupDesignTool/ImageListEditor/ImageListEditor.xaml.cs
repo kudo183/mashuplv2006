@@ -64,7 +64,10 @@ namespace ItemCollectionEditor
         {
             f.Show(150, 150);
         }
-
+        public void ShowDialog()
+        {
+            f.ShowDialog();
+        }
         public void Show(double horizontalOffset, double verticalOffset)
         {
             f.Show(horizontalOffset, verticalOffset);
