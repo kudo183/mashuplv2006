@@ -45,6 +45,10 @@ namespace ItemCollectionEditor
             root = p;
             f.ParentLayoutRoot = root;
             f.Content = this;
+            f.HasCloseButton = false;
+            f.Title = "Image list editor";
+            f.Width = 600;
+            f.Height = 400;
             foreach (ImageListControlItems ec in list.Items)
             {
                 Image img = new Image();
@@ -53,6 +57,8 @@ namespace ItemCollectionEditor
                 listBox.Items.Add(img);
                 listControlItems.Add(ec);
             }
+            if (listBox.Items.Count > 0)
+                listBox.SelectedIndex = 0;
         }
 
         public void Close()
