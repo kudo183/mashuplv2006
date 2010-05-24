@@ -155,9 +155,7 @@ namespace RssSlideshowControl
             hlbTitle.Content = list[currentIndex].Title;
             rtbSummary.Load(Liquid.Format.HTML, list[currentIndex].Summary);
 
-            if (mainEffect != null)
-                mainEffect.Start();
-
+            StartMainEffect();
             timer.Start();
         }
 

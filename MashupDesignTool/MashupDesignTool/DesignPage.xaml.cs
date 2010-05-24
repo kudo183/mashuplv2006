@@ -367,7 +367,7 @@ namespace MashupDesignTool
 
         private void AddControl(string controlName)
         {
-            BasicControl uc = LoadedAssembly[controlName].CreateInstance(controlName) as BasicControl;
+            FrameworkElement uc = LoadedAssembly[controlName].CreateInstance(controlName) as FrameworkElement;
             if (uc != null)
                 designCanvas1.AddControl(uc, 100.0, 100.0, 400, 300);
         }
@@ -506,21 +506,30 @@ namespace MashupDesignTool
 
         private void AddEffectMenuItemsToMenu(EffectableControl element)
         {
-            PropertyInfo[] pis = element.Control.GetType().GetProperties();
+            PropertyInfo[] pis = element.GetType().GetProperties();
             foreach (PropertyInfo pi in pis)
             {
                 if (typeof(BasicEffect).IsAssignableFrom(pi.PropertyType))
                 {
                     AddEffectMenuItemToMenu(pi, true, element);
                 }
+            }
+
+            pis = element.Control.GetType().GetProperties();
+            foreach (PropertyInfo pi in pis)
+            {
+                if (typeof(BasicEffect).IsAssignableFrom(pi.PropertyType))
+                {
+                    AddEffectMenuItemToMenu(pi, true, element.Control);
+                }
                 else if (typeof(BasicListEffect).IsAssignableFrom(pi.PropertyType))
                 {
-                    AddEffectMenuItemToMenu(pi, false, element);
+                    AddEffectMenuItemToMenu(pi, false, element.Control);
                 }
             }
         }
 
-        private void AddEffectMenuItemToMenu(PropertyInfo pi, bool single, EffectableControl element)
+        private void AddEffectMenuItemToMenu(PropertyInfo pi, bool single, FrameworkElement element)
         {
             RibbonSimpleListView listView = new RibbonSimpleListView();
             listView.Width = 600;
@@ -530,7 +539,7 @@ namespace MashupDesignTool
             int selectedIndex = -1;
             if (single)
             {
-                BasicEffect be = (BasicEffect)element.Control.GetType().GetProperty(pi.Name).GetValue(element.Control, null); 
+                BasicEffect be = (BasicEffect)element.GetType().GetProperty(pi.Name).GetValue(element, null); 
                 if (be != null)
                     str = be.GetType().FullName;
                 for (int i = 0; i < listSingleEffects.Count; i++)
@@ -542,7 +551,7 @@ namespace MashupDesignTool
             }
             else
             {
-                BasicListEffect ble = (BasicListEffect)element.Control.GetType().GetProperty(pi.Name).GetValue(element.Control, null);
+                BasicListEffect ble = (BasicListEffect)element.GetType().GetProperty(pi.Name).GetValue(element, null);
                 if (ble != null)
                     str = ble.GetType().FullName;
                 for (int i = 0; i < listListEffects.Count; i++)
@@ -610,8 +619,13 @@ namespace MashupDesignTool
 
         private void ChangeEffect(string effectName)
         {
-            ((BasicControl)designCanvas1.SelectedControls[0].Control).ChangeEffect(piEffect.Name, LoadedEffectAssembly[effectName].GetType(effectName), designCanvas1.SelectedControls[0]);
-            effectPropertiesGrid.SelectedObject = piEffect.GetValue(designCanvas1.SelectedControls[0].Control, null);
+            designCanvas1.SelectedControls[0].ChangeEffect(piEffect.Name, LoadedEffectAssembly[effectName].GetType(effectName));
+            FrameworkElement ec;
+            if (((TabsItem)menu.Tabs.Items[1]).IsSelected)
+                ec = designCanvas1.SelectedControls[0];
+            else
+                ec = (FrameworkElement)designCanvas1.SelectedControls[0].Control;
+            effectPropertiesGrid.SelectedObject = piEffect.GetValue(ec, null);
         }
 
         private void DownloadEffect(EffectInfo ei)
@@ -761,7 +775,15 @@ namespace MashupDesignTool
             TabsItem ti = (TabsItem)e.AddedItems[0];
             if (ti.Header.ToString() != "Home")
             {
-                BasicControl ec = (BasicControl)designCanvas1.SelectedControls[0].Control;
+                FrameworkElement ec;
+                if (((TabsItem)menu.Tabs.Items[1]).IsSelected)
+                {
+                    ec = designCanvas1.SelectedControls[0];
+                }
+                else
+                {
+                    ec = (FrameworkElement)designCanvas1.SelectedControls[0].Control;
+                }
                 PropertyInfo pi = (PropertyInfo)ti.Tag;
                 effectPropertiesGrid.SelectedObject = pi.GetValue(ec, null);
             }

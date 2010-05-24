@@ -65,27 +65,23 @@ namespace BasicLibrary
         }
         #endregion
 
-        protected BasicEffect mainEffect;
-
-        public BasicEffect MainEffect
-        {
-            get { return mainEffect; }
-        }
+        public delegate void CallEffectHandle(object sender);
+        public event CallEffectHandle CallEffect;
 
         public virtual void ChangeEffect(string propertyName, Type effectType, EffectableControl owner)
         {
-            if (propertyName == "MainEffect")
-            {
-                if (mainEffect != null)
-                    mainEffect.DetachEffect();
-                ConstructorInfo ci = effectType.GetConstructor(new Type[] { typeof(EffectableControl) });
-                mainEffect = (BasicEffect)ci.Invoke(new object[] { owner});
-            }
+            
         }
 
         public BasicControl()
             : base()
         {
+        }
+
+        protected void StartMainEffect()
+        {
+            if (CallEffect != null)
+                CallEffect(this);
         }
     }   
 }

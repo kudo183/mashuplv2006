@@ -181,9 +181,9 @@ namespace Testcontrol1
 
         private void button1_Click_1(object sender, RoutedEventArgs e)
         {
-            ((BasicLibrary.BasicControl)btn).MainEffect.Start();
-            WriteableBitmap bitmap = new WriteableBitmap(btn, rectangle1.RenderTransform);
-            image1.Source = bitmap;
+            //((BasicLibrary.BasicControl)btn).MainEffect.Start();
+            //WriteableBitmap bitmap = new WriteableBitmap(btn, rectangle1.RenderTransform);
+            //image1.Source = bitmap;
         }
 
         private void rssItemListControl1_Loaded_1(object sender, RoutedEventArgs e)
