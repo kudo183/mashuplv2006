@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Controls>
   <Control>
     <Name>MacStyleContactFormControl.MacStyleContactForm</Name>
@@ -11,6 +12,22 @@
     <Description>Basic contact form control</Description>
     <IconName>control4.png</IconName>
     <Group>Contact form</Group>
+  </Control>
+  <Control>
+    <Name>BasicLibrary.ImageListControl</Name>
+    <DllFilename>BasicLibrary.dll</DllFilename>
+    <DllReferences>
+      <Dll>DockCanvas.dll</Dll>
+      <Dll>System.ComponentModel.DataAnnotations.dll</Dll>
+      <Dll>System.Windows.Controls.Data.Input.dll</Dll>
+      <Dll>Liquid.RichText.dll</Dll>
+      <Dll>System.ServiceModel.Syndication.dll</Dll>
+      <Dll>System.Xml.Serialization.dll</Dll>
+    </DllReferences>
+    <DisplayName>Image List</DisplayName>
+    <Description>Image List Control</Description>
+    <IconName>control4.png</IconName>
+    <Group>Rss</Group>
   </Control>
   <Control>
     <Name>RssSlideshowControl.RssSlideshow</Name>
@@ -27,5 +44,23 @@
     <Description>Rss Slideshow view</Description>
     <IconName>control4.png</IconName>
     <Group>Rss</Group>
+  </Control>
+  <Control>
+    <Name>ControlLibrary.AnimatedGifImage</Name>
+    <DllFilename>AnimatedGifImage.dll</DllFilename>
+    <DllReferences>
+      <Dll>ImageTools.Controls.dll</Dll>
+      <Dll>ImageTools.dll</Dll>
+      <Dll>ImageTools.Filtering.dll</Dll>
+      <Dll>ImageTools.IO.Bmp.dll</Dll>
+      <Dll>ImageTools.IO.Png.dll</Dll>
+      <Dll>ImageTools.IO.Jpeg.dll</Dll>
+      <Dll>ImageTools.IO.Gif.dll</Dll>
+      <Dll>ImageTools.Utils.dll</Dll>
+    </DllReferences>
+    <DisplayName>AnimatedGifImage</DisplayName>
+    <Description>Control để hiển thị ảnh</Description>
+    <IconName>control4.png</IconName>
+    <Group>Group 2</Group>
   </Control>
 </Controls>
