@@ -14,15 +14,11 @@
     <Group>Contact form</Group>
   </Control>
   <Control>
-    <Name>BasicLibrary.ImageListControl</Name>
-    <DllFilename>BasicLibrary.dll</DllFilename>
+    <Name>ControlLibrary.ImageListControl</Name>
+    <DllFilename>ImageListControl.dll</DllFilename>
     <DllReferences>
-      <Dll>DockCanvas.dll</Dll>
-      <Dll>System.ComponentModel.DataAnnotations.dll</Dll>
-      <Dll>System.Windows.Controls.Data.Input.dll</Dll>
-      <Dll>Liquid.RichText.dll</Dll>
-      <Dll>System.ServiceModel.Syndication.dll</Dll>
-      <Dll>System.Xml.Serialization.dll</Dll>
+      <Dll>BasicLibrary.dll</Dll>
+      <Dll>EffectLibrary.dll</Dll>
     </DllReferences>
     <DisplayName>Image List</DisplayName>
     <Description>Image List Control</Description>
