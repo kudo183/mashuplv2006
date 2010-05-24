@@ -426,6 +426,7 @@ namespace MashupDesignTool
             {
                 CleanEffectMenuItemsFromMenu();
                 effectPropertiesGrid.SelectedObject = null;
+                RemoveImageListEditorButtonFromHome();
             }
 
             if (element.Equals(designCanvas1.ControlContainer))
@@ -439,6 +440,11 @@ namespace MashupDesignTool
                 {
                     propertiesGrid.SelectedObject = element;
                     AddEffectMenuItemsToMenu((EffectableControl)designCanvas1.SelectedControls[0]);
+
+                    if (typeof(ImageListControl).IsAssignableFrom(designCanvas1.SelectedControls[0].Control.GetType()))
+                    {
+                        AddImageListEditorButtonToHome();
+                    }
                 }
                 previousElement = designCanvas1.SelectedControls[0].Control;
             }
@@ -446,6 +452,46 @@ namespace MashupDesignTool
             {
                 propertiesGrid.SelectedObject = null;
                 previousElement = null;
+            }
+        }
+
+        RibbonItem riImageList = new RibbonItem();
+        private void AddImageListEditorButtonToHome()
+        {
+            riImageList = new RibbonItem();
+            riImageList.Title = "Image list";
+            riImageList.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+
+            RibbonButtonsGroup rbg = new RibbonButtonsGroup();
+            RibbonButton rb = new RibbonButton() 
+            { 
+                Text = "Editor", 
+                ImageUrl = new BitmapImage(new Uri("Images/Delete.png", UriKind.Relative)),
+                TooltipText = "Edit image list"
+            };
+            rb.OnClick += new RoutedEventHandler(rbImageListEditor_OnClick);
+            rbg.Children.Add(rb);
+            riImageList.Content = rbg;
+
+            RibbonItems ris = (RibbonItems)((TabsItem)menu.Tabs.Items[0]).Content;
+            ris.Children.Add(riImageList);
+
+            ((TabsItem)menu.Tabs.Items[0]).Content = ris;
+        }
+
+        void rbImageListEditor_OnClick(object sender, RoutedEventArgs e)
+        {
+            // hien thi tai day, lay control hien tai bang cach designCanvas1.SelectedControls[0].Control;
+        }
+
+        private void RemoveImageListEditorButtonFromHome()
+        {
+            if (riImageList != null)
+            {
+                RibbonItems ris = (RibbonItems)((TabsItem)menu.Tabs.Items[0]).Content;
+                ris.Children.Remove(riImageList);
+
+                ((TabsItem)menu.Tabs.Items[0]).Content = ris;
             }
         }
 
