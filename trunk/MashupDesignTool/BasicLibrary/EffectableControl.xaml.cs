@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using BasicLibrary;
+using System.Reflection;
 
 namespace BasicLibrary
 {
@@ -32,6 +33,9 @@ namespace BasicLibrary
             this.Width = control.Width;
             this.Height = control.Height;
             this.SizeChanged += new SizeChangedEventHandler(LayoutRoot_SizeChanged);
+
+            if (typeof(BasicControl).IsAssignableFrom(control.GetType()))
+                ((BasicControl)control).CallEffect += new BasicControl.CallEffectHandle(EffectableControl_CallEffect);
         }
 
         void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -63,6 +67,37 @@ namespace BasicLibrary
         public Canvas CanvasRoot
         {
             get { return LayoutRoot; }
+        }
+
+        protected BasicEffect mainEffect;
+
+        public BasicEffect MainEffect
+        {
+            get { return mainEffect; }
+        }
+
+        public virtual void ChangeEffect(string propertyName, Type effectType)
+        {
+            if (propertyName == "MainEffect")
+            {
+                if (mainEffect != null)
+                    mainEffect.DetachEffect();
+                ConstructorInfo ci = effectType.GetConstructor(new Type[] { typeof(EffectableControl) });
+                mainEffect = (BasicEffect)ci.Invoke(new object[] { this });
+            }
+            else
+            {
+                if (typeof(BasicControl).IsAssignableFrom(control.GetType()))
+                {
+                    ((BasicControl)control).ChangeEffect(propertyName, effectType, this);
+                }
+            }
+        }
+
+        void EffectableControl_CallEffect(object sender)
+        {
+            if (mainEffect != null)
+                mainEffect.Start();
         }
     }
 }

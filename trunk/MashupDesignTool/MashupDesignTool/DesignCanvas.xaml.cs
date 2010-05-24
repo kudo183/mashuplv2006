@@ -273,7 +273,7 @@ namespace MashupDesignTool
         #endregion context menu
 
         #region add new control to canvas
-        public void AddControl(BasicControl uc, double x, double y, int width, int height)
+        public void AddControl(FrameworkElement uc, double x, double y, int width, int height)
         {
             EffectableControl ec = new EffectableControl(uc);
             uc.Margin = new Thickness(0, 0, 0, 0);

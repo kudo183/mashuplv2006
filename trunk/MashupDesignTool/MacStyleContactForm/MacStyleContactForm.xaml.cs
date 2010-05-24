@@ -142,14 +142,12 @@ namespace MacStyleContactFormControl
             txtName.Text = "";
             txtSubject.Text = "";
 
-            if (mainEffect != null)
-                mainEffect.Start();
+            StartMainEffect();
         }
 
         private void root_Loaded(object sender, RoutedEventArgs e)
         {
-            if (mainEffect != null)
-                mainEffect.Start();
+            StartMainEffect();
         }
     }
 }
