@@ -482,7 +482,6 @@ namespace MashupDesignTool
 
         void rbImageListEditor_OnClick(object sender, RoutedEventArgs e)
         {
-            // hien thi tai day, lay control hien tai bang cach designCanvas1.SelectedControls[0].Control;
             ImageListEditor im = new ImageListEditor(designCanvas1.ControlContainer, designCanvas1.SelectedControls[0].Control as ImageListControl);
             im.ShowDialog();
         }
@@ -498,10 +497,15 @@ namespace MashupDesignTool
             }
         }
 
+        bool bIsRemovingMenu = false;
+
         private void CleanEffectMenuItemsFromMenu()
         {
-            for (int i = 1; i < menu.Tabs.Items.Count; i++)
+            bIsRemovingMenu = true;
+            int count = menu.Tabs.Items.Count;
+            for (int i = count - 1; i >= 1; i--)
                 menu.Tabs.Items.RemoveAt(i);
+            bIsRemovingMenu = false;
         }
 
         private void AddEffectMenuItemsToMenu(EffectableControl element)
@@ -557,7 +561,7 @@ namespace MashupDesignTool
                 for (int i = 0; i < listListEffects.Count; i++)
                 {
                     list.Add(new RibbonSimpleListViewSourceItem(listListEffects[i].DisplayName, clientRoot + @"Effects/Images/" + listListEffects[i].IconName, listListEffects[i]));
-                    if (listSingleEffects[i].EffectName == str)
+                    if (listListEffects[i].EffectName == str)
                         selectedIndex = i;
                 }
             }
@@ -772,20 +776,25 @@ namespace MashupDesignTool
 
         private void menu_OnSelectionTabChanged(object sender, SelectionChangedEventArgs e)
         {
-            TabsItem ti = (TabsItem)e.AddedItems[0];
-            if (ti.Header.ToString() != "Home")
+            if (bIsRemovingMenu)
+                return;
+            if (menu.Tabs.Items.Count != 1)
             {
-                FrameworkElement ec;
-                if (((TabsItem)menu.Tabs.Items[1]).IsSelected)
+                TabsItem ti = (TabsItem)e.AddedItems[0];
+                if (!((TabsItem)menu.Tabs.Items[0]).IsSelected)
                 {
-                    ec = designCanvas1.SelectedControls[0];
+                    FrameworkElement ec;
+                    if (((TabsItem)menu.Tabs.Items[1]).IsSelected)
+                    {
+                        ec = designCanvas1.SelectedControls[0];
+                    }
+                    else
+                    {
+                        ec = (FrameworkElement)designCanvas1.SelectedControls[0].Control;
+                    }
+                    PropertyInfo pi = (PropertyInfo)ti.Tag;
+                    effectPropertiesGrid.SelectedObject = pi.GetValue(ec, null);
                 }
-                else
-                {
-                    ec = (FrameworkElement)designCanvas1.SelectedControls[0].Control;
-                }
-                PropertyInfo pi = (PropertyInfo)ti.Tag;
-                effectPropertiesGrid.SelectedObject = pi.GetValue(ec, null);
             }
         }
         #endregion select in design canvas
