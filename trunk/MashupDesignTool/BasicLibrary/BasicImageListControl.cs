@@ -15,9 +15,9 @@ using System.Xml;
 
 namespace BasicLibrary
 {
-    public class ImageListControl : BasicListControl
+    public class BasicImageListControl : BasicListControl
     {
-        public ImageListControl()
+        public BasicImageListControl()
             : base()
         {
             int count = 5;

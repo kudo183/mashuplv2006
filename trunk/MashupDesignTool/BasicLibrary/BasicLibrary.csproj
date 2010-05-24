@@ -59,7 +59,7 @@
     <Compile Include="BasicControl.cs" />
     <Compile Include="BasicListControl.cs" />
     <Compile Include="BasicListEffect.cs" />
-    <Compile Include="ImageListControl.cs" />
+    <Compile Include="BasicImageListControl.cs" />
     <Compile Include="EffectableControl.xaml.cs">
       <DependentUpon>EffectableControl.xaml</DependentUpon>
     </Compile>
