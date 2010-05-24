@@ -16,6 +16,7 @@ using System.Xml.Linq;
 using System.Windows.Threading;
 using BasicLibrary;
 using MapulRibbon;
+using ItemCollectionEditor;
 
 namespace MashupDesignTool
 {
@@ -482,6 +483,8 @@ namespace MashupDesignTool
         void rbImageListEditor_OnClick(object sender, RoutedEventArgs e)
         {
             // hien thi tai day, lay control hien tai bang cach designCanvas1.SelectedControls[0].Control;
+            ImageListEditor im = new ImageListEditor(designCanvas1.ControlContainer, designCanvas1.SelectedControls[0].Control as ImageListControl);
+            im.ShowDialog();
         }
 
         private void RemoveImageListEditorButtonFromHome()
