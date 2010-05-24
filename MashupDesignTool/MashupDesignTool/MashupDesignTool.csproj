@@ -176,6 +176,10 @@
       <Project>{C38EEC60-122E-4002-A7B1-E6465DC41201}</Project>
       <Name>DockCanvas</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImageListEditor\ImageListEditor.csproj">
+      <Project>{3E104867-6004-47A1-AB24-8158A307EDB5}</Project>
+      <Name>ImageListEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MapulRibbon\MapulRibbon.csproj">
       <Project>{E6875CC4-6311-41E3-B8F0-F4E3B27E8A59}</Project>
       <Name>MapulRibbon</Name>
