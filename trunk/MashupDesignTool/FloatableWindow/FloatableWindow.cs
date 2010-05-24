@@ -640,9 +640,7 @@ namespace System.Windows.Controls
         {
             z++;
             Canvas.SetZIndex(this, z);
-#if DEBUG
-            this.Title = z.ToString();
-#endif
+
         }
 
         /// <summary>
@@ -881,10 +879,7 @@ namespace System.Windows.Controls
                 this._chrome.CaptureMouse();
                 this._isMouseCaptured = true;
                 this._clickPoint = e.GetPosition(sender as UIElement);
-#if DEBUG
-                this.Title = string.Format("X:{0},Y:{1}", this._clickPoint.X.ToString(), this._clickPoint.Y.ToString());
-#endif
-            }
+}
         }
 
         /// <summary>
@@ -1643,9 +1638,6 @@ namespace System.Windows.Controls
             this._isMouseCaptured = true;
             this._clickPoint = e.GetPosition(sender as UIElement);
 
-#if DEBUG
-            this.Title = string.Format("X:{0},Y:{1}", this._clickPoint.X.ToString(), this._clickPoint.Y.ToString());
-#endif
         }
 
         private void Resizer_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -1665,10 +1657,6 @@ namespace System.Windows.Controls
                 {
                     return;
                 }
-
-#if DEBUG
-                this.Title = string.Format("X:{0},Y:{1}", this._clickPoint.X.ToString(), this._clickPoint.Y.ToString());
-#endif
 
                 Point p = e.GetPosition(this.ContentRoot);
 
