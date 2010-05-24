@@ -36,9 +36,9 @@ namespace ItemCollectionEditor
             f.Height = 300;
         }
 
-        ImageListControl listControl;
+        BasicImageListControl listControl;
         List<ImageListControlItems> listControlItems = new List<ImageListControlItems>();
-        public ImageListEditor(Panel p, ImageListControl list)
+        public ImageListEditor(Panel p, BasicImageListControl list)
             : this()
         {
             listControl = list;
