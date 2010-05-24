@@ -442,7 +442,7 @@ namespace MashupDesignTool
                     propertiesGrid.SelectedObject = element;
                     AddEffectMenuItemsToMenu((EffectableControl)designCanvas1.SelectedControls[0]);
 
-                    if (typeof(ImageListControl).IsAssignableFrom(designCanvas1.SelectedControls[0].Control.GetType()))
+                    if (typeof(BasicImageListControl).IsAssignableFrom(designCanvas1.SelectedControls[0].Control.GetType()))
                     {
                         AddImageListEditorButtonToHome();
                     }
@@ -482,7 +482,7 @@ namespace MashupDesignTool
 
         void rbImageListEditor_OnClick(object sender, RoutedEventArgs e)
         {
-            ImageListEditor im = new ImageListEditor(designCanvas1.ControlContainer, designCanvas1.SelectedControls[0].Control as ImageListControl);
+            ImageListEditor im = new ImageListEditor(designCanvas1.ControlContainer, designCanvas1.SelectedControls[0].Control as BasicImageListControl);
             im.ShowDialog();
         }
 
