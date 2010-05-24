@@ -83,8 +83,9 @@ namespace BasicLibrary
             get { return listEffect; }            
         }
 
-        public virtual void ChangeListEffect(string propertyName, Type effectType)
+        public override void ChangeEffect(string propertyName, Type effectType, EffectableControl owner)
         {
+            base.ChangeEffect(propertyName, effectType, owner);
             if (propertyName == "ListEffect")
             {
                 if (listEffect != null)
