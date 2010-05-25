@@ -47,8 +47,7 @@ namespace BasicLibrary
 
         public ImageListControlItems()
         {
-            img.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-            img.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+            img.Stretch = Stretch.Fill;
             Content = img;
             //ImageUrl = "http://img140.imageshack.us/img140/9317/untitled96hf.png";
             ImageUrl = "Images/default.png";

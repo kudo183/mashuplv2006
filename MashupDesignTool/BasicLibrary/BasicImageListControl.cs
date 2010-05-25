@@ -22,6 +22,9 @@ namespace BasicLibrary
         {
             int count = 5;
             Width = Height = 150;
+            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+            VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+           // Width = Height = 150;
             for (int i = 0; i < count; i++)
                 AddItem(new ImageListControlItems() { Width = 50, Height = 50 });
         }
