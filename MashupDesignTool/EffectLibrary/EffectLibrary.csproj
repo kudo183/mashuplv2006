@@ -55,13 +55,13 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ListEffect\FishEye.cs" />
     <Compile Include="SingleEffect\Checkerboard.cs" />
     <Compile Include="SingleEffect\GlowWinSeven.cs" />
     <Compile Include="SingleEffect\Dissolve.cs" />
     <Compile Include="SingleEffect\Fade.cs" />
     <Compile Include="ListEffect\Carousel.cs" />
     <Compile Include="ListEffect\CoverFlow.cs" />
-    <Compile Include="ListEffect\MenuMac.cs" />
     <Compile Include="SingleEffect\Push.cs" />
     <Compile Include="SingleEffect\Jump.cs" />
     <Compile Include="SingleEffect\Ripple.cs" />
