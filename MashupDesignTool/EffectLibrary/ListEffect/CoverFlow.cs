@@ -14,17 +14,23 @@ using BasicLibrary;
 namespace EffectLibrary
 {
     public class CoverFlow : BasicListEffect
-    {                
+    {
         #region implement abstact method
         public override void Start()
         {
-           
+
         }
         public override void Stop()
         {
         }
         public override void DetachEffect()
         {
+            foreach (CoverFlowItem item in coverFlowItems)
+            {
+                item.Element.RenderTransform = null;
+                item.Element.RenderTransformOrigin = new Point(0, 0);
+                item.Element.Projection = null;
+            }
             LayoutRoot.Children.Clear();
             control.Content = null;
             IsSelfHandle = false;
@@ -50,7 +56,7 @@ namespace EffectLibrary
         #endregion
 
         #region method for list change event
-       
+
         public void AddItem(FrameworkElement element)
         {
             InsertItem(LayoutRoot.Children.Count, element);
@@ -61,7 +67,6 @@ namespace EffectLibrary
             CoverFlowItem item = new CoverFlowItem(element);
             element.Width = ItemWidth;
             element.Height = ItemHeight;
-            element.RenderTransformOrigin = new Point(0.5, 0.5);
             item.ItemSelected += new EventHandler(item_ItemSelected);
             coverFlowItems.Add(item);
             LayoutRoot.Children.Add(element);
@@ -99,7 +104,7 @@ namespace EffectLibrary
         public void RemoveItem(FrameworkElement ui)
         {
             int index = LayoutRoot.Children.IndexOf(ui);
-            RemoveItemAt(index);            
+            RemoveItemAt(index);
         }
         public void RemoveAllItem()
         {
@@ -228,7 +233,7 @@ namespace EffectLibrary
                 element.Projection = planeProjection;
 
                 scaleTransform = new ScaleTransform();
-                scaleTransform.CenterX = scaleTransform.CenterY = 0.5;
+                //element.RenderTransformOrigin = new Point(0.5, 0.5);
                 element.RenderTransform = scaleTransform;
 
                 Animation.Children.Add(CreateDAKF(planeProjection, "RotationY", out rotationKeyFrame));
@@ -260,7 +265,7 @@ namespace EffectLibrary
                     scaleYKeyFrame.Value = s;
                     scaleXKeyFrame.Value = s;
                     xAnimation.To = x;
-
+                    //MessageBox.Show(string.Format("x:{0:n}",x));
                     if (duration != d)
                     {
                         duration = d;
@@ -291,17 +296,10 @@ namespace EffectLibrary
 
         #region property
         private int selectedIndex;
-        public int SelectedIndex
+        
+        private void SelectItem(int index)
         {
-            get { return selectedIndex; }
-            set
-            {
-                IndexSelected(value, false);
-            }
-        }
-        private void IndexSelected(int index, bool mouseclick)
-        {
-            IndexSelected(index, mouseclick, true);
+            IndexSelected(index, true, true);
         }
 
         private void IndexSelected(int index, bool mouseclick, bool layoutChildren)
@@ -319,7 +317,7 @@ namespace EffectLibrary
         public double SpaceBetweenItems
         {
             get { return _SpaceBetweenItems; }
-            set 
+            set
             {
                 if (_SpaceBetweenItems == value)
                     return;
@@ -419,20 +417,22 @@ namespace EffectLibrary
             }
         }
 
-        private IEasingFunction _EasingFunction;
-
-        public IEasingFunction EasingFunction
-        {
-            get { return _EasingFunction; }
-            set { _EasingFunction = value; }
-        }
+        private IEasingFunction EasingFunction;
 
         private double _ItemWidth;
 
         public double ItemWidth
         {
             get { return _ItemWidth; }
-            set { _ItemWidth = value; }
+            set
+            {
+                _ItemWidth = value;
+                for (int i = 0; i < coverFlowItems.Count; i++)
+                {
+                    coverFlowItems[i].Element.Width = _ItemWidth;
+                    LayoutChild(coverFlowItems[i], i);
+                }
+            }
         }
 
         private double _ItemHeight;
@@ -440,7 +440,15 @@ namespace EffectLibrary
         public double ItemHeight
         {
             get { return _ItemHeight; }
-            set { _ItemHeight = value; }
+            set 
+            {
+                _ItemHeight = value;
+                for (int i = 0; i < coverFlowItems.Count; i++)
+                {
+                    coverFlowItems[i].Element.Height = _ItemHeight;
+                    LayoutChild(coverFlowItems[i], i);
+                }
+            }
         }
 
         #endregion
@@ -457,8 +465,8 @@ namespace EffectLibrary
             LayoutRoot.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
             control.Content = LayoutRoot;
             LayoutRoot.Background = new SolidColorBrush(Colors.Red);
-            LayoutRoot.Width = 400;                        
-            ItemWidth = ItemHeight = 150;
+
+            _ItemWidth = _ItemHeight = 100;
 
             coverFlowItems = new List<CoverFlowItem>();
 
@@ -469,12 +477,22 @@ namespace EffectLibrary
             PageDuration = 900;
             duration = SingleItemDuration;
             EasingFunction = new CubicEase();
-            _Scale = 0.7;    
+            _Scale = 0.7;
 
             foreach (EffectableControl element in control.Items)
             {
                 AddItem(element);
             }
+            LayoutRoot.SizeChanged += new SizeChangedEventHandler(LayoutRoot_SizeChanged);
+        }
+
+        void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (LayoutRoot.ActualWidth != 0)
+                control.Width = LayoutRoot.ActualWidth;
+            if (LayoutRoot.ActualHeight != 0)
+                control.Height = LayoutRoot.ActualHeight;
+            LayoutChildren();
         }
 
         void control_OnListChange(string action, int index1, EffectableControl control, int index2)
@@ -509,7 +527,7 @@ namespace EffectLibrary
                 return;
             int index = coverFlowItems.IndexOf(item);
             if (index >= 0)
-                IndexSelected(index, true);
+                IndexSelected(index, true, true);
         }
 
         protected void LayoutChildren()
@@ -522,9 +540,9 @@ namespace EffectLibrary
 
         protected void LayoutChild(CoverFlowItem item, int index)
         {
-            double m = LayoutRoot.Width / 2;
+            double m = control.Width / 2;
 
-            int b = index - SelectedIndex;
+            int b = index - selectedIndex;
             double mu = 0;
             if (b < 0)
                 mu = -1;
@@ -536,10 +554,10 @@ namespace EffectLibrary
 
             int zindex = coverFlowItems.Count - Math.Abs(b);
 
-            if (((x + item.Element.Width) < 0 || x > LayoutRoot.Width)
-                && ((item.X + item.Element.Width) < 0 || item.X > LayoutRoot.Width)
-                && !((x + item.Element.Width) < 0 && item.X > LayoutRoot.Width)
-                && !((item.X + item.Element.Width) < 0 && x > LayoutRoot.Width))
+            if (((x + item.Element.Width) < 0 || x > control.Width)
+                && ((item.X + item.Element.Width) < 0 || item.X > control.Width)
+                && !((x + item.Element.Width) < 0 && item.X > control.Width)
+                && !((item.X + item.Element.Width) < 0 && x > control.Width))
             {
                 item.SetValues(x, zindex, RotationAngle * mu, ZDistance * Math.Abs(mu), s, duration, EasingFunction, false);
             }

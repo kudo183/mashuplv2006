@@ -17,6 +17,50 @@ namespace EffectLibrary
     {
         public class CarouselItem : DependencyObject
         {
+            #region ScaleX
+            public static readonly DependencyProperty ScaleXProperty = DependencyProperty.Register("ScaleX", typeof(double), typeof(CarouselItem), new PropertyMetadata(1.0d, OnScaleXPropertyChanged));
+
+            private static void OnScaleXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            {
+                CarouselItem item = d as CarouselItem;
+                if (item != null)
+                {
+                    item.ScaleXChanged((double)e.OldValue, (double)e.NewValue);
+                }
+            }
+
+            private void ScaleXChanged(double oldValue, double newValue)
+            {
+            }
+            public double ScaleX
+            {
+                get { return (double)GetValue(ScaleXProperty); }
+                set { SetValue(ScaleXProperty, value); }
+            }
+            #endregion
+
+            #region ScaleY
+            public static readonly DependencyProperty ScaleYProperty = DependencyProperty.Register("ScaleY", typeof(double), typeof(CarouselItem), new PropertyMetadata(1.0d, OnScaleYPropertyChanged));
+
+            private static void OnScaleYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            {
+                CarouselItem item = d as CarouselItem;
+                if (item != null)
+                {
+                    item.ScaleYChanged((double)e.OldValue, (double)e.NewValue);
+                }
+            }
+
+            private void ScaleYChanged(double oldValue, double newValue)
+            {
+            }
+            public double ScaleY
+            {
+                get { return (double)GetValue(ScaleYProperty); }
+                set { SetValue(ScaleYProperty, value); }
+            }
+            #endregion
+
             #region center
             public static readonly DependencyProperty CenterProperty = DependencyProperty.Register("Center", typeof(Point), typeof(CarouselItem), new PropertyMetadata(OnCenterPropertyChanged));
 
@@ -79,18 +123,20 @@ namespace EffectLibrary
                 double dx = Axis.Width * Math.Cos(newValue) + Center.X;
                 double dy = Axis.Height * Math.Sin(newValue) + Center.Y;
                 Canvas.SetLeft(_Element, dx);
-                Canvas.SetTop(this._Element, dy);
+                Canvas.SetTop(_Element, dy);
 
                 // Scale 
                 double sc = 2 + Math.Cos(newValue - Math.PI / 2) * 1;
+
                 ScaleTransform st = _Element.RenderTransform as ScaleTransform;
                 if (st == null)
                 {
                     st = new ScaleTransform();
                     _Element.RenderTransform = st;
                 }
-                st.ScaleX = sc;
-                st.ScaleY = sc;
+                st.ScaleX = Math.Pow(sc, ScaleX);
+                st.ScaleY = Math.Pow(sc, ScaleY);
+                
                 // Set the ZIndex based the distance from us, the far item 
                 // is under the near item 
                 Canvas.SetZIndex(_Element, (int)dy);
@@ -116,6 +162,11 @@ namespace EffectLibrary
 
             private void DurationChanged(double oldValue, double newValue)
             {
+                if (sb != null)
+                {
+                    double count = Math.PI * 2 / PerAngle;
+                    ((DoubleAnimation)sb.Children[0]).Duration = TimeSpan.FromMilliseconds(newValue / count);                    
+                }
             }
             public double Duration
             {
@@ -139,7 +190,11 @@ namespace EffectLibrary
             private void PerAngleChanged(double oldValue, double newValue)
             {
                 if (sb != null)
+                {
                     ((DoubleAnimation)sb.Children[0]).By = newValue;
+                    double count = Math.PI * 2 / newValue;
+                    ((DoubleAnimation)sb.Children[0]).Duration = TimeSpan.FromMilliseconds( Duration / count);
+                }
             }
             public double PerAngle
             {
@@ -157,10 +212,12 @@ namespace EffectLibrary
 
             private Storyboard sb;
 
-            public CarouselItem(Point center, Size axis, double duration, FrameworkElement element)
+            public CarouselItem(Point center, Size axis, double scaleX, double scaleY, double duration, FrameworkElement element)
             {
                 Center = center;
                 Axis = axis;
+                ScaleX = scaleX;
+                ScaleY = scaleY;
                 Duration = duration;
                 _Element = element;
                 sb = CreateStoryBoard(Duration);
@@ -216,45 +273,178 @@ namespace EffectLibrary
 
         #region property
         private double _Duration;
-        private double _PaddingLeftRight;
-        private double _PaddingTopBottom;
+        private double _PaddingLeft;
+        private double _PaddingRight;
+        private double _PaddingTop;
+        private double _PaddingBottom;
         private double _ItemWidth;
         private double _ItemHeight;
+        private double _ScaleX;
+        private double _ScaleY;
+
+        public double ScaleX
+        {
+            get { return _ScaleX; }
+            set
+            {
+                _ScaleX = value;
+                CalculateEllipse();
+                Stop();
+                foreach (CarouselItem item in carouselItems)
+                {
+                    item.Center = _Center;
+                    item.Axis = _Axis;
+                    item.ScaleX = _ScaleX;
+                }
+                Start();
+            }
+        }
+
+        public double ScaleY
+        {
+            get { return _ScaleY; }
+            set
+            {
+                _ScaleY = value;
+                CalculateEllipse();
+                Stop();
+                foreach (CarouselItem item in carouselItems)
+                {
+                    item.Center = _Center;
+                    item.Axis = _Axis;
+                    item.ScaleY = _ScaleY;
+                }
+                Start();
+            }
+        }
 
         public double Duration
         {
             get { return _Duration; }
-            set { _Duration = value; }
+            set
+            {
+                _Duration = value;
+                Stop();
+                foreach (CarouselItem item in carouselItems)
+                {
+                    item.Duration = _Duration;
+                }
+                Start();
+            }
         }
 
-        public double PaddingLeftRight
+        public double PaddingLeft
         {
-            get { return _PaddingLeftRight; }
-            set { _PaddingLeftRight = value; }
+            get { return _PaddingLeft; }
+            set
+            {
+                _PaddingLeft = value;
+                CalculateEllipse();
+                Stop();
+                foreach (CarouselItem item in carouselItems)
+                {
+                    item.Axis = _Axis;
+                    item.Center = _Center;
+                }
+                Start();
+            }
         }
 
-        public double PaddingTopBottom
+        public double PaddingRight
         {
-            get { return _PaddingTopBottom; }
-            set { _PaddingTopBottom = value; }
+            get { return _PaddingRight; }
+            set
+            {
+                _PaddingRight = value;
+                CalculateEllipse();
+                Stop();
+                foreach (CarouselItem item in carouselItems)
+                {
+                    item.Axis = _Axis;
+                    item.Center = _Center;
+                }
+                Start();
+            }
+        }
+
+        public double PaddingTop
+        {
+            get { return _PaddingTop; }
+            set
+            {
+                _PaddingTop = value;
+                CalculateEllipse();
+                Stop();
+                foreach (CarouselItem item in carouselItems)
+                {
+                    item.Axis = _Axis;
+                    item.Center = _Center;
+                }
+                Start();
+            }
+        }
+
+        public double PaddingBottom
+        {
+            get { return _PaddingBottom; }
+            set
+            {
+                _PaddingBottom = value;
+                CalculateEllipse();
+                Stop();
+                foreach (CarouselItem item in carouselItems)
+                {
+                    item.Axis = _Axis;
+                    item.Center = _Center;
+                }
+                Start();
+            }
         }
 
         public double ItemWidth
         {
             get { return _ItemWidth; }
-            set { _ItemWidth = value; }
+            set
+            {
+                _ItemWidth = value;
+                CalculateEllipse();
+                Stop();
+                foreach (CarouselItem item in carouselItems)
+                {
+                    item.Axis = _Axis;
+                    item.Center = _Center;
+                    item.Element.Width = ItemWidth;
+                    item.Element.Height = ItemHeight;
+
+                }
+                Start();
+            }
         }
 
         public double ItemHeight
         {
             get { return _ItemHeight; }
-            set { _ItemHeight = value; }
+            set
+            {
+                _ItemHeight = value;
+                CalculateEllipse();
+                Stop();
+                foreach (CarouselItem item in carouselItems)
+                {
+                    item.Axis = _Axis;
+                    item.Center = _Center;
+                    item.Element.Width = ItemWidth;
+                    item.Element.Height = ItemHeight;
+
+                }
+                Start();
+            }
         }
 
-        public Canvas LayoutRoot;
-        public Point _Center;
-        public double _PerAngel = Math.PI;
-        public Size _Axis;
+        private Canvas LayoutRoot;
+        private Point _Center;
+        private double _PerAngel = Math.PI;
+        private Size _Axis;
         #endregion
 
         #region implement abstact method
@@ -270,10 +460,16 @@ namespace EffectLibrary
         }
         public override void DetachEffect()
         {
+            Stop();
             foreach (CarouselItem ca in carouselItems)
+            {
+                ca.Element.RenderTransformOrigin = new Point(0, 0);
                 ca.Element.RenderTransform = null;
+                Canvas.SetTop(ca.Element, 0);
+            }
             LayoutRoot.Children.Clear();
             control.Content = null;
+            IsSelfHandle = false;
         }
         public override void Next()
         {
@@ -306,8 +502,11 @@ namespace EffectLibrary
 
         public void InsertItem(int index, FrameworkElement element)
         {
-            CarouselItem item = new CarouselItem(_Center, _Axis, _Duration, element);
+            CarouselItem item = new CarouselItem(_Center, _Axis, _ScaleX, _ScaleY, _Duration, element);
             LayoutRoot.Children.Insert(index, element);
+            element.Width = ItemWidth;
+            element.Height = ItemHeight;
+            element.RenderTransformOrigin = new Point(0.5, 0.5);
             carouselItems.Insert(index, item);
             UpdateItem();
         }
@@ -319,7 +518,7 @@ namespace EffectLibrary
 
             UIElement temp1 = LayoutRoot.Children[min];
             UIElement temp2 = LayoutRoot.Children[max];
-            
+
             LayoutRoot.Children.RemoveAt(max);
             LayoutRoot.Children[min] = temp2;
             LayoutRoot.Children.Insert(max, temp1);
@@ -360,29 +559,53 @@ namespace EffectLibrary
             LayoutRoot.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
             control.Content = LayoutRoot;
 
-            control.Width = 200;
-            control.Height = 200;
             Duration = 5000;
+            _ScaleX = 1;
+            _ScaleY = 1;
 
-            control.Background = new SolidColorBrush(Colors.Red);
+            LayoutRoot.Background = new SolidColorBrush(Colors.Red);
 
             ItemWidth = ItemHeight = 20;
-
-            // X and Y axis of the ellipse
-            double radiusX = (control.Width - 2 * ItemWidth - PaddingLeftRight) / 2;
-            double radiusY = (control.Height - 3 * ItemHeight - PaddingTopBottom) / 2;
-
-            // center point of the ellipse
-            double centerX = radiusX + PaddingLeftRight / 2;
-            double centerY = radiusY + PaddingTopBottom / 2;
-
-            _Center = new Point(centerX, centerY);
-            _Axis = new Size(radiusX, radiusY);
 
             foreach (EffectableControl c in control.Items)
             {
                 AddItem(c);
             }
+
+            LayoutRoot.SizeChanged += new SizeChangedEventHandler(LayoutRoot_SizeChanged);
+        }
+
+        void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (LayoutRoot.ActualWidth != 0)
+                control.Width = LayoutRoot.ActualWidth;
+            if (LayoutRoot.ActualHeight != 0)
+                control.Height = LayoutRoot.ActualHeight;
+            CalculateEllipse();
+            Stop();
+            foreach (CarouselItem item in carouselItems)
+            {
+                item.Axis = _Axis;
+                item.Center = _Center;
+            }
+            Start();
+            
+        }
+
+        private void CalculateEllipse()
+        {
+            // X and Y axis of the ellipse
+            double maxItemWidth = (Math.Pow(2, ScaleX) * ItemWidth);
+            double maxItemHeight = (Math.Pow(3, ScaleY) * ItemHeight);
+            double radiusX = (control.Width - maxItemWidth - PaddingLeft - PaddingRight) / 2;
+            double radiusY = (control.Height - maxItemHeight - PaddingTop - PaddingBottom) / 2;
+
+            // center point of the ellipse
+            double centerX = radiusX + PaddingLeft + maxItemWidth / 2 - ItemWidth / 2;
+            double centerY = radiusY + PaddingTop + maxItemHeight / 2 - ItemHeight / 2;
+
+            _Center = new Point(centerX, centerY);
+            _Axis = new Size(radiusX, radiusY);
         }
 
         void control_OnListChange(string action, int index1, EffectableControl control, int index2)
@@ -410,7 +633,7 @@ namespace EffectLibrary
                     RemoveItem(control);
                     break;
                 case "REMOVEALL":
-                    Stop();           
+                    Stop();
                     RemoveAllItem();
                     break;
             }
