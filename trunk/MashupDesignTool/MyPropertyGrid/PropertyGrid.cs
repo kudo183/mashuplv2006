@@ -284,6 +284,8 @@ namespace SL30PropertyGrid
         }
         void AddPropertyRow(PropertyItem item, ref int rowIndex)
         {
+            if (item.DisplayName == "Projection")
+                return;
             item.PropertyChanged += new PropertyChangedEventHandler(item_PropertyChanged);
             #region Create Display Objects
             PropertyGridLabel label = CreateLabel(item.Name, item.DisplayName);
