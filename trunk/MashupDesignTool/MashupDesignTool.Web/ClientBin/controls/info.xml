@@ -59,4 +59,37 @@
     <IconName>control4.png</IconName>
     <Group>Group 2</Group>
   </Control>
+  <Control>
+    <Name>C1.Silverlight.Extended.C1HtmlHost</Name>
+    <DllFilename>C1.Silverlight.Extended.dll</DllFilename>
+    <DllReferences>
+      <Dll>C1.Silverlight.dll</Dll>
+    </DllReferences>
+    <DisplayName>C1 Html Host</DisplayName>
+    <Description>Control để hiển thị trang nội dung html</Description>
+    <IconName>control4.png</IconName>
+    <Group>ComponentOne</Group>
+  </Control>
+  <Control>
+    <Name>C1.Silverlight.Extended.C1Cube</Name>
+    <DllFilename>C1.Silverlight.Extended.dll</DllFilename>
+    <DllReferences>
+      <Dll>C1.Silverlight.dll</Dll>
+    </DllReferences>
+    <DisplayName>C1 Cube</DisplayName>
+    <Description>Control để hiển thị trang nội dung html</Description>
+    <IconName>control4.png</IconName>
+    <Group>ComponentOne</Group>
+  </Control>
+  <Control>
+    <Name>C1.Silverlight.Maps.C1Maps</Name>
+    <DllFilename>C1.Silverlight.Maps.dll</DllFilename>
+    <DllReferences>
+      <Dll>C1.Silverlight.dll</Dll>
+    </DllReferences>
+    <DisplayName>C1 Map</DisplayName>
+    <Description>Control để hiển thị trang nội dung html</Description>
+    <IconName>control4.png</IconName>
+    <Group>ComponentOne</Group>
+  </Control>
 </Controls>
