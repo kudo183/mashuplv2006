@@ -1,6 +1,6 @@
 ﻿<UserControl x:Class="Controls.ColorPicker"
     xmlns="http://schemas.microsoft.com/client/2007" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:inputToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit" xmlns:my="clr-namespace:Controls">
     <Canvas>
         <Rectangle Canvas.Left="0" Canvas.Top="0" Width="20" Height="180" >
             <Rectangle.Fill>
@@ -15,6 +15,8 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
+
+        <my:AlphaSelectControl Canvas.Left="20" Canvas.Top="0" Height="180" x:Name="alphaSelectControl1" Width="10"/>
         <Canvas x:Name="HueSelector" Height="8" Canvas.Left="0" Canvas.Top="-4">
             <Path Width="5" Height="8" Stretch="Fill" StrokeLineJoin="Round" Stroke="#FF000000" Fill="#FF000000" Data="F1 M 276.761,316L 262.619,307.835L 262.619,324.165L 276.761,316 Z " />
             <Path Width="5" Height="8" Canvas.Top="8" Canvas.Left="20" Stretch="Fill" StrokeLineJoin="Round" Stroke="#FF000000" Fill="#FF000000" Data="F1 M 276.761,316L 262.619,307.835L 262.619,324.165L 276.761,316 Z ">
@@ -25,7 +27,7 @@
         </Canvas>
         <Rectangle x:Name="rectHueMonitor" Canvas.Top="0" Canvas.Left="0" Fill="Transparent" Width="20" Height="180" />
 
-        <Canvas Canvas.Top="0" Canvas.Left="20">
+        <Canvas Canvas.Top="0" Canvas.Left="30">
             <Rectangle x:Name="rectSample" Width="180" Height="180" Fill="Red"></Rectangle>
             <Rectangle x:Name="rectWhiteGradient" Width="180" Height="180">
                 <Rectangle.Fill>
@@ -48,24 +50,26 @@
                 <Ellipse Width="10" Height="10" StrokeThickness="1" Stroke="#FF000000"/>
             </Canvas>
             <Rectangle x:Name="rectSampleMonitor" Fill="Transparent" Width="180" Height="180" />
+
         </Canvas>
 
         <Canvas Canvas.Top="180" Canvas.Left="0">
-            <Rectangle x:Name="SelectedColorRect" Width="200" Height="20" Fill="Black" />
-            
-            <TextBox x:Name="HexValue" Foreground="White" Background="Black" Width="80" FontFamily="Arial" FontSize="12" Canvas.Top="0" Canvas.Left="0"  Height="20" SelectionBackground="White" SelectionForeground="Black" LostFocus="HexValue_LostFocus" KeyUp="HexValue_KeyUp"></TextBox>
+            <Rectangle x:Name="SelectedColorRect" Width="210" Height="20" Fill="Black" />
+
+            <TextBox x:Name="HexValue" Foreground="White" Background="Black" Width="80" FontFamily="Arial" FontSize="12" Canvas.Top="0" Canvas.Left="0"  Height="20" SelectionBackground="White" SelectionForeground="Black" LostFocus="HexValue_LostFocus" KeyUp="HexValue_KeyUp" CaretBrush="#FFFCFC00"></TextBox>
         </Canvas>
+        
         <Canvas Canvas.Top="200" Canvas.Left="0">
             <Rectangle Width="27" Height="20" Fill="Red"/>
-            
-            <Rectangle Canvas.Left="67" Width="27" Height="20" Fill="Green"/>
-            <Rectangle Canvas.Left="134"  Width="27" Height="20" Fill="Blue"/>
-    </Canvas>
-        <Rectangle Canvas.Left="27" Canvas.Top="200" Width="40" Height="20" Fill="White"/>
-        <inputToolkit:NumericUpDown Canvas.Left="27" Canvas.Top="200" Width="40" Height="20" Name="numericUpDownRed" Maximum="255" ValueChanged="numericUpDownRed_ValueChanged"/>
-        <Rectangle Canvas.Left="94" Canvas.Top="200" Width="40" Height="20" Fill="White"/>
-        <inputToolkit:NumericUpDown Canvas.Left="94" Canvas.Top="200" Width="40" Height="20" Name="numericUpDownGreen" Maximum="255" ValueChanged="numericUpDownGreen_ValueChanged"/>
-        <Rectangle Canvas.Left="161" Canvas.Top="200" Width="40" Height="20" Fill="White"/>
-        <inputToolkit:NumericUpDown Canvas.Left="161" Canvas.Top="200" Width="39" Height="20" Name="numericUpDownBlue" Maximum="255" ValueChanged="numericUpDownBlue_ValueChanged"/>
+            <Rectangle Canvas.Left="70" Width="27" Height="20" Fill="Green"/>
+            <Rectangle Canvas.Left="140"  Width="27" Height="20" Fill="Blue"/>
+        </Canvas>
+        
+        <Rectangle Canvas.Left="27" Canvas.Top="200" Width="43" Height="20" Fill="White"/>
+        <inputToolkit:NumericUpDown Canvas.Left="27" Canvas.Top="200" Width="43" Height="20" Name="numericUpDownRed" Maximum="255" ValueChanged="numericUpDownRed_ValueChanged"/>
+        <Rectangle Canvas.Left="97" Canvas.Top="200" Width="43" Height="20" Fill="White"/>
+        <inputToolkit:NumericUpDown Canvas.Left="97" Canvas.Top="200" Width="43" Height="20" Name="numericUpDownGreen" Maximum="255" ValueChanged="numericUpDownGreen_ValueChanged"/>
+        <Rectangle Canvas.Left="167" Canvas.Top="200" Width="43" Height="20" Fill="White"/>
+        <inputToolkit:NumericUpDown Canvas.Left="167" Canvas.Top="200" Width="43" Height="20" Name="numericUpDownBlue" Maximum="255" ValueChanged="numericUpDownBlue_ValueChanged"/>
     </Canvas>
 </UserControl>
