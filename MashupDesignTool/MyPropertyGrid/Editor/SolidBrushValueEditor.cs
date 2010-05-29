@@ -57,6 +57,8 @@ namespace SL30PropertyGrid
             cp.MouseEnter += new MouseEventHandler(cp_MouseEnter);
             cp.MouseLeave += new MouseEventHandler(cp_MouseLeave);
             mouseInColorPicker = false;
+            p.HorizontalOffset = -100;
+            p.VerticalOffset = 17;
             p.Child = cp;
             p.IsOpen = true;
 			pnl.Children.Add(p);
