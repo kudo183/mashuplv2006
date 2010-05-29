@@ -40,6 +40,9 @@ namespace Controls
                 numericUpDownRed.Value = value.R;
                 numericUpDownGreen.Value = value.G;
                 numericUpDownBlue.Value = value.B;
+
+                alphaSelectControl1.DisplayColor = value;
+
                 if (ColorSelected != null)
                     ColorSelected(value);
                 if (m_ManualSet == true)
@@ -93,6 +96,7 @@ namespace Controls
             m_ManualSet = false;
             SelectedColor = Colors.Black;
             numericUpDownRed.Focus();
+            alphaSelectControl1.AlphaChanged+=new AlphaSelectControl.AlphaChangedHandler(alphaSelectControl1_AlphaChanged);
         }
 
         void rectHueMonitor_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -217,6 +221,17 @@ namespace Controls
                     MessageBox.Show("Invalid color: " + HexValue.Text);
                 SelectedColor = c;
             }            
+        }
+
+        private void alphaSelectControl1_AlphaChanged(byte newAlpha)
+        {
+            alpha = newAlpha;
+            Color c = Color.FromArgb(alpha, SelectedColor.R, SelectedColor.G, SelectedColor.B);
+            m_ManualSet = true;
+            SelectedColor = c;
+            m_ManualSet = false;
+            SelectedColorRect.Fill = new SolidColorBrush(c);
+            HexValue.Text = m_colorSpace.GetHexCode(c); 
         }
        
     }
