@@ -92,18 +92,19 @@ namespace MashupDesignTool
             }
         }
 
-        public ControlInfo(string xml) : this(XElement.Parse(xml))
+        public ControlInfo(string xml, string imageFolder)
+            : this(XElement.Parse(xml), imageFolder)
         {
         }
 
-        public ControlInfo(XElement element)
+        public ControlInfo(XElement element, string imageFolder)
         {
             controlName = element.Element("Name").Value;
             dllFilename = element.Element("DllFilename").Value;
             displayName = element.Element("DisplayName").Value;
             description = element.Element("Description").Value;
             group = element.Element("Group").Value;
-            iconName = element.Element("IconName").Value;
+            iconName = imageFolder + "/" + element.Element("IconName").Value;
             isDllFileDownloaded = false;
 
             dllReferences = new List<string>();
