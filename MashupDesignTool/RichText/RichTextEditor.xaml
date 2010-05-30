@@ -1,0 +1,169 @@
+﻿<UserControl x:Class="Liquid.RichTextEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:liquidRichText="clr-namespace:Liquid;assembly=Liquid.RichText"
+    xmlns:liquidPopup="clr-namespace:Liquid;assembly=Liquid.Popup"
+    xmlns:liquid="clr-namespace:Liquid;assembly=Liquid" 
+    xmlns:local="clr-namespace:Liquid"
+    >
+    <Border>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="1" Margin="0" Padding="4" BorderThickness="1 1 1 0" BorderBrush="#aaaaaa">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#ffffff" Offset="0.0" />
+                        <GradientStop Color="#e3e8f4" Offset="0.5" />
+                        <GradientStop Color="#cfd7eb" Offset="0.5" />
+                        <GradientStop Color="#e9ecfa" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Border.Background>               
+                <StackPanel  Orientation="Horizontal">
+                    <Button x:Name="link" Width="24" Height="23" Margin="2" ToolTipService.ToolTip="Insert Hyperlink" Click="Button_Click">
+                        <Image Source="images/link.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="image" Width="24" Height="23" Margin="2" ToolTipService.ToolTip="Insert Image" Click="Button_Click">
+                        <Image Source="images/image.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="copy" Width="24" Height="23" Margin="6,2,2,2" ToolTipService.ToolTip="Copy" Click="Button_Click">
+                        <Image Source="images/copy.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="paste" Width="24" Height="23" Margin="2" ToolTipService.ToolTip="Paste" Click="Button_Click">
+                        <Image Source="images/paste.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="cut" Width="24" Height="23" Margin="2" ToolTipService.ToolTip="Cut" Click="Button_Click">
+                        <Image Source="images/cut.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="undo" Width="24" Height="23" Margin="6,2,2,2" ToolTipService.ToolTip="Undo" Click="Button_Click">
+                        <Image Source="images/undo.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="redo" Width="24" Height="23" Margin="2" ToolTipService.ToolTip="Redo" Click="Button_Click">
+                        <Image Source="images/redo.png" Stretch="None" />
+                    </Button>
+                    <Button x:Name="painter" Width="24" Height="23" Margin="6,2,2,2" ToolTipService.ToolTip="Format Painter" Click="Button_Click">
+                        <Image Source="images/painter.png" Stretch="None" />
+                    </Button>
+                    <Slider Name="sliderZoom" Width="80" Height="23" Margin="6,2,2,2" Minimum="0.5"  ToolTipService.ToolTip="Zoom" ValueChanged="sliderZoom_ValueChanged"></Slider>
+                    <liquid:ColorSelector x:Name="selectForegroundColor" Margin="6 0 2 0" ToolTipService.ToolTip="Foreground" SelectionChanged="selectForegroundColor_ItemSelected" />
+                    <liquid:ColorSelector x:Name="selectBackgroundColor" Margin="0 0 2 0" ToolTipService.ToolTip="Background" SelectionChanged="selectBackgroundColor_SelectionChanged" />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="0" Margin="0" Padding="4" BorderThickness="1 1 1 0" BorderBrush="#aaaaaa">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#ffffff" Offset="0.0" />
+                        <GradientStop Color="#e3e8f4" Offset="0.5" />
+                        <GradientStop Color="#cfd7eb" Offset="0.5" />
+                        <GradientStop Color="#e9ecfa" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel Orientation="Horizontal">
+                <ComboBox x:Name="selectFontFamily" Width="135" Height="23" Margin="0 0 2 0" SelectionChanged="SelectFontFamily_ItemSelected">
+                    <ComboBoxItem Content="Arial" FontSize="14" FontFamily="Arial" />
+                    <ComboBoxItem Content="Arial Black" FontSize="14" FontFamily="Arial Black" />
+                    <ComboBoxItem Content="Comic Sans MS" FontSize="14" FontFamily="Comic Sans MS" />
+                    <ComboBoxItem Content="Courier New" FontSize="14" FontFamily="Courier New" />
+                    <ComboBoxItem Content="Lucida Grande" FontSize="14" FontFamily="Lucida Grande" />
+                    <ComboBoxItem Content="Lucida Sans" FontSize="14" FontFamily="Lucida Sans Unicode" />
+                    <ComboBoxItem Content="Times New Roman" FontSize="14" FontFamily="Times New Roman" />
+                    <ComboBoxItem Content="Trebuchet MS" FontSize="14" FontFamily="Trebuchet MS" />
+                    <ComboBoxItem Content="Verdana" FontSize="14" FontFamily="Verdana" />
+                </ComboBox>
+
+                <ComboBox x:Name="selectFontSize" Width="45" Height="23" Margin="0, 0, 8, 0" SelectionChanged="SelectFontSize_ItemSelected">
+                    <ComboBoxItem Content="6" />
+                    <ComboBoxItem Content="7" />
+                    <ComboBoxItem Content="8" />
+                    <ComboBoxItem Content="9" />
+                    <ComboBoxItem Content="10" />
+                    <ComboBoxItem Content="11" />
+                    <ComboBoxItem Content="12" />
+                    <ComboBoxItem Content="13" />
+                    <ComboBoxItem Content="14" />
+                    <ComboBoxItem Content="15" />
+                    <ComboBoxItem Content="16" />
+                    <ComboBoxItem Content="17" />
+                    <ComboBoxItem Content="18" />
+                    <ComboBoxItem Content="20" />
+                    <ComboBoxItem Content="22" />
+                    <ComboBoxItem Content="24" />
+                    <ComboBoxItem Content="26" />
+                    <ComboBoxItem Content="28" />
+                    <ComboBoxItem Content="36" />
+                    <ComboBoxItem Content="48" />
+                    <ComboBoxItem Content="72" />
+                </ComboBox>
+
+                <Button x:Name="makeBold" Width="24" Height="23" Margin="0 2 2 2" ToolTipService.ToolTip="Bold" Click="MakeBold_Click">
+                    <TextBlock x:Name="boldText" Text="B" FontFamily="Arial" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Button>
+                <Button x:Name="makeItalic" Width="24" Height="23" Margin="2" ToolTipService.ToolTip="Italic" Click="MakeItalic_Click">
+                    <TextBlock x:Name="italicText" Text="I" FontFamily="Arial" FontSize="14" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Button>
+                <Button x:Name="makeUnderline" Width="24" Height="23" Margin="2" ToolTipService.ToolTip="Underline" Click="MakeUnderline_Click">
+                    <TextBlock x:Name="underlineText" Text="U" FontFamily="Arial" FontSize="14" TextDecorations="Underline" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Button>
+                <Button x:Name="makeLeft" Width="24" Height="23" Margin="6 2 2 2" ToolTipService.ToolTip="Align Left" Click="MakeLeft_Click">
+                    <Image Source="images/left.png" Stretch="None" />
+                </Button>
+                <Button x:Name="makeCenter" Width="24" Height="23" Margin="2" ToolTipService.ToolTip="Align Center" Click="MakeCenter_Click">
+                    <Image Source="images/center.png" Stretch="None" />
+                </Button>
+                <Button x:Name="makeRight" Width="24" Height="23" Margin="2" ToolTipService.ToolTip="Align Right" Click="MakeRight_Click">
+                    <Image Source="images/right.png" Stretch="None" />
+                </Button>
+
+                <Button x:Name="indent" Width="24" Height="23" Margin="6 0 2 0" ToolTipService.ToolTip="Increase Indent" Click="Indent_Click">
+                    <Image Source="images/indent.png" Stretch="None" />
+                </Button>
+                <Button x:Name="outdent" Width="24" Height="23" Margin="0 0 8 0" ToolTipService.ToolTip="Decrease Indent" Click="Outdent_Click">
+                    <Image Source="images/dedent.png" Stretch="None" />
+                </Button>
+
+                <Button x:Name="bulletList" Width="24" Height="23" Margin="0 0 2 0" ToolTipService.ToolTip="Bullet List" Click="BulletList_Click">
+                    <Image Source="images/bullets.png" Stretch="None" />
+                </Button>
+                <Button x:Name="numberList" Width="24" Height="23" Margin="0 0 2 0" ToolTipService.ToolTip="Number List" Click="NumberList_Click">
+                    <Image Source="images/numbers.png" Stretch="None" />
+                </Button>
+
+                <Button x:Name="makeSuperscript" Width="24" Height="23" Margin="6, 2, 2, 2" ToolTipService.ToolTip="Superscript" Click="Superscript_Click">
+                    <Image Source="images/superscript.png" Stretch="None" />
+                </Button>
+                <Button x:Name="makeSubscript" Width="24" Height="23" Margin="2" ToolTipService.ToolTip="Subscript" Click="Subscript_Click">
+                    <Image Source="images/subscript.png" Stretch="None" />
+                </Button>
+                <Button x:Name="makeStrike" Width="24" Height="23" Margin="2" ToolTipService.ToolTip="Strike-through" Click="Strike_Click">
+                    <Image Source="images/strike.png" Stretch="None" />
+                </Button>
+            </StackPanel>
+            </Border>
+            
+            <liquidRichText:RichTextBox x:Name="rtb" Grid.Row="2" FontFamily="Arial" Margin="0" HorizontalScrollBarVisibility="Hidden" EnableObjectSelection="True" />
+
+            <liquidPopup:Dialog x:Name="linkDialog" Grid.RowSpan="3" Width="200" Height="110" Title="Insert Hyperlink" IsMaximizeEnabled="False" IsMinimizeEnabled="False" Buttons="OK"  Closed="linkDialog_Closed">
+                <StackPanel Orientation="Vertical" Margin="2 4 2 0">
+                    <TextBlock Text="URL:" HorizontalAlignment="Left" FontFamily="Arial" FontWeight="Bold" />
+                    <TextBox x:Name="ElementLink" Width="190" HorizontalAlignment="Left" />
+                </StackPanel>
+            </liquidPopup:Dialog>
+            
+            <liquidPopup:Dialog x:Name="URLDialog" Grid.RowSpan="3" Width="370" Height="120" Title="Enter an URL:" IsMaximizeEnabled="False" IsMinimizeEnabled="False" Buttons="OK"  Closed="URLDialog_Closed">                                    
+                    <TextBox x:Name="URL" Margin="20"/>                
+            </liquidPopup:Dialog>
+            
+            <liquidPopup:Dialog x:Name="colorPickerForegroundDialog" Grid.RowSpan="3" Width="340" Height="390" Title="Custom Color Picker" Buttons="OK" IsMaximizeEnabled="False" Closed="colorPickerForegroundDialog_Closed">
+                <local:ColorPicker x:Name="colorPickerForeground" Margin="2" />
+            </liquidPopup:Dialog>
+            <liquidPopup:Dialog x:Name="colorPickerBackgroundDialog" Grid.RowSpan="3" Width="340" Height="390" Title="Custom Color Picker" Buttons="OK" IsMaximizeEnabled="False" Closed="colorPickerBackgroundDialog_Closed">
+                <local:ColorPicker x:Name="colorPickerBackground" Margin="2" />
+            </liquidPopup:Dialog>
+        </Grid>
+    </Border>
+</UserControl>
