@@ -1,4 +1,4 @@
-﻿<UserControl xmlns:sdk="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input"  x:Class="MashupDesignTool.MainPage"
+﻿<UserControl xmlns:my2="clr-namespace:System.Windows.Controls;assembly=FloatableWindow"  xmlns:my1="clr-namespace:Blacklight.Controls;assembly=Blacklight.Controls"  xmlns:sdk="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.Input"  x:Class="MashupDesignTool.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,11 +6,13 @@
     xmlns:propertyGrid="clr-namespace:SL30PropertyGrid;assembly=MyPropertyGrid"
     xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
     xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
-    mc:Ignorable="d" x:Name="root"
+    mc:Ignorable="d" x:Name="rootUserControl"
     d:DesignHeight="300" d:DesignWidth="400" xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" Loaded="UserControl_Loaded" xmlns:my="clr-namespace:MashupDesignTool" xmlns:MapulRibbon="clr-namespace:MapulRibbon;assembly=MapulRibbon">
     
     <UserControl.Resources>
         <Style x:Key="ExpanderButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="#FF4A85CD"></Setter>
+            <Setter Property="FontSize" Value="9"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -23,22 +25,46 @@
                                             <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
                                                 Duration="00:00:00.0010000" Storyboard.TargetName="GradientStop1" 
                                                 Storyboard.TargetProperty="Color">
-                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FF8C9BF2"/>
+                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFFBEEA2"/>
                                             </ColorAnimationUsingKeyFrames>
                                             <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
                                                 Duration="00:00:00.0010000" Storyboard.TargetName="GradientStop2" 
                                                 Storyboard.TargetProperty="Color">
-                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FF6672BA"/>
+                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFEFD379"/>
                                             </ColorAnimationUsingKeyFrames>
                                             <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
                                                 Duration="00:00:00.0010000" Storyboard.TargetName="GradientStop3" 
                                                 Storyboard.TargetProperty="Color">
-                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FF47528E"/>
+                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFE9B91F"/>
                                             </ColorAnimationUsingKeyFrames>
                                             <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
                                                 Duration="00:00:00.0010000" Storyboard.TargetName="GradientStop4" 
                                                 Storyboard.TargetProperty="Color">
-                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FF293161"/>
+                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFE1B720"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </vsm:VisualState>
+                                    <vsm:VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
+                                                Duration="00:00:00.0010000" Storyboard.TargetName="GradientStop1" 
+                                                Storyboard.TargetProperty="Color">
+                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFF1E3D0"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
+                                                Duration="00:00:00.0010000" Storyboard.TargetName="GradientStop2" 
+                                                Storyboard.TargetProperty="Color">
+                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFD3B07C"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
+                                                Duration="00:00:00.0010000" Storyboard.TargetName="GradientStop3" 
+                                                Storyboard.TargetProperty="Color">
+                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFC8780E"/>
+                                            </ColorAnimationUsingKeyFrames>
+                                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" 
+                                                Duration="00:00:00.0010000" Storyboard.TargetName="GradientStop4" 
+                                                Storyboard.TargetProperty="Color">
+                                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFEA7E15"/>
                                             </ColorAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </vsm:VisualState>
@@ -53,15 +79,15 @@
                                     <vsm:VisualState x:Name="Unfocused"/>
                                 </vsm:VisualStateGroup>
                             </vsm:VisualStateManager.VisualStateGroups>
-                            <Border CornerRadius="3"
-                                       BorderBrush="#FF333333" BorderThickness="2" 
+                            <Border CornerRadius="7"
+                                       BorderBrush="#FF8393A9" BorderThickness="1" 
                                        x:Name="border" RenderTransformOrigin="0.5,0.5">
                                 <Border.Background>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop x:Name="GradientStop1" Color="#FF0E101A" Offset="0.0" />
-                                        <GradientStop x:Name="GradientStop2" Color="#FF0E101A" Offset="0.43" />
-                                        <GradientStop x:Name="GradientStop3" Color="#FF373946" Offset="0.57" />
-                                        <GradientStop x:Name="GradientStop4" Color="#FF373946" Offset="1.0" />
+                                        <GradientStop x:Name="GradientStop1" Color="#FFF7F8F9" Offset="0.0" />
+                                        <GradientStop x:Name="GradientStop2" Color="#FFE3E6EA" Offset="0.43" />
+                                        <GradientStop x:Name="GradientStop3" Color="#FFC6CFDE" Offset="0.57" />
+                                        <GradientStop x:Name="GradientStop4" Color="#FF9FAEC8" Offset="1.0" />
                                     </LinearGradientBrush>
                                 </Border.Background>
                                 <Border.RenderTransform>
@@ -83,16 +109,12 @@
         </Style>
 
         <Style x:Key="TitlePanelHorizontal" TargetType="sdk:Label">
-            <Setter Property="Background" Value="#FF2D355C">
-            </Setter>
-            <Setter Property="Foreground" Value="White">
-            </Setter>
+            <!--<Setter Property="Background" Value="#FF2D355C"></Setter>-->
+            <Setter Property="Foreground" Value="#FF534AA2"></Setter>
         </Style>
         <Style x:Key="TitlePanelVertical" TargetType="sdk:Label">
-            <Setter Property="Background" Value="Transparent">
-            </Setter>
-            <Setter Property="Foreground" Value="White">
-            </Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="Foreground" Value="#FF534AA2"></Setter>
         </Style>
 
         <Storyboard x:Name="CollapseToolbarPanel">
@@ -108,11 +130,11 @@
                 </ObjectAnimationUsingKeyFrames.KeyFrames>
             </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation Duration="0:0:.3" To="24" x:Name="CollapseToolbarPanelColumn" 
-                             Storyboard.TargetName="root" 
+                             Storyboard.TargetName="rootUserControl" 
                              Storyboard.TargetProperty="ColumnToolbarWidth"></DoubleAnimation>
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
                                            BeginTime="00:00:00.3" Duration="0:0:0"
-                                           Storyboard.TargetName="TreeControl">
+                                           Storyboard.TargetName="treeControlScrollViewer">
                 <ObjectAnimationUsingKeyFrames.KeyFrames>
                     <DiscreteObjectKeyFrame KeyTime="00:00:00">
                         <DiscreteObjectKeyFrame.Value>
@@ -167,11 +189,11 @@
                 </ObjectAnimationUsingKeyFrames.KeyFrames>
             </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation Duration="0:0:.3" From="24" x:Name="ExpandToolbarPanelColumn"
-                             Storyboard.TargetName="root" 
+                             Storyboard.TargetName="rootUserControl" 
                              Storyboard.TargetProperty="ColumnToolbarWidth"></DoubleAnimation>
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
                                            BeginTime="00:00:00.3" Duration="0:0:0"
-                                           Storyboard.TargetName="TreeControl">
+                                           Storyboard.TargetName="treeControlScrollViewer">
                 <ObjectAnimationUsingKeyFrames.KeyFrames>
                     <DiscreteObjectKeyFrame KeyTime="00:00:00">
                         <DiscreteObjectKeyFrame.Value>
@@ -226,7 +248,7 @@
                 </ObjectAnimationUsingKeyFrames.KeyFrames>
             </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation Duration="0:0:.3" To="24" x:Name="CollapsePropertiesGridPanelColumn" 
-                             Storyboard.TargetName="root" 
+                             Storyboard.TargetName="rootUserControl" 
                              Storyboard.TargetProperty="ColumnPropertiesGridWidth"></DoubleAnimation>
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
                                            BeginTime="00:00:00.3" Duration="0:0:0"
@@ -285,7 +307,7 @@
                 </ObjectAnimationUsingKeyFrames.KeyFrames>
             </ObjectAnimationUsingKeyFrames>
             <DoubleAnimation Duration="0:0:.3" From="24" x:Name="ExpandPropertiesGridPanelColumn"
-                             Storyboard.TargetName="root" 
+                             Storyboard.TargetName="rootUserControl" 
                              Storyboard.TargetProperty="ColumnPropertiesGridWidth"></DoubleAnimation>
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
                                            BeginTime="00:00:00.3" Duration="0:0:0"
@@ -330,34 +352,234 @@
                 </ObjectAnimationUsingKeyFrames.KeyFrames>
             </ObjectAnimationUsingKeyFrames>
         </Storyboard>
+
+        <Style x:Key="TreeControlScrollViewerStyle" TargetType="ScrollViewer">
+            <Setter Property="Background" Value="#FFD5E4F2"></Setter>
+        </Style>
+
+        <ControlTemplate x:Key="RadioButtonControlTemplate" TargetType="RadioButton">
+            <Border Padding="5,2,5,2" x:Name="rootBorder" Background="#00FFFFFF" CornerRadius="3,3,3,3">
+                <vsm:VisualStateManager.VisualStateGroups>
+                    <vsm:VisualStateGroup x:Name="CommonStates">
+                        <vsm:VisualState x:Name="Disabled"/>
+                        <vsm:VisualState x:Name="Normal">
+                            <Storyboard>
+                                <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rootBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="#00A9DBF6"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </vsm:VisualState>
+                        <vsm:VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rootBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFFEC900"/>
+                                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="#FFFEDB60"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </vsm:VisualState>
+                        <vsm:VisualState x:Name="Pressed">
+                            <Storyboard>
+                                <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="rootBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFFEC900"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </vsm:VisualState>
+                    </vsm:VisualStateGroup>
+                    <vsm:VisualStateGroup x:Name="FocusStates">
+                        <vsm:VisualState x:Name="ContentFocused"/>
+                        <vsm:VisualState x:Name="Unfocused"/>
+                        <vsm:VisualState x:Name="Focused"/>
+                    </vsm:VisualStateGroup>
+                    <vsm:VisualStateGroup x:Name="CheckStates">
+                        <vsm:VisualState x:Name="Unchecked"/>
+                        <vsm:VisualState x:Name="Checked">
+                            <Storyboard>
+                                <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="checkedRectangle" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                    <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFFEC900"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </vsm:VisualState>
+                        <vsm:VisualState x:Name="Indeterminate"/>
+                    </vsm:VisualStateGroup>
+                </vsm:VisualStateManager.VisualStateGroups>
+                <Grid>
+                    <Rectangle Margin="-5,-2,-5,-2" Fill="#004792DE" RadiusX="3" RadiusY="3" x:Name="checkedRectangle"/>
+                    <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" />
+                </Grid>
+            </Border>
+        </ControlTemplate>
+        <Style x:Key="RadioButtonControlStyle" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="#FF000000"/>
+            <Setter Property="Template" Value="{StaticResource RadioButtonControlTemplate}"/>
+            <Setter Property="GroupName" Value="ControlItem"/>
+        </Style>
+
+        <Style x:Key="PanelStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFC1D9F1"></Setter>
+            <!--<Setter Property="InnerGlowColor" Value="Black"></Setter>-->
+            <Setter Property="BorderBrush" Value="#FF7699C7"></Setter>
+            <Setter Property="BorderThickness" Value="2"></Setter>
+        </Style>
+        <Style x:Key="GroupControlHeaderStyle" TargetType="my1:AnimatedExpander">
+            <Setter Property="Foreground" Value="#313E77"></Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
+        </Style>
+        <Style x:Key="TextBlockControlDisplayNameStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FF3B66C4"></Setter>
+        </Style>
+
+        <Style x:Key="PopupBorderStyle" TargetType="Border">
+            <!--<Setter Property="" Value="White"></Setter>-->
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#CF444444" Offset="0" />
+                        <GradientStop Color="#CF444444" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="10"></Setter>
+            <!--<Setter Property="OuterGlowColor" Value="Black"></Setter>-->
+        </Style>
+        <Style x:Key="PopupBackgroundStyle" TargetType="StackPanel">
+            <Setter Property="Background" Value="#FFF0F0F0"></Setter>
+        </Style>
+        <Style x:Key="PopupLoadingAnimationStyle" TargetType="my1:LoadingAnimation">
+            <Setter Property="Foreground" Value="#FF3C7FB1"></Setter>
+            <Setter Property="EllipseFill">
+                <Setter.Value>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#ff444444" Offset="0" />
+                        <GradientStop Color="#55444444" Offset="1" />
+                    </RadialGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="PopupButtonCancelStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="#FF3C7FB1"></Setter>
+        </Style>
+
+        <Style x:Key="DesignCanvasBorderStyle" TargetType="my1:GlassBorder">
+            <Setter Property="Background" Value="#FFADD1FF"></Setter>
+        </Style>
+        <Style x:Key="DesignCanvasGridStyle" TargetType="Grid">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <!--<RadialGradientBrush>
+                        <RadialGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="1.52" ScaleY="1.8"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform Y="0.4"/>
+                            </TransformGroup>
+                        </RadialGradientBrush.RelativeTransform>
+                        <GradientStop Color="#B2FFFFFF"/>
+                        <GradientStop Color="#00FFFFFF" Offset="1"/>
+                    </RadialGradientBrush>-->
+                    <ImageBrush ImageSource="Images/panther_wallpaper.jpg" Stretch="Fill" Opacity="0.9"></ImageBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="HRLineStyle" TargetType="Grid">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF96AAC4" Offset="0" />
+                        <GradientStop Color="#FFB0C8E7" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="MainGridStyle" TargetType="Grid">
+            <Setter Property="Background" Value="#FFADD1FF">
+            </Setter>
+        </Style>
+
+        <Style x:Key="GridSplitter1Style" TargetType="controls:GridSplitter">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                        <!--<GradientStop Color="White" Offset="0" />-->
+                        <GradientStop Color="Transparent" Offset="0.25" />
+                        <GradientStop Color="#FF6593CF" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="GridSplitter2Style" TargetType="controls:GridSplitter">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                        <!--<GradientStop Color="#FF6593CF" Offset="0" />-->
+                        <GradientStop Color="Transparent" Offset="0.75" />
+                        <GradientStop Color="White" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="8"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF2B3151" Offset="0.008" />
-                <GradientStop Color="#FF2B3151" Offset="0.4" />
-                <GradientStop Color="#FF191D30" Offset="0.7" />
-                <GradientStop Color="Black" Offset="1" />
-            </LinearGradientBrush>
-        </Grid.Background>
-        
-        <Popup x:Name="popupLoading" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalOffset="-150" VerticalOffset="-75" Grid.RowSpan="3">
+                
+        <Popup x:Name="popupLoading" VerticalAlignment="Center" HorizontalAlignment="Center" 
+               HorizontalOffset="-200" VerticalOffset="-100" Grid.RowSpan="3">
             <Popup.Child>
-                <StackPanel Orientation="Vertical" Width="300" Height="150" Background="LightBlue" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Image Source="" Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
-                    <TextBlock x:Name="popupText" Text="Loading ..." VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    <Button Content="Cancel" Width="60" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click"></Button>
-                </StackPanel>
+                <Grid Width="400" Height="200">
+                    <!--<my1:OuterGlowBorder CornerRadius="10" Margin="10" 
+                                         OuterGlowOpacity="0.5" OuterGlowSize="20"
+                                         HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0"
+                                         Style="{StaticResource PopupBorderStyle}">-->
+                    <Border HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Style="{StaticResource PopupBorderStyle}" 
+                            CornerRadius="5" Margin="10">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="30" Color="Black" Direction="0" Opacity="1" ShadowDepth="0"></DropShadowEffect>
+                        </Border.Effect>
+                        <StackPanel x:Name="spPopupLoading" Orientation="Vertical" 
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource PopupBackgroundStyle}">
+                            <StackPanel.Resources>
+                                <Storyboard x:Name="openPopup">
+                                    <DoubleAnimation Duration="0:0:.4" From="0" To="300"
+                                                 Storyboard.TargetName="spPopupLoading" 
+                                                 Storyboard.TargetProperty="Width"></DoubleAnimation>
+                                    <DoubleAnimation Duration="0:0:.4" From="0" To="150"
+                                                 Storyboard.TargetName="spPopupLoading" 
+                                                 Storyboard.TargetProperty="Height"></DoubleAnimation>
+                                </Storyboard>
+                                <Storyboard x:Name="closePopup">
+                                    <DoubleAnimation Duration="0:0:.3" To="0"
+                                                 Storyboard.TargetName="spPopupLoading" 
+                                                 Storyboard.TargetProperty="Width"></DoubleAnimation>
+                                    <DoubleAnimation Duration="0:0:.3" To="0"
+                                                 Storyboard.TargetName="spPopupLoading" 
+                                                 Storyboard.TargetProperty="Height"></DoubleAnimation>
+                                </Storyboard>
+                            </StackPanel.Resources>
+                            <my1:LoadingAnimation AutoPlay="True" Margin="0,5" Style="{StaticResource PopupLoadingAnimationStyle}">
+                                <TextBlock x:Name="popupText" Text="L O A D I N G ..." VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Verdana" FontSize="12"></TextBlock>
+                            </my1:LoadingAnimation>
+                            <Button Content="Cancel" Width="60" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click" Style="{StaticResource PopupButtonCancelStyle}"></Button>
+                        </StackPanel>
+                        <!--</my1:OuterGlowBorder>-->
+                    </Border>
+                </Grid>
             </Popup.Child>
         </Popup>
         
-        <MapulRibbon:Ribbon HorizontalAlignment="Stretch" Name="menu" VerticalAlignment="Stretch" Margin="0,-30,0,0" Grid.Row="0" Height="145" OnSelectionTabChanged="menu_OnSelectionTabChanged">
+        <MapulRibbon:Ribbon HorizontalAlignment="Stretch" Name="menu" 
+                            VerticalAlignment="Stretch" Margin="0,0,0,0" 
+                            Grid.Row="0" Height="145" 
+                            Title="Silverlight Designer Tools"
+                            OnSelectionTabChanged="menu_OnSelectionTabChanged">
             <MapulRibbon:Tabs>
                 <MapulRibbon:Tabs.Items>
                     <!-- Home TabItem -->
@@ -365,32 +587,12 @@
                         <MapulRibbon:TabsItem.Content>
                             <MapulRibbon:RibbonItems>
                                 <!-- Clipboard RibbonItem -->
-                                <MapulRibbon:RibbonItem Title="Clipboard">
+                                <MapulRibbon:RibbonItem Title="Full screen">
                                     <MapulRibbon:RibbonItem.Content>
                                         <MapulRibbon:RibbonButtonsGroup>
-                                            <MapulRibbon:RibbonButton x:Name="btnPaste" ImageUrl="img/paste.png" Text="Paste" Height="20" Width="20"
-                                                                    TooltipTitle="Paste (CTRL + V)" 
-                                                                    TooltipText="Paste from clipboard.">
-                                            </MapulRibbon:RibbonButton>
-                                        </MapulRibbon:RibbonButtonsGroup>
-                                    </MapulRibbon:RibbonItem.Content>
-                                </MapulRibbon:RibbonItem>
-                                <MapulRibbon:RibbonItem Title="Clipboard">
-                                    <MapulRibbon:RibbonItem.Content>
-                                        <MapulRibbon:RibbonButtonsGroup>
-                                            <MapulRibbon:RibbonList hAlignment="Left" vAlignment="Top">
-                                                <MapulRibbon:RibbonListItem Text="abc" ImageSource="Images/Delete.png">
-
-                                                </MapulRibbon:RibbonListItem>
-                                                <MapulRibbon:RibbonListItem Text="def" ImageSource="Images/Properties.png">
-                                                </MapulRibbon:RibbonListItem>
-                                                <MapulRibbon:RibbonListItem Text="def" ImageSource="Images/Properties.png">
-                                                </MapulRibbon:RibbonListItem>
-
-                                                <MapulRibbon:RibbonListItem Text="def" ImageSource="Images/Properties.png">
-                                                </MapulRibbon:RibbonListItem>
-
-                                            </MapulRibbon:RibbonList>
+                                            <MapulRibbon:RibbonToggleButton Name="btnFullScreen" ImageUrl="Images/fullscreen.png" Text="Switch" Height="70" Width="70"
+                                                                    TooltipTitle="Switch/Escape full screen mode" TooltipText="Switch to/escape full screen mode" OnClick="btnFullScreen_OnClick">
+                                            </MapulRibbon:RibbonToggleButton>
                                         </MapulRibbon:RibbonButtonsGroup>
                                     </MapulRibbon:RibbonItem.Content>
                                 </MapulRibbon:RibbonItem>
@@ -401,10 +603,10 @@
             </MapulRibbon:Tabs>
         </MapulRibbon:Ribbon>
         
-        <Grid Height="8" Background="#232842" Grid.Row="1">
+        <Grid Height="2" Style="{StaticResource HRLineStyle}" Grid.Row="1">
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Style="{StaticResource MainGridStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150" x:Name="ToolbarColumn"></ColumnDefinition>
                 <ColumnDefinition Width="3"></ColumnDefinition>
@@ -413,17 +615,22 @@
                 <ColumnDefinition Width="250" x:Name="PropertiesGridColumn"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" BorderBrush="#FF885A2C" BorderThickness="2" x:Name="ToolbarPanel">
+            <Border Grid.Column="0" x:Name="ToolbarPanel" Style="{StaticResource PanelStyle}">
+            <!--<my1:InnerGlowBorder BorderThickness="0" CornerRadius="0,0,10,10" 
+                                 InnerGlowOpacity="0.5" InnerGlowSize="15"
+                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                 x:Name="ToolbarPanel"
+                                 Style="{StaticResource PanelStyle}">-->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="20"></ColumnDefinition>
+                        <ColumnDefinition Width="19"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20"></RowDefinition>
+                        <RowDefinition Height="19"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <controls:TreeView Grid.Row="1" BorderBrush="#FF885A2C" BorderThickness="0,1,0,0"
+                    <!--<controls:TreeView Grid.Row="1" BorderBrush="#FF885A2C" BorderThickness="0,1,0,0"
                                        Grid.ColumnSpan="2" Grid.Column="0" x:Name="TreeControl"
                                        SelectedItemChanged="TreeControl_SelectedItemChanged" 
                                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
@@ -435,39 +642,80 @@
                                 <GradientStop Color="Black" Offset="1" />
                             </LinearGradientBrush>
                         </controls:TreeView.Background>
-                    </controls:TreeView>
-                    <Button Grid.Column="1" x:Name="ToolbarExpander" Foreground="White" 
-                            Style="{StaticResource ExpanderButtonStyle}" Content="&lt;" Padding="0" FontWeight="Bold" Click="ExpanderToolbar_Click">
+                    </controls:TreeView>-->
+
+                    <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2"
+                                  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" x:Name="treeControlScrollViewer"  
+                                  Style="{StaticResource TreeControlScrollViewerStyle}">
+                        <ItemsControl x:Name="treeControl">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <my1:AnimatedExpander Header="{Binding GroupName}" FontSize="12" Style="{StaticResource GroupControlHeaderStyle}" FontFamily="Verdana" Margin="0">
+                                        <ItemsControl Margin="0" ItemsSource="{Binding ControlInfos}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <RadioButton Margin="8,0,6,0" Height="Auto" Width="Auto" x:Name="Control" Style="{StaticResource RadioButtonControlStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Control_Click">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Width="15" Height="15" Source="{Binding IconName}" Stretch="Fill"></Image>
+                                                            <TextBlock Margin="2,0,2,0" FontFamily="Verdana" FontSize="11" Text="{Binding DisplayName}" UseLayoutRounding="False" Style="{StaticResource TextBlockControlDisplayNameStyle}" Width="{Binding Width}" />
+                                                        </StackPanel>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip Content="{Binding Description}"></ToolTip>
+                                                        </ToolTipService.ToolTip>
+                                                    </RadioButton>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </my1:AnimatedExpander>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <Button Grid.Column="1" x:Name="ToolbarExpander" Width="15" Height="15" Margin="0,2,2,0"
+                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                            Style="{StaticResource ExpanderButtonStyle}" Content="&lt;" FontWeight="Bold" Click="ExpanderToolbar_Click">
                     </Button>
-                    <sdk:Label Grid.Column="0" x:Name="ToolbarTitle"
+                    <sdk:Label Grid.Column="0" x:Name="ToolbarTitle" VerticalContentAlignment="Center"
                                Style="{StaticResource TitlePanelHorizontal}" Content="Toolbar"
-                               Margin="3,0,0,0">
+                               Margin="3,0,0,0" Background="Transparent">
                     </sdk:Label>
                 </Grid>
             </Border>
+            <!--</my1:InnerGlowBorder>-->
 
-            <controls:GridSplitter Grid.Column="1" Background="Transparent" x:Name="spliter1"
-                                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <controls:GridSplitter Grid.Column="1" x:Name="spliter1"
+                                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource GridSplitter1Style}">
             </controls:GridSplitter>
 
-            <my:DesignCanvas Grid.Column="2" x:Name="designCanvas1" IsHitTestVisible="True"
-                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                                SelectPropertiesMenu="designCanvas1_SelectPropertiesMenu" SelectionChanged="designCanvas1_SelectionChanged"
-                                BorderBrush="#FF885A2C" Background="#2D355C" BorderThickness="3" Margin="0">
-            </my:DesignCanvas>
+            <my1:GlassBorder Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ContentZIndex="1"
+                             BorderThickness="0" GlassOpacity="0" Style="{StaticResource DesignCanvasBorderStyle}">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource DesignCanvasGridStyle}">
+                    <my:DesignCanvas x:Name="designCanvas1" IsHitTestVisible="True" Opacity="1"
+                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                    SelectPropertiesMenu="designCanvas1_SelectPropertiesMenu" SelectionChanged="designCanvas1_SelectionChanged"
+                                    BorderThickness="0" BorderBrush="Transparent">
+                    </my:DesignCanvas>
+                </Grid>
+            </my1:GlassBorder>
 
-            <controls:GridSplitter Grid.Column="3" Background="Transparent" x:Name="spliter2"
-                                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <controls:GridSplitter Grid.Column="3" x:Name="spliter2"
+                                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource GridSplitter2Style}">
             </controls:GridSplitter>
 
-            <Border Grid.Column="5" BorderBrush="#FF885A2C" BorderThickness="2" x:Name="PropertiesGridPanel">
+            <Border Grid.Column="5" x:Name="PropertiesGridPanel" Style="{StaticResource PanelStyle}">
+            <!--<my1:InnerGlowBorder BorderThickness="0" CornerRadius="0,0,10,10" 
+                                 InnerGlowOpacity="0.5" InnerGlowSize="15"
+                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                 x:Name="PropertiesGridPanel"
+                                 Grid.Column="5"
+                                 Style="{StaticResource PanelStyle}">-->
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="20"></ColumnDefinition>
+                        <ColumnDefinition Width="19"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20"></RowDefinition>
+                        <RowDefinition Height="19"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <controls:TabControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="propertiesTabs"
@@ -476,39 +724,27 @@
                             <propertyGrid:PropertyGrid x:Name="propertiesGrid" 
                                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                                            GridBorderThickness="0" Foreground="Black">
-                                <propertyGrid:PropertyGrid.GridBackgroundBrush>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#FF151E38" Offset="0" />
-                                        <GradientStop Color="#FF161E34" Offset="0.6" />
-                                        <GradientStop Color="Black" Offset="1" />
-                                    </LinearGradientBrush>
-                                </propertyGrid:PropertyGrid.GridBackgroundBrush>
                             </propertyGrid:PropertyGrid>
                         </controls:TabItem>
                         <controls:TabItem Header="Effect options">
                             <propertyGrid:PropertyGrid x:Name="effectPropertiesGrid" 
                                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                                            GridBorderThickness="0" Foreground="Black">
-                                <propertyGrid:PropertyGrid.GridBackgroundBrush>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#FF151E38" Offset="0" />
-                                        <GradientStop Color="#FF161E34" Offset="0.6" />
-                                        <GradientStop Color="Black" Offset="1" />
-                                    </LinearGradientBrush>
-                                </propertyGrid:PropertyGrid.GridBackgroundBrush>
                             </propertyGrid:PropertyGrid>
                         </controls:TabItem>
                     </controls:TabControl>
-                    <Button Grid.Column="0" x:Name="PropertiesGridExpander" Foreground="White" 
+                    <Button Grid.Column="0" x:Name="PropertiesGridExpander" Width="15" Height="15" Margin="2,2,0,0"
+                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                             Style="{StaticResource ExpanderButtonStyle}" Content="&gt;" Padding="0" FontWeight="Bold" Click="PropertiesGridExpander_Click">
                     </Button>
-                    <sdk:Label Grid.Column="1" x:Name="PropertiesGridTitle"
+                    <sdk:Label Grid.Column="1" x:Name="PropertiesGridTitle" Background="Transparent" VerticalContentAlignment="Center"
                                Style="{StaticResource TitlePanelHorizontal}" Content="Properties"
                                HorizontalAlignment="Right" HorizontalContentAlignment="Right"
                                Margin="0,0,3,0">
                     </sdk:Label>
                 </Grid>
-            </Border>
+                </Border>
+            <!--</my1:InnerGlowBorder>-->
             <sdk:Label x:Name="ToolbarTitleVertical" Content="Toolbar" Grid.RowSpan="1" Grid.ColumnSpan="3" Visibility="Collapsed"
                        VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                        Margin="-2,8,0,0" Style="{StaticResource TitlePanelVertical}" 

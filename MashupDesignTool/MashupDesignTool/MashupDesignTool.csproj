@@ -60,28 +60,31 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Blacklight.Controls, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="FloatableWindow, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Liquid.Menu, Version=5.3.1.31637, Culture=neutral, PublicKeyToken=7fbdd25c3fcc3919, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Syndication, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Data.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Controls.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Controls.Toolkit.Internals, Version=4.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
     <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ControlInfo.cs" />
-    <Compile Include="ControlTreeViewItem.xaml.cs">
-      <DependentUpon>ControlTreeViewItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="CursorManager.cs" />
     <Compile Include="CustomCursor.xaml.cs">
       <DependentUpon>CustomCursor.xaml</DependentUpon>
@@ -100,16 +103,13 @@
       <DependentUpon>ProxyControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="SampleTreeItem.cs" />
+    <Compile Include="ControlGroupInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="ControlTreeViewItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="CustomCursor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -149,6 +149,11 @@
     <None Include="Images\.svn\text-base\SizeWNES.png.svn-base" />
     <None Include="Images\.svn\text-base\Thumbs.db.svn-base" />
     <None Include="Properties\AppManifest.xml" />
+    <Content Include="Blacklight.Controls.dll" />
+    <Resource Include="Images\bg_body.jpg" />
+    <Resource Include="Images\panther_wallpaper.jpg" />
+    <Resource Include="Images\fullscreen.png" />
+    <Resource Include="Images\nofullscreen.png" />
     <Content Include="Liquid.Menu.dll" />
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,7 @@ namespace SL30PropertyGrid
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    using System.Windows.Media.Animation;
 
     #endregion
 
@@ -26,6 +27,9 @@ namespace SL30PropertyGrid
         public delegate void OnPropertyValueChange(UIElement ui, string name, object value);
         public event OnPropertyValueChange PropertyValueChange;
 
+        private Dictionary<PropertyGridLabel, Storyboard> listStoryboardMouseEnter = new Dictionary<PropertyGridLabel, Storyboard>();
+        private Dictionary<PropertyGridLabel, Storyboard> listStoryboardMouseLeave = new Dictionary<PropertyGridLabel, Storyboard>();
+
         #region Fields
 
         //#99B4D1
@@ -37,7 +41,7 @@ namespace SL30PropertyGrid
         //internal static Color backgroundColorFocused = Color.FromArgb(255, 94, 170, 255);
 
         public static Color labelBackgroundColor = Colors.Transparent;
-        public static Color labelBackgroundColorFocused = Colors.Red;
+        public static Color labelBackgroundColorFocused = Color.FromArgb(255, 254, 201, 0);
         public static Color labelForegroundColor = Colors.White;
         public static Color labelForegroundColorReadOnly = Colors.Gray;
         public static Color labelForegroundColorFocused = Colors.White;
@@ -296,6 +300,29 @@ namespace SL30PropertyGrid
             editors.Add(editor);
             #endregion
 
+            #region create storyboard
+            Storyboard sb1 = new Storyboard();
+            ObjectAnimationUsingKeyFrames colorAnimation1 = new ObjectAnimationUsingKeyFrames() { BeginTime = TimeSpan.FromSeconds(0) };
+            Storyboard.SetTarget(colorAnimation1, label);
+            Storyboard.SetTargetProperty(colorAnimation1, new PropertyPath("Background"));
+            colorAnimation1.KeyFrames.Add(new DiscreteObjectKeyFrame() { KeyTime = TimeSpan.FromMilliseconds(200), Value = new SolidColorBrush(Color.FromArgb(00, 254, 201, 0)) });
+            sb1.Children.Add(colorAnimation1);
+            sb1.Begin();
+            listStoryboardMouseLeave.Add(label, sb1);
+
+            Storyboard sb2 = new Storyboard();
+            ObjectAnimationUsingKeyFrames colorAnimation2 = new ObjectAnimationUsingKeyFrames() { BeginTime = TimeSpan.FromSeconds(0) };
+            Storyboard.SetTarget(colorAnimation2, label);
+            Storyboard.SetTargetProperty(colorAnimation2, new PropertyPath("Background"));
+            colorAnimation2.KeyFrames.Add(new DiscreteObjectKeyFrame() { KeyTime = TimeSpan.FromSeconds(0), Value = new SolidColorBrush(Color.FromArgb(255, 254, 201, 0)) });
+            colorAnimation2.KeyFrames.Add(new DiscreteObjectKeyFrame() { KeyTime = TimeSpan.FromMilliseconds(200), Value = new SolidColorBrush(Color.FromArgb(255, 254, 219, 96)) });
+            sb2.Children.Add(colorAnimation2);
+            listStoryboardMouseEnter.Add(label, sb2);
+
+            label.MouseEnter += new MouseEventHandler(label_MouseEnter);
+            label.MouseLeave += new MouseEventHandler(label_MouseLeave);
+            #endregion create storyboard
+
             rowIndex++;
             MainGrid.RowDefinitions.Add(new RowDefinition());
             string tagValue = item.Category;
@@ -320,6 +347,30 @@ namespace SL30PropertyGrid
             Grid.SetRow(brd, rowIndex);
             Grid.SetColumn(brd, 2);
             #endregion
+        }
+
+        void label_MouseLeave(object sender, MouseEventArgs e)
+        {
+            PropertyGridLabel label = (PropertyGridLabel)sender;
+            if (selectedEditor != null)
+            {
+                if (!label.Equals(selectedEditor.Label))
+                    listStoryboardMouseLeave[(PropertyGridLabel)sender].Begin();
+            }
+            else
+                listStoryboardMouseLeave[(PropertyGridLabel)sender].Begin();
+        }
+
+        void label_MouseEnter(object sender, MouseEventArgs e)
+        {
+            PropertyGridLabel label = (PropertyGridLabel)sender;
+            if (selectedEditor != null)
+            {
+                if (!label.Equals(selectedEditor.Label))
+                    listStoryboardMouseEnter[(PropertyGridLabel)sender].Begin();
+            }
+            else
+                listStoryboardMouseEnter[(PropertyGridLabel)sender].Begin();
         }
 
         void item_PropertyChanged(object sender, PropertyChangedEventArgs e)

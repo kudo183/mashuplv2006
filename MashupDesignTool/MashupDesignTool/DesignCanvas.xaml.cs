@@ -1118,10 +1118,6 @@ namespace MashupDesignTool
 
         private void root_Loaded(object sender, RoutedEventArgs e)
         {
-            ControlContainer.Width = 600;
-            ControlContainer.Height = 400;
-            LayoutRoot.Width = 600;
-            LayoutRoot.Height = 400;
         }
 
         private void textBox1_TextChanged(object sender, TextChangedEventArgs e)

@@ -285,7 +285,7 @@
                     <GradientStop Color="#FFCDDFF8" Offset="0.246"/>                
                 </LinearGradientBrush>
             </Grid.Background>     
-            <Popup IsOpen="True" x:Name="puRibbonButton" Visibility="Collapsed">            
+            <Popup IsOpen="True" x:Name="puRibbonButton" Visibility="Visible">            
                 <Button x:Name="RibbonButton" IsTabStop="False" Style="{StaticResource RibbonButtonStyle}" Height="45" Width="45" Margin="4, 4, 0, 0" Padding="4,4,4,4">                 
                     <Button.Content>                        
                         <Image Source="img/logo.png" Stretch="Uniform" Margin="2,2,2,2" />
@@ -306,10 +306,10 @@
                 </Grid.ColumnDefinitions>                
                 <MapulRibbon:RibbonButton x:Name="_mailButton" Margin="0,6,0,0" ImageUrl="img/mail.png" Width="20" Height="20" Grid.Column="1"  
                                   TooltipTitle="Feedback" 
-                                  TooltipText="Contact with us." />                
+                                  TooltipText="Contact with us." Visibility="Collapsed" />                
                 <MapulRibbon:RibbonButton x:Name="_closeButton" Margin="0,6,0,0" ImageUrl="img/exit.png" Width="20" Height="20" Grid.Column="3" 
                                   TooltipTitle="Close" 
-                                  TooltipText="Exit"/>
+                                  TooltipText="Exit" Visibility="Collapsed" />
             </Grid>
         </Grid>            
     </Border>      
@@ -331,8 +331,8 @@
                 <ToolTip Content="Quickstart guide" />
             </ToolTipService.ToolTip>
         </HyperlinkButton>-->
-        <MapulRibbon:RibbonButton x:Name="_hideButton" Margin="0,6,0,0" Text="_" Width="20" Height="20" Grid.Column="2" 
-                                  TooltipTitle="Hide / Show" 
-                                  TooltipText="Hide / Show Ribbon Panel"/>
+        <MapulRibbon:RibbonButton x:Name="_hideButton" Margin="0,6,0,0" Text="_" Width="20" Height="20" Grid.Column="1" 
+                                  TooltipTitle="Hide/Show" 
+                                  TooltipText="Hide/Show Ribbon Panel"/>
     </Grid>    
 </StackPanel>

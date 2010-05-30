@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPropertyGrid", "MyPropert
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorPicker", "ColorPicker\ColorPicker.csproj", "{DCA68119-D086-44AF-A067-A6B9F3FEEA80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Effect", "Effect\Effect.csproj", "{D7CD730C-B3EF-4558-AC0C-F24DDF19099D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Liquid.HtmlRichTextArea", "Liquid.HtmlRichTextArea\Liquid.HtmlRichTextArea.csproj", "{3631374F-4860-4C3A-A99B-A27088926FB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testcontrol1", "Testcontrol1\Testcontrol1.csproj", "{AAA4E9CE-56C4-4D7C-8EE7-94CAA670A3E1}"
@@ -65,10 +63,6 @@ Global
 		{DCA68119-D086-44AF-A067-A6B9F3FEEA80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCA68119-D086-44AF-A067-A6B9F3FEEA80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCA68119-D086-44AF-A067-A6B9F3FEEA80}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7CD730C-B3EF-4558-AC0C-F24DDF19099D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7CD730C-B3EF-4558-AC0C-F24DDF19099D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7CD730C-B3EF-4558-AC0C-F24DDF19099D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7CD730C-B3EF-4558-AC0C-F24DDF19099D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3631374F-4860-4C3A-A99B-A27088926FB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3631374F-4860-4C3A-A99B-A27088926FB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3631374F-4860-4C3A-A99B-A27088926FB2}.Release|Any CPU.ActiveCfg = Release|Any CPU

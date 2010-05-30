@@ -30,7 +30,9 @@ namespace MashupDesignTool
         string downloadingControlName = "";
         string downloadingEffectName = "";
         PropertyInfo piEffect;
-        bool bAdd = false, bChange = false;
+        bool bAdd = false, bChange = false, bDownloadControl = false;
+        ControlInfo downloadControlInfo;
+        EffectInfo downloadEffectInfo;
         DispatcherTimer doubleClickTimer;
         double toolbarWidthBeforeCollapse;
         double propertiesGridWidthBeforeCollapse;
@@ -183,35 +185,33 @@ namespace MashupDesignTool
         {
             XmlReader reader = XmlReader.Create(e.Result);
             XDocument document = XDocument.Load(reader);
+            string imageFolder = clientRoot + @"Controls/Images";
+            List<ControlGroupInfo> list = new List<ControlGroupInfo>();
 
             foreach (XElement element in document.Descendants("Control"))
             {
-                ControlInfo ci = new ControlInfo(element);
+                ControlInfo ci = new ControlInfo(element, imageFolder);
                 listControls.Add(ci);
-                AddControlToTree(ci);
+                AddToGroup(ci, list);
             }
+            treeControl.ItemsSource = list;
         }
 
-        private void AddTreeViewItem(TreeView t, string group, object item)
+        private void AddToGroup(ControlInfo ci, List<ControlGroupInfo> list)
         {
-            foreach (TreeViewItem tv in t.Items)
-                if (group == tv.Header.ToString())
+            int i;
+            for (i = 0; i < list.Count; i++)
+                if (list[i].GroupName == ci.Group)
                 {
-                    tv.Items.Add(item);
-                    return;
+                    list[i].ControlInfos.Add(ci);
+                    break;
                 }
-            TreeViewItem tvi = new TreeViewItem();
-            tvi.Header = group;
-            tvi.Items.Add(item);
-            t.Items.Add(tvi);
-        }
-
-        private void AddControlToTree(ControlInfo ci)
-        {
-            ControlTreeViewItem item = new ControlTreeViewItem(ci, clientRoot);
-            item.ControlIcon.Source = new BitmapImage(new Uri(clientRoot + @"Controls/Images/" + ci.IconName, UriKind.Absolute));
-            item.MouseLeftButtonDown += new MouseButtonEventHandler(item_MouseLeftButtonDown);
-            AddTreeViewItem(TreeControl, ci.Group, item);
+            if (i == list.Count)
+            {
+                ControlGroupInfo cgi = new ControlGroupInfo(ci.Group);
+                cgi.ControlInfos.Add(ci);
+                list.Add(cgi);
+            }
         }
         #endregion
 
@@ -343,33 +343,33 @@ namespace MashupDesignTool
             }
         }
 
-        //when user click a control, download it if needed.
-        private void item_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ControlTreeViewItem item = (ControlTreeViewItem)sender;
-            if (doubleClickTimer.IsEnabled)
-            {
-                doubleClickTimer.Stop();
-                if (!LoadedAssembly.ContainsKey(item.ControlInfo.ControlName))
-                {
-                    DownloadControl(item.ControlInfo);
-                    downloadingControlName = item.ControlInfo.ControlName;
-                    ShowPopup();
-                    return;
-                }
-                AddControl(item.ControlInfo.ControlName);
-            }
-            else
-            {
-                doubleClickTimer.Start();
-            }
-        }
-
         private void AddControl(string controlName)
         {
             FrameworkElement uc = LoadedAssembly[controlName].CreateInstance(controlName) as FrameworkElement;
             if (uc != null)
                 designCanvas1.AddControl(uc, 100.0, 100.0, 400, 300);
+        }
+
+        private void Control_Click(object sender, RoutedEventArgs e)
+        {
+            ControlInfo ci = (ControlInfo)((RadioButton)sender).DataContext;
+            if (doubleClickTimer.IsEnabled)
+            {
+                doubleClickTimer.Stop();
+                if (!LoadedAssembly.ContainsKey(ci.ControlName))
+                {
+                    bDownloadControl = true;
+                    downloadingControlName = ci.ControlName;
+                    downloadControlInfo = ci;
+                    ShowPopup();
+                    return;
+                }
+                AddControl(ci.ControlName);
+            }
+            else
+            {
+                doubleClickTimer.Start();
+            }
         }
 
         void DoubleClick_Timer(object sender, EventArgs e)
@@ -386,17 +386,33 @@ namespace MashupDesignTool
         #region popup loading
         private void ShowPopup()
         {
+            openPopup.Begin();
             popupLoading.IsOpen = true;
+            openPopup.Completed += new EventHandler(openPopup_Completed);
             bAdd = true;
             bChange = true;
             IsEnabled = false;
         }
 
+        void openPopup_Completed(object sender, EventArgs e)
+        {
+            if (bDownloadControl)
+                DownloadControl(downloadControlInfo);
+            else
+                DownloadEffect(downloadEffectInfo);
+        }
+
         private void HidePopup()
         {
-            popupLoading.IsOpen = false;
+            closePopup.Begin();
+            closePopup.Completed += new EventHandler(closePopup_Completed);
             bAdd = false;
             bChange = false;
+        }
+
+        void closePopup_Completed(object sender, EventArgs e)
+        {
+            popupLoading.IsOpen = false;
             IsEnabled = true;
         }
 
@@ -415,7 +431,7 @@ namespace MashupDesignTool
             propertiesTabs.SelectedIndex = 0;
             if (propertiesTabs.Visibility == System.Windows.Visibility.Collapsed)
             {
-                ExpandPropertiesGridPanelColumn.To = propertiesGridWidthBeforeCollapse;
+                //ExpandPropertiesGridPanelColumn.To = propertiesGridWidthBeforeCollapse;
                 ExpandPropertiesGridPanel.Begin();
             }
         }
@@ -613,7 +629,8 @@ namespace MashupDesignTool
             piEffect = (PropertyInfo)listView.Tag;
             if (!LoadedEffectAssembly.ContainsKey(ei.EffectName))
             {
-                DownloadEffect(ei);
+                bDownloadControl = false;
+                downloadEffectInfo = ei;
                 downloadingEffectName = ei.EffectName;
                 ShowPopup();
                 return;
@@ -769,7 +786,7 @@ namespace MashupDesignTool
             propertiesTabs.SelectedIndex = 1;
             if (propertiesTabs.Visibility == System.Windows.Visibility.Collapsed)
             {
-                ExpandPropertiesGridPanelColumn.To = propertiesGridWidthBeforeCollapse;
+                //ExpandPropertiesGridPanelColumn.To = propertiesGridWidthBeforeCollapse;
                 ExpandPropertiesGridPanel.Begin();
             }
         }
@@ -802,7 +819,7 @@ namespace MashupDesignTool
         #region animation for left and right panels
         private void ExpanderToolbar_Click(object sender, RoutedEventArgs e)
         {
-            if (TreeControl.Visibility == System.Windows.Visibility.Visible)
+            if (treeControlScrollViewer.Visibility == System.Windows.Visibility.Visible)
             {
                 toolbarWidthBeforeCollapse = ToolbarPanel.ActualWidth;
                 CollapseToolbarPanelColumn.From = toolbarWidthBeforeCollapse;
@@ -856,6 +873,22 @@ namespace MashupDesignTool
             ((MainPage)d).PropertiesGridColumn.Width = new GridLength((double)e.NewValue);
         }
         #endregion animation for left and right panels
+
+        private void btnFullScreen_OnClick(object sender, RoutedEventArgs e)
+        {
+            RibbonToggleButton rtb = (RibbonToggleButton)sender;
+            Application.Current.Host.Content.IsFullScreen = rtb.IsChecked;
+            if (rtb.IsChecked == true)
+            {
+                rtb.TooltipText = "Switch to full screen mode";
+                rtb.ImageUrl = new BitmapImage(new Uri("Images/nofullscreen.png", UriKind.Relative));
+            }
+            else
+            {
+                rtb.TooltipText = "Escape full screen mode";
+                rtb.ImageUrl = new BitmapImage(new Uri("Images/fullscreen.png", UriKind.Relative));
+            }
+        }
     }
 }
 
