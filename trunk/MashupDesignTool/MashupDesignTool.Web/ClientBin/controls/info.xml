@@ -42,6 +42,38 @@
     <Group>Rss</Group>
   </Control>
   <Control>
+    <Name>Liquid.RichTextBox</Name>
+    <DllFilename>Liquid.RichText.dll</DllFilename>
+    <DllReferences>
+      <Dll>DockCanvas.dll</Dll>
+      <Dll>System.ComponentModel.DataAnnotations.dll</Dll>
+      <Dll>System.Windows.Controls.Data.Input.dll</Dll>
+      <Dll>Liquid.RichText.dll</Dll>
+      <Dll>System.ServiceModel.Syndication.dll</Dll>
+      <Dll>System.Xml.Serialization.dll</Dll>
+    </DllReferences>
+    <DisplayName>Rich text box</DisplayName>
+    <Description>Rich text box</Description>
+    <IconName>control4.png</IconName>
+    <Group>Rss</Group>
+  </Control>
+  <Control>
+    <Name>SilverlightHtmlHost.HtmlHost</Name>
+    <DllFilename>SilverlightHtmlHost.dll</DllFilename>
+    <DllReferences>
+      <Dll>DockCanvas.dll</Dll>
+      <Dll>System.ComponentModel.DataAnnotations.dll</Dll>
+      <Dll>System.Windows.Controls.Data.Input.dll</Dll>
+      <Dll>Liquid.RichText.dll</Dll>
+      <Dll>System.ServiceModel.Syndication.dll</Dll>
+      <Dll>System.Xml.Serialization.dll</Dll>
+    </DllReferences>
+    <DisplayName>Html host</DisplayName>
+    <Description>Html host</Description>
+    <IconName>control4.png</IconName>
+    <Group>Rss</Group>
+  </Control>
+  <Control>
     <Name>ControlLibrary.AnimatedGifImage</Name>
     <DllFilename>AnimatedGifImage.dll</DllFilename>
     <DllReferences>
