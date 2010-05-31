@@ -350,12 +350,68 @@ namespace MashupDesignTool
                 designCanvas1.AddControl(uc, 100.0, 100.0, 400, 300);
         }
 
+        private void AddFrameworkControl(string controlName)
+        {
+            FrameworkElement uc = null;
+            switch (controlName)
+            {
+                case "Border":
+                    uc = new Border();
+                    break;
+                case "Button":
+                    uc = new Button();
+                    break;
+                case "CheckBox":
+                    uc = new CheckBox();
+                    break;
+                case "ComboBox":
+                    uc = new ComboBox();
+                    break;
+                case "DataGrid":
+                    uc = new DataGrid();
+                    break;
+                case "Image":
+                    uc = new Image();
+                    break;
+                case "Label":
+                    uc = new Label();
+                    break;
+                case "ListBox":
+                    uc = new ListBox();
+                    break;
+                case "RadioButton":
+                    uc = new RadioButton();
+                    break;
+                case "Rectangle":
+                    uc = new Rectangle();
+                    break;
+                case "TabControl":
+                    uc = new TabControl();
+                    break;
+                case "TextBlock":
+                    uc = new TextBlock();
+                    break;
+                case "TextBox":
+                    uc = new TextBox();
+                    break;
+                default:
+                    break;
+            }
+            if (uc != null)
+                designCanvas1.AddControl(uc, 100.0, 100.0, 400, 300);
+        }
+
         private void Control_Click(object sender, RoutedEventArgs e)
         {
             ControlInfo ci = (ControlInfo)((RadioButton)sender).DataContext;
             if (doubleClickTimer.IsEnabled)
             {
                 doubleClickTimer.Stop();
+                if (ci.Group == "Common Silverlight Controls")
+                {
+                    AddFrameworkControl(ci.ControlName);
+                    return;
+                }
                 if (!LoadedAssembly.ContainsKey(ci.ControlName))
                 {
                     bDownloadControl = true;
@@ -475,17 +531,19 @@ namespace MashupDesignTool
         RibbonItem riImageList = new RibbonItem();
         private void AddImageListEditorButtonToHome()
         {
-            riImageList = new RibbonItem();
-            riImageList.Title = "Image list";
-            riImageList.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+            riImageList = new RibbonItem() { Title = "Image list" };
+            riImageList.Height = 84;
+            riImageList.Width = 75;
 
             RibbonButtonsGroup rbg = new RibbonButtonsGroup();
             RibbonButton rb = new RibbonButton() 
             { 
-                Text = "Editor", 
-                ImageUrl = new BitmapImage(new Uri("Images/Delete.png", UriKind.Relative)),
-                TooltipText = "Edit image list"
+                Text = "Editor",
+                TooltipText = "Edit image list",
+                VerticalAlignment = System.Windows.VerticalAlignment.Stretch,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
             };
+            rb.ImageUrl = new BitmapImage(new Uri(@"Images/ImageListEditor.png", UriKind.Relative));
             rb.OnClick += new RoutedEventHandler(rbImageListEditor_OnClick);
             rbg.Children.Add(rb);
             riImageList.Content = rbg;
@@ -588,7 +646,7 @@ namespace MashupDesignTool
             listView.SelectionChanged += new SelectionChangedEventHandler(listView_SelectionChanged);
 
             RibbonButton rb = new RibbonButton();
-            rb.ImageUrl = new BitmapImage(new Uri("Images/Delete.png", UriKind.Relative));
+            rb.ImageUrl = new BitmapImage(new Uri(@"Images/EffectOptions.png", UriKind.Relative));
             rb.Text = "Effect options";
             rb.TooltipText = "Effect options";
             rb.Tag = pi;

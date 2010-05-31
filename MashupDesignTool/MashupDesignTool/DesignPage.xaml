@@ -589,10 +589,13 @@
                                 <!-- Clipboard RibbonItem -->
                                 <MapulRibbon:RibbonItem Title="Full screen">
                                     <MapulRibbon:RibbonItem.Content>
-                                        <MapulRibbon:RibbonButtonsGroup>
+                                        <MapulRibbon:RibbonButtonsGroup Orientation="Horizontal">
                                             <MapulRibbon:RibbonToggleButton Name="btnFullScreen" ImageUrl="Images/fullscreen.png" Text="Switch" Height="70" Width="70"
                                                                     TooltipTitle="Switch/Escape full screen mode" TooltipText="Switch to/escape full screen mode" OnClick="btnFullScreen_OnClick">
                                             </MapulRibbon:RibbonToggleButton>
+                                            <MapulRibbon:RibbonToggleButton ImageUrl="Images/EffectOptions.png" Text="Switch" Height="0" Width="0"></MapulRibbon:RibbonToggleButton>
+                                            <MapulRibbon:RibbonToggleButton ImageUrl="Images/ImageListEditor.png" Text="Switch" Height="0" Width="0"></MapulRibbon:RibbonToggleButton>
+                                            <MapulRibbon:RibbonToggleButton ImageUrl="Images/nofullscreen.png" Text="Switch" Height="0" Width="0"></MapulRibbon:RibbonToggleButton>
                                         </MapulRibbon:RibbonButtonsGroup>
                                     </MapulRibbon:RibbonItem.Content>
                                 </MapulRibbon:RibbonItem>
@@ -656,7 +659,7 @@
                                                 <DataTemplate>
                                                     <RadioButton Margin="8,0,6,0" Height="Auto" Width="Auto" x:Name="Control" Style="{StaticResource RadioButtonControlStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Control_Click">
                                                         <StackPanel Orientation="Horizontal">
-                                                            <Image Width="15" Height="15" Source="{Binding IconName}" Stretch="Fill"></Image>
+                                                            <Image Width="15" Height="15" Source="{Binding IconName}" Stretch="Uniform"></Image>
                                                             <TextBlock Margin="2,0,2,0" FontFamily="Verdana" FontSize="11" Text="{Binding DisplayName}" UseLayoutRounding="False" Style="{StaticResource TextBlockControlDisplayNameStyle}" Width="{Binding Width}" />
                                                         </StackPanel>
                                                         <ToolTipService.ToolTip>
