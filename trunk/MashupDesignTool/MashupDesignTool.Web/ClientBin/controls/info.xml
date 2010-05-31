@@ -124,4 +124,122 @@
     <IconName>control4.png</IconName>
     <Group>ComponentOne</Group>
   </Control>
+
+  <Control>
+    <Name>Border</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Border</DisplayName>
+    <Description>Border</Description>
+    <IconName>Border.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>Button</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Button</DisplayName>
+    <Description>Button</Description>
+    <IconName>Button.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>CheckBox</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>CheckBox</DisplayName>
+    <Description>CheckBox</Description>
+    <IconName>CheckBox.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>ComboBox</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>ComboBox</DisplayName>
+    <Description>ComboBox</Description>
+    <IconName>ComboBox.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>DataGrid</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>DataGrid</DisplayName>
+    <Description>DataGrid</Description>
+    <IconName>DataGrid.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>Image</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Image</DisplayName>
+    <Description>Image</Description>
+    <IconName>Image.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>Label</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Label</DisplayName>
+    <Description>Label</Description>
+    <IconName>Label.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>ListBox</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>ListBox</DisplayName>
+    <Description>ListBox</Description>
+    <IconName>ListBox.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>RadioButton</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Radio Button</DisplayName>
+    <Description>Radio button</Description>
+    <IconName>RadioButton.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>Rectangle</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Rectangle</DisplayName>
+    <Description>Rectangle</Description>
+    <IconName>Rectangle.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>TabControl</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Tab Control</DisplayName>
+    <Description>Tab control</Description>
+    <IconName>TabControl.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>TextBlock</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Text Block</DisplayName>
+    <Description>Text block</Description>
+    <IconName>TextBlock.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>TextBox</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>TextBox</DisplayName>
+    <Description>TextBox</Description>
+    <IconName>TextBox.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
 </Controls>
