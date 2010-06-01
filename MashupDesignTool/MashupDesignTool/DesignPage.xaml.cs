@@ -503,6 +503,7 @@ namespace MashupDesignTool
                 CleanEffectMenuItemsFromMenu();
                 effectPropertiesGrid.SelectedObject = null;
                 RemoveImageListEditorButtonFromHome();
+                RemoveRichTextEditorButtonFromHome();
             }
 
             if (element.Equals(designCanvas1.ControlContainer))
@@ -520,6 +521,11 @@ namespace MashupDesignTool
                     if (typeof(BasicImageListControl).IsAssignableFrom(designCanvas1.SelectedControls[0].Control.GetType()))
                     {
                         AddImageListEditorButtonToHome();
+                    }
+
+                    else if (typeof(Liquid.RichTextBox).IsAssignableFrom(designCanvas1.SelectedControls[0].Control.GetType()))
+                    {
+                        AddRichTextEditorButtonToHome();
                     }
                 }
                 previousElement = designCanvas1.SelectedControls[0].Control;
@@ -569,6 +575,49 @@ namespace MashupDesignTool
             {
                 RibbonItems ris = (RibbonItems)((TabsItem)menu.Tabs.Items[0]).Content;
                 ris.Children.Remove(riImageList);
+
+                ((TabsItem)menu.Tabs.Items[0]).Content = ris;
+            }
+        }
+
+        RibbonItem riRichText = new RibbonItem();
+        private void AddRichTextEditorButtonToHome()
+        {
+            riRichText = new RibbonItem() { Title = "Richtext" };
+            riRichText.Height = 84;
+            riRichText.Width = 75;
+
+            RibbonButtonsGroup rbg = new RibbonButtonsGroup();
+            RibbonButton rb = new RibbonButton()
+            {
+                Text = "Editor",
+                TooltipText = "Edit rich text box",
+                VerticalAlignment = System.Windows.VerticalAlignment.Stretch,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+            };
+            rb.ImageUrl = new BitmapImage(new Uri(@"Images/ImageListEditor.png", UriKind.Relative));
+            rb.OnClick += new RoutedEventHandler(rbRichTextEditor_OnClick);
+            rbg.Children.Add(rb);
+            riRichText.Content = rbg;
+
+            RibbonItems ris = (RibbonItems)((TabsItem)menu.Tabs.Items[0]).Content;
+            ris.Children.Add(riRichText);
+
+            ((TabsItem)menu.Tabs.Items[0]).Content = ris;
+        }
+
+        void rbRichTextEditor_OnClick(object sender, RoutedEventArgs e)
+        {
+            Liquid.RichTextEditor rte = new Liquid.RichTextEditor(designCanvas1.ControlContainer, designCanvas1.SelectedControls[0].Control as Liquid.RichTextBox);
+            rte.ShowDialog();
+        }
+
+        private void RemoveRichTextEditorButtonFromHome()
+        {
+            if (riRichText != null)
+            {
+                RibbonItems ris = (RibbonItems)((TabsItem)menu.Tabs.Items[0]).Content;
+                ris.Children.Remove(riRichText);
 
                 ((TabsItem)menu.Tabs.Items[0]).Content = ris;
             }
