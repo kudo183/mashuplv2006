@@ -394,6 +394,9 @@ namespace MashupDesignTool
                 case "TextBox":
                     uc = new TextBox();
                     break;
+                case "Liquid.RichTextBox":
+                    uc = new Liquid.RichTextBox();
+                    break;
                 default:
                     break;
             }
