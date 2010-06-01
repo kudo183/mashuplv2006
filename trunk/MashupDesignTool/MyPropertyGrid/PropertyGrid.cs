@@ -454,14 +454,14 @@ namespace SL30PropertyGrid
         }
         Image GetHideImage(Visibility visibility)
         {
-            Image img = GetImage("assets/minus.png");
+            Image img = GetImage("Images/minus.png");
             img.Visibility = visibility;
             img.MouseLeftButtonUp += new MouseButtonEventHandler(this.CategoryHide_MouseLeftButtonUp);
             return img;
         }
         Image GetShowImage(Visibility visibility)
         {
-            Image img = GetImage("assets/plus.png");
+            Image img = GetImage("Images/plus.png");
             img.Visibility = visibility;
             img.MouseLeftButtonUp += new MouseButtonEventHandler(this.CategoryShow_MouseLeftButtonUp);
             return img;
