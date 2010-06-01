@@ -15,7 +15,7 @@ using BasicLibrary;
 
 namespace EffectLibrary
 {
-    public class MenuMac : BasicListEffect
+    public class FishEye : BasicListEffect
     {
         List<Storyboard> lstStoryEnter = new List<Storyboard>();
         List<Storyboard> lstStoryLeave = new List<Storyboard>();
@@ -224,7 +224,7 @@ namespace EffectLibrary
         #endregion
 
         StackPanel LayoutRoot;
-        public MenuMac(BasicListControl control)
+        public FishEye(BasicListControl control)
             : base(control)
         {
             LayoutRoot = new StackPanel();
