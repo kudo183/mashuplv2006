@@ -157,6 +157,8 @@
     <Resource Include="Images\nofullscreen.png" />
     <Resource Include="Images\EffectOptions.png" />
     <Resource Include="Images\ImageListEditor.png" />
+    <Resource Include="Images\minus.png" />
+    <Resource Include="Images\plus.png" />
     <Content Include="Liquid.Menu.dll" />
   </ItemGroup>
   <ItemGroup>
