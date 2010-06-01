@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageListEditor", "ImageLis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloatableWindow", "FloatableWindow\FloatableWindow.csproj", "{018E725A-830D-4913-B646-067E2222B4EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichText", "RichText\RichText.csproj", "{0FDB4ACD-0F11-43CC-B777-D58D112A9763}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,10 @@ Global
 		{018E725A-830D-4913-B646-067E2222B4EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{018E725A-830D-4913-B646-067E2222B4EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{018E725A-830D-4913-B646-067E2222B4EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FDB4ACD-0F11-43CC-B777-D58D112A9763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FDB4ACD-0F11-43CC-B777-D58D112A9763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FDB4ACD-0F11-43CC-B777-D58D112A9763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FDB4ACD-0F11-43CC-B777-D58D112A9763}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
