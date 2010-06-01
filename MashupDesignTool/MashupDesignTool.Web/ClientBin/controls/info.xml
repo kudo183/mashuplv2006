@@ -42,22 +42,6 @@
     <Group>Rss</Group>
   </Control>
   <Control>
-    <Name>Liquid.RichTextBox</Name>
-    <DllFilename>Liquid.RichText.dll</DllFilename>
-    <DllReferences>
-      <Dll>DockCanvas.dll</Dll>
-      <Dll>System.ComponentModel.DataAnnotations.dll</Dll>
-      <Dll>System.Windows.Controls.Data.Input.dll</Dll>
-      <Dll>Liquid.RichText.dll</Dll>
-      <Dll>System.ServiceModel.Syndication.dll</Dll>
-      <Dll>System.Xml.Serialization.dll</Dll>
-    </DllReferences>
-    <DisplayName>Rich text box</DisplayName>
-    <Description>Rich text box</Description>
-    <IconName>control4.png</IconName>
-    <Group>Rss</Group>
-  </Control>
-  <Control>
     <Name>SilverlightHtmlHost.HtmlHost</Name>
     <DllFilename>SilverlightHtmlHost.dll</DllFilename>
     <DllReferences>
@@ -124,7 +108,6 @@
     <IconName>control4.png</IconName>
     <Group>ComponentOne</Group>
   </Control>
-
   <Control>
     <Name>Border</Name>
     <DllFilename></DllFilename>
@@ -239,6 +222,15 @@
     <DllReferences></DllReferences>
     <DisplayName>TextBox</DisplayName>
     <Description>TextBox</Description>
+    <IconName>TextBox.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>Liquid.RichTextBox</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>RichTextBox (Liquid)</DisplayName>
+    <Description>RichTextBox</Description>
     <IconName>TextBox.png</IconName>
     <Group>Common Silverlight Controls</Group>
   </Control>
