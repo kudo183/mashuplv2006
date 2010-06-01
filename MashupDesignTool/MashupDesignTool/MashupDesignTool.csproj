@@ -61,8 +61,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Blacklight.Controls, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="FloatableWindow, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Liquid.Menu, Version=5.3.1.31637, Culture=neutral, PublicKeyToken=7fbdd25c3fcc3919, processorArchitecture=MSIL" />
+    <Reference Include="Liquid.RichText">
+      <HintPath>..\..\..\lv\MashupDesignTool\RichText\dll\Liquid.RichText.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Syndication, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
@@ -197,6 +199,10 @@
     <ProjectReference Include="..\MyPropertyGrid\MyPropertyGrid.csproj">
       <Project>{EBE7ECFD-0942-49A9-BF98-0FE9378C1472}</Project>
       <Name>MyPropertyGrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RichText\RichText.csproj">
+      <Project>{0FDB4ACD-0F11-43CC-B777-D58D112A9763}</Project>
+      <Name>RichText</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
