@@ -44,14 +44,7 @@
   <Control>
     <Name>SilverlightHtmlHost.HtmlHost</Name>
     <DllFilename>SilverlightHtmlHost.dll</DllFilename>
-    <DllReferences>
-      <Dll>DockCanvas.dll</Dll>
-      <Dll>System.ComponentModel.DataAnnotations.dll</Dll>
-      <Dll>System.Windows.Controls.Data.Input.dll</Dll>
-      <Dll>Liquid.RichText.dll</Dll>
-      <Dll>System.ServiceModel.Syndication.dll</Dll>
-      <Dll>System.Xml.Serialization.dll</Dll>
-    </DllReferences>
+    <DllReferences></DllReferences>
     <DisplayName>Html host</DisplayName>
     <Description>Html host</Description>
     <IconName>control4.png</IconName>
