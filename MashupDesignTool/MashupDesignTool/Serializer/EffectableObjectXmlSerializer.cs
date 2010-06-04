@@ -34,7 +34,7 @@ namespace MashupDesignTool
             xm.WriteElementString("Height", control.Height.ToString());
 
             xm.WriteStartElement("Control");
-            xm.WriteRaw(MyXmlSerializer.Serialize(control.Control));
+            xm.WriteRaw(ControlSerializer.Serialize(control.Control));
             xm.WriteEndElement();
 
             xm.WriteStartElement("Effects");
@@ -98,7 +98,7 @@ namespace MashupDesignTool
                         height = double.Parse(element.Value);
                         break;
                     case "Control":
-                        fe = (FrameworkElement)MyXmlSerializer.Load(element.FirstNode.ToString());
+                        fe = ControlSerializer.Load(element.FirstNode.ToString());
                         break;
                     default:
                         break;

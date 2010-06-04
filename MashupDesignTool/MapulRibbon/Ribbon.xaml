@@ -285,7 +285,7 @@
                     <GradientStop Color="#FFCDDFF8" Offset="0.246"/>                
                 </LinearGradientBrush>
             </Grid.Background>     
-            <Popup IsOpen="True" x:Name="puRibbonButton" Visibility="Visible">            
+            <Popup IsOpen="True" x:Name="puRibbonButton">            
                 <Button x:Name="RibbonButton" IsTabStop="False" Style="{StaticResource RibbonButtonStyle}" Height="45" Width="45" Margin="4, 4, 0, 0" Padding="4,4,4,4">                 
                     <Button.Content>                        
                         <Image Source="img/logo.png" Stretch="Uniform" Margin="2,2,2,2" />
