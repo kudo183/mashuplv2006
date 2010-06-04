@@ -9,6 +9,7 @@ using System.IO;
 using System.Xml.Linq;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace MashupDesignTool
 {
@@ -18,11 +19,14 @@ namespace MashupDesignTool
                                                     {
                                                         "Template", "Resources", "Language", "RenderTransform"
                                                     };
+        private static Type[] skipTypeList = new Type[] 
+                                                    {
+                                                    };
 
         public static string Serialize(object o)
         {
             StringBuilder sb = new StringBuilder();
-            XmlWriter xm = XmlWriter.Create(sb);
+            XmlWriter xm = XmlWriter.Create(sb, new XmlWriterSettings() { OmitXmlDeclaration = true });
             xm.WriteStartElement(o.GetType().Name);
             xm.WriteAttributeString("Type", o.GetType().AssemblyQualifiedName);
             Serialize(o, xm);
@@ -62,15 +66,23 @@ namespace MashupDesignTool
         }
         private static void SerializeList(object o, PropertyInfo pi, XmlWriter xm)
         {
-            object lst = pi.GetValue(o, null);
-            if (lst == null)
-                return;
-            int count = (int)(lst.GetType().GetProperty("Count").GetValue(lst, null));
-            if (count == 0)
-                return;
+            object lst;
+            int count;
             object[] index = { 0 };
-            object myObject = lst.GetType().GetProperty("Item").GetValue(lst, index);
-            string elementType = myObject.GetType().AssemblyQualifiedName;
+            object myObject;
+            string elementType;
+            try
+            {
+                lst = pi.GetValue(o, null);
+                if (lst == null)
+                    return;
+                count = (int)(lst.GetType().GetProperty("Count").GetValue(lst, null));
+                if (count == 0)
+                    return;
+                myObject = lst.GetType().GetProperty("Item").GetValue(lst, index);
+                elementType = myObject.GetType().AssemblyQualifiedName;
+            }
+            catch { return; }
 
             xm.WriteStartElement(pi.Name);
             xm.WriteAttributeString("Type", pi.PropertyType.AssemblyQualifiedName);
@@ -168,8 +180,25 @@ namespace MashupDesignTool
                         break;
                     }
                 }
+                if (typeof(BasicLibrary.BasicEffect).IsAssignableFrom(pi.PropertyType))
+                    b = true;
+                else if (typeof(BasicLibrary.BasicListEffect).IsAssignableFrom(pi.PropertyType))
+                    b = true;
                 if (b == true)
                     continue;
+
+                ///////////////////////////////////////
+                ///////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////
+                ///////////////////////////////////////
+                ///////////////////////////////////////
+                if (pi.Name == "Content")
+                    b = false;
+                ///////////////////////////////////////
+                ///////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////
+                ///////////////////////////////////////
+                ///////////////////////////////////////
 
                 if (pi.PropertyType.IsArray)
                 {
@@ -178,10 +207,10 @@ namespace MashupDesignTool
                     continue;
                 }
 
-                if (pi.PropertyType.IsGenericType == true || (typeof(IList).IsAssignableFrom(pi.PropertyType)) == true)
+                if ((pi.PropertyType.IsGenericType == true && typeof(IList).IsAssignableFrom(pi.PropertyType)) || (typeof(IList).IsAssignableFrom(pi.PropertyType)) == true)
                 {
                     SerializeList(o, pi, xm);
-
+                    
                     continue;
                 }
 
@@ -192,13 +221,18 @@ namespace MashupDesignTool
                 if (pi.CanWrite == false || pi.GetSetMethod() == null)
                     continue;
 
-                object value = pi.GetValue(o, null);
+                object value = null;
+                try { value = pi.GetValue(o, null); }
+                catch { }
 
                 if (value == null)
                     continue;
                 xm.WriteStartElement(pi.Name);
                 xm.WriteAttributeString("Type", value.GetType().AssemblyQualifiedName);
-                Serialize(value, xm);
+                if (value.GetType() == typeof(string) || typeof(Enum).IsAssignableFrom(value.GetType()))
+                    xm.WriteValue(value.ToString());
+                else
+                    Serialize(value, xm);
                 xm.WriteEndElement();
             }
         }
@@ -213,15 +247,24 @@ namespace MashupDesignTool
                 XDocument doc = XDocument.Load(reader);
                 XElement root = doc.Root;
 
+                obj = Load(root);
+            }
+            catch { }
+            return obj;
+        }
+
+        public static object Load(XElement root)
+        {
+            object obj = null;
+            try
+            {
                 Type type = Type.GetType(root.Attribute("Type").Value);
                 obj = Activator.CreateInstance(type);
 
                 object value;
                 string propertyName;
-                foreach (XElement element in root.Nodes())
+                foreach (XElement element in root.Elements())
                 {
-                    if (type == typeof(ControlTemplate))
-                        continue; 
                     propertyName = element.Name.ToString();
                     value = Load(obj, element);
                     if (!typeof(IList).IsAssignableFrom(value.GetType()))
@@ -232,25 +275,63 @@ namespace MashupDesignTool
             return obj;
         }
 
+        public static void Load(string xml, object obj)
+        {
+            try
+            {
+                XmlReader reader = XmlReader.Create(new StringReader(xml));
+                XDocument doc = XDocument.Load(reader);
+                XElement root = doc.Root;
+
+                Type type;
+                if (obj == null)
+                {
+                    type = Type.GetType(root.Attribute("Type").Value);
+                    obj = Activator.CreateInstance(type);
+                }
+                else
+                    type = obj.GetType();
+
+                object value;
+                string propertyName;
+                foreach (XElement element in root.Elements())
+                {
+                    propertyName = element.Name.ToString();
+                    value = Load(obj, element);
+                    if (!typeof(IList).IsAssignableFrom(value.GetType()))
+                        type.GetProperty(propertyName).SetValue(obj, value, null);
+                }
+            }
+            catch { }
+        }
+
         private static object Load(object obj, XElement element)
         {
+            int a;
+            if (element.Name == "Content")
+                a = 3;
+
             Type type = Type.GetType(element.Attribute("Type").Value);
+            object objLoad;
             if (type.IsPrimitive)
             {
-                return LoadPrimitive(element);
+                objLoad = LoadPrimitive(element);
             }
             else if (type.IsArray)
             {
-                return LoadArray(obj, element);
+                objLoad = LoadArray(obj, element);
             }
             else if (typeof(IList).IsAssignableFrom(type))
             {
-                return LoadList(obj, element);
+                objLoad = LoadList(obj, element);
             }
             else
             {
-                return LoadNotPrimitive(obj, element);
+                objLoad = LoadNotPrimitive(obj, element);
             }
+            //if (typeof(ComboBoxItem).IsAssignableFrom(objLoad.GetType()))
+            //    ((ComboBoxItem)objLoad).Name = new Random().NextDouble().ToString();
+            return objLoad;
         }
 
         private static object LoadPrimitive(XElement element)
@@ -286,8 +367,12 @@ namespace MashupDesignTool
 
             foreach (XElement child in element.Elements("Child"))
             {
-                object temp = Load(list, child);
+                //object temp = Load(list, child);
+                object temp = Load(child.ToString(SaveOptions.DisableFormatting));
                 list.Add(temp);
+
+                //if (typeof(ComboBoxItem).IsAssignableFrom(temp.GetType()))
+                //    ((ComboBoxItem)temp).Name = new Random().NextDouble().ToString();
             }
             return list;
         }
@@ -297,7 +382,6 @@ namespace MashupDesignTool
             Type type = Type.GetType(element.Attribute("Type").Value);
             if (type == typeof(System.String))
                 return element.Value;
-
             if (type == typeof(FontFamily))
             {
                 string font = "Portable User Interface";
@@ -305,24 +389,12 @@ namespace MashupDesignTool
                     font = element.Value;
                 return new FontFamily(font);
             }
-
-            //if (type == typeof(ControlTemplate))
-            //{
-            //    return obj.GetType().GetProperty(element.Name.ToString()).GetValue(obj, null);
-            //}
-
-            //if (type.FullName == "System.RuntimeType")
-            //{
-            //    return obj.GetType().GetProperty(element.Name.ToString()).GetValue(obj, null);
-            //}
-
-            object obj1 = Activator.CreateInstance(type);
-
-            if (element.Name.ToString() == "Matrix")
+            if (typeof(Enum).IsAssignableFrom(type))
             {
-                int bac = 3;
+                return Enum.Parse(type, element.Value.ToString(), true);
             }
 
+            object obj1 = Activator.CreateInstance(type);
             string propertyName;
             object value;
             foreach (XElement child in element.Elements())
@@ -331,9 +403,10 @@ namespace MashupDesignTool
                     continue;
                 propertyName = child.Name.ToString();
                 value = Load(obj1, child);
-                type.GetProperty(propertyName).SetValue(obj1, value, null);
+                if (!typeof(IList).IsAssignableFrom(value.GetType()))
+                    type.GetProperty(propertyName).SetValue(obj1, value, null);
             }
-
+            
             return obj1;
         }
         #endregion load

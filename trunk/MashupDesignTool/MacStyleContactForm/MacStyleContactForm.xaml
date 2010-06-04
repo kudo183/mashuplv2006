@@ -115,7 +115,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Border Grid.Row="1" CornerRadius="15" 
+    <Border Grid.Row="1" CornerRadius="15" x:Name="border"
             VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
             BorderBrush="#808182" BorderThickness="1"
             Background="{Binding Background, ElementName=root, TargetNullValue={StaticResource BackgroundBrush}}">
@@ -143,14 +143,14 @@
                 <StackPanel.RenderTransform>
                     <ScaleTransform ScaleX="1.15" ScaleY="1.02"></ScaleTransform>
                 </StackPanel.RenderTransform>
-                <sdk:Label VerticalContentAlignment="Center" 
+                <sdk:Label VerticalContentAlignment="Center"  x:Name="label1"
                            FontFamily="Arial" FontWeight="ExtraBlack" FontSize="20" 
                            Foreground="White" Content="Contact">
                     <sdk:Label.Effect>
                         <DropShadowEffect ShadowDepth="1" Direction="-90" Color="Gray"></DropShadowEffect>
                     </sdk:Label.Effect>
                 </sdk:Label>
-                <sdk:Label Margin="5,0,0,0" VerticalContentAlignment="Center" 
+                <sdk:Label Margin="5,0,0,0" VerticalContentAlignment="Center" x:Name="label2"
                            FontFamily="Arial" FontSize="20" 
                            Foreground="LightGray" Content="Form">
                     <sdk:Label.Effect>

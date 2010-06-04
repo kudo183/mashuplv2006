@@ -37,6 +37,14 @@ namespace RssSlideshowControl
 
             timer.Tick += new EventHandler(timer_Tick);
             timer.Interval = TimeSpan.FromSeconds(delaySeconds);
+
+            parameterNameList.Add("RssUrl");
+            parameterNameList.Add("LinkColor");
+            parameterNameList.Add("SummaryColor");
+            parameterNameList.Add("TimeLabelColor");
+            parameterNameList.Add("IndexColor");
+            parameterNameList.Add("ButtonColor");
+            parameterNameList.Add("DelaySeconds");
         }
 
         void timer_Tick(object sender, EventArgs e)

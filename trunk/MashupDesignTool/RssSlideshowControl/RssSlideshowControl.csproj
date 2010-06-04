@@ -94,7 +94,6 @@
     <None Include="Service References\ServiceReference1\Service11.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Resource Include="Images\RSS Icon.png" />
     <Content Include="dll\Liquid.RichText.dll" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>

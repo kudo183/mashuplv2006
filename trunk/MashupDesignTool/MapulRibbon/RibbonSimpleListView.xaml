@@ -16,8 +16,8 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical" Width="86" Background="Transparent" Margin="2,0,2,0">
-                        <Image Source="{Binding ImageSource}" Width="34" Height="34" HorizontalAlignment="Center" Stretch="Uniform"></Image>
-                        <TextBlock Text="{Binding Text}" HorizontalAlignment="Center"></TextBlock>
+                        <Image Source="{Binding ImageSource}" Width="40" Height="36" HorizontalAlignment="Center" Stretch="Uniform"></Image>
+                        <TextBlock Text="{Binding Text}" HorizontalAlignment="Center" FontFamily="Verdana" FontSize="11" Foreground="#FF4A85CD"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

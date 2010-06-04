@@ -23,6 +23,12 @@ namespace MacStyleContactFormControl
         public MacStyleContactForm()
         {
             InitializeComponent();
+
+            parameterNameList.Add("ReceiveEmail");
+            parameterNameList.Add("LabelColor");
+            parameterNameList.Add("ButtonColor");
+            parameterNameList.Add("ContentColor");
+            parameterNameList.Add("ContentBackgroundColor");
         }
 
         public string ReceiveEmail
