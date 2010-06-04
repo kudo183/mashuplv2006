@@ -97,8 +97,8 @@ namespace SL30PropertyGrid
 
 			base.OnGotFocus(e);
 
-			//if (this.Property.CanWrite)
-				//this.ShowColorPicker();
+            if (this.Property.CanWrite)
+                this.ShowColorPicker();
 		}
 		/// <summary>
 		/// 
