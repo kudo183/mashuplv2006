@@ -173,8 +173,11 @@ namespace MashupDesignTool
             //write element value, stop recursive
             if (t.IsPrimitive)
                 xm.WriteValue(o.ToString());
-            if (t == typeof(string) || typeof(Enum).IsAssignableFrom(t))
+            if (t == typeof(string) || typeof(Enum).IsAssignableFrom(t) || t == typeof(TimeSpan) || t == typeof(DateTime))
+            {
                 xm.WriteValue(o.ToString());
+                return;
+            }
 
             foreach (PropertyInfo pi in t.GetProperties())
             {
@@ -249,14 +252,21 @@ namespace MashupDesignTool
                 Type type = Type.GetType(root.Attribute("Type").Value);
                 obj = Activator.CreateInstance(type);
 
-                object value;
-                string propertyName;
-                foreach (XElement element in root.Elements())
+                if (root.HasElements)
                 {
-                    propertyName = element.Name.ToString();
-                    value = Load(obj, element);
-                    if (!typeof(IList).IsAssignableFrom(value.GetType()))
-                        type.GetProperty(propertyName).SetValue(obj, value, null);
+                    object value;
+                    string propertyName;
+                    foreach (XElement element in root.Elements())
+                    {
+                        propertyName = element.Name.ToString();
+                        value = Load(obj, element);
+                        if (!typeof(IList).IsAssignableFrom(value.GetType()))
+                            type.GetProperty(propertyName).SetValue(obj, value, null);
+                    }
+                }
+                else
+                {
+                    return MyXmlSerializer.Load(new object(), root);
                 }
             }
             catch { }
@@ -367,9 +377,11 @@ namespace MashupDesignTool
                 return new FontFamily(font);
             }
             if (typeof(Enum).IsAssignableFrom(type))
-            {
                 return Enum.Parse(type, element.Value.ToString(), true);
-            }
+            if (type == typeof(TimeSpan))
+                return TimeSpan.Parse(element.Value);
+            if (type == typeof(DateTime))
+                return DateTime.Parse(element.Value);
 
             object obj1 = Activator.CreateInstance(type);
             string propertyName;
