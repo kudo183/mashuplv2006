@@ -1023,18 +1023,6 @@ namespace MashupDesignTool
                 rtb.TooltipText = "Escape full screen mode";
                 rtb.ImageUrl = new BitmapImage(new Uri("/MashupDesignTool;component/Images/fullscreen.png", UriKind.Relative));
             }
-
-            //string str = EffectableObjectXmlSerializer.Serialize(designCanvas1.Controls[designCanvas1.Controls.Count - 1]);
-            //EffectableControl ec = EffectableObjectXmlSerializer.Load(str);
-            //designCanvas1.ControlContainer.Children.Add(ec);
-
-
-            //string str = MyXmlSerializer.Serialize(new Button() { Content = "DSDF", Width=100,Height=100 });
-            //LayoutRoot.Children.Add((FrameworkElement)MyXmlSerializer.Load(str));
-
-            //FrameworkElement fee = (FrameworkElement)MyXmlSerializer.Load(MyXmlSerializer.Serialize(new Button() { Content = "DSF", Width = 100, Height = 100 }));
-            //fee.Name = "HEllo";
-            //designCanvas1.Layout.Children.Add(fee);
         }
 
         UIElement oldPage;
@@ -1085,7 +1073,7 @@ namespace MashupDesignTool
             foreach (EffectableControl ec in designCanvas1.Controls)
             {
                 Type type = ec.Control.GetType();
-                if (!frameworkTypes.Contains(type))
+                if (!Utility.IsFrameworkControl(ec.Control))
                 {
                     string fullName = type.FullName;
                     foreach (ControlInfo ci in listControls)

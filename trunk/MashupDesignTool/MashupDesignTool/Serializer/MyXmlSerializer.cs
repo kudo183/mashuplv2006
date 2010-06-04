@@ -9,6 +9,7 @@ using System.IO;
 using System.Xml.Linq;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Linq;
 
 namespace MashupDesignTool
 {
@@ -24,9 +25,14 @@ namespace MashupDesignTool
 
         public static string Serialize(object o)
         {
+            return MyXmlSerializer.Serialize(o, o.GetType().Name);
+        }
+
+        public static string Serialize(object o, string rootName)
+        {
             StringBuilder sb = new StringBuilder();
             XmlWriter xm = XmlWriter.Create(sb, new XmlWriterSettings() { OmitXmlDeclaration = true });
-            xm.WriteStartElement(o.GetType().Name);
+            xm.WriteStartElement(rootName);
             xm.WriteAttributeString("Type", o.GetType().AssemblyQualifiedName);
             Serialize(o, xm);
             xm.WriteEndElement();
@@ -167,37 +173,20 @@ namespace MashupDesignTool
             //write element value, stop recursive
             if (t.IsPrimitive)
                 xm.WriteValue(o.ToString());
+            if (t == typeof(string) || typeof(Enum).IsAssignableFrom(t))
+                xm.WriteValue(o.ToString());
 
             foreach (PropertyInfo pi in t.GetProperties())
             {
                 bool b = false;
-                foreach (string skip in skipPropertyList)
-                {
-                    if (skip == pi.Name)
-                    {
-                        b = true;
-                        break;
-                    }
-                }
+                if (skipPropertyList.Contains(pi.Name) || skipTypeList.Contains(pi.PropertyType))
+                    b = true;
                 if (typeof(BasicLibrary.BasicEffect).IsAssignableFrom(pi.PropertyType))
                     b = true;
                 else if (typeof(BasicLibrary.BasicListEffect).IsAssignableFrom(pi.PropertyType))
                     b = true;
                 if (b == true)
                     continue;
-
-                ///////////////////////////////////////
-                ///////////////////////////////////////
-                //////////////////////////////////////////////////////////////////////////////
-                ///////////////////////////////////////
-                ///////////////////////////////////////
-                if (pi.Name == "Content")
-                    b = false;
-                ///////////////////////////////////////
-                ///////////////////////////////////////
-                //////////////////////////////////////////////////////////////////////////////
-                ///////////////////////////////////////
-                ///////////////////////////////////////
 
                 if (pi.PropertyType.IsArray)
                 {
@@ -228,9 +217,9 @@ namespace MashupDesignTool
                     continue;
                 xm.WriteStartElement(pi.Name);
                 xm.WriteAttributeString("Type", value.GetType().AssemblyQualifiedName);
-                if (value.GetType() == typeof(string) || typeof(Enum).IsAssignableFrom(value.GetType()))
-                    xm.WriteValue(value.ToString());
-                else
+                //if (value.GetType() == typeof(string) || typeof(Enum).IsAssignableFrom(value.GetType()))
+                //    xm.WriteValue(value.ToString());
+                //else
                     Serialize(value, xm);
                 xm.WriteEndElement();
             }
@@ -306,10 +295,6 @@ namespace MashupDesignTool
 
         private static object Load(object obj, XElement element)
         {
-            int a;
-            if (element.Name == "Content")
-                a = 3;
-
             Type type = Type.GetType(element.Attribute("Type").Value);
             if (type.IsPrimitive)
             {

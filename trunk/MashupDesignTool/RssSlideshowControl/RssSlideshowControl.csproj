@@ -87,6 +87,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Images\Thumbs.db" />
     <None Include="Service References\ServiceReference1\Service1.wsdl" />
     <None Include="Service References\ServiceReference1\Service1.xsd">
       <SubType>Designer</SubType>
@@ -95,6 +96,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="dll\Liquid.RichText.dll" />
+    <Resource Include="Images\RSS Icon.png" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
