@@ -76,7 +76,7 @@ namespace BasicLibrary
             get { return mainEffect; }
         }
 
-        public virtual void ChangeEffect(string propertyName, Type effectType)
+        public void ChangeEffect(string propertyName, Type effectType)
         {
             if (propertyName == "MainEffect")
             {
@@ -98,6 +98,49 @@ namespace BasicLibrary
         {
             if (mainEffect != null)
                 mainEffect.Start();
+        }
+
+        public List<string> GetListEffectPropertyName()
+        {
+            List<string> list = new List<string>();
+            list.Add("MainEffect");
+
+            if (typeof(BasicControl).IsAssignableFrom(control.GetType()))
+            {
+                List<string> temp = ((BasicControl)control).GetListEffectPropertyName();
+                foreach (string str in temp)
+                    list.Add(str);
+            }
+            return list;
+        }
+
+        public Type GetEffectType(string effectName)
+        {
+            if (effectName == "MainEffect")
+            {
+                if (mainEffect == null)
+                    return typeof(BasicEffect);
+                else
+                    return mainEffect.GetType();
+            }
+            else if (typeof(BasicControl).IsAssignableFrom(control.GetType()))
+            {
+                return ((BasicControl)control).GetEffectType(effectName);
+            }
+            return null;
+        }
+
+        public IBasic GetEffect(string effectName)
+        {
+            if (effectName == "MainEffect")
+            {
+                return mainEffect;
+            }
+            else if (typeof(BasicControl).IsAssignableFrom(control.GetType()))
+            {
+                return ((BasicControl)control).GetEffect(effectName);
+            }
+            return null;
         }
     }
 }

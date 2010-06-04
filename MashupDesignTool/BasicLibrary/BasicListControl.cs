@@ -94,5 +94,11 @@ namespace BasicLibrary
                 listEffect = (BasicListEffect)ci.Invoke(new object[] { this });
             }
         }
+
+        public BasicListControl()
+            : base()
+        {
+            effectPropertyNameList.Add("ListEffect");
+        }
     }
 }

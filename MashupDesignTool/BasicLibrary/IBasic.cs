@@ -8,12 +8,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
 
 namespace BasicLibrary
 {
     public interface IBasic
     {
         string GetParameterNames();
+        List<string> GetParameterNameList();
         Type GetParameterType(string parameterName);
         object GetParameterValue(string parameterName);
         bool SetParameterValue(string parameterName, object value);

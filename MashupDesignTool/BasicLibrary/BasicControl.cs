@@ -21,6 +21,11 @@ namespace BasicLibrary
         protected List<string> parameterNameList = new List<string>();
         public string GetParameterNames()
         {
+            if (!parameterNameList.Contains("Width"))
+                parameterNameList.Add("Width");
+            if (!parameterNameList.Contains("Height"))
+                parameterNameList.Add("Height"); 
+            
             StringBuilder sb = new StringBuilder();
             XmlWriter xw = XmlWriter.Create(sb);
             xw.WriteStartDocument();
@@ -38,6 +43,15 @@ namespace BasicLibrary
             xw.Flush();
             xw.Close();
             return sb.ToString();
+        }
+
+        public List<string> GetParameterNameList()
+        {
+            if (!parameterNameList.Contains("Width"))
+                parameterNameList.Add("Width");
+            if (!parameterNameList.Contains("Height"))
+                parameterNameList.Add("Height");
+            return parameterNameList;
         }
 
         public Type GetParameterType(string parameterName)
@@ -68,9 +82,29 @@ namespace BasicLibrary
         public delegate void CallEffectHandle(object sender);
         public event CallEffectHandle CallEffect;
 
+        protected List<string> effectPropertyNameList = new List<string>();
+
         public virtual void ChangeEffect(string propertyName, Type effectType, EffectableControl owner)
         {
-            
+        }
+
+        public List<string> GetListEffectPropertyName()
+        {
+            return effectPropertyNameList;
+        }
+
+        public Type GetEffectType(string effectName)
+        {
+            if (!effectPropertyNameList.Contains(effectName))
+                return null;
+            return this.GetType().GetProperty(effectName).PropertyType;
+        }
+
+        public IBasic GetEffect(string effectName)
+        {
+            if (!effectPropertyNameList.Contains(effectName))
+                return null;
+            return (IBasic)this.GetType().GetProperty(effectName).GetValue(this, null);
         }
 
         public BasicControl()

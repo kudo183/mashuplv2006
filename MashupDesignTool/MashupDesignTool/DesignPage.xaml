@@ -587,15 +587,15 @@
                         <MapulRibbon:TabsItem.Content>
                             <MapulRibbon:RibbonItems>
                                 <!-- Clipboard RibbonItem -->
-                                <MapulRibbon:RibbonItem Title="Full screen">
+                                <MapulRibbon:RibbonItem Title="View">
                                     <MapulRibbon:RibbonItem.Content>
                                         <MapulRibbon:RibbonButtonsGroup Orientation="Horizontal">
+                                            <MapulRibbon:RibbonButton Name="btnPreview" ImageUrl="Images/Preview.png" Text="Preview" Height="70" Width="70"
+                                                                      TooltipTitle="Preview" TooltipText="Preview page" OnClick="btnPreview_OnClick">
+                                            </MapulRibbon:RibbonButton>
                                             <MapulRibbon:RibbonToggleButton Name="btnFullScreen" ImageUrl="Images/fullscreen.png" Text="Switch" Height="70" Width="70"
                                                                     TooltipTitle="Switch/Escape full screen mode" TooltipText="Switch to/escape full screen mode" OnClick="btnFullScreen_OnClick">
                                             </MapulRibbon:RibbonToggleButton>
-                                            <MapulRibbon:RibbonToggleButton ImageUrl="Images/EffectOptions.png" Text="Switch" Height="0" Width="0"></MapulRibbon:RibbonToggleButton>
-                                            <MapulRibbon:RibbonToggleButton ImageUrl="Images/ImageListEditor.png" Text="Switch" Height="0" Width="0"></MapulRibbon:RibbonToggleButton>
-                                            <MapulRibbon:RibbonToggleButton ImageUrl="Images/nofullscreen.png" Text="Switch" Height="0" Width="0"></MapulRibbon:RibbonToggleButton>
                                         </MapulRibbon:RibbonButtonsGroup>
                                     </MapulRibbon:RibbonItem.Content>
                                 </MapulRibbon:RibbonItem>
@@ -633,19 +633,6 @@
                         <RowDefinition Height="19"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <!--<controls:TreeView Grid.Row="1" BorderBrush="#FF885A2C" BorderThickness="0,1,0,0"
-                                       Grid.ColumnSpan="2" Grid.Column="0" x:Name="TreeControl"
-                                       SelectedItemChanged="TreeControl_SelectedItemChanged" 
-                                       VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                                       Foreground="White">
-                        <controls:TreeView.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF151E38" Offset="0" />
-                                <GradientStop Color="#FF161E34" Offset="0.6" />
-                                <GradientStop Color="Black" Offset="1" />
-                            </LinearGradientBrush>
-                        </controls:TreeView.Background>
-                    </controls:TreeView>-->
 
                     <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2"
                                   HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" x:Name="treeControlScrollViewer"  

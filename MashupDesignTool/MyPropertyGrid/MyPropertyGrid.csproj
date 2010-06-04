@@ -84,6 +84,7 @@
     <Compile Include="DisplayNameAttribute.cs" />
     <Compile Include="Editor\BooleanValueEditor.cs" />
     <Compile Include="Editor\ColorValueEditor.cs" />
+    <Compile Include="Editor\ImageSourceValueEditor.cs" />
     <Compile Include="Editor\SolidBrushValueEditor.cs" />
     <Compile Include="Editor\ComboBoxEditorBase.cs" />
     <Compile Include="Editor\FontStyleValueEditor.cs" />

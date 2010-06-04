@@ -64,16 +64,11 @@ namespace MashupDesignTool
         List<Key> arrowKeyPressed;
         Menu menu = new Menu();
         Liquid.MenuItem lmiBringToFront, lmiBringForward, lmiSendToBack, lmiSendBackward, lmiProperties, lmiDelete;
+        int iCount = 0;
 
-        public List<FrameworkElement> Controls
+        public List<EffectableControl> Controls
         {
-            get 
-            {
-                List<FrameworkElement> list = new List<FrameworkElement>();
-                foreach (EffectableControl ec in controls)
-                    list.Add(ec.Control);
-                return list; 
-            }
+            get { return controls; }
         }
 
         public List<EffectableControl> SelectedControls
@@ -86,6 +81,35 @@ namespace MashupDesignTool
         {
             get { return selectedProxyControls; }
         }
+
+
+        /// <summary>
+        /// ////////////////dsafasdfjaslfkja/
+        /// 
+        /// 
+        /// </summary>
+        ///         /// <summary>
+        /// ////////////////dsafasdfjaslfkja/
+        /// 
+        /// 
+        /// </summary>
+
+        public Canvas Layout
+        {
+            get { return LayoutRoot; }
+        }
+
+        /// <summary>
+        /// ////////////////dsafasdfjaslfkja/
+        /// 
+        /// 
+        /// </summary>
+        /// <summary>
+        /// ////////////////dsafasdfjaslfkja/
+        /// 
+        /// 
+        /// </summary>
+
 
         public DesignCanvas()
         {
@@ -276,6 +300,9 @@ namespace MashupDesignTool
         public void AddControl(FrameworkElement uc, double x, double y, int width, int height)
         {
             EffectableControl ec = new EffectableControl(uc);
+            uc.Name = iCount.ToString();
+            ec.Name = (iCount + 1).ToString();
+            iCount += 2;
             uc.Margin = new Thickness(0, 0, 0, 0);
             //ProxyControl pc = new ProxyControl(uc, x, y, width, height);
             ProxyControl pc = new ProxyControl(ec, 10, 10);

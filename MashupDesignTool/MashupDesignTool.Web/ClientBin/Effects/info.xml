@@ -7,7 +7,7 @@
     </DllReferences>
     <DisplayName>Checkerboard</DisplayName>
     <Description>Checkerboard</Description>
-    <IconName>control4.png</IconName>
+    <IconName>Checkerboard.png</IconName>
     <Group>Single</Group>
   </Effect>
   <Effect>
@@ -18,7 +18,7 @@
     </DllReferences>
     <DisplayName>Dissolve</DisplayName>
     <Description>Dissolve</Description>
-    <IconName>control4.png</IconName>
+    <IconName>Dissolve.png</IconName>
     <Group>Single</Group>
   </Effect>
   <Effect>
@@ -29,7 +29,7 @@
     </DllReferences>
     <DisplayName>Fade</DisplayName>
     <Description>Fade</Description>
-    <IconName>control4.png</IconName>
+    <IconName>Fade.png</IconName>
     <Group>Single</Group>
   </Effect>
   <Effect>
@@ -38,9 +38,9 @@
     <DllReferences>
       <Dll>DockCanvas.dll</Dll>
     </DllReferences>
-    <DisplayName>GlowWinSeven</DisplayName>
-    <Description>GlowWinSeven</Description>
-    <IconName>control4.png</IconName>
+    <DisplayName>Seven Glow</DisplayName>
+    <Description>Seven Glow</Description>
+    <IconName>SevenGlow.png</IconName>
     <Group>Single</Group>
   </Effect>
   <Effect>
@@ -51,7 +51,7 @@
     </DllReferences>
     <DisplayName>Jump</DisplayName>
     <Description>Jump</Description>
-    <IconName>control4.png</IconName>
+    <IconName>Jump.png</IconName>
     <Group>Single</Group>
   </Effect>
   <Effect>
@@ -62,7 +62,7 @@
     </DllReferences>
     <DisplayName>Push</DisplayName>
     <Description>Push</Description>
-    <IconName>control4.png</IconName>
+    <IconName>Push.png</IconName>
     <Group>Single</Group>
   </Effect>
   <Effect>
@@ -73,7 +73,7 @@
     </DllReferences>
     <DisplayName>Ripple</DisplayName>
     <Description>Ripple</Description>
-    <IconName>control4.png</IconName>
+    <IconName>Ripple.png</IconName>
     <Group>Single</Group>
   </Effect>
   <Effect>
@@ -84,7 +84,7 @@
     </DllReferences>
     <DisplayName>SplitScreen</DisplayName>
     <Description>SplitScreen</Description>
-    <IconName>control4.png</IconName>
+    <IconName>SplitScreen.png</IconName>
     <Group>Single</Group>
   </Effect>
   <Effect>
@@ -95,7 +95,7 @@
     </DllReferences>
     <DisplayName>Wipe</DisplayName>
     <Description>Wipe</Description>
-    <IconName>control4.png</IconName>
+    <IconName>Wipe.png</IconName>
     <Group>Single</Group>
   </Effect>
   <Effect>
@@ -106,7 +106,7 @@
     </DllReferences>
     <DisplayName>Zoom</DisplayName>
     <Description>Zoom</Description>
-    <IconName>control4.png</IconName>
+    <IconName>Zoom.png</IconName>
     <Group>Single</Group>
   </Effect>
   <Effect>
@@ -117,7 +117,7 @@
     </DllReferences>
     <DisplayName>Carousel</DisplayName>
     <Description>Carousel</Description>
-    <IconName>control4.png</IconName>
+    <IconName>Carousel.png</IconName>
     <Group>List</Group>
   </Effect>
   <Effect>
@@ -128,7 +128,7 @@
     </DllReferences>
     <DisplayName>CoverFlow</DisplayName>
     <Description>CoverFlow</Description>
-    <IconName>control4.png</IconName>
+    <IconName>CoverFlow.png</IconName>
     <Group>List</Group>
   </Effect>
   <Effect>
@@ -137,9 +137,9 @@
     <DllReferences>
       <Dll>DockCanvas.dll</Dll>
     </DllReferences>
-    <DisplayName>MenuMac</DisplayName>
-    <Description>MenuMac</Description>
-    <IconName>control4.png</IconName>
+    <DisplayName>FishEye</DisplayName>
+    <Description>Fish eye</Description>
+    <IconName>FishEye.png</IconName>
     <Group>List</Group>
   </Effect>
 </Effects>

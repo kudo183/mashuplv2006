@@ -71,9 +71,11 @@ namespace SL30PropertyGrid
             if (typeof(Color).IsAssignableFrom(propertyType))
                 return new ColorValueEditor(label, property);
 
+            if (typeof(ImageSource).IsAssignableFrom(propertyType))
+                return new ImageSourceValueEditor(label, property);
+
 			if (typeof(ValueType).IsAssignableFrom(propertyType))
 				return new StringValueEditor(label, property);
-
 
 			//if (typeof(Object).IsAssignableFrom(propertyType))
 			//    return new PropertyGrid(label, property);

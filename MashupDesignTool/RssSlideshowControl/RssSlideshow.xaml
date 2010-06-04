@@ -58,7 +58,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Border Grid.Row="1" CornerRadius="15" 
+    <Border Grid.Row="1" CornerRadius="15" x:Name="border"
             VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
             Background="{Binding Background, ElementName=root, TargetNullValue={StaticResource BackgroundBrush}}">
         <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -69,7 +69,7 @@
                 <RowDefinition Height="20"></RowDefinition>
             </Grid.RowDefinitions>
             
-            <Grid Grid.Column="0" Grid.Row="0" Margin="10,5,10,0">
+            <Grid Grid.Column="0" Grid.Row="0" Margin="10,5,10,0" x:Name="grid1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -80,7 +80,7 @@
                 <Button Grid.Column="2" Name="btnToNext" Style="{StaticResource MyButton}" Content="&gt;" Click="btnToNext_Click"></Button>
             </Grid>
 
-            <Grid Grid.Column="0" Grid.Row="1">
+            <Grid Grid.Column="0" Grid.Row="1" x:Name="grid2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -90,7 +90,7 @@
                     <RowDefinition Height="30"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Image Grid.RowSpan="2" Margin="12,12,12,12" Stretch="Fill" Source="/RssSlideshowControl;component/Images/RSS%20Icon.png">
+                <Image Grid.RowSpan="2" Margin="12,12,12,12" Stretch="Fill" Source="/RssSlideshowControl;component/Images/RSS%20Icon.png" x:Name="image">
                     <Image.Effect>
                         <DropShadowEffect ShadowDepth="2"></DropShadowEffect>
                     </Image.Effect>

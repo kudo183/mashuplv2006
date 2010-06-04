@@ -62,9 +62,7 @@
   <ItemGroup>
     <Reference Include="Blacklight.Controls, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Liquid.Menu, Version=5.3.1.31637, Culture=neutral, PublicKeyToken=7fbdd25c3fcc3919, processorArchitecture=MSIL" />
-    <Reference Include="Liquid.RichText">
-      <HintPath>..\..\..\lv\MashupDesignTool\RichText\dll\Liquid.RichText.dll</HintPath>
-    </Reference>
+    <Reference Include="Liquid.RichText, Version=5.3.1.31638, Culture=neutral, PublicKeyToken=7fbdd25c3fcc3919, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Syndication, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
@@ -76,6 +74,7 @@
     <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Data.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Input.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Windows.Controls.Navigation, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="System.Windows.Controls.Toolkit.Internals, Version=4.0.5.0, Culture=neutral, PublicKeyToken=2c5c654d367bf4a7" />
     <Reference Include="System.Xml" />
@@ -101,12 +100,17 @@
     <Compile Include="EffectInfo.cs" />
     <Compile Include="MyXmlSerializer.cs" />
     <Compile Include="ObjectConverter.cs" />
+    <Compile Include="DockCanvasSerializer.cs" />
+    <Compile Include="PreviewPage.xaml.cs">
+      <DependentUpon>PreviewPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyControl.xaml.cs">
       <DependentUpon>ProxyControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="SampleTreeItem.cs" />
     <Compile Include="ControlGroupInfo.cs" />
+    <Compile Include="EffectableObjectXmlSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -125,12 +129,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="PreviewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ProxyControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\preview.png" />
+    <Resource Include="Images\Back.png" />
+    <Resource Include="Images\DefaultImage.png" />
+    <Content Include="Liquid.RichText.dll" />
     <None Include="Images\.svn\all-wcprops" />
     <None Include="Images\.svn\entries" />
     <None Include="Images\.svn\prop-base\BringForward.png.svn-base" />
@@ -187,6 +199,10 @@
     <ProjectReference Include="..\DockCanvas\DockCanvas.csproj">
       <Project>{C38EEC60-122E-4002-A7B1-E6465DC41201}</Project>
       <Name>DockCanvas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FloatableWindow\FloatableWindow.csproj">
+      <Project>{018E725A-830D-4913-B646-067E2222B4EE}</Project>
+      <Name>FloatableWindow</Name>
     </ProjectReference>
     <ProjectReference Include="..\ImageListEditor\ImageListEditor.csproj">
       <Project>{3E104867-6004-47A1-AB24-8158A307EDB5}</Project>

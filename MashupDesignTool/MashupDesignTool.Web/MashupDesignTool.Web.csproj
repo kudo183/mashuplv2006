@@ -57,24 +57,19 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ClientBin\Controls\ControlDll\control1.dll" />
     <Content Include="ClientBin\Controls\Images\control4.png" />
     <Content Include="ClientBin\Controls\info.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="ClientBin\Controls\ReferenceDll\Liquid.RichText.dll" />
     <Content Include="ClientBin\Controls\ReferenceDll\System.ComponentModel.DataAnnotations.dll" />
     <Content Include="ClientBin\Controls\ReferenceDll\System.ServiceModel.Syndication.dll" />
     <Content Include="ClientBin\Controls\ReferenceDll\System.Windows.Controls.Data.Input.dll" />
     <Content Include="ClientBin\Controls\ReferenceDll\System.Xml.Serialization.dll" />
     <Content Include="ClientBin\Controls\Images\control1.png" />
-    <Content Include="ClientBin\Controls\ControlDll\control2.dll" />
     <Content Include="ClientBin\Controls\Images\control2.png" />
-    <Content Include="ClientBin\Controls\ControlDll\control3.dll" />
     <Content Include="ClientBin\Controls\Images\control3.png" />
-    <Content Include="ClientBin\Controls\ControlDll\control4.dll" />
     <Content Include="ClientBin\Effects\Images\control4.png" />
-    <Content Include="ClientBin\Controls\ControlDll\control5.dll" />
+    <Content Include="ClientBin\Effects\Images\FishEye.png" />
     <Content Include="ClientBin\Effects\info.xml">
       <SubType>Designer</SubType>
     </Content>

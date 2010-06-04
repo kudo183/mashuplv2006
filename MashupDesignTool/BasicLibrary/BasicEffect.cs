@@ -38,6 +38,11 @@ namespace BasicLibrary
             return sb.ToString();
         }
 
+        public List<string> GetParameterNameList()
+        {
+            return parameterNameList;
+        }
+
         public Type GetParameterType(string parameterName)
         {
             if (parameterNameList.Contains(parameterName))
