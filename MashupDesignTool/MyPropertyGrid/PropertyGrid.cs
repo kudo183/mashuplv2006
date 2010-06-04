@@ -716,6 +716,7 @@ namespace SL30PropertyGrid
             selectedEditor = sender as ValueEditorBase;
             if (null != selectedEditor)
             {
+                listStoryboardMouseLeave[selectedEditor.Label].Stop();
                 selectedEditor.IsSelected = true;
 
                 //double editorX = ((UIElement)selectedEditor.Parent).RenderTransformOrigin.X;
