@@ -40,9 +40,9 @@ namespace SL30PropertyGrid
         //internal static Color backgroundColor = Colors.Transparent;
         //internal static Color backgroundColorFocused = Color.FromArgb(255, 94, 170, 255);
 
-        public static Color labelBackgroundColor = Colors.Transparent;
+        public static Color labelBackgroundColor = Colors.White;
         public static Color labelBackgroundColorFocused = Color.FromArgb(255, 254, 201, 0);
-        public static Color labelForegroundColor = Colors.White;
+        public static Color labelForegroundColor = Colors.Black;
         public static Color labelForegroundColorReadOnly = Colors.Gray;
         public static Color labelForegroundColorFocused = Colors.White;
 
