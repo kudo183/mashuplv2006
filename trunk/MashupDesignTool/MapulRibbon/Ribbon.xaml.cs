@@ -193,11 +193,11 @@ namespace MapulRibbon
         //    set { imageRibbon.Source = value; }
         //}
 
-        public bool ImageRibbonVisibillity
-        {
-            get { return puRibbonButton.IsOpen; }
-            set { puRibbonButton.IsOpen = value;  }            
-        }
+        //public bool ImageRibbonVisibillity
+        //{
+        //    get { return puRibbonButton.IsOpen; }
+        //    set { puRibbonButton.IsOpen = value;  }            
+        //}
 
         public AboutTemplate RibbonAboutTemplate
         {
