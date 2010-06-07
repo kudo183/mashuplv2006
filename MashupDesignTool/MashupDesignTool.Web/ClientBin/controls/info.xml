@@ -10,8 +10,8 @@
     </DllReferences>
     <DisplayName>Basic contact form</DisplayName>
     <Description>Basic contact form control</Description>
-    <IconName>control4.png</IconName>
-    <Group>Contact form</Group>
+    <IconName>MacStyleContactForm.png</IconName>
+    <Group>User defined control</Group>
   </Control>
   <Control>
     <Name>ControlLibrary.ImageListControl</Name>
@@ -23,7 +23,7 @@
     <DisplayName>Image List</DisplayName>
     <Description>Image List Control</Description>
     <IconName>control4.png</IconName>
-    <Group>Rss</Group>
+    <Group>User defined control</Group>
   </Control>
   <Control>
     <Name>RssSlideshowControl.RssSlideshow</Name>
@@ -38,8 +38,8 @@
     </DllReferences>
     <DisplayName>Rss Slideshow</DisplayName>
     <Description>Rss Slideshow view</Description>
-    <IconName>control4.png</IconName>
-    <Group>Rss</Group>
+    <IconName>RssSlideshow.png</IconName>
+    <Group>User defined control</Group>
   </Control>
   <Control>
     <Name>SilverlightHtmlHost.HtmlHost</Name>
@@ -47,8 +47,8 @@
     <DllReferences></DllReferences>
     <DisplayName>Html host</DisplayName>
     <Description>Html host</Description>
-    <IconName>control4.png</IconName>
-    <Group>Rss</Group>
+    <IconName>HtmlIcon.png</IconName>
+    <Group>User defined control</Group>
   </Control>
   <Control>
     <Name>ControlLibrary.AnimatedGifImage</Name>
@@ -63,10 +63,10 @@
       <Dll>ImageTools.IO.Gif.dll</Dll>
       <Dll>ImageTools.Utils.dll</Dll>
     </DllReferences>
-    <DisplayName>AnimatedGifImage</DisplayName>
+    <DisplayName>Animated gif image</DisplayName>
     <Description>Control để hiển thị ảnh</Description>
-    <IconName>control4.png</IconName>
-    <Group>Group 2</Group>
+    <IconName>GifIcon.png</IconName>
+    <Group>User defined control</Group>
   </Control>
   <Control>
     <Name>C1.Silverlight.Extended.C1HtmlHost</Name>
@@ -76,7 +76,7 @@
     </DllReferences>
     <DisplayName>C1 Html Host</DisplayName>
     <Description>Control để hiển thị trang nội dung html</Description>
-    <IconName>control4.png</IconName>
+    <IconName>HtmlIcon.png</IconName>
     <Group>ComponentOne</Group>
   </Control>
   <Control>
