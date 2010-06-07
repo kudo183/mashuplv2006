@@ -94,6 +94,9 @@
     <Compile Include="GetBinaryData.ashx.cs">
       <DependentUpon>GetBinaryData.ashx</DependentUpon>
     </Compile>
+    <Compile Include="GetStringDataFromURL.ashx.cs">
+      <DependentUpon>GetStringDataFromURL.ashx</DependentUpon>
+    </Compile>
     <Compile Include="GetListDataFromDatabase.ashx.cs">
       <DependentUpon>GetListDataFromDatabase.ashx</DependentUpon>
     </Compile>
@@ -117,6 +120,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GetListDataFromXml.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GetStringDataFromURL.ashx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
