@@ -22,10 +22,6 @@ namespace RssSlideshowControl
 
         public RssItem()
         {
-            link = "http:\\link.com";
-            summary = "summary";
-            title = "title";
-            pubDate = new DateTimeOffset(new DateTime(2010, 10, 30));
         }
 
         public RssItem(SyndicationItem si) : this(si, "") { }
@@ -47,6 +43,7 @@ namespace RssSlideshowControl
         public string Summary
         {
             get { return summary; }
+            set { summary = value; }
         }
 
         public string Title

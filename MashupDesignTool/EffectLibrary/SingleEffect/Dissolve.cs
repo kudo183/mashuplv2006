@@ -42,6 +42,8 @@ namespace EffectLibrary
             get { return cellDuration; }
             set
             {
+                if (value == null)
+                    return;
                 cellDuration = value;
                 InitStoryboard();
             }
