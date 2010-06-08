@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using RssSlideshowControl.ServiceReference1;
 using BasicLibrary;
 using System.ServiceModel;
 using System.Xml;
@@ -27,7 +26,6 @@ namespace RssSlideshowControl
         private List<RssItem> list = new List<RssItem>();
         private int currentIndex = -1;
         private string rssUrl = "";
-        private string feedProxy = "http://localhost:1728/Service1.svc";
         private int delaySeconds = 6;
         DispatcherTimer timer = new DispatcherTimer();
                 
@@ -100,12 +98,6 @@ namespace RssSlideshowControl
             }
         }
 
-        //public string FeedProxy
-        //{
-        //    get { return feedProxy; }
-        //    set { feedProxy = value; }
-        //}
-
         public int DelaySeconds
         {
             get { return delaySeconds; }
@@ -120,32 +112,43 @@ namespace RssSlideshowControl
             try
             {
                 timer.Stop();
-                BasicHttpBinding basicHttpBinding = new BasicHttpBinding();
-                EndpointAddress endpointAddress = new EndpointAddress(feedProxy);
-                ServiceReference1.Service1Client client = new ServiceReference1.Service1Client(basicHttpBinding, endpointAddress);
-                client.GetStringFromURLCompleted += new EventHandler<ServiceReference1.GetStringFromURLCompletedEventArgs>(client_GetStringFromURLCompleted);
-                client.GetStringFromURLAsync(rssUrl);
+                Ultility ulti = new Ultility();
+                ulti.OnGetStringAsyncCompleted += new Ultility.GetStringAsyncCompletedHandler(ulti_OnGetStringAsyncCompleted);
+                ulti.GetStringAsync(rssUrl);
             }
             catch { }
         }
 
-        void client_GetStringFromURLCompleted(object sender, ServiceReference1.GetStringFromURLCompletedEventArgs e)
+        void ulti_OnGetStringAsyncCompleted(string result)
         {
-            if (e.Error == null)
+            try
             {
-                XmlReader xmlReader = XmlReader.Create(new StringReader(e.Result));
+                XmlReader xmlReader = XmlReader.Create(new StringReader(result));
                 SyndicationFeed feed = SyndicationFeed.Load(xmlReader);
                 list.Clear();
 
                 foreach (SyndicationItem item in feed.Items)
                 {
                     RssItem rssItem = new RssItem(item);
-                    list.Add(rssItem);
+                    string summary = rssItem.Summary.Replace(" &", " -");
+                    summary = rssItem.Summary.Replace("& ", "- ");
+
+                    XmlReader reader = XmlReader.Create(new StringReader("<content>" + summary + "</content>"));
+                    bool b = true;
+                    try { while (reader.Read()); }
+                    catch { b = false; }
+
+                    if (b == true)
+                    {
+                        rssItem.Summary = summary;
+                        list.Add(rssItem);
+                    }
                 }
 
                 currentIndex = list.Count > 0 ? 0 : -1;
                 Update();
             }
+            catch { }
         }
 
         private void Update()
