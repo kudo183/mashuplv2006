@@ -98,5 +98,26 @@ namespace BasicLibrary
 
             return result;
         }
+
+        public delegate void GetStringAsyncCompletedHandler(string result);
+        public event GetStringAsyncCompletedHandler OnGetStringAsyncCompleted;
+        public void GetStringAsync(string URL)
+        {
+            WebClient webClient = new WebClient();
+            webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_OpenReadCompleted);
+            Uri xmlUri = new Uri(HtmlPage.Document.DocumentUri, "GetStringDataFromURL.ashx?URL=" + URL);
+            webClient.OpenReadAsync(xmlUri);
+        }
+
+        void webClient_OpenReadCompleted(object sender, OpenReadCompletedEventArgs e)
+        {
+            if (OnGetStringAsyncCompleted != null)
+            {
+                //StreamReader sr = new StreamReader(e.Result);
+                //OnGetStringAsyncCompleted(sr.ReadToEnd());
+                XmlSerializer xm = new XmlSerializer(typeof(string));
+                OnGetStringAsyncCompleted((string)xm.Deserialize(e.Result));
+            }
+        }
     }
 }
