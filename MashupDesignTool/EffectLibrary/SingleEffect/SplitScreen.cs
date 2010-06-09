@@ -126,17 +126,8 @@ namespace EffectLibrary
 
         protected override void SetSelfHandle()
         {
-            if (_isSelfHandle == true)
-            {
-                control.MouseEnter += new MouseEventHandler(control_MouseEnter);
-                control.MouseLeave += new MouseEventHandler(control_MouseLeave);
-            }
-            else
-            {
-                control.MouseEnter -= new MouseEventHandler(control_MouseEnter);
-                control.MouseLeave -= new MouseEventHandler(control_MouseLeave);
-            }
         }
+
         public SplitScreen(EffectableControl control) : base(control)
         {
             parameterNameList.Add("MaskOpacity");
@@ -174,6 +165,8 @@ namespace EffectLibrary
 
             //InitStoryboard();           //da duoc goi luc gan speed
             control.SizeChanged += new SizeChangedEventHandler(control_SizeChanged);
+            control.MouseEnter += new MouseEventHandler(control_MouseEnter);
+            control.MouseLeave += new MouseEventHandler(control_MouseLeave);
         }
 
         void control_MouseLeave(object sender, MouseEventArgs e)
