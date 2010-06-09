@@ -23,11 +23,22 @@ namespace EffectLibrary
         #endregion attributes
 
         #region properties
+        public TimeSpan Duration
+        {
+            get { return duration; }
+            set
+            {
+                duration = value;
+                InitStoryboard();
+            }
+        }
         #endregion properties
 
         public Fade(EffectableControl control)
             : base(control)
         {
+            parameterNameList.Add("Duration");
+
             width = control.Width;
             height = control.Height;
             if (((double.IsNaN(width) && double.IsNaN(height)) || (width == 0 && height == 0)) && !double.IsNaN(control.ActualWidth) && !double.IsNaN(control.ActualHeight))
