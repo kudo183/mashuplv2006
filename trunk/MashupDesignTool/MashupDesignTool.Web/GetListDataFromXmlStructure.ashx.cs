@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using System.Web;
 using System.Net;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace MashupDesignTool.Web
+namespace ItemCollectionEditor.Web
 {
     /// <summary>
-    /// Summary description for GetListDataFromXml
+    /// Summary description for GetXMLStructure
     /// </summary>
-    public class GetListDataFromXml : IHttpHandler
+    public class GetXMLStructure : IHttpHandler
     {
 
         public void ProcessRequest(HttpContext context)
@@ -21,34 +21,20 @@ namespace MashupDesignTool.Web
             {
                 Uri uri = new Uri(context.Request["URL"], UriKind.RelativeOrAbsolute);
                 string elementName = context.Request["ELEMENT"];
-                int index = int.Parse(context.Request["INDEX"]);
-                int count = int.Parse(context.Request["COUNT"]);
 
                 string xmlString = webClient.DownloadString(uri);
 
                 XDocument xDoc = XDocument.Parse(xmlString);
-                List<List<string>> result = new List<List<string>>();
+                List<string> result = new List<string>();
 
-                int i = 0;
-                
                 foreach (XElement element in xDoc.Descendants(elementName))
                 {
-                    if (i < index)
-                    {
-                        i++;
-                        continue;
-                    }
-                    List<string> temp = new List<string>();
                     foreach (XElement e in element.Elements())
-                    {
-                        temp.Add(e.Value);
-                    }
-                    result.Add(temp);
-                    if (result.Count == count)
-                        break;
+                        result.Add(e.Name.ToString());
+                    break;
                 }
 
-                XmlSerializer xm = new XmlSerializer(typeof(List<List<string>>));
+                XmlSerializer xm = new XmlSerializer(typeof(List<string>));
                 xm.Serialize(context.Response.OutputStream, result);
             }
             catch (Exception ex)
