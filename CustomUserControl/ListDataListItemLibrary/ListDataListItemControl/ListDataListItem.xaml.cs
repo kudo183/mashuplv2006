@@ -78,7 +78,7 @@ namespace ListDataListItemControl
         public Color HeaderTextColor
         {
             get { return ((SolidColorBrush)lblHeader.Foreground).Color; }
-            set { ((SolidColorBrush)lblHeader.Foreground).Color = value; }
+            set { lblHeader.Foreground = new SolidColorBrush(value); }
         }
 
         public Color ContentColor
@@ -87,7 +87,7 @@ namespace ListDataListItemControl
             set 
             { 
                 for (int i = 0; i < subItemsContent.Length; i++)
-                    ((SolidColorBrush)subItemsContent[i].Foreground).Color = value; 
+                    subItemsContent[i].Foreground = new SolidColorBrush(value); 
             }
         }
 
@@ -97,20 +97,20 @@ namespace ListDataListItemControl
             set
             {
                 for (int i = 0; i < subItemsBullet.Length; i++)
-                    ((SolidColorBrush)subItemsBullet[i].Fill).Color = value;
+                    subItemsBullet[i].Fill = new SolidColorBrush(value);
             }
         }
 
         public new Color Background
         {
             get { return ((SolidColorBrush)LayoutRoot.Background).Color; }
-            set { ((SolidColorBrush)LayoutRoot.Background).Color = value; }
+            set { LayoutRoot.Background = new SolidColorBrush(value); }
         }
 
         public new Color BorderBrush
         {
             get { return ((SolidColorBrush)LayoutBorder.BorderBrush).Color; }
-            set { ((SolidColorBrush)LayoutBorder.BorderBrush).Color = value; }
+            set { LayoutBorder.BorderBrush = new SolidColorBrush(value); }
         }
 
         public new Thickness BorderThickness

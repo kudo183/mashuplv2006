@@ -1,0 +1,32 @@
+﻿<bl:BasicDataListItem x:Class="ImageTitleDataListItemControl.ImageTitleDataListItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:bl="clr-namespace:BasicLibrary;assembly=BasicLibrary"
+    mc:Ignorable="d"
+    d:DesignHeight="202" d:DesignWidth="287">
+    
+    <Border x:Name="LayoutBorder" BorderBrush="Transparent" BorderThickness="0">
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Border x:Name="borderImage" BorderBrush="#EFEFEF" BorderThickness="1" Margin="2">
+                <Image Grid.Row="0" x:Name="imgImage" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="Uniform" MouseEnter="imgImage_MouseEnter" MouseLeave="imgImage_MouseLeave">
+                    <!--<ToolTipService.ToolTip>
+                        <Image x:Name="imgTooltip" Visibility="Collapsed">
+                            <Image.Resources>
+                                <Storyboard x:Key="fade" x:Name="fade" Storyboard.TargetName="imgTooltip">
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1"></DoubleAnimation>
+                                </Storyboard>
+                            </Image.Resources>
+                        </Image>
+                    </ToolTipService.ToolTip>-->
+                </Image>
+            </Border>
+            <TextBlock Grid.Row="1" x:Name="tbTitle" Margin="5,5" Cursor="Hand" Text="Hello world Hello worldHello world Hello world Hello worldHello worldHello world Hello world Hello world" TextWrapping="Wrap"></TextBlock>
+        </Grid>
+    </Border>
+</bl:BasicDataListItem>
