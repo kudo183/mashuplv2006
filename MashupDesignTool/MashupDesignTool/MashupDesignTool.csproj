@@ -91,6 +91,9 @@
     <Compile Include="CustomCursor.xaml.cs">
       <DependentUpon>CustomCursor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DeleteConfirm.xaml.cs">
+      <DependentUpon>DeleteConfirm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DesignCanvas.xaml.cs">
       <DependentUpon>DesignCanvas.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,10 @@
     <Page Include="CustomCursor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DeleteConfirm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DesignCanvas.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -1101,9 +1101,30 @@ namespace MashupDesignTool
         }
         #endregion keyboard
 
+        private List<ProxyControl> deletingControl = new List<ProxyControl>();
         private void DeleteSelectedControl()
         {
+            deletingControl.Clear();
             foreach (ProxyControl pc in selectedProxyControls)
+                deletingControl.Add(pc);
+            DeleteConfirm deleteConfirm = new DeleteConfirm();
+            deleteConfirm.Closed += new EventHandler(deleteConfirm_Closed);
+            deleteConfirm.Show();
+        }
+
+        void deleteConfirm_Closed(object sender, EventArgs e)
+        {
+            DeleteConfirm deleteConfirm = (DeleteConfirm)sender;
+            if (deleteConfirm.DialogResult == false)
+            {
+                selectedControls.Clear();
+                selectedProxyControls.Clear();
+                foreach (ProxyControl pc in deletingControl)
+                    AddSelectedControl(pc);
+                return;
+            }
+
+            foreach (ProxyControl pc in deletingControl)
             {
                 LayoutRoot.Children.Remove(pc);
                 ControlContainer.Children.Remove(pc.RealControl);
