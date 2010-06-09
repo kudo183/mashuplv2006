@@ -26,7 +26,7 @@
                     </ToolTipService.ToolTip>-->
                 </Image>
             </Border>
-            <TextBlock Grid.Row="1" x:Name="tbTitle" Margin="5,5" Cursor="Hand" Text="Hello world Hello worldHello world Hello world Hello worldHello worldHello world Hello world Hello world" TextWrapping="Wrap"></TextBlock>
+            <TextBlock Grid.Row="1" x:Name="tbTitle" Margin="5,5" Cursor="Hand" TextWrapping="Wrap"></TextBlock>
         </Grid>
     </Border>
 </bl:BasicDataListItem>

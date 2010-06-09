@@ -307,6 +307,8 @@ namespace ListDataListItemControl
         {
             if (i >= subItemsContent.Length || i < 0)
                 return "";
+            if (subItemsContent[i].Tag == null)
+                return null;
             return (string)subItemsContent[i].Tag;
         }
 
