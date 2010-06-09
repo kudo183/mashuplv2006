@@ -75,6 +75,7 @@
     </Content>
     <Content Include="ClientBin\MashupDesignTool.xap" />
     <Content Include="ClientBin\Testcontrol1.xap" />
+    <Content Include="crossdomain.xml" />
     <Content Include="dll\MySql.Data.dll" />
     <Content Include="MashupDesignToolTestPage.aspx" />
     <Content Include="MashupDesignToolTestPage.html" />
@@ -94,6 +95,9 @@
     <Compile Include="GetBinaryData.ashx.cs">
       <DependentUpon>GetBinaryData.ashx</DependentUpon>
     </Compile>
+    <Compile Include="GetListDataFromDatabaseStructure.ashx.cs">
+      <DependentUpon>GetListDataFromDatabaseStructure.ashx</DependentUpon>
+    </Compile>
     <Compile Include="GetStringDataFromURL.ashx.cs">
       <DependentUpon>GetStringDataFromURL.ashx</DependentUpon>
     </Compile>
@@ -102,6 +106,9 @@
     </Compile>
     <Compile Include="GetListDataFromXml.ashx.cs">
       <DependentUpon>GetListDataFromXml.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="GetListDataFromXmlStructure.ashx.cs">
+      <DependentUpon>GetListDataFromXmlStructure.ashx</DependentUpon>
     </Compile>
     <Compile Include="MashupToolWCFService.svc.cs">
       <DependentUpon>MashupToolWCFService.svc</DependentUpon>
@@ -122,7 +129,13 @@
     <Content Include="GetListDataFromXml.ashx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="GetListDataFromXmlStructure.ashx" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="GetStringDataFromURL.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GetListDataFromDatabaseStructure.ashx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
