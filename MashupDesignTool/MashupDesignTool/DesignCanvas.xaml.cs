@@ -1109,6 +1109,10 @@ namespace MashupDesignTool
                 ControlContainer.Children.Remove(pc.RealControl);
                 proxyControls.Remove(pc);
                 controls.Remove(pc.RealControl);
+                if (typeof(BasicControl).IsAssignableFrom(pc.RealControl.Control.GetType()))
+                {
+                    ((BasicControl)pc.RealControl.Control).Dispose();
+                }
             }
             selectedProxyControls.Clear();
             selectedControls.Clear();

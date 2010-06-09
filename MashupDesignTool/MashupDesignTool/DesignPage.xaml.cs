@@ -367,7 +367,7 @@ namespace MashupDesignTool
             switch (controlName)
             {
                 case "Border":
-                    uc = new Border() { Width = 40, Height = 40, Background = transparentBrush, BorderBrush = blackBrush };
+                    uc = new Border() { Width = 40, Height = 40, Background = transparentBrush, BorderBrush = blackBrush, BorderThickness = new Thickness(1) };
                     break;
                 case "Button":
                     uc = new Button() { Content = "Button" };
@@ -930,24 +930,20 @@ namespace MashupDesignTool
         {
             if (bIsRemovingMenu)
                 return;
-            if (menu.Tabs.Items.Count != 1)
+            if (((TabsItem)menu.Tabs.Items[0]).IsSelected)
             {
-                TabsItem ti = (TabsItem)e.AddedItems[0];
-                if (!((TabsItem)menu.Tabs.Items[0]).IsSelected)
-                {
-                    FrameworkElement ec;
-                    if (((TabsItem)menu.Tabs.Items[1]).IsSelected)
-                    {
-                        ec = designCanvas1.SelectedControls[0];
-                    }
-                    else
-                    {
-                        ec = (FrameworkElement)designCanvas1.SelectedControls[0].Control;
-                    }
-                    PropertyInfo pi = (PropertyInfo)ti.Tag;
-                    effectPropertiesGrid.SelectedObject = pi.GetValue(ec, null);
-                }
+                effectPropertiesGrid.SelectedObject = null;
+                return;
             }
+         
+            TabsItem ti = (TabsItem)e.AddedItems[0];
+            FrameworkElement ec;
+            if (((TabsItem)menu.Tabs.Items[1]).IsSelected)
+                ec = designCanvas1.SelectedControls[0];
+            else
+                ec = (FrameworkElement)designCanvas1.SelectedControls[0].Control;
+            PropertyInfo pi = (PropertyInfo)ti.Tag;
+            effectPropertiesGrid.SelectedObject = pi.GetValue(ec, null);
         }
         #endregion select in design canvas
 
