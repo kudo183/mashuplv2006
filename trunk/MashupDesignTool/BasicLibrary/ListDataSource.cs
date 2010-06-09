@@ -13,7 +13,7 @@ namespace BasicLibrary
 {
     public class ListDataSource
     {
-        enum DataSourceType
+        public enum DataSourceType
         {
             XML,
             MYSQL
@@ -21,7 +21,7 @@ namespace BasicLibrary
 
         DataSourceType _SourceType;
 
-        private DataSourceType SourceType
+        public DataSourceType SourceType
         {
             get { return _SourceType; }
             set { _SourceType = value; }
@@ -34,6 +34,15 @@ namespace BasicLibrary
             get { return _XmlURL; }
             set { _XmlURL = value; }
         }
+
+        string elementName;
+
+        public string ElementName
+        {
+            get { return elementName; }
+            set { elementName = value; }
+        }
+
         string _server;
 
         public string Server
