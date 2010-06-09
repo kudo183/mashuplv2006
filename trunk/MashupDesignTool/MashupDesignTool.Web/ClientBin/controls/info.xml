@@ -51,6 +51,15 @@
     <Group>User defined control</Group>
   </Control>
   <Control>
+    <Name>QuickViewContentControl.QuickViewContent</Name>
+    <DllFilename>QuickViewContentControl.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Quick view content</DisplayName>
+    <Description>control used to display summary content</Description>
+    <IconName>QuickViewContentControl.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
     <Name>ControlLibrary.AnimatedGifImage</Name>
     <DllFilename>AnimatedGifImage.dll</DllFilename>
     <DllReferences>
