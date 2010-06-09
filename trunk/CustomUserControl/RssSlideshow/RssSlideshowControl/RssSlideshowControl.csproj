@@ -75,9 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\Thumbs.db" />
-    <Content Include="dll\BasicLibrary.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="dll\Liquid.RichText.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
