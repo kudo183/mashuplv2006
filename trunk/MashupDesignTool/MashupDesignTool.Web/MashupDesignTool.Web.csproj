@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClientAccessPolicy.xml" />
     <Content Include="ClientBin\Controls\Images\control4.png" />
     <Content Include="ClientBin\Controls\info.xml">
       <SubType>Designer</SubType>
@@ -79,7 +80,6 @@
     <Content Include="dll\MySql.Data.dll" />
     <Content Include="MashupDesignToolTestPage.aspx" />
     <Content Include="MashupDesignToolTestPage.html" />
-    <Content Include="MashupToolWCFService.svc" />
     <Content Include="Silverlight.js" />
     <Content Include="Testcontrol1TestPage.aspx" />
     <Content Include="Testcontrol1TestPage.html" />
