@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RssSlideshow", "RssSlideshow\RssSlideshow.csproj", "{726E2017-7FD5-42A6-B421-2A60E596DFA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RssSlideshow.Web", "RssSlideshow.Web\RssSlideshow.Web.csproj", "{846D22A0-0CB7-49AF-9363-822153F2EBB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RssSlideshowControl", "RssSlideshowControl\RssSlideshowControl.csproj", "{68C26FE2-0A06-4C0A-AD42-D738A0885E2E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{726E2017-7FD5-42A6-B421-2A60E596DFA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{726E2017-7FD5-42A6-B421-2A60E596DFA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{726E2017-7FD5-42A6-B421-2A60E596DFA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{726E2017-7FD5-42A6-B421-2A60E596DFA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846D22A0-0CB7-49AF-9363-822153F2EBB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846D22A0-0CB7-49AF-9363-822153F2EBB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846D22A0-0CB7-49AF-9363-822153F2EBB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846D22A0-0CB7-49AF-9363-822153F2EBB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68C26FE2-0A06-4C0A-AD42-D738A0885E2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68C26FE2-0A06-4C0A-AD42-D738A0885E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68C26FE2-0A06-4C0A-AD42-D738A0885E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68C26FE2-0A06-4C0A-AD42-D738A0885E2E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
