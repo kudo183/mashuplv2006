@@ -27,9 +27,9 @@ namespace ListDataListItemControl
             parameterNameList.Add("HeaderTextColor");
             parameterNameList.Add("ContentColor");
             parameterNameList.Add("BulletColor");
-            parameterNameList.Add("Background");
-            parameterNameList.Add("BorderBrush");
-            parameterNameList.Add("BorderThickness");
+            parameterNameList.Add("ControlBackground");
+            parameterNameList.Add("ControlBorderBrush");
+            parameterNameList.Add("ControlBorderThickness");
 
             parameterCanBindingNameList.Add("Header");
             parameterCanBindingNameList.Add("SubItem1Content");
@@ -101,19 +101,19 @@ namespace ListDataListItemControl
             }
         }
 
-        public new Color Background
+        public Color ControlBackground
         {
             get { return ((SolidColorBrush)LayoutRoot.Background).Color; }
             set { LayoutRoot.Background = new SolidColorBrush(value); }
         }
 
-        public new Color BorderBrush
+        public Color ControlBorderBrush
         {
             get { return ((SolidColorBrush)LayoutBorder.BorderBrush).Color; }
             set { LayoutBorder.BorderBrush = new SolidColorBrush(value); }
         }
 
-        public new Thickness BorderThickness
+        public Thickness ControlBorderThickness
         {
             get { return LayoutBorder.BorderThickness; }
             set { LayoutBorder.BorderThickness = value; }
