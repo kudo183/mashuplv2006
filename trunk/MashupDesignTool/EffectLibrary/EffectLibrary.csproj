@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ListEffect\FishEye.cs" />
+    <Compile Include="SingleEffect\ChangeFillColor.cs" />
     <Compile Include="SingleEffect\Checkerboard.cs" />
     <Compile Include="SingleEffect\GlowWinSeven.cs" />
     <Compile Include="SingleEffect\Dissolve.cs" />
