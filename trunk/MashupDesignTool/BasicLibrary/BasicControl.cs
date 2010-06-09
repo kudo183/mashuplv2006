@@ -117,5 +117,9 @@ namespace BasicLibrary
             if (CallEffect != null)
                 CallEffect(this);
         }
+
+        public virtual void Dispose()
+        {
+        }
     }   
 }
