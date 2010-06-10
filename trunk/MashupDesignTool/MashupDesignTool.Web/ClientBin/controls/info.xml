@@ -55,8 +55,17 @@
     <DllFilename>QuickViewContentControl.dll</DllFilename>
     <DllReferences></DllReferences>
     <DisplayName>Quick view content</DisplayName>
-    <Description>control used to display summary content</Description>
+    <Description>Control used to display summary content</Description>
     <IconName>QuickViewContentControl.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>CategoryQuickViewControl.CategoryQuickView</Name>
+    <DllFilename>CategoryQuickViewControl.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Category quick view</DisplayName>
+    <Description>Control used to display summary category</Description>
+    <IconName>CategoryQuickView.png</IconName>
     <Group>User defined control</Group>
   </Control>
   <Control>
