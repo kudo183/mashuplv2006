@@ -55,7 +55,7 @@ namespace QuickViewContentControl
         {
             try
             {
-                string imageURL = "", title = "", content = "";
+                string imageURL = "", title = "", content = "", link = "";
                 XmlReader xmlReader = XmlReader.Create(new StringReader(result));
 
                 while (xmlReader.Read())
@@ -72,6 +72,9 @@ namespace QuickViewContentControl
                                 break;
                             case "Content":
                                 content = xmlReader.ReadInnerXml();
+                                break;
+                            case "Link":
+                                link = xmlReader.ReadInnerXml();
                                 break;
                             default:
                                 break;
