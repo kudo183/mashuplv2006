@@ -54,6 +54,7 @@ namespace MashupDesignTool
         bool canResize;
         bool isShowingContextMenu;
         bool canvasClick;
+        bool canMove;
         Point beginCanvasClicked;
         List<Point> clickPoints;
         List<EffectableControl> controls;
@@ -65,6 +66,8 @@ namespace MashupDesignTool
         Menu menu = new Menu();
         Liquid.MenuItem lmiBringToFront, lmiBringForward, lmiSendToBack, lmiSendBackward, lmiProperties, lmiDelete;
         int iCount = 0;
+        DispatcherTimer dispatcherTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(200) };
+
 
         public List<EffectableControl> Controls
         {
@@ -120,9 +123,10 @@ namespace MashupDesignTool
             isShowingContextMenu = false;
             canvasClick = false;
             isCaptured = false;
+            canMove = false;
             
             CursorManager.InitCursor(LayoutRoot);
-            DockCanvas.DockCanvas.SetZIndex(multipleSelectRect, 9999);
+            DockCanvas.DockCanvas.SetZIndex(multipleSelectRect, 99999);
 
             clickPoints = new List<Point>();
             proxyControls = new List<ProxyControl>();
@@ -134,6 +138,8 @@ namespace MashupDesignTool
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 0, 0, 20);
             timer.Tick += new EventHandler(timer_Tick);
+
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
 
             CreateContextMenu();
         }
@@ -306,6 +312,8 @@ namespace MashupDesignTool
             uc.Margin = new Thickness(0, 0, 0, 0);
             //ProxyControl pc = new ProxyControl(uc, x, y, width, height);
             ProxyControl pc = new ProxyControl(ec, 10, 10);
+            if (double.IsNaN(ec.Width) && double.IsNaN(ec.Height))
+                ec.Width = ec.Height = 1;
             proxyControls.Add(pc);
             controls.Add(ec);
             int index = FindTopProxyControlIndex();
@@ -343,6 +351,7 @@ namespace MashupDesignTool
         #endregion add new control to canvas
 
         #region dragdrop control
+
         void control_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (isCaptured)
@@ -355,8 +364,10 @@ namespace MashupDesignTool
 
         void control_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isCaptured)
+            if (isCaptured && canMove)
             {
+                if (!dispatcherTimer.IsEnabled)
+                    dispatcherTimer.Start();
                 Point pt = e.GetPosition(LayoutRoot);
                 pt = MoveControls(pt);
             }
@@ -433,16 +444,16 @@ namespace MashupDesignTool
 
             for (int i = 0; i < selectedProxyControls.Count; i++)
             {
-                if (((DockCanvas.DockCanvas.DockType)selectedControls[i].GetValue(DockCanvas.DockCanvas.DockTypeProperty)) != DockCanvas.DockCanvas.DockType.None)
-                {
-                    delta.X = delta.Y = 0;
-                    for (int j = 0; j < selectedProxyControls.Count; j++)
-                    {
-                        pts[j].X = Canvas.GetLeft(selectedControls[j]);
-                        pts[j].Y = Canvas.GetTop(selectedControls[j]);
-                    }
-                    break;
-                }
+                //if (((DockCanvas.DockCanvas.DockType)selectedControls[i].GetValue(DockCanvas.DockCanvas.DockTypeProperty)) != DockCanvas.DockCanvas.DockType.None)
+                //{
+                //    delta.X = delta.Y = 0;
+                //    for (int j = 0; j < selectedProxyControls.Count; j++)
+                //    {
+                //        pts[j].X = Canvas.GetLeft(selectedControls[j]);
+                //        pts[j].Y = Canvas.GetTop(selectedControls[j]);
+                //    }
+                //    break;
+                //}
                 double x = pt.X - clickPoints[i].X;
                 double y = pt.Y - clickPoints[i].Y;
                 ProxyControl pc = selectedProxyControls[i];
@@ -472,14 +483,29 @@ namespace MashupDesignTool
                 pc.MoveControl(pts[i].X - delta.X, pts[i].Y - delta.Y);
             }
 
-            if (b == true && PositionChanged != null)
+            //if (b == true && PositionChanged != null)
+            //{
+            //    if (selectedControls.Count == 1)
+            //        PositionChanged(this, false);
+            //    else
+            //        PositionChanged(this, true);
+            //}
+            return pt;
+        }
+
+        void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            if (PositionChanged != null)
             {
                 if (selectedControls.Count == 1)
                     PositionChanged(this, false);
                 else
                     PositionChanged(this, true);
             }
-            return pt;
+            if (!isCaptured)
+            {
+                dispatcherTimer.Stop();
+            }
         }
         #endregion dragdrop control
 
@@ -1147,6 +1173,15 @@ namespace MashupDesignTool
             selectedProxyControls.Remove(selectedProxyControl);
             selectedControls.Remove(selectedProxyControl.RealControl);
             selectedProxyControl.UpdateVisibility(System.Windows.Visibility.Collapsed);
+            canMove = true;
+            for (int i = 0; i < selectedControls.Count; i++)
+            {
+                if (((DockCanvas.DockCanvas.DockType)selectedControls[i].GetValue(DockCanvas.DockCanvas.DockTypeProperty)) != DockCanvas.DockCanvas.DockType.None)
+                {
+                    canMove = false;
+                    break;
+                }
+            }
         }
 
         private void AddSelectedControl(ProxyControl pc)
@@ -1154,6 +1189,15 @@ namespace MashupDesignTool
             selectedProxyControls.Add(pc);
             selectedControls.Add(pc.RealControl);
             pc.UpdateVisibility(System.Windows.Visibility.Visible);
+            canMove = true;
+            for (int i = 0; i < selectedControls.Count; i++)
+            {
+                if (((DockCanvas.DockCanvas.DockType)selectedControls[i].GetValue(DockCanvas.DockCanvas.DockTypeProperty)) != DockCanvas.DockCanvas.DockType.None)
+                {
+                    canMove = false;
+                    break;
+                }
+            }
         }
 
         private void UserControl_LostFocus(object sender, RoutedEventArgs e)
