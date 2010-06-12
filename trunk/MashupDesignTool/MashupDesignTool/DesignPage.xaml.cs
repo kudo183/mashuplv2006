@@ -163,6 +163,36 @@ namespace MashupDesignTool
             doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
 
             propertiesGrid.SelectedObject = designCanvas1.RootCanvas;
+
+            ////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////
+            test t = new test();
+            t.Width = t.Height = 100;
+            SilverlightControl1 sc1 = new SilverlightControl1();
+            //sc1.Width = sc1.Height = 10;
+            designCanvas1.AddControl(t, 0, 0, 0, 0);
+            designCanvas1.AddControl(sc1, 0, 0, 0, 0);
+
+            //string abc = "";
+            //foreach (string str in t.GetListEventName())
+            //    abc += str + "\t";
+            //abc += "\r\n";
+            //foreach (string str in t.GetListOperationName())
+            //    abc += str + "\t";
+
+            //abc += "\r\n";
+            //foreach (string str in sc1.GetListEventName())
+            //    abc += str + "\t";
+            //abc += "\r\n";
+            //foreach (string str in sc1.GetListOperationName())
+            //    abc += str + "\t";
+
+            //MessageBox.Show(abc);
+
+            //MDTEventManager.RegisterEvent(t, "Test1", sc1, "Hello1");
+            //MDTEventManager.RegisterEvent(t, "Test1", sc1, "Hello1");
+            ////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////
         }
 
         #region download Controls/info.xml and contruct control tree
@@ -520,6 +550,7 @@ namespace MashupDesignTool
             if (element.Equals(designCanvas1.ControlContainer))
             {
                 propertiesGrid.SelectedObject = element;
+                eventBindingGrid.ChangeSelectedObject(null, designCanvas1.Controls);
                 previousElement = null;
             }
             else if (designCanvas1.SelectedControls.Count == 1)
@@ -527,13 +558,16 @@ namespace MashupDesignTool
                 if (!element.Equals(previousElement))
                 {
                     propertiesGrid.SelectedObject = element;
+                    if (typeof(BasicControl).IsAssignableFrom(designCanvas1.SelectedControls[0].Control.GetType()))
+                        eventBindingGrid.ChangeSelectedObject((BasicControl)designCanvas1.SelectedControls[0].Control, designCanvas1.Controls);
+                    else
+                        eventBindingGrid.ChangeSelectedObject(null, designCanvas1.Controls);
+                    
                     AddEffectMenuItemsToMenu((EffectableControl)designCanvas1.SelectedControls[0]);
-
                     if (typeof(BasicImageListControl).IsAssignableFrom(designCanvas1.SelectedControls[0].Control.GetType()))
                     {
                         AddImageListEditorButtonToHome();
                     }
-
                     else if (typeof(Liquid.RichTextBox).IsAssignableFrom(designCanvas1.SelectedControls[0].Control.GetType()))
                     {
                         AddRichTextEditorButtonToHome();

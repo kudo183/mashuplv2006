@@ -312,8 +312,6 @@ namespace MashupDesignTool
             uc.Margin = new Thickness(0, 0, 0, 0);
             //ProxyControl pc = new ProxyControl(uc, x, y, width, height);
             ProxyControl pc = new ProxyControl(ec, 10, 10);
-            if (double.IsNaN(ec.Width) && double.IsNaN(ec.Height))
-                ec.Width = ec.Height = 1;
             proxyControls.Add(pc);
             controls.Add(ec);
             int index = FindTopProxyControlIndex();
@@ -333,6 +331,33 @@ namespace MashupDesignTool
 
             if (SelectionChanged != null)
                 SelectionChanged(this, uc);
+
+            this.Focus();
+            HideContextMenu();
+        }
+
+        public void AddControl(EffectableControl ec)
+        {
+            ProxyControl pc = new ProxyControl(ec, DockCanvas.DockCanvas.GetLeft(ec), DockCanvas.DockCanvas.GetTop(ec));
+            proxyControls.Add(pc);
+            controls.Add(ec);
+            int index = FindTopProxyControlIndex();
+            SetZindex(pc, index + 1);
+
+            ControlContainer.Children.Add(ec);
+            LayoutRoot.Children.Add(pc);
+
+            pc.MouseLeftButtonDown += new MouseButtonEventHandler(control_MouseLeftButtonDown);
+            pc.MouseMove += new MouseEventHandler(control_MouseMove);
+            pc.MouseLeftButtonUp += new MouseButtonEventHandler(control_MouseLeftButtonUp);
+
+            ClearSelectedList();
+            AddSelectedControl(pc);
+
+            textBox1.Focus();
+
+            if (SelectionChanged != null)
+                SelectionChanged(this, ec.Control);
 
             this.Focus();
             HideContextMenu();
@@ -439,6 +464,9 @@ namespace MashupDesignTool
 
         private Point MoveControls(Point pt)
         {
+            if (selectedProxyControls.Count == 0)
+                return pt;
+
             Point delta = new Point(0, 0);
             Point[] pts = new Point[selectedProxyControls.Count];
 
@@ -616,6 +644,10 @@ namespace MashupDesignTool
         private void CheckCanResize(MouseEventArgs e)
         {
             FrameworkElement selectedControl = selectedControls[0];
+            if (double.IsNaN(selectedControl.Width))
+                selectedControl.Width = 0;
+            if (double.IsNaN(selectedControl.Height))
+                selectedControl.Height = 0;
             Point pt = e.GetPosition(selectedControl);
             canResize = false;
 
