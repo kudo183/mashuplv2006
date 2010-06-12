@@ -101,6 +101,15 @@
       <DependentUpon>DesignPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="EffectInfo.cs" />
+    <Compile Include="Event\ControlComboBoxItemData.cs" />
+    <Compile Include="Event\EventBindingGrid.xaml.cs">
+      <DependentUpon>EventBindingGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Event\EventBindingGridItem.xaml.cs">
+      <DependentUpon>EventBindingGridItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Event\MDTEventInfo.cs" />
+    <Compile Include="Event\MDTEventManager.cs" />
     <Compile Include="Serializer\ControlSerializer.cs" />
     <Compile Include="Serializer\MyXmlSerializer.cs" />
     <Compile Include="ObjectConverter.cs" />
@@ -112,9 +121,14 @@
     <Compile Include="ProxyControl.xaml.cs">
       <DependentUpon>ProxyControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SampleTreeItem.cs" />
     <Compile Include="ControlGroupInfo.cs" />
     <Compile Include="Serializer\EffectableObjectXmlSerializer.cs" />
+    <Compile Include="SilverlightControl1.xaml.cs">
+      <DependentUpon>SilverlightControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="test.xaml.cs">
+      <DependentUpon>test.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +152,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Event\EventBindingGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Event\EventBindingGridItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PreviewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,6 +167,14 @@
     <Page Include="ProxyControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SilverlightControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="test.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

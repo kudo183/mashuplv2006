@@ -9,12 +9,12 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition MaxWidth="5" Width="5" />
-            <ColumnDefinition />
+            <ColumnDefinition MinWidth="4" Width="*" />
             <ColumnDefinition MaxWidth="5" Width="5" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="5" MaxHeight="5" />
-            <RowDefinition />
+            <RowDefinition MinHeight="4" Height="*" />
             <RowDefinition Height="5" MaxHeight="5" />
         </Grid.RowDefinitions>
         
