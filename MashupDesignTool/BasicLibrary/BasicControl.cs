@@ -79,15 +79,16 @@ namespace BasicLibrary
         }
         #endregion
 
+        public delegate void MDTEventHandler(object sender, string xmlString);
+
         public delegate void CallEffectHandle(object sender);
         public event CallEffectHandle CallEffect;
 
         protected List<string> effectPropertyNameList = new List<string>();
+        private List<string> eventNameList = new List<string>();
+        private List<string> operationNameList = new List<string>();
 
-        public virtual void ChangeEffect(string propertyName, Type effectType, EffectableControl owner)
-        {
-        }
-
+        #region Effect Property Name List
         public List<string> GetListEffectPropertyName()
         {
             return effectPropertyNameList;
@@ -106,9 +107,65 @@ namespace BasicLibrary
                 return null;
             return (IBasic)this.GetType().GetProperty(effectName).GetValue(this, null);
         }
+        #endregion Effect Property Name List
+
+        #region Event Name List
+        public List<string> GetListEventName()
+        {
+            return eventNameList;
+        }
+
+        public EventInfo GetEventInfoByName(string eventName)
+        {
+            if (!eventNameList.Contains(eventName))
+                return null;
+            return this.GetType().GetEvent(eventName);
+        }
+
+        protected void AddEventNameToList(string eventName)
+        {
+            EventInfo ei = this.GetType().GetEvent(eventName);
+            if (ei != null)
+                if (ei.EventHandlerType == typeof(MDTEventHandler))
+                    eventNameList.Add(eventName);
+        }
+        #endregion Event Name List
+
+        #region Operation Name List
+        public List<string> GetListOperationName()
+        {
+            return operationNameList;
+        }
+
+        public MethodInfo GetOperationInfoByName(string operationName)
+        {
+            if (!operationNameList.Contains(operationName))
+                return null;
+            return this.GetType().GetMethod(operationName);
+        }
+
+        protected void AddOperationNameToList(string operationName)
+        {
+            MethodInfo mi = this.GetType().GetMethod(operationName);
+            if (mi != null)
+            {
+                ParameterInfo[] pis = mi.GetParameters();
+                if (pis.Length != 1)
+                    return;
+                if (pis[0].ParameterType != typeof(string))
+                    return;
+                if (mi.IsPublic && !mi.IsStatic)
+                    operationNameList.Add(operationName);
+            }
+        }
+        #endregion Operation Name List
 
         public BasicControl()
             : base()
+        {
+        }
+
+        public virtual void ChangeEffect(string propertyName, Type effectType, EffectableControl owner)
         {
         }
 
