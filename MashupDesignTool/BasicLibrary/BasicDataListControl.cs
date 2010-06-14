@@ -15,12 +15,20 @@ namespace BasicLibrary
 {
     public class BasicDataListControl : BasicListControl
     {
-        private Type _ListItem;
+        //private Type _ListItem;
 
-        public Type ListItem
+        //public Type ListItem
+        //{
+        //    get { return _ListItem; }
+        //    set { _ListItem = value; }
+        //}
+
+        private string _ListItemXMlString;
+
+        public string ListItemXMlString
         {
-            get { return _ListItem; }
-            set { _ListItem = value; }
+            get { return _ListItemXMlString; }
+            set { _ListItemXMlString = value; }
         }
 
         List<int> _ControlDataMapping = new List<int>();
@@ -31,7 +39,7 @@ namespace BasicLibrary
             set { _ControlDataMapping = value; }
         }
 
-        private ListDataSource _Datasource;
+        private ListDataSource _Datasource = new ListDataSource();
 
         public ListDataSource Datasource
         {
@@ -39,27 +47,73 @@ namespace BasicLibrary
             set { _Datasource = value; }
         }
 
-        public BasicDataListControl():base()
+        public BasicDataListControl()
+            : base()
         {
+            parameterNameList.Add("ListItemXMlString");
+            parameterNameList.Add("ControlDataMapping");
+            parameterNameList.Add("Datasource");
+            Loaded += new RoutedEventHandler(BasicDataListControl_Loaded);
+        }
+
+        void BasicDataListControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            BindingData();
+        }
+
+        Ultility u = new Ultility();
+
+        public Ultility U
+        {
+            get { return u; }
+            set { u = value; }
         }
 
         public void BindingData()
         {
-            Ultility u = new Ultility();
             if (_Datasource.SourceType == ListDataSource.DataSourceType.XML)
             {
+                if (_Datasource.XmlURL == null)
+                    return;
                 u.OnGetListDataFromXmlAsyncCompleted += new Ultility.GetListDataFromXmlAsyncCompletedHandler(u_OnGetListDataCompleted);
                 u.GetListDataFromXmlAsync(_Datasource.XmlURL, _Datasource.ElementName, 0, int.MaxValue);
             }
+            else if (_Datasource.SourceType == ListDataSource.DataSourceType.MYSQL)
+            {
+                if (_Datasource.Server == null)
+                    return;
+                u.OnGetListDataFromDatabaseAsyncCompleted += new Ultility.GetListDataFromDatabaseAsyncCompletedHandler(u_OnGetListDataFromDatabaseAsyncCompleted);
+                u.GetListDataFromDatabaseAsync(_Datasource.Server, _Datasource.Username, _Datasource.Password, _Datasource.Db, _Datasource.Table, 0, int.MaxValue);
+            }
+        }
+
+        void u_OnGetListDataFromDatabaseAsyncCompleted(List<List<string>> result)
+        {
+            u.OnGetListDataFromDatabaseAsyncCompleted -= new Ultility.GetListDataFromDatabaseAsyncCompletedHandler(u_OnGetListDataFromDatabaseAsyncCompleted);
+            CreateListItemFromData(result);
         }
 
         void u_OnGetListDataCompleted(List<List<string>> result)
         {
+            u.OnGetListDataFromXmlAsyncCompleted -= new Ultility.GetListDataFromXmlAsyncCompletedHandler(u_OnGetListDataCompleted);
+            CreateListItemFromData(result);
+        }
+
+        private void CreateListItemFromData(List<List<string>> data)
+        {
             RemoveAllItem();
-            foreach (List<string> lstString in result)
+            foreach (List<string> lstString in data)
             {
-                BasicDataListItem fe = Activator.CreateInstance(_ListItem) as BasicDataListItem;
-                
+                // BasicDataListItem fe = Activator.CreateInstance(_ListItem) as BasicDataListItem;
+                BasicDataListItem fe = BasicControlSerializer.Deserialize(_ListItemXMlString) as BasicDataListItem;
+                int i = 0;
+                foreach (string s in fe.GetParameterCanBindingNameList())
+                {
+                    if (_ControlDataMapping[i] != -1)
+                        fe.SetParameterCanBindingValue(s, lstString[_ControlDataMapping[i]]);
+                    i++;
+                }
+                fe.Width = fe.Height = 50;
                 AddItem(new EffectableControl(fe));
             }
         }
