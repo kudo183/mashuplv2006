@@ -19,9 +19,10 @@ namespace EffectLibrary
     {
         List<Storyboard> lstStoryEnter = new List<Storyboard>();
         List<Storyboard> lstStoryLeave = new List<Storyboard>();
-        List<SplineDoubleKeyFrame> lstSDKFWidth = new List<SplineDoubleKeyFrame>();
-        List<SplineDoubleKeyFrame> lstSDKFHeight = new List<SplineDoubleKeyFrame>();
-
+        List<SplineDoubleKeyFrame> lstSDKFEnterWidth = new List<SplineDoubleKeyFrame>();
+        List<SplineDoubleKeyFrame> lstSDKFEnterHeight = new List<SplineDoubleKeyFrame>();
+        List<SplineDoubleKeyFrame> lstSDKFLeaveWidth = new List<SplineDoubleKeyFrame>();
+        List<SplineDoubleKeyFrame> lstSDKFLeaveHeight = new List<SplineDoubleKeyFrame>();
         double _ItemWidth;
         double _ItemHeight;
         double _Scale;
@@ -35,6 +36,14 @@ namespace EffectLibrary
                 _ItemWidth = value;
                 foreach (FrameworkElement element in LayoutRoot.Children)
                     element.Width = _ItemWidth;
+                foreach (SplineDoubleKeyFrame sdkf in lstSDKFLeaveWidth)
+                {
+                    sdkf.Value = _ItemWidth;
+                }
+                foreach (SplineDoubleKeyFrame sdkf in lstSDKFEnterWidth)
+                {
+                    sdkf.Value = _ItemWidth;
+                }
                 control.UpdateLayout();
             }
         }
@@ -47,6 +56,14 @@ namespace EffectLibrary
                 _ItemHeight = value;
                 foreach (FrameworkElement element in LayoutRoot.Children)
                     element.Height = _ItemHeight;
+                foreach (SplineDoubleKeyFrame sdkf in lstSDKFLeaveHeight)
+                {
+                    sdkf.Value = _ItemHeight;
+                }
+                foreach (SplineDoubleKeyFrame sdkf in lstSDKFEnterHeight)
+                {
+                    sdkf.Value = _ItemHeight;
+                }
                 control.UpdateLayout();
             }
         }
@@ -127,6 +144,7 @@ namespace EffectLibrary
             sdkf.KeyTime = TimeSpan.FromSeconds(0.08);
             sdkf.Value = _ItemWidth;
             dakf.KeyFrames.Add(sdkf);
+            lstSDKFLeaveWidth.Add(sdkf);
             Storyboard.SetTarget(dakf, element);
             Storyboard.SetTargetProperty(dakf, new PropertyPath("(FrameworkElement.Width)"));
             sb.Children.Add(dakf);
@@ -137,6 +155,7 @@ namespace EffectLibrary
             sdkf.KeyTime = TimeSpan.FromSeconds(0.08);
             sdkf.Value = _ItemHeight;
             dakf.KeyFrames.Add(sdkf);
+            lstSDKFLeaveHeight.Add(sdkf);
             Storyboard.SetTarget(dakf, element);
             Storyboard.SetTargetProperty(dakf, new PropertyPath("(FrameworkElement.Height)"));
             sb.Children.Add(dakf);
@@ -151,7 +170,7 @@ namespace EffectLibrary
             sdkf.KeyTime = TimeSpan.FromSeconds(0.08);
             sdkf.Value = _ItemWidth;
             dakf.KeyFrames.Add(sdkf);
-            lstSDKFWidth.Add(sdkf);
+            lstSDKFEnterWidth.Add(sdkf);
             Storyboard.SetTarget(dakf, element);
             Storyboard.SetTargetProperty(dakf, new PropertyPath("(FrameworkElement.Width)"));
             sb.Children.Add(dakf);
@@ -162,7 +181,7 @@ namespace EffectLibrary
             sdkf.KeyTime = TimeSpan.FromSeconds(0.08);
             sdkf.Value = _ItemHeight;
             dakf.KeyFrames.Add(sdkf);
-            lstSDKFHeight.Add(sdkf);
+            lstSDKFEnterHeight.Add(sdkf);
             Storyboard.SetTarget(dakf, element);
             Storyboard.SetTargetProperty(dakf, new PropertyPath("(FrameworkElement.Height)"));
             sb.Children.Add(dakf);
@@ -182,13 +201,13 @@ namespace EffectLibrary
             LayoutRoot.Children[min] = temp2;
             LayoutRoot.Children.Insert(max, temp1);
 
-            SplineDoubleKeyFrame temp3 = lstSDKFWidth[min];
-            lstSDKFWidth[min] = lstSDKFWidth[max];
-            lstSDKFWidth[max] = temp3;
+            SplineDoubleKeyFrame temp3 = lstSDKFEnterWidth[min];
+            lstSDKFEnterWidth[min] = lstSDKFEnterWidth[max];
+            lstSDKFEnterWidth[max] = temp3;
 
-            SplineDoubleKeyFrame temp4 = lstSDKFHeight[min];
-            lstSDKFHeight[min] = lstSDKFHeight[max];
-            lstSDKFHeight[max] = temp4;
+            SplineDoubleKeyFrame temp4 = lstSDKFEnterHeight[min];
+            lstSDKFEnterHeight[min] = lstSDKFEnterHeight[max];
+            lstSDKFEnterHeight[max] = temp4;
 
             Storyboard temp5 = lstStoryEnter[min];
             lstStoryEnter[min] = lstStoryEnter[max];
@@ -202,8 +221,8 @@ namespace EffectLibrary
         public void RemoveItemAt(int index)
         {
             LayoutRoot.Children.RemoveAt(index);
-            lstSDKFHeight.RemoveAt(index);
-            lstSDKFWidth.RemoveAt(index);
+            lstSDKFEnterHeight.RemoveAt(index);
+            lstSDKFEnterWidth.RemoveAt(index);
             lstStoryEnter.RemoveAt(index);
             lstStoryLeave.RemoveAt(index);
         }
@@ -216,8 +235,8 @@ namespace EffectLibrary
         public void RemoveAllItem()
         {
             LayoutRoot.Children.Clear();
-            lstSDKFHeight.Clear();
-            lstSDKFWidth.Clear();
+            lstSDKFEnterHeight.Clear();
+            lstSDKFEnterWidth.Clear();
             lstStoryEnter.Clear();
             lstStoryLeave.Clear();
         }
@@ -227,10 +246,15 @@ namespace EffectLibrary
         public FishEye(BasicListControl control)
             : base(control)
         {
+            parameterNameList.Add("ItemWidth");
+            parameterNameList.Add("ItemHeight");
+            parameterNameList.Add("Scale");
+            parameterNameList.Add("Range");
+
             LayoutRoot = new StackPanel();
             control.Content = LayoutRoot;
 
-            LayoutRoot.Background = new SolidColorBrush(Colors.Red);
+            LayoutRoot.Background = new SolidColorBrush(Colors.Blue);
             LayoutRoot.Orientation = Orientation.Horizontal;
             LayoutRoot.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
             _ItemWidth = _ItemHeight = 100;
@@ -285,12 +309,14 @@ namespace EffectLibrary
 
                 if (offset.X > rangeMin && offset.X < rangeMax)
                 {
-                    lstSDKFWidth[i].Value = lstSDKFHeight[i].Value = _ItemWidth + _Scale * (Math.Sin(Math.PI * ((offset.X - rangeMin) / _Range)));
+                    lstSDKFEnterWidth[i].Value = _ItemWidth + _Scale * (Math.Sin(Math.PI * ((offset.X - rangeMin) / _Range)));
+                    lstSDKFEnterHeight[i].Value = _ItemHeight + _Scale * (Math.Sin(Math.PI * ((offset.X - rangeMin) / _Range)));
                     lstStoryEnter[i].Begin();
                 }
                 else
                 {
-                    lstSDKFWidth[i].Value = lstSDKFHeight[i].Value = _ItemWidth;
+                    lstSDKFEnterWidth[i].Value = _ItemWidth;
+                    lstSDKFEnterHeight[i].Value = _ItemHeight;
                     lstStoryEnter[i].Begin();
                 }
             }

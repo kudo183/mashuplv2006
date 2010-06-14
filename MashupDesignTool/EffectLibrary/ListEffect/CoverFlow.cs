@@ -233,7 +233,7 @@ namespace EffectLibrary
                 element.Projection = planeProjection;
 
                 scaleTransform = new ScaleTransform();
-                //element.RenderTransformOrigin = new Point(0.5, 0.5);
+                element.RenderTransformOrigin = new Point(0.5, 0.5);
                 element.RenderTransform = scaleTransform;
 
                 Animation.Children.Add(CreateDAKF(planeProjection, "RotationY", out rotationKeyFrame));
@@ -328,7 +328,7 @@ namespace EffectLibrary
         }
 
         private double _SpaceBetweenSelectedItemAndItems;
-
+        
         public double SpaceBetweenSelectedItemAndItems
         {
             get { return _SpaceBetweenSelectedItemAndItems; }
@@ -356,7 +356,7 @@ namespace EffectLibrary
                 LayoutChildren();
             }
         }
-
+        
         private double _ZDistance;
 
         public double ZDistance
@@ -388,7 +388,7 @@ namespace EffectLibrary
         }
 
         private double _SingleItemDuration;
-
+        
         public double SingleItemDuration
         {
             get { return _SingleItemDuration; }
@@ -418,7 +418,7 @@ namespace EffectLibrary
         }
 
         private IEasingFunction EasingFunction;
-
+        
         private double _ItemWidth;
 
         public double ItemWidth
@@ -460,6 +460,16 @@ namespace EffectLibrary
         public CoverFlow(BasicListControl control)
             : base(control)
         {
+            parameterNameList.Add("SpaceBetweenItems");
+            parameterNameList.Add("SpaceBetweenSelectedItemAndItems");
+            parameterNameList.Add("RotationAngle");
+            parameterNameList.Add("ZDistance");
+            parameterNameList.Add("Scale");
+            parameterNameList.Add("SingleItemDuration");
+            parameterNameList.Add("PageDuration");
+            parameterNameList.Add("ItemWidth");
+            parameterNameList.Add("ItemHeight");
+
             LayoutRoot = new Canvas();
             LayoutRoot.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             LayoutRoot.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
