@@ -437,7 +437,7 @@ namespace MashupDesignTool
                     break;
                 case "Liquid.RichTextBox":
                     uc = new Liquid.RichTextBox() { Width = 40, Height = 40, Text = "RichTextBox" };
-                    break;
+                    break;               
                 default:
                     break;
             }
@@ -545,6 +545,7 @@ namespace MashupDesignTool
                 effectPropertiesGrid.SelectedObject = null;
                 RemoveImageListEditorButtonFromHome();
                 RemoveRichTextEditorButtonFromHome();
+                RemoveDataListEditorButtonFromHome();
             }
 
             if (element.Equals(designCanvas1.ControlContainer))
@@ -572,6 +573,10 @@ namespace MashupDesignTool
                     {
                         AddRichTextEditorButtonToHome();
                     }
+                    else if (typeof(BasicDataListControl).IsAssignableFrom(designCanvas1.SelectedControls[0].Control.GetType()))
+                    {
+                        AddDataListEditorButtonToHome();
+                    }
                 }
                 previousElement = designCanvas1.SelectedControls[0].Control;
             }
@@ -582,6 +587,7 @@ namespace MashupDesignTool
             }
         }
 
+        #region imagelist editor button
         RibbonItem riImageList = new RibbonItem();
         private void AddImageListEditorButtonToHome()
         {
@@ -624,7 +630,9 @@ namespace MashupDesignTool
                 ((TabsItem)menu.Tabs.Items[0]).Content = ris;
             }
         }
+        #endregion
 
+        #region richtext editor button
         RibbonItem riRichText = new RibbonItem();
         private void AddRichTextEditorButtonToHome()
         {
@@ -667,6 +675,52 @@ namespace MashupDesignTool
                 ((TabsItem)menu.Tabs.Items[0]).Content = ris;
             }
         }
+        #endregion
+
+        #region datalist editor button
+        RibbonItem riDataList = new RibbonItem();
+        private void AddDataListEditorButtonToHome()
+        {
+            riDataList = new RibbonItem() { Title = "DataList" };
+            riDataList.Height = 84;
+            riDataList.Width = 75;
+
+            RibbonButtonsGroup rbg = new RibbonButtonsGroup();
+            RibbonButton rb = new RibbonButton()
+            {
+                Text = "Editor",
+                TooltipText = "Edit data list",
+                VerticalAlignment = System.Windows.VerticalAlignment.Stretch,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+            };
+            rb.ImageUrl = new BitmapImage(new Uri(@"/MashupDesignTool;component/Images/ImageListEditor.png", UriKind.Relative));
+            rb.OnClick += new RoutedEventHandler(rbDataListEditor_OnClick);
+            rbg.Children.Add(rb);
+            riDataList.Content = rbg;
+
+            RibbonItems ris = (RibbonItems)((TabsItem)menu.Tabs.Items[0]).Content;
+            ris.Children.Add(riDataList);
+
+            ((TabsItem)menu.Tabs.Items[0]).Content = ris;
+        }
+
+        void rbDataListEditor_OnClick(object sender, RoutedEventArgs e)
+        {
+            DataListEditor d = new DataListEditor(designCanvas1.ControlContainer, designCanvas1.SelectedControls[0].Control as BasicDataListControl);
+            d.ShowDialog();
+        }
+
+        private void RemoveDataListEditorButtonFromHome()
+        {
+            if (riDataList != null)
+            {
+                RibbonItems ris = (RibbonItems)((TabsItem)menu.Tabs.Items[0]).Content;
+                ris.Children.Remove(riDataList);
+
+                ((TabsItem)menu.Tabs.Items[0]).Content = ris;
+            }
+        }
+        #endregion
 
         bool bIsRemovingMenu = false;
 
