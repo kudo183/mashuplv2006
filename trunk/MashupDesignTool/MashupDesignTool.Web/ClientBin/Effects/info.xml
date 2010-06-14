@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Effects>
   <Effect>
     <Name>EffectLibrary.Checkerboard</Name>
@@ -132,7 +133,7 @@
     <Group>List</Group>
   </Effect>
   <Effect>
-    <Name>EffectLibrary.MenuMac</Name>
+    <Name>EffectLibrary.FishEye</Name>
     <DllFilename>EffectLibrary.dll</DllFilename>
     <DllReferences>
       <Dll>DockCanvas.dll</Dll>
