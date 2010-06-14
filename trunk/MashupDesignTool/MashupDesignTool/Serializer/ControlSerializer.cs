@@ -28,24 +28,7 @@ namespace MashupDesignTool
             if (!typeof(BasicControl).IsAssignableFrom(type))
                 return "";
 
-            BasicControl basicControl = (BasicControl)control;
-            StringBuilder sb = new StringBuilder();
-            XmlWriter xm = XmlWriter.Create(sb, new XmlWriterSettings() { OmitXmlDeclaration = true });
-
-            xm.WriteStartElement(type.Name);
-            xm.WriteAttributeString("Type", type.AssemblyQualifiedName);
-            List<string> propertyList = basicControl.GetParameterNameList();
-            foreach (string propertyName in propertyList)
-            {
-                object value = basicControl.GetParameterValue(propertyName);
-                if (value != null)
-                    xm.WriteRaw(MyXmlSerializer.Serialize(value, propertyName));
-            }
-
-            xm.WriteEndElement();
-            xm.Flush();
-            xm.Close();
-            return sb.ToString();
+            return BasicControlSerializer.Serialize(control as BasicControl);
         }
 
         public static FrameworkElement Load(string xml)
