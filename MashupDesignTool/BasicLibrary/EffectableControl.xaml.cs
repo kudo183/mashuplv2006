@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using BasicLibrary;
 using System.Reflection;
+using System.Windows.Threading;
 
 namespace BasicLibrary
 {
@@ -50,13 +51,14 @@ namespace BasicLibrary
 
         void control_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (LayoutRoot.Width != e.NewSize.Width || LayoutRoot.Height != e.NewSize.Height)
-            {
-                LayoutRoot.Width = e.NewSize.Width;
-                LayoutRoot.Height = e.NewSize.Height;
-                this.Width = LayoutRoot.Width;
-                this.Height = LayoutRoot.Height;
-            }
+            LayoutRoot.Clip = new RectangleGeometry() { Rect = new Rect(new Point(0, 0), e.NewSize) };
+            //if (LayoutRoot.Width != e.NewSize.Width || LayoutRoot.Height != e.NewSize.Height)
+            //{
+            //    LayoutRoot.Width = e.NewSize.Width;
+            //    LayoutRoot.Height = e.NewSize.Height;
+            //    this.Width = LayoutRoot.Width;
+            //    this.Height = LayoutRoot.Height;
+            //}
         }
 
         public FrameworkElement Control
