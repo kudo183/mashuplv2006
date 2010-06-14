@@ -26,6 +26,18 @@
     <Group>User defined control</Group>
   </Control>
   <Control>
+    <Name>ControlLibrary.DataListControl</Name>
+    <DllFilename>DataListControl.dll</DllFilename>
+    <DllReferences>
+      <Dll>BasicLibrary.dll</Dll>
+      <Dll>EffectLibrary.dll</Dll>
+    </DllReferences>
+    <DisplayName>Data List</DisplayName>
+    <Description>List control support binding data from Xml file and Database.</Description>
+    <IconName>control4.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
     <Name>RssSlideshowControl.RssSlideshow</Name>
     <DllFilename>RssSlideshowControl.dll</DllFilename>
     <DllReferences>
