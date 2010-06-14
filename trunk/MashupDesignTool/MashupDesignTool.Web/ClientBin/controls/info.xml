@@ -54,8 +54,8 @@
     <Group>User defined control</Group>
   </Control>
   <Control>
-    <Name>SilverlightHtmlHost.HtmlHost</Name>
-    <DllFilename>SilverlightHtmlHost.dll</DllFilename>
+    <Name>ControlLibrary.HtmlHost</Name>
+    <DllFilename>HtmlHostControl.dll</DllFilename>
     <DllReferences></DllReferences>
     <DisplayName>Html host</DisplayName>
     <Description>Html host</Description>
