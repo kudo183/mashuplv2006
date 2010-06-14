@@ -64,6 +64,7 @@ namespace ControlLibrary
             {
                 img = new ImageTools.Image();
                 img.SetSource(new MemoryStream(buffer));
+                img.AnimationSpeed = (_AnimationSpeed == 0) ? 0 : 1000 / _AnimationSpeed;                
                 img.LoadingCompleted += new EventHandler(img_LoadingCompleted);
             }
         }
@@ -88,11 +89,11 @@ namespace ControlLibrary
             }
             set
             {
+                _AnimationSpeed = value;
                 if (_IsAnimated == true)
-                {
-                    _AnimationSpeed = (value == 0) ? 1 : 1000 / value;
+                {                    
                     img = new ImageTools.Image();
-                    img.AnimationSpeed = _AnimationSpeed;
+                    img.AnimationSpeed = (_AnimationSpeed == 0) ? 0 : 1000 / _AnimationSpeed;
                     img.SetSource(new MemoryStream(buffer));
                     img.LoadingCompleted += new EventHandler(img_LoadingCompleted);
                 }
@@ -106,6 +107,9 @@ namespace ControlLibrary
         }
         private void SetImageSource()
         {
+            ai.AnimationMode = ImageTools.Controls.AnimationMode.Repeat;
+            if(img.AnimationSpeed == 0)
+                ai.AnimationMode = ImageTools.Controls.AnimationMode.None;
             ai.Source = img;
         }
 
@@ -117,11 +121,10 @@ namespace ControlLibrary
         {
             parameterNameList.Add("ImageURL");
             parameterNameList.Add("AnimationSpeed");
-            parameterNameList.Add("IsAnimated");
-
+            
             Content = ai;
             Width = Height = 200;
-            _AnimationSpeed = 300;
+            _AnimationSpeed = 10;
             
             _StretchMode = Stretch.Fill;
 
