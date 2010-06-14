@@ -4,8 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using MySql.Data.MySqlClient;
+using System.Xml;
 using System.Xml.Serialization;
-
+using System.Text;
 namespace MashupDesignTool.Web
 {
     /// <summary>
@@ -33,15 +34,26 @@ namespace MashupDesignTool.Web
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.TableDirect;
                 MySqlDataReader reader = cmd.ExecuteReader();
-                List<string> result = new List<string>();
+
+                StringBuilder sb = new StringBuilder();
+                XmlWriter xResult = XmlWriter.Create(sb, new XmlWriterSettings() { OmitXmlDeclaration = true });
+
                 if (reader.Read())
                 {
+                    xResult.WriteStartElement("Root");
                     for (int i = 0; i < reader.FieldCount; i++)
-                        result.Add(reader.GetName(i));
+                    {
+                        xResult.WriteStartElement(reader.GetName(i));
+                        xResult.WriteRaw(reader[i].ToString());
+                        xResult.WriteEndElement();
+                    }
+                    xResult.WriteEndElement();
                 }
                 conn.Close();
-                XmlSerializer xm = new XmlSerializer(typeof(List<string>));
-                xm.Serialize(context.Response.OutputStream, result);
+
+                xResult.Flush();
+                xResult.Close();
+                context.Response.Write(sb.ToString());
             }
             catch (Exception ex)
             {
