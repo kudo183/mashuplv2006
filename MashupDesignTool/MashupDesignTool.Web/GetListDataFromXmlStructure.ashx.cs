@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Net;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using System.Text;
 
 namespace ItemCollectionEditor.Web
 {
@@ -25,17 +27,24 @@ namespace ItemCollectionEditor.Web
                 string xmlString = webClient.DownloadString(uri);
 
                 XDocument xDoc = XDocument.Parse(xmlString);
-                List<string> result = new List<string>();
 
+                StringBuilder sb = new StringBuilder();
+                XmlWriter xResult = XmlWriter.Create(sb, new XmlWriterSettings() { OmitXmlDeclaration = true });
                 foreach (XElement element in xDoc.Descendants(elementName))
                 {
+                    xResult.WriteStartElement("Root");
                     foreach (XElement e in element.Elements())
-                        result.Add(e.Name.ToString());
+                    {
+                        xResult.WriteStartElement(e.Name.ToString());
+                        xResult.WriteRaw(e.Value);
+                        xResult.WriteEndElement();
+                    }
+                    xResult.WriteEndElement();
                     break;
                 }
-
-                XmlSerializer xm = new XmlSerializer(typeof(List<string>));
-                xm.Serialize(context.Response.OutputStream, result);
+                xResult.Flush();
+                xResult.Close();
+                context.Response.Write(sb.ToString());
             }
             catch (Exception ex)
             {
