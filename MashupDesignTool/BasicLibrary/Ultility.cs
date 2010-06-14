@@ -26,7 +26,6 @@ namespace BasicLibrary
             set { _ServerURL = value; }
         }
 
-
         public Ultility()
         {
             _ServerURL = HtmlPage.Document.DocumentUri;
@@ -85,12 +84,12 @@ namespace BasicLibrary
         #endregion
 
         #region GetListDataFromDatabaseStructure
-        public delegate void GetListDataFromDatabaseStructureAsyncCompletedHandler(List<string> result);
+        public delegate void GetListDataFromDatabaseStructureAsyncCompletedHandler(string result);
         public event GetListDataFromDatabaseStructureAsyncCompletedHandler OnGetListDataFromDatabaseStructureAsyncCompleted;
         public void GetListDataFromDatabaseStructureAsync(string server, string username, string pass, string db, string table)
         {
             WebClient webClient = new WebClient();
-            webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_GetListDataFromDatabaseStructureOpenReadCompleted);
+            webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClient_GetListDataFromDatabaseStructureDownloadStringCompleted);
 
             string url = "GetListDataFromDatabaseStructure.ashx?";
             url += "SERVER=" + server;
@@ -100,16 +99,14 @@ namespace BasicLibrary
             url += "&TABLE=" + table;
 
             Uri xmlUri = new Uri(_ServerURL, url);
-            webClient.OpenReadAsync(xmlUri);
+            webClient.DownloadStringAsync(xmlUri);
         }
 
-        void webClient_GetListDataFromDatabaseStructureOpenReadCompleted(object sender, OpenReadCompletedEventArgs e)
+        void webClient_GetListDataFromDatabaseStructureDownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             if (OnGetListDataFromDatabaseStructureAsyncCompleted != null)
             {
-                XmlSerializer xm = new XmlSerializer(typeof(List<string>));
-                List<string> result = xm.Deserialize(e.Result) as List<string>;
-                OnGetListDataFromDatabaseStructureAsyncCompleted(result);
+                OnGetListDataFromDatabaseStructureAsyncCompleted(e.Result);
             }
         }
         #endregion
@@ -144,30 +141,29 @@ namespace BasicLibrary
         #endregion
 
         #region GetListDataFromXmlStructure
-        public delegate void GetListDataFromXmlStructureAsyncCompletedHandler(List<string> result);
+        public delegate void GetListDataFromXmlStructureAsyncCompletedHandler(string result);
         public event GetListDataFromXmlStructureAsyncCompletedHandler OnGetListDataFromXmlStructureAsyncCompleted;
         public void GetListDataFromXmlStructureAsync(string xmlUrl, string elementName)
         {
             WebClient webClient = new WebClient();
-            webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_GetListDataFromXmlStructureOpenReadCompleted);
+            webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClient_DownloadXmlStructureStringCompleted);
 
             string url = "GetListDataFromXmlStructure.ashx?";
             url += "URL=" + xmlUrl;
             url += "&ELEMENT=" + elementName;
 
             Uri xmlUri = new Uri(_ServerURL, url);
-            webClient.OpenReadAsync(xmlUri);
+            webClient.DownloadStringAsync(xmlUri);
         }
 
-        void webClient_GetListDataFromXmlStructureOpenReadCompleted(object sender, OpenReadCompletedEventArgs e)
+        void webClient_DownloadXmlStructureStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             if (OnGetListDataFromXmlStructureAsyncCompleted != null)
             {
-                XmlSerializer xm = new XmlSerializer(typeof(List<string>));
-                List<string> result = xm.Deserialize(e.Result) as List<string>;
-                OnGetListDataFromXmlStructureAsyncCompleted(result);
+                OnGetListDataFromXmlStructureAsyncCompleted(e.Result);
             }
         }
+        
         #endregion
         
         #region GetString
