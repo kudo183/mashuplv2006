@@ -111,7 +111,6 @@
     <Compile Include="Event\MDTEventInfo.cs" />
     <Compile Include="Event\MDTEventManager.cs" />
     <Compile Include="Serializer\ControlSerializer.cs" />
-    <Compile Include="Serializer\MyXmlSerializer.cs" />
     <Compile Include="ObjectConverter.cs" />
     <Compile Include="Serializer\DockCanvasSerializer.cs" />
     <Compile Include="PreviewPage.xaml.cs">
@@ -234,6 +233,10 @@
     <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
       <Project>{CAC33183-F531-43AD-A288-6575775B4BE1}</Project>
       <Name>BasicLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataListEditor\DataListEditor.csproj">
+      <Project>{5DB1337E-B92C-4F91-B3AA-81F6446C6A43}</Project>
+      <Name>DataListEditor</Name>
     </ProjectReference>
     <ProjectReference Include="..\DockCanvas\DockCanvas.csproj">
       <Project>{C38EEC60-122E-4002-A7B1-E6465DC41201}</Project>
