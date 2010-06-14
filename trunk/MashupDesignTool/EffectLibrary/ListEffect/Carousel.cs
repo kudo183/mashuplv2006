@@ -136,7 +136,7 @@ namespace EffectLibrary
                 }
                 st.ScaleX = Math.Pow(sc, ScaleX);
                 st.ScaleY = Math.Pow(sc, ScaleY);
-                
+
                 // Set the ZIndex based the distance from us, the far item 
                 // is under the near item 
                 Canvas.SetZIndex(_Element, (int)dy);
@@ -165,7 +165,7 @@ namespace EffectLibrary
                 if (sb != null)
                 {
                     double count = Math.PI * 2 / PerAngle;
-                    ((DoubleAnimation)sb.Children[0]).Duration = TimeSpan.FromMilliseconds(newValue / count);                    
+                    ((DoubleAnimation)sb.Children[0]).Duration = TimeSpan.FromMilliseconds(newValue / count);
                 }
             }
             public double Duration
@@ -193,7 +193,7 @@ namespace EffectLibrary
                 {
                     ((DoubleAnimation)sb.Children[0]).By = newValue;
                     double count = Math.PI * 2 / newValue;
-                    ((DoubleAnimation)sb.Children[0]).Duration = TimeSpan.FromMilliseconds( Duration / count);
+                    ((DoubleAnimation)sb.Children[0]).Duration = TimeSpan.FromMilliseconds(Duration / count);
                 }
             }
             public double PerAngle
@@ -554,6 +554,16 @@ namespace EffectLibrary
         public Carousel(BasicListControl control)
             : base(control)
         {
+            parameterNameList.Add("Duration");
+            parameterNameList.Add("PaddingLeft");
+            parameterNameList.Add("PaddingRight");
+            parameterNameList.Add("PaddingTop");
+            parameterNameList.Add("PaddingBottom");
+            parameterNameList.Add("ItemWidth");
+            parameterNameList.Add("ItemHeight");
+            parameterNameList.Add("ScaleX");
+            parameterNameList.Add("ScaleY");
+
             LayoutRoot = new Canvas();
             LayoutRoot.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             LayoutRoot.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
@@ -589,7 +599,7 @@ namespace EffectLibrary
                 item.Center = _Center;
             }
             Start();
-            
+
         }
 
         private void CalculateEllipse()
