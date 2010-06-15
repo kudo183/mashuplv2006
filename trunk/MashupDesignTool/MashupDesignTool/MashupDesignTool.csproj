@@ -177,6 +177,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\EventIcon.png" />
     <Resource Include="Images\preview.png" />
     <Resource Include="Images\Back.png" />
     <Resource Include="Images\DefaultImage.png" />

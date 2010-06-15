@@ -66,7 +66,7 @@ namespace MashupDesignTool
         Menu menu = new Menu();
         Liquid.MenuItem lmiBringToFront, lmiBringForward, lmiSendToBack, lmiSendBackward, lmiProperties, lmiDelete;
         int iCount = 0;
-        DispatcherTimer dispatcherTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(200) };
+        DispatcherTimer dispatcherTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(40) };
 
 
         public List<EffectableControl> Controls
@@ -334,6 +334,17 @@ namespace MashupDesignTool
 
             this.Focus();
             HideContextMenu();
+
+            uc.Tag = ec;
+            uc.SizeChanged += new SizeChangedEventHandler(uc_SizeChanged);
+        }
+
+        void uc_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            FrameworkElement uc = (FrameworkElement)sender;
+            uc.SizeChanged -= new SizeChangedEventHandler(uc_SizeChanged);
+            ((EffectableControl)uc.Tag).Width = e.NewSize.Width;
+            ((EffectableControl)uc.Tag).Height = e.NewSize.Height;
         }
 
         public void AddControl(EffectableControl ec)
