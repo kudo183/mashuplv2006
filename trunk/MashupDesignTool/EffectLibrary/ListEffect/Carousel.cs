@@ -441,6 +441,18 @@ namespace EffectLibrary
             }
         }
 
+        private SolidColorBrush _BackgroundColor;
+
+        public SolidColorBrush BackgroundColor
+        {
+            get { return LayoutRoot.Background as SolidColorBrush; }
+            set
+            {
+                _BackgroundColor = value;
+                LayoutRoot.Background = _BackgroundColor;
+            }
+        }
+
         private Canvas LayoutRoot;
         private Point _Center;
         private double _PerAngel = Math.PI;
@@ -563,8 +575,10 @@ namespace EffectLibrary
             parameterNameList.Add("ItemHeight");
             parameterNameList.Add("ScaleX");
             parameterNameList.Add("ScaleY");
+            parameterNameList.Add("BackgroundColor");
 
             LayoutRoot = new Canvas();
+            LayoutRoot.Background = new SolidColorBrush(Colors.Transparent);
             LayoutRoot.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             LayoutRoot.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
             control.Content = LayoutRoot;
@@ -572,8 +586,6 @@ namespace EffectLibrary
             Duration = 5000;
             _ScaleX = 1;
             _ScaleY = 1;
-
-            LayoutRoot.Background = new SolidColorBrush(Colors.Red);
 
             ItemWidth = ItemHeight = 20;
 
