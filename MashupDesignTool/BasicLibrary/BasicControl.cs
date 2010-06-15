@@ -21,10 +21,10 @@ namespace BasicLibrary
         protected List<string> parameterNameList = new List<string>();
         public string GetParameterNames()
         {
-            if (!parameterNameList.Contains("Width"))
-                parameterNameList.Add("Width");
-            if (!parameterNameList.Contains("Height"))
-                parameterNameList.Add("Height"); 
+            //if (!parameterNameList.Contains("Width"))
+            //    parameterNameList.Add("Width");
+            //if (!parameterNameList.Contains("Height"))
+            //    parameterNameList.Add("Height"); 
             
             StringBuilder sb = new StringBuilder();
             XmlWriter xw = XmlWriter.Create(sb);
@@ -47,24 +47,34 @@ namespace BasicLibrary
 
         public List<string> GetParameterNameList()
         {
-            if (!parameterNameList.Contains("Width"))
-                parameterNameList.Add("Width");
-            if (!parameterNameList.Contains("Height"))
-                parameterNameList.Add("Height");
+            //if (!parameterNameList.Contains("Width"))
+            //    parameterNameList.Add("Width");
+            //if (!parameterNameList.Contains("Height"))
+            //    parameterNameList.Add("Height");
             return parameterNameList;
         }
 
         public Type GetParameterType(string parameterName)
         {
             if (parameterNameList.Contains(parameterName))
-                return this.GetType().GetProperty(parameterName).PropertyType;
+            {
+                PropertyInfo pi = this.GetType().GetProperty(parameterName);
+                if (pi == null)
+                    return null;
+                return pi.PropertyType;
+            }
             return null;
         }
 
         public object GetParameterValue(string parameterName)
         {
             if (parameterNameList.Contains(parameterName))
-                return this.GetType().GetProperty(parameterName).GetValue(this, null);
+            {
+                PropertyInfo pi = this.GetType().GetProperty(parameterName);
+                if (pi == null)
+                    return null;
+                return pi.GetValue(this, null);
+            }
             return null;
         }
 
@@ -72,7 +82,13 @@ namespace BasicLibrary
         {
             if (parameterNameList.Contains(parameterName))
             {
-                this.GetType().GetProperty(parameterName).SetValue(this, Convert.ChangeType(value, GetParameterType(parameterName), null), null);
+                PropertyInfo pi = this.GetType().GetProperty(parameterName);
+                if (pi == null)
+                    return false;
+                Type t = GetParameterType(parameterName);
+                if (t == null)
+                    return false;
+                pi.SetValue(this, Convert.ChangeType(value, t, null), null);
                 return true;
             }
             return false;
@@ -163,6 +179,12 @@ namespace BasicLibrary
         public BasicControl()
             : base()
         {
+            parameterNameList.Add("Left");
+            parameterNameList.Add("Top");
+            parameterNameList.Add("Width");
+            parameterNameList.Add("Height");
+            parameterNameList.Add("DockType");
+            parameterNameList.Add("ZIndex");
         }
 
         public virtual void ChangeEffect(string propertyName, Type effectType, EffectableControl owner)
