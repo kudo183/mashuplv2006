@@ -25,6 +25,7 @@ namespace EffectLibrary
         }
         public override void DetachEffect()
         {
+            ReflectionShader = false;
             foreach (CoverFlowItem item in coverFlowItems)
             {
                 item.Element.RenderTransform = null;
@@ -451,6 +452,42 @@ namespace EffectLibrary
             }
         }
 
+        private SolidColorBrush _BackgroundColor;
+
+        public SolidColorBrush BackgroundColor
+        {
+            get { return LayoutRoot.Background as SolidColorBrush; }
+            set
+            {
+                _BackgroundColor = value;
+                LayoutRoot.Background = _BackgroundColor;
+            }
+        }
+
+        private bool _ReflectionShader;
+
+        public bool ReflectionShader
+        {
+            get { return _ReflectionShader; }
+            set
+            {
+                _ReflectionShader = value;
+                if (_ReflectionShader == true)
+                {
+                    foreach (UIElement ui in LayoutRoot.Children)
+                    {
+                        ui.Effect = new EffectLibrary.CustomPixelShader.ReflectionShader(_ItemHeight);
+                    }
+                }
+                else
+                {
+                    foreach (UIElement ui in LayoutRoot.Children)
+                    {
+                        ui.Effect = null;
+                    }
+                }
+            }
+        }
         #endregion
 
         private Canvas LayoutRoot;
@@ -469,12 +506,14 @@ namespace EffectLibrary
             parameterNameList.Add("PageDuration");
             parameterNameList.Add("ItemWidth");
             parameterNameList.Add("ItemHeight");
+            parameterNameList.Add("BackgroundColor");
+            parameterNameList.Add("ReflectionShader");
 
             LayoutRoot = new Canvas();
             LayoutRoot.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             LayoutRoot.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
             control.Content = LayoutRoot;
-            LayoutRoot.Background = new SolidColorBrush(Colors.Red);
+            LayoutRoot.Background = new SolidColorBrush(Colors.Transparent);
 
             _ItemWidth = _ItemHeight = 100;
 
