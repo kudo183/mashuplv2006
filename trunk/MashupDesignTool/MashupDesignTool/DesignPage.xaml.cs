@@ -437,7 +437,7 @@ namespace MashupDesignTool
                     break;
                 case "Liquid.RichTextBox":
                     uc = new Liquid.RichTextBox() { Width = 40, Height = 40, Text = "RichTextBox" };
-                    break;               
+                    break;
                 default:
                     break;
             }
@@ -527,7 +527,12 @@ namespace MashupDesignTool
         #region select in design canvas
         private void designCanvas1_SelectPropertiesMenu(object sender, UIElement element)
         {
-            propertiesGrid.SelectedObject = element;
+            //propertiesGrid.SelectedObject = element;
+            BasicControl bc = element as BasicControl;
+            if (bc != null)
+                propertiesGrid.SetSelectedObject(bc, bc.GetParameterNameList());
+            else
+                propertiesGrid.SetSelectedObject(null, null);
             propertiesTabs.SelectedIndex = 0;
             if (propertiesTabs.Visibility == System.Windows.Visibility.Collapsed)
             {
@@ -542,7 +547,8 @@ namespace MashupDesignTool
             if (!element.Equals(previousElement))
             {
                 CleanEffectMenuItemsFromMenu();
-                effectPropertiesGrid.SelectedObject = null;
+                //effectPropertiesGrid.SelectedObject = null;
+                effectPropertiesGrid.SetSelectedObject(null, null);
                 RemoveImageListEditorButtonFromHome();
                 RemoveRichTextEditorButtonFromHome();
                 RemoveDataListEditorButtonFromHome();
@@ -550,7 +556,12 @@ namespace MashupDesignTool
 
             if (element.Equals(designCanvas1.ControlContainer))
             {
-                propertiesGrid.SelectedObject = element;
+                //propertiesGrid.SelectedObject = element;
+                BasicControl bc = element as BasicControl;
+                if (bc != null)
+                    propertiesGrid.SetSelectedObject(bc, bc.GetParameterNameList());
+                else
+                    propertiesGrid.SetSelectedObject(null, null);
                 eventBindingGrid.ChangeSelectedObject(null, designCanvas1.Controls);
                 previousElement = null;
             }
@@ -558,12 +569,17 @@ namespace MashupDesignTool
             {
                 if (!element.Equals(previousElement))
                 {
-                    propertiesGrid.SelectedObject = element;
+                    //propertiesGrid.SelectedObject = element;
+                    BasicControl bc = element as BasicControl;
+                    if (bc != null)
+                        propertiesGrid.SetSelectedObject(bc, bc.GetParameterNameList());
+                    else
+                        propertiesGrid.SetSelectedObject(null, null);
                     if (typeof(BasicControl).IsAssignableFrom(designCanvas1.SelectedControls[0].Control.GetType()))
                         eventBindingGrid.ChangeSelectedObject((BasicControl)designCanvas1.SelectedControls[0].Control, designCanvas1.Controls);
                     else
                         eventBindingGrid.ChangeSelectedObject(null, designCanvas1.Controls);
-                    
+
                     AddEffectMenuItemsToMenu((EffectableControl)designCanvas1.SelectedControls[0]);
                     if (typeof(BasicImageListControl).IsAssignableFrom(designCanvas1.SelectedControls[0].Control.GetType()))
                     {
@@ -582,7 +598,7 @@ namespace MashupDesignTool
             }
             else
             {
-                propertiesGrid.SelectedObject = null;
+                propertiesGrid.SetSelectedObject(null, null);
                 previousElement = null;
             }
         }
@@ -596,8 +612,8 @@ namespace MashupDesignTool
             riImageList.Width = 75;
 
             RibbonButtonsGroup rbg = new RibbonButtonsGroup();
-            RibbonButton rb = new RibbonButton() 
-            { 
+            RibbonButton rb = new RibbonButton()
+            {
                 Text = "Editor",
                 TooltipText = "Edit image list",
                 VerticalAlignment = System.Windows.VerticalAlignment.Stretch,
@@ -768,7 +784,7 @@ namespace MashupDesignTool
             int selectedIndex = -1;
             if (single)
             {
-                BasicEffect be = (BasicEffect)element.GetType().GetProperty(pi.Name).GetValue(element, null); 
+                BasicEffect be = (BasicEffect)element.GetType().GetProperty(pi.Name).GetValue(element, null);
                 if (be != null)
                     str = be.GetType().FullName;
                 for (int i = 0; i < listSingleEffects.Count; i++)
@@ -816,7 +832,7 @@ namespace MashupDesignTool
             else
                 ri.Title = "Effects for " + pi.Name;
             ri.Content = rbg;
-            
+
             RibbonItems ris = new RibbonItems();
             ris.Children.Add(ri);
             ris.Margin = new Thickness(0, -2, 0, 0);
@@ -859,7 +875,12 @@ namespace MashupDesignTool
             }
             else
                 ec = (FrameworkElement)designCanvas1.SelectedControls[0].Control;
-            effectPropertiesGrid.SelectedObject = piEffect.GetValue(ec, null);
+            //effectPropertiesGrid.SelectedObject = piEffect.GetValue(ec, null);
+            IBasic be = piEffect.GetValue(ec, null) as IBasic;
+            if (be != null)
+                effectPropertiesGrid.SetSelectedObject(be, be.GetParameterNameList());
+            else
+                effectPropertiesGrid.SetSelectedObject(null,null);
             if (effectPropertiesGrid.SelectedObject != null && b == true)
                 ((BasicEffect)effectPropertiesGrid.SelectedObject).Start();
         }
@@ -1020,10 +1041,11 @@ namespace MashupDesignTool
                 return;
             if (((TabsItem)menu.Tabs.Items[0]).IsSelected)
             {
-                effectPropertiesGrid.SelectedObject = null;
+                //effectPropertiesGrid.SelectedObject = null;
+                effectPropertiesGrid.SetSelectedObject(null, null);
                 return;
             }
-         
+
             TabsItem ti = (TabsItem)e.AddedItems[0];
             FrameworkElement ec;
             if (((TabsItem)menu.Tabs.Items[1]).IsSelected)
@@ -1031,7 +1053,13 @@ namespace MashupDesignTool
             else
                 ec = (FrameworkElement)designCanvas1.SelectedControls[0].Control;
             PropertyInfo pi = (PropertyInfo)ti.Tag;
-            effectPropertiesGrid.SelectedObject = pi.GetValue(ec, null);
+            //effectPropertiesGrid.SelectedObject = pi.GetValue(ec, null);
+
+            IBasic be = pi.GetValue(ec, null) as IBasic;
+            if (be != null)
+                effectPropertiesGrid.SetSelectedObject(be, be.GetParameterNameList());
+            else
+                effectPropertiesGrid.SetSelectedObject(null, null);
         }
         #endregion select in design canvas
 
