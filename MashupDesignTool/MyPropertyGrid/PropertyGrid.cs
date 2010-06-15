@@ -56,6 +56,8 @@ namespace SL30PropertyGrid
         Grid MainGrid;
         bool loaded = false;
         bool resetLoadedObject;
+        ValueEditorBase _editorLeft;
+        ValueEditorBase _editorTop;
 
         #endregion
 
@@ -82,29 +84,49 @@ namespace SL30PropertyGrid
         }
 
         #region SelectedObject
-
-        public static readonly DependencyProperty SelectedObjectProperty =
-          DependencyProperty.Register("SelectedObject", typeof(object), thisType, new PropertyMetadata(null, OnSelectedObjectChanged));
+        private object _SelectedObject;
 
         public object SelectedObject
         {
-            get { return base.GetValue(SelectedObjectProperty); }
-            set { base.SetValue(SelectedObjectProperty, value); }
-        }
+            get { return _SelectedObject; }
+            set 
+            { 
+                _SelectedObject = value;
+                _propertyNames = null;
+                if (loaded == false)
+                {
+                    resetLoadedObject = true;
+                    return;
+                }
 
-        private static void OnSelectedObjectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            PropertyGrid propertyGrid = d as PropertyGrid;
-            if (propertyGrid != null)
-            {
-                if (!propertyGrid.loaded)
-                    propertyGrid.resetLoadedObject = true;
-                else if (null != e.NewValue)
-                    propertyGrid.ResetObject(e.NewValue);
+                if (_SelectedObject != null)
+                    this.ResetObject(_SelectedObject);
                 else
-                    propertyGrid.ResetMainGrid();
+                    this.ResetMainGrid();
             }
         }
+        //public static readonly DependencyProperty SelectedObjectProperty =
+        //  DependencyProperty.Register("SelectedObject", typeof(object), thisType, new PropertyMetadata(null, OnSelectedObjectChanged));
+
+        //public object SelectedObject
+        //{
+        //    get { return base.GetValue(SelectedObjectProperty); }
+        //    set { base.SetValue(SelectedObjectProperty, value); }
+        //}
+
+        //private static void OnSelectedObjectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    PropertyGrid propertyGrid = d as PropertyGrid;
+        //    if (propertyGrid != null)
+        //    {
+        //        if (!propertyGrid.loaded)
+        //            propertyGrid.resetLoadedObject = true;
+        //        else if (null != e.NewValue)
+        //            propertyGrid.ResetObject(e.NewValue);
+        //        else
+        //            propertyGrid.ResetMainGrid();
+        //    }
+        //}
         #endregion
 
         #region Default LabelWidth
@@ -189,7 +211,7 @@ namespace SL30PropertyGrid
         }
 
         #endregion
-        
+        private List<string> _propertyNames = new List<string>();
         #endregion
 
         #region Overrides
@@ -205,12 +227,68 @@ namespace SL30PropertyGrid
             if (resetLoadedObject)
             {
                 resetLoadedObject = false;
-                this.ResetObject(this.SelectedObject);
+                if (_propertyNames == null)
+                    this.ResetObject(_SelectedObject);
+                else
+                    this.SetSelectedObject(_SelectedObject, _propertyNames);
             }
         }
         #endregion
 
         #region Methods
+        public void SetSelectedObject(object obj, List<string> propertyNames)
+        {
+            _SelectedObject = obj;
+            _propertyNames = propertyNames;
+            if (loaded == false)
+            {               
+                resetLoadedObject = true;
+                return;
+            }
+            this.ResetMainGrid();
+            if (obj == null)
+                return;            
+
+            int rowCount = this.SetObject(obj, propertyNames);
+
+            if (rowCount > 0)
+                AddGridSplitter(rowCount);
+        }
+        int SetObject(object obj, List<string> propertyNames)
+        {
+            props = new List<PropertyItem>();
+            editors = new List<ValueEditorBase>();
+
+            int rowCount = -1;
+
+            // Parse the objects properties
+            props = ParseObject(obj, propertyNames);
+
+            #region Render the Grid
+
+            var categories = (from p in props
+                              orderby p.Category
+                              select p.Category).Distinct();
+
+            foreach (string category in categories)
+            {
+
+                this.AddHeaderRow(category, ref rowCount);
+
+                var items = from p in props
+                            where p.Category == category
+                            orderby p.Name
+                            select p;
+
+                foreach (var item in items)
+                    this.AddPropertyRow(item, ref rowCount);
+
+            }
+            #endregion
+
+            return rowCount++;
+
+        }
 
         int SetObject(object obj)
         {
@@ -347,6 +425,15 @@ namespace SL30PropertyGrid
             Grid.SetRow(brd, rowIndex);
             Grid.SetColumn(brd, 2);
             #endregion
+
+            if (item.DisplayName == "Left")
+            {
+                _editorLeft = editor;
+            }
+            else if (item.DisplayName == "Top")
+            {
+                _editorTop = editor;
+            }
         }
 
         void label_MouseLeave(object sender, MouseEventArgs e)
@@ -380,11 +467,11 @@ namespace SL30PropertyGrid
                 PropertyItem pi = sender as PropertyItem;
                 UIElement ui = pi.Instant as UIElement;
                 PropertyValueChange(ui, pi.Name, pi.Value);
-                
+
                 if (pi.Name == "DockType")
                 {
                     string dock = pi.Value.ToString();
-                                        
+
                     if (dock == "Left" || dock == "Right")
                     {
                         SetPropertyReadonly("Height", true);
@@ -395,7 +482,7 @@ namespace SL30PropertyGrid
                         SetPropertyReadonly("Width", true);
                         SetPropertyReadonly("Height", false);
                     }
-                    else if(dock == "Fill")
+                    else if (dock == "Fill")
                     {
                         SetPropertyReadonly("Height", true);
                         SetPropertyReadonly("Width", true);
@@ -406,7 +493,7 @@ namespace SL30PropertyGrid
                         SetPropertyReadonly("Width", false);
                     }
                 }
-                
+
             }
 
         }
@@ -578,7 +665,7 @@ namespace SL30PropertyGrid
                                 {
                                     //get the default value
                                     DependencyProperty dp = (DependencyProperty)field.GetValue(_SelectedObjectParent);
-                                    
+
                                     object currentValue = fe.GetValue(dp);
                                     //now have both the value and the default, we're away!
 
@@ -600,6 +687,128 @@ namespace SL30PropertyGrid
 
             return pc;
         }
+
+        private List<PropertyItem> ParseObject(object objItem, List<string> propertyNames)
+        {
+            if (null == objItem)
+                return new List<PropertyItem>();
+
+            List<PropertyItem> pc = new List<PropertyItem>();
+            Type t = objItem.GetType();
+
+            foreach (string name in propertyNames)
+            {
+                PropertyInfo pinfo = t.GetProperty(name);
+                if (pinfo == null)
+                    continue;
+                bool isBrowsable = true;
+                BrowsableAttribute b = PropertyItem.GetAttribute<BrowsableAttribute>(pinfo);
+                if (null != b)
+                    isBrowsable = b.Browsable;
+                if (isBrowsable)
+                {
+                    EditorBrowsableAttribute eb = PropertyItem.GetAttribute<EditorBrowsableAttribute>(pinfo);
+                    if (null != eb && eb.State == EditorBrowsableState.Never)
+                        isBrowsable = false;
+                }
+                if (isBrowsable)
+                {
+                    bool readOnly = (pinfo.CanWrite == false) | (pinfo.GetSetMethod() == null);
+                    ReadOnlyAttribute attr = PropertyItem.GetAttribute<ReadOnlyAttribute>(pinfo);
+                    if (attr != null)
+                        readOnly = attr.IsReadOnly;
+
+                    try
+                    {
+                        object value = pinfo.GetValue(objItem, null);
+                        PropertyItem prop = new PropertyItem(objItem, null, value, pinfo, readOnly, false, null, null, null);
+                        pc.Add(prop);
+                    }
+                    catch (Exception ex) { }
+                }
+            }
+
+            #region attached property
+            FrameworkElement fe = objItem as FrameworkElement;
+            while (fe != null && fe.Parent != _SelectedObjectParent)
+            {
+                fe = fe.Parent as FrameworkElement;
+            }
+
+            int beginIndex = pc.Count;
+            if (fe != null)
+            {
+                _SelectedObjectParent = fe.Parent as FrameworkElement;
+                if (_SelectedObjectParent != null)
+                {
+                    Type parentType = _SelectedObjectParent.GetType();
+
+
+                    foreach (string name in propertyNames)
+                    {
+                        FieldInfo field = parentType.GetField(name + "Property", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                        if (field == null)
+                            continue;
+                        if (field.FieldType == typeof(DependencyProperty))
+                        {                            
+                            MethodInfo get = null;
+                            get = parentType.GetMethod("Get" + name, BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                            MethodInfo set = null;
+                            set = parentType.GetMethod("Set" + name, BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+
+
+                            if (get == null && set == null)
+                                continue;
+
+                            ParameterInfo[] getMethodParams = get.GetParameters();
+                            if (getMethodParams.Length != 1)
+                            {
+                                continue;
+                            }
+
+                            ParameterInfo[] setMethodParams = set.GetParameters();
+                            bool readOnly = true;
+                            if (setMethodParams.Length == 2)
+                            {
+                                readOnly = false;
+                            }
+
+                            //loại bỏ property trùng
+                            int matchCount = 0;
+                            for (int i = beginIndex - 1; i < pc.Count; i++)
+                            {
+                                if (pc[i].Name == name)
+                                {
+                                    matchCount = 1;
+                                    break;
+                                }
+                            }
+                            if (matchCount == 1)
+                                continue;
+
+                            try
+                            {
+                                //get the default value
+                                DependencyProperty dp = (DependencyProperty)field.GetValue(_SelectedObjectParent);
+
+                                object currentValue = fe.GetValue(dp);
+                                //now have both the value and the default, we're away!
+
+                                PropertyItem propAttached = new PropertyItem(objItem, _SelectedObjectParent, currentValue, null, readOnly, true, name, get, set);
+                                pc.Add(propAttached);
+                            }
+                            catch (Exception ex)
+                            {
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            return pc;
+        }
+
         static PropertyGridLabel CreateLabel(string name, string displayName)
         {
             TextBlock txt = new TextBlock()
@@ -801,6 +1010,16 @@ namespace SL30PropertyGrid
 
         public void UpdatePropertyValue(string propertyName)
         {
+            if (propertyName == "Left")
+            {
+                _editorLeft.UpdatePropertyValue();
+                return;
+            }
+            if (propertyName == "Top")
+            {
+                _editorTop.UpdatePropertyValue();
+                return;
+            }
             for (int i = 0; i < editors.Count; i++)
             {
                 if (editors[i].Property.Name == propertyName)
