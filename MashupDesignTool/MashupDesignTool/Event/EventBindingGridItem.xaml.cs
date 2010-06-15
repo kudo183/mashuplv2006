@@ -89,12 +89,12 @@ namespace MashupDesignTool
 
         private void UserControl_GotFocus(object sender, RoutedEventArgs e)
         {
-            lblEventName.Background = new SolidColorBrush(Color.FromArgb(255, 254, 201, 0));
+            lblEventNameRegion.Background = new SolidColorBrush(Color.FromArgb(255, 254, 201, 0));
         }
 
         private void UserControl_LostFocus(object sender, RoutedEventArgs e)
         {
-            lblEventName.Background = new SolidColorBrush(Color.FromArgb(255, 233, 236, 255));
+            lblEventNameRegion.Background = new SolidColorBrush(Color.FromArgb(255, 233, 236, 255));
         }
 
         private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

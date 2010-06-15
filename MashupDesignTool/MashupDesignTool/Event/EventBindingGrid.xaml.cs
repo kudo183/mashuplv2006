@@ -37,15 +37,23 @@ namespace MashupDesignTool
         private void UpdateGrid(List<EffectableControl> controls)
         {
             stackPanel.Children.Clear();
+            List<string> listEvent;
             if (selectedObject == null)
+                listEvent = new List<string>();
+            else
+                listEvent = selectedObject.GetListEventName();
+            if (listEvent.Count == 0)
+            {
+                stackPanel.Children.Add(new Label() { Content = "No event availabel", Margin = new Thickness(0, 20, 0, 0), VerticalAlignment = System.Windows.VerticalAlignment.Center, HorizontalAlignment = System.Windows.HorizontalAlignment.Center });
                 return;
+            }
+            
             List<ControlComboBoxItemData> listControls = new List<ControlComboBoxItemData>();
             listControls.Add(ControlComboBoxItemData.None);
             foreach (EffectableControl fe in controls)
                 if (typeof(BasicControl).IsAssignableFrom(fe.Control.GetType()) && fe.Control.Name != selectedObject.Name)
                     listControls.Add(new ControlComboBoxItemData((BasicControl)fe.Control));
             
-            List<string> listEvent = selectedObject.GetListEventName();
             List<MDTEventInfo> listEventInfo = MDTEventManager.GetListEventInfoRaiseBy(selectedObject);
             foreach (string eventName in listEvent)
             {
