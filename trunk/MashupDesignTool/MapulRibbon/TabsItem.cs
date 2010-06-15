@@ -29,9 +29,13 @@ namespace MapulRibbon
         void TabsItem_Loaded(object sender, RoutedEventArgs e)
         {                       
                 // set style
-                Style style = (this.Parent as Tabs).Ribbon._ribbonTabItemStyle;
-                if (style != null && this.Style == null)
-                    this.Style = style;                                
+                try
+                {
+                    Style style = (this.Parent as Tabs).Ribbon._ribbonTabItemStyle;
+                    if (style != null && this.Style == null)
+                        this.Style = style;
+                }
+                catch { }
                 //
                 RibbonItems content = this.Content as RibbonItems;
                 this.RibbonItems.Clear();
