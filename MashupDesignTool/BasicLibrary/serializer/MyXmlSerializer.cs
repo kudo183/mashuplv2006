@@ -25,7 +25,7 @@ namespace BasicLibrary
 
         public static string Serialize(object o)
         {
-            return MyXmlSerializer.Serialize(o, o.GetType().Name);
+            return MyXmlSerializer.Serialize(o, "Root");
         }
 
         public static string Serialize(object o, string rootName)
@@ -33,20 +33,21 @@ namespace BasicLibrary
             StringBuilder sb = new StringBuilder();
             XmlWriter xm = XmlWriter.Create(sb, new XmlWriterSettings() { OmitXmlDeclaration = true });
 
-            if (typeof(IList).IsAssignableFrom(o.GetType()))
+            if (o.GetType().IsArray)
+            {
+                SerializeArray(o, xm, rootName);
+                xm.Flush();
+                xm.Close();
+                return sb.ToString();
+            }
+            else if (typeof(IList).IsAssignableFrom(o.GetType()))
             {
                 SerializeList(o, xm, rootName);
                 xm.Flush();
                 xm.Close();
                 return sb.ToString();
             }
-            else if (o.GetType().IsArray)
-            {
-                SerializeArray(o, xm);
-                xm.Flush();
-                xm.Close();
-                return sb.ToString();
-            }
+            
             xm.WriteStartElement(rootName);
             xm.WriteAttributeString("Type", o.GetType().AssemblyQualifiedName);
             Serialize(o, xm);
@@ -81,42 +82,9 @@ namespace BasicLibrary
                 index[0] = i;
                 myObject = lst.GetType().GetProperty("Item").GetValue(lst, index);
                 if (myObject.GetType().IsGenericType)
-                    SerializeList(myObject, null, xm);
-                xm.WriteStartElement("Child");
-                xm.WriteAttributeString("Type", elementType);
-                Serialize(myObject, xm);
-                xm.WriteEndElement();
-            }
-            xm.WriteEndElement();
-        }
-        private static void SerializeList(object o, PropertyInfo pi, XmlWriter xm)
-        {
-            object lst;
-            int count;
-            object[] index = { 0 };
-            object myObject;
-            string elementType;
-            try
-            {
-                lst = pi.GetValue(o, null);
-                if (lst == null)
-                    return;
-                count = (int)(lst.GetType().GetProperty("Count").GetValue(lst, null));
-                if (count == 0)
-                    return;
-                myObject = lst.GetType().GetProperty("Item").GetValue(lst, index);
-                elementType = myObject.GetType().AssemblyQualifiedName;
-            }
-            catch { return; }
-
-            xm.WriteStartElement(pi.Name);
-            xm.WriteAttributeString("Type", pi.PropertyType.AssemblyQualifiedName);
-            for (int i = 0; i < count; i++)
-            {
-                index[0] = i;
-                myObject = lst.GetType().GetProperty("Item").GetValue(lst, index);
-                if (myObject.GetType().IsGenericType)
+                {
                     SerializeList(myObject, xm);
+                }
                 else
                 {
                     xm.WriteStartElement("Child");
@@ -127,6 +95,44 @@ namespace BasicLibrary
             }
             xm.WriteEndElement();
         }
+        //private static void SerializeList(object o, PropertyInfo pi, XmlWriter xm)
+        //{
+        //    object lst;
+        //    int count;
+        //    object[] index = { 0 };
+        //    object myObject;
+        //    string elementType;
+        //    try
+        //    {
+        //        lst = pi.GetValue(o, null);
+        //        if (lst == null)
+        //            return;
+        //        count = (int)(lst.GetType().GetProperty("Count").GetValue(lst, null));
+        //        if (count == 0)
+        //            return;
+        //        myObject = lst.GetType().GetProperty("Item").GetValue(lst, index);
+        //        elementType = myObject.GetType().AssemblyQualifiedName;
+        //    }
+        //    catch { return; }
+
+        //    xm.WriteStartElement(pi.Name);
+        //    xm.WriteAttributeString("Type", pi.PropertyType.AssemblyQualifiedName);
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        index[0] = i;
+        //        myObject = lst.GetType().GetProperty("Item").GetValue(lst, index);
+        //        if (myObject.GetType().IsGenericType)
+        //            SerializeList(myObject, xm);
+        //        else
+        //        {
+        //            xm.WriteStartElement("Child");
+        //            xm.WriteAttributeString("Type", elementType);
+        //            Serialize(myObject, xm);
+        //            xm.WriteEndElement();
+        //        }
+        //    }
+        //    xm.WriteEndElement();
+        //}
         #endregion
 
         #region serialize array
@@ -139,42 +145,26 @@ namespace BasicLibrary
             object lst = o;
             if (lst == null)
                 return;
-            int count = (int)(lst.GetType().GetProperty("Length").GetValue(lst, null));
+            
             Array a = (Array)lst;
-            string elementType = a.GetType().GetElementType().AssemblyQualifiedName;
+            if(a.Rank > 1)
+                return;
 
+            string elementType = a.GetType().GetElementType().AssemblyQualifiedName;
+            
             xm.WriteStartElement(rootName);
             xm.WriteAttributeString("Type", o.GetType().AssemblyQualifiedName);
-            for (int i = 0; i < count; i++)
-            {
-                xm.WriteStartElement("Child");
-                xm.WriteAttributeString("Type", elementType);
-                Serialize(a.GetValue(i), xm);
-                xm.WriteEndElement();
-            }
-            xm.WriteEndElement();
-        }
-        private static void SerializeArray(object o, PropertyInfo pi, XmlWriter xm)
-        {
-            object lst = pi.GetValue(o, null);
-            if (lst == null)
-                return;
-            int count = (int)(lst.GetType().GetProperty("Length").GetValue(lst, null));
-            Array a = (Array)lst;
-            string elementType = a.GetType().GetElementType().AssemblyQualifiedName;
 
-            xm.WriteStartElement("Child");
-            xm.WriteAttributeString("Type", pi.PropertyType.AssemblyQualifiedName);
             if (a.GetType().GetElementType().IsArray)
             {
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < a.Length; i++)
                 {
                     SerializeArray(a.GetValue(i), xm);
                 }
             }
             else
             {
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < a.Length; i++)
                 {
                     xm.WriteStartElement("Child");
                     xm.WriteAttributeString("Type", elementType);
@@ -183,17 +173,122 @@ namespace BasicLibrary
                 }
             }
             xm.WriteEndElement();
-
         }
+        //private static void SerializeArray(object o, PropertyInfo pi, XmlWriter xm)
+        //{
+        //    object lst = pi.GetValue(o, null);
+        //    if (lst == null)
+        //        return;
+        //    int count = (int)(lst.GetType().GetProperty("Length").GetValue(lst, null));
+        //    Array a = (Array)lst;
+        //    string elementType = a.GetType().GetElementType().AssemblyQualifiedName;
+
+        //    xm.WriteStartElement("Child");
+        //    xm.WriteAttributeString("Type", pi.PropertyType.AssemblyQualifiedName);
+        //    if (a.GetType().GetElementType().IsArray)
+        //    {
+        //        for (int i = 0; i < count; i++)
+        //        {
+        //            SerializeArray(a.GetValue(i), xm);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        for (int i = 0; i < count; i++)
+        //        {
+        //            xm.WriteStartElement("Child");
+        //            xm.WriteAttributeString("Type", elementType);
+        //            Serialize(a.GetValue(i), xm);
+        //            xm.WriteEndElement();
+        //        }
+        //    }
+        //    xm.WriteEndElement();
+
+        //}
         #endregion
 
+        //private static void Serialize(object o, XmlWriter xm)
+        //{
+        //    if (o == null)
+        //        return;
+
+        //    Type t = o.GetType();
+
+        //    //write element value, stop recursive
+        //    if (t.IsPrimitive)
+        //        xm.WriteValue(o.ToString());
+        //    if (t == typeof(string) || typeof(Enum).IsAssignableFrom(t) || t == typeof(TimeSpan) || t == typeof(DateTime))
+        //    {
+        //        xm.WriteValue(o.ToString());
+        //        return;
+        //    }
+
+        //    foreach (PropertyInfo pi in t.GetProperties())
+        //    {
+        //        bool b = false;
+        //        if (skipPropertyList.Contains(pi.Name) || skipTypeList.Contains(pi.PropertyType))
+        //            b = true;
+        //        if (typeof(BasicLibrary.BasicEffect).IsAssignableFrom(pi.PropertyType))
+        //            b = true;
+        //        else if (typeof(BasicLibrary.BasicListEffect).IsAssignableFrom(pi.PropertyType))
+        //            b = true;
+        //        if (b == true)
+        //            continue;
+
+        //        if (pi.PropertyType.IsArray)
+        //        {
+        //            SerializeArray(o, pi, xm);
+
+        //            continue;
+        //        }
+
+        //        if (typeof(IList).IsAssignableFrom(pi.PropertyType))
+        //        {
+        //            SerializeList(o, pi, xm);
+
+        //            continue;
+        //        }
+
+        //        //skip dictionary type
+        //        if (pi.GetIndexParameters().Length > 1)
+        //            continue;
+
+        //        if (pi.CanWrite == false || pi.GetSetMethod() == null)
+        //            continue;
+
+        //        object value = null;
+        //        try { value = pi.GetValue(o, null); }
+        //        catch { }
+
+        //        if (value == null)
+        //            continue;
+        //        xm.WriteStartElement(pi.Name);
+        //        xm.WriteAttributeString("Type", value.GetType().AssemblyQualifiedName);
+        //        //if (value.GetType() == typeof(string) || typeof(Enum).IsAssignableFrom(value.GetType()))
+        //        //    xm.WriteValue(value.ToString());
+        //        //else
+        //        Serialize(value, xm);
+        //        xm.WriteEndElement();
+        //    }
+        //}
         private static void Serialize(object o, XmlWriter xm)
         {
             if (o == null)
                 return;
 
             Type t = o.GetType();
-
+            if (t == typeof(Type))
+                return;
+            if (t is Type)
+            {
+                int a = 0;
+                a++;
+            }
+            else if (o is Type)
+            {
+                int a = 0;
+                a++;
+            }
             //write element value, stop recursive
             if (t.IsPrimitive)
                 xm.WriteValue(o.ToString());
@@ -215,22 +310,8 @@ namespace BasicLibrary
                 if (b == true)
                     continue;
 
-                if (pi.PropertyType.IsArray)
-                {
-                    SerializeArray(o, pi, xm);
-
-                    continue;
-                }
-
-                if (typeof(IList).IsAssignableFrom(pi.PropertyType))
-                {
-                    SerializeList(o, pi, xm);
-
-                    continue;
-                }
-
-                //skip dictionary type
-                if (pi.GetIndexParameters().Length > 1)
+                //skip indexed property
+                if (pi.GetIndexParameters().Length > 0)
                     continue;
 
                 if (pi.CanWrite == false || pi.GetSetMethod() == null)
@@ -242,16 +323,22 @@ namespace BasicLibrary
 
                 if (value == null)
                     continue;
+                if (pi.PropertyType.IsArray)
+                {
+                    MyXmlSerializer.SerializeArray(value, xm);
+                    continue;
+                }
+                if (typeof(IList).IsAssignableFrom(pi.PropertyType))
+                {
+                    MyXmlSerializer.SerializeList(value, xm);
+                    continue;
+                }
                 xm.WriteStartElement(pi.Name);
                 xm.WriteAttributeString("Type", value.GetType().AssemblyQualifiedName);
-                //if (value.GetType() == typeof(string) || typeof(Enum).IsAssignableFrom(value.GetType()))
-                //    xm.WriteValue(value.ToString());
-                //else
                 Serialize(value, xm);
                 xm.WriteEndElement();
             }
         }
-
         #region load
         public static object Load(string xml)
         {
@@ -284,11 +371,7 @@ namespace BasicLibrary
                     foreach (XElement element in root.Elements())
                     {
                         propertyName = element.Name.ToString();
-                        if (propertyName == "ControlDataMapping")
-                        {
-                            int a = 0;
-                            a++;
-                        }
+                        
                         value = Load(obj, element);
                         if (!typeof(IList).IsAssignableFrom(value.GetType()))
                             type.GetProperty(propertyName).SetValue(obj, value, null);
