@@ -173,6 +173,19 @@ namespace MashupDesignTool
             designCanvas1.AddControl(t, 0, 0, 0, 0);
             designCanvas1.AddControl(sc1, 0, 0, 0, 0);
 
+            List<int> abc = new List<int>();
+            abc.Add(1);
+            abc.Add(1);
+            abc.Add(3);
+            abc.Add(1);
+            abc.Add(1);
+            abc.Add(3);
+
+            List<int> def = (List<int>)MyXmlSerializer.Load(MyXmlSerializer.Serialize(abc));
+
+            int[] array = new int[] { 1};
+            string st = MyXmlSerializer.Serialize(array);
+            int[] array1 = (int[])MyXmlSerializer.Load(st);
             //string abc = "";
             //foreach (string str in t.GetListEventName())
             //    abc += str + "\t";
@@ -189,9 +202,9 @@ namespace MashupDesignTool
 
             //MessageBox.Show(abc);
 
-            //MDTEventManager.RegisterEvent(t, "Test1", sc1, "Hello1");
-            //MDTEventManager.RegisterEvent(t, "Test1", sc1, "Hello1");
-            ////////////////////////////////////////////////////////////////
+            //MDTEventManager.RegisterEvent(t, "Test1", sc1,, "Hello1");
+            /////////////////////////////////////////////// "Hello1");
+            //MDTEventManager.RegisterEvent(t, "Test1", sc1/////////////////
             ////////////////////////////////////////////////////////////////
         }
 
@@ -531,6 +544,8 @@ namespace MashupDesignTool
             BasicControl bc = element as BasicControl;
             if (bc != null)
                 propertiesGrid.SetSelectedObject(bc, bc.GetParameterNameList());
+            else if (typeof(DockCanvas.DockCanvas) == element.GetType())
+                propertiesGrid.SetSelectedObject(element, designCanvas1.GetPropertyNameList());
             else
                 propertiesGrid.SetSelectedObject(null, null);
             propertiesTabs.SelectedIndex = 0;
@@ -557,11 +572,7 @@ namespace MashupDesignTool
             if (element.Equals(designCanvas1.ControlContainer))
             {
                 //propertiesGrid.SelectedObject = element;
-                BasicControl bc = element as BasicControl;
-                if (bc != null)
-                    propertiesGrid.SetSelectedObject(bc, bc.GetParameterNameList());
-                else
-                    propertiesGrid.SetSelectedObject(null, null);
+                propertiesGrid.SetSelectedObject(element, designCanvas1.GetPropertyNameList());
                 eventBindingGrid.ChangeSelectedObject(null, designCanvas1.Controls);
                 previousElement = null;
             }
