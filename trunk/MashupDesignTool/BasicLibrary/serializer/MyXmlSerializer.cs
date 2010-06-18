@@ -361,8 +361,13 @@ namespace BasicLibrary
             try
             {
                 Type type = Type.GetType(root.Attribute("Type").Value);
-                obj = Activator.CreateInstance(type);
+                if (type.IsArray)
+                    return LoadArray(null, root);
 
+                if (typeof(IList).IsAssignableFrom(type))
+                    return LoadList(root);
+
+                obj = Activator.CreateInstance(type);
                 if (root.HasElements)
                 {
                     object value;
@@ -371,7 +376,6 @@ namespace BasicLibrary
                     foreach (XElement element in root.Elements())
                     {
                         propertyName = element.Name.ToString();
-                        
                         value = Load(obj, element);
                         if (!typeof(IList).IsAssignableFrom(value.GetType()))
                             type.GetProperty(propertyName).SetValue(obj, value, null);
@@ -450,7 +454,7 @@ namespace BasicLibrary
             int count = 0;
             foreach (XElement child in element.Elements("Child"))
                 count++;
-            Array array = Array.CreateInstance(type, count);
+            Array array = Array.CreateInstance(type.GetElementType(), count);
 
             count = 0;
             foreach (XElement child in element.Elements("Child"))
@@ -468,6 +472,19 @@ namespace BasicLibrary
             //IList list = (IList)Activator.CreateInstance(type);
             IList list = (IList)obj.GetType().GetProperty(element.Name.ToString()).GetValue(obj, null);
 
+            foreach (XElement child in element.Elements("Child"))
+            {
+                //object temp = Load(list, child);
+                object temp = Load(child.ToString(SaveOptions.DisableFormatting));
+                list.Add(temp);
+            }
+            return list;
+        }
+
+        private static object LoadList(XElement element)
+        {
+            Type type = Type.GetType(element.Attribute("Type").Value);
+            IList list = (IList)Activator.CreateInstance(type);
             foreach (XElement child in element.Elements("Child"))
             {
                 //object temp = Load(list, child);
