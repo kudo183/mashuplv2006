@@ -46,7 +46,6 @@ namespace MashupDesignTool
         public delegate void OnSelectionChanged(object sender, UIElement element);
         public event OnSelectionChanged SelectionChanged;
 
-
         ResizeDirection resizeDirection;
         Point beginResizedPoint;
         bool isCaptured;
@@ -68,7 +67,6 @@ namespace MashupDesignTool
         int iCount = 0;
         DispatcherTimer dispatcherTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(40) };
 
-
         public List<EffectableControl> Controls
         {
             get { return controls; }
@@ -85,34 +83,14 @@ namespace MashupDesignTool
             get { return selectedProxyControls; }
         }
 
-
-        /// <summary>
-        /// ////////////////dsafasdfjaslfkja/
-        /// 
-        /// 
-        /// </summary>
-        ///         /// <summary>
-        /// ////////////////dsafasdfjaslfkja/
-        /// 
-        /// 
-        /// </summary>
-
-        public Canvas Layout
+        public List<string> GetPropertyNameList()
         {
-            get { return LayoutRoot; }
+            List<string> list = new List<string>();
+            list.Add("Width");
+            list.Add("Height");
+            list.Add("Background");
+            return list;
         }
-
-        /// <summary>
-        /// ////////////////dsafasdfjaslfkja/
-        /// 
-        /// 
-        /// </summary>
-        /// <summary>
-        /// ////////////////dsafasdfjaslfkja/
-        /// 
-        /// 
-        /// </summary>
-
 
         public DesignCanvas()
         {
