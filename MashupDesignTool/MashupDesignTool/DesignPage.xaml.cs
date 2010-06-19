@@ -23,36 +23,42 @@ namespace MashupDesignTool
 {
     public partial class MainPage : UserControl
     {
-        Dictionary<string, Assembly> LoadedAssembly = new Dictionary<string, Assembly>();
-        Dictionary<string, Assembly> LoadingAssembly = new Dictionary<string, Assembly>();
-        Dictionary<WebClient, string> downloadingDllReferences = new Dictionary<WebClient, string>();
-        Dictionary<WebClient, string> downloadingDllFilenames = new Dictionary<WebClient, string>();
-        String clientRoot = "";
+        Dictionary<string, Assembly> LoadedControlAssembly = new Dictionary<string, Assembly>();
+        ControlDownloader controlDownloader = new ControlDownloader();
+        //Dictionary<string, Assembly> LoadingAssembly = new Dictionary<string, Assembly>();
+        //Dictionary<WebClient, string> downloadingDllReferences = new Dictionary<WebClient, string>();
+        //Dictionary<WebClient, string> downloadingDllFilenames = new Dictionary<WebClient, string>();
+        Dictionary<string, Assembly> LoadedEffectAssembly = new Dictionary<string, Assembly>();
+        //Dictionary<string, Assembly> LoadingEffectAssembly = new Dictionary<string, Assembly>();
+        //Dictionary<WebClient, string> downloadingEffectDllReferences = new Dictionary<WebClient, string>();
+        //Dictionary<WebClient, string> downloadingEffectDllFilenames = new Dictionary<WebClient, string>();
+        EffectDownloader effectDownloader = new EffectDownloader();
         string downloadingControlName = "";
         string downloadingEffectName = "";
-        PropertyInfo piEffect;
-        bool bAdd = false, bChange = false, bDownloadControl = false;
         ControlInfo downloadControlInfo;
         EffectInfo downloadEffectInfo;
+        String clientRoot = "";
+        PropertyInfo piEffect;
+        bool bAdd = false, bChange = false, bDownloadControl = false;
         DispatcherTimer doubleClickTimer;
         double toolbarWidthBeforeCollapse;
         double propertiesGridWidthBeforeCollapse;
         List<ControlInfo> listControls = new List<ControlInfo>();
         List<EffectInfo> listSingleEffects = new List<EffectInfo>();
         List<EffectInfo> listListEffects = new List<EffectInfo>();
-        Dictionary<string, Assembly> LoadedEffectAssembly = new Dictionary<string, Assembly>();
-        Dictionary<string, Assembly> LoadingEffectAssembly = new Dictionary<string, Assembly>();
-        Dictionary<WebClient, string> downloadingEffectDllReferences = new Dictionary<WebClient, string>();
-        Dictionary<WebClient, string> downloadingEffectDllFilenames = new Dictionary<WebClient, string>();
-
+        
         public MainPage()
         {
             InitializeComponent();
             propertiesGrid.SelectedObjectParent = designCanvas1.ControlContainer;
-            designCanvas1.PositionChanged += new DesignCanvas.PositionChangedHander(designCanvas1_PositionChanged);
-            designCanvas1.ZIndexChanged += new DesignCanvas.ZIndexChangedHandler(designCanvas1_ZIndexChanged);
+            designCanvas1.ControlPositionChanged += new DesignCanvas.ControlPositionChangedHander(designCanvas1_PositionChanged);
+            designCanvas1.ControlZIndexChanged += new DesignCanvas.ControlZIndexChangedHandler(designCanvas1_ZIndexChanged);
+            designCanvas1.ControlSizeChanged += new DesignCanvas.ControlSizeChangedHander(designCanvas1_ControlSizeChanged);
 
             propertiesGrid.PropertyValueChange += new SL30PropertyGrid.PropertyGrid.OnPropertyValueChange(propertiesGrid_PropertyValueChange);
+
+            controlDownloader.DownloadControlCompleted += new ControlDownloader.DownloadControlCompletedHandler(controlDownloader_DownloadControlCompleted);
+            effectDownloader.DownloadEffectCompleted += new EffectDownloader.DownloadEffectCompletedHandler(effectDownloader_DownloadEffectCompleted);
         }
 
         void propertiesGrid_PropertyValueChange(UIElement ui, string name, object value)
@@ -132,6 +138,7 @@ namespace MashupDesignTool
             }
         }
 
+        #region handle event from designCanvas
         void designCanvas1_ZIndexChanged(object sender, int zindex)
         {
             propertiesGrid.UpdatePropertyValue("ZIndex");
@@ -150,6 +157,13 @@ namespace MashupDesignTool
             propertiesGrid.UpdatePropertyValue("Top");
         }
 
+        void designCanvas1_ControlSizeChanged(object sender, Size newSize)
+        {
+            propertiesGrid.UpdatePropertyValue("Width");
+            propertiesGrid.UpdatePropertyValue("Height");
+        }
+        #endregion handle event from designCanvas
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             string absoluteUri = Application.Current.Host.Source.AbsoluteUri;
@@ -162,30 +176,30 @@ namespace MashupDesignTool
             doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
 
-            propertiesGrid.SelectedObject = designCanvas1.RootCanvas;
+            propertiesGrid.SetSelectedObject(designCanvas1.RootCanvas, designCanvas1.GetPropertyNameList());
 
             ////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////
-            test t = new test();
-            t.Width = t.Height = 100;
-            SilverlightControl1 sc1 = new SilverlightControl1();
-            //sc1.Width = sc1.Height = 10;
-            designCanvas1.AddControl(t, 0, 0, 0, 0);
-            designCanvas1.AddControl(sc1, 0, 0, 0, 0);
+            //test t = new test();
+            //t.Width = t.Height = 100;
+            //SilverlightControl1 sc1 = new SilverlightControl1();
+            ////sc1.Width = sc1.Height = 10;
+            //designCanvas1.AddControl(t, 0, 0, 0, 0);
+            //designCanvas1.AddControl(sc1, 0, 0, 0, 0);
 
-            List<int> abc = new List<int>();
-            abc.Add(1);
-            abc.Add(1);
-            abc.Add(3);
-            abc.Add(1);
-            abc.Add(1);
-            abc.Add(3);
+            //List<int> abc = new List<int>();
+            //abc.Add(1);
+            //abc.Add(1);
+            //abc.Add(3);
+            //abc.Add(1);
+            //abc.Add(1);
+            //abc.Add(3);
 
-            List<int> def = (List<int>)MyXmlSerializer.Load(MyXmlSerializer.Serialize(abc));
+            //List<int> def = (List<int>)MyXmlSerializer.Load(MyXmlSerializer.Serialize(abc));
 
-            int[] array = new int[] { 1};
-            string st = MyXmlSerializer.Serialize(array);
-            int[] array1 = (int[])MyXmlSerializer.Load(st);
+            //int[] array = new int[] { 1};
+            //string st = MyXmlSerializer.Serialize(array);
+            //int[] array1 = (int[])MyXmlSerializer.Load(st);
             //string abc = "";
             //foreach (string str in t.GetListEventName())
             //    abc += str + "\t";
@@ -293,111 +307,111 @@ namespace MashupDesignTool
         #endregion download Effects/info.xml
 
         #region control tree
-        private void DownloadControl(ControlInfo ci)
-        {
-            String assemblyPath = clientRoot + "Controls/ControlDll/" + ci.DllFilename;
+        //private void DownloadControl(ControlInfo ci)
+        //{
+        //    String assemblyPath = clientRoot + "Controls/ControlDll/" + ci.DllFilename;
 
-            if (!ci.IsDllFileDownloaded)
-            {
-                if (!downloadingDllFilenames.ContainsValue(assemblyPath))
-                {
-                    Uri uri = new Uri(assemblyPath, UriKind.Absolute);
-                    //Start an async download:
-                    WebClient webClient = new WebClient();
-                    webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_DownloadControlCompleted);
-                    webClient.OpenReadAsync(uri);
-                    downloadingDllFilenames.Add(webClient, ci.ControlName);
-                }
-            }
+        //    if (!ci.IsDllFileDownloaded)
+        //    {
+        //        if (!downloadingDllFilenames.ContainsValue(assemblyPath))
+        //        {
+        //            Uri uri = new Uri(assemblyPath, UriKind.Absolute);
+        //            //Start an async download:
+        //            WebClient webClient = new WebClient();
+        //            webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_DownloadControlCompleted);
+        //            webClient.OpenReadAsync(uri);
+        //            downloadingDllFilenames.Add(webClient, ci.ControlName);
+        //        }
+        //    }
 
-            for (int i = 0; i < ci.DllReferences.Count; i++)
-            {
-                if (!ci.IsDllReferencesDownloaded[i])
-                {
-                    assemblyPath = clientRoot + "Controls/ReferenceDll/" + ci.DllReferences[i];
-                    if (!downloadingDllReferences.ContainsValue(ci.DllReferences[i]))
-                    {
-                        Uri uri = new Uri(assemblyPath, UriKind.Absolute);
-                        //Start an async download:
-                        WebClient webClient = new WebClient();
-                        webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_DownloadDllDependenceCompleted);
-                        webClient.OpenReadAsync(uri);
-                        downloadingDllReferences.Add(webClient, ci.DllReferences[i]);
-                    }
-                }
-            }
-        }
+        //    for (int i = 0; i < ci.DllReferences.Count; i++)
+        //    {
+        //        if (!ci.IsDllReferencesDownloaded[i])
+        //        {
+        //            assemblyPath = clientRoot + "Controls/ReferenceDll/" + ci.DllReferences[i];
+        //            if (!downloadingDllReferences.ContainsValue(ci.DllReferences[i]))
+        //            {
+        //                Uri uri = new Uri(assemblyPath, UriKind.Absolute);
+        //                //Start an async download:
+        //                WebClient webClient = new WebClient();
+        //                webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_DownloadDllDependenceCompleted);
+        //                webClient.OpenReadAsync(uri);
+        //                downloadingDllReferences.Add(webClient, ci.DllReferences[i]);
+        //            }
+        //        }
+        //    }
+        //}
 
-        private void webClient_DownloadControlCompleted(object sender, OpenReadCompletedEventArgs e)
-        {
-            try
-            {
-                if (e.Error == null)
-                {
-                    string controlName = downloadingDllFilenames[(WebClient)sender];
-                    downloadingDllFilenames.Remove((WebClient)sender);
-                    AssemblyPart assemblyPart = new AssemblyPart();
-                    Assembly assembly = assemblyPart.Load(e.Result);
-                    for (int i = 0; i < listControls.Count; i++)
-                    {
-                        if (listControls[i].ControlName == controlName)
-                        {
-                            listControls[i].IsDllFileDownloaded = true;
-                            if (listControls[i].IsReady)
-                            {
-                                LoadedAssembly.Add(controlName, assembly);
-                                if (listControls[i].ControlName == downloadingControlName && bAdd == true)
-                                {
-                                    AddControl(downloadingControlName);
-                                    HidePopup();
-                                }
-                            }
-                            else
-                                LoadingAssembly.Add(controlName, assembly);
-                        }
-                    }
-                }
-            }
-            catch { }
-        }
+        //private void webClient_DownloadControlCompleted(object sender, OpenReadCompletedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (e.Error == null)
+        //        {
+        //            string controlName = downloadingDllFilenames[(WebClient)sender];
+        //            downloadingDllFilenames.Remove((WebClient)sender);
+        //            AssemblyPart assemblyPart = new AssemblyPart();
+        //            Assembly assembly = assemblyPart.Load(e.Result);
+        //            for (int i = 0; i < listControls.Count; i++)
+        //            {
+        //                if (listControls[i].ControlName == controlName)
+        //                {
+        //                    listControls[i].IsDllFileDownloaded = true;
+        //                    if (listControls[i].IsReady)
+        //                    {
+        //                        LoadedAssembly.Add(controlName, assembly);
+        //                        if (listControls[i].ControlName == downloadingControlName && bAdd == true)
+        //                        {
+        //                            AddControl(downloadingControlName);
+        //                            HidePopup();
+        //                        }
+        //                    }
+        //                    else
+        //                        LoadingAssembly.Add(controlName, assembly);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch { }
+        //}
 
-        private void webClient_DownloadDllDependenceCompleted(object sender, OpenReadCompletedEventArgs e)
-        {
-            try
-            {
-                if (e.Error == null)
-                {
-                    string dll = downloadingDllReferences[(WebClient)sender];
-                    downloadingDllReferences.Remove((WebClient)sender);
-                    AssemblyPart assemblyPart = new AssemblyPart();
-                    Assembly assembly = assemblyPart.Load(e.Result);
+        //private void webClient_DownloadDllDependenceCompleted(object sender, OpenReadCompletedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (e.Error == null)
+        //        {
+        //            string dll = downloadingDllReferences[(WebClient)sender];
+        //            downloadingDllReferences.Remove((WebClient)sender);
+        //            AssemblyPart assemblyPart = new AssemblyPart();
+        //            Assembly assembly = assemblyPart.Load(e.Result);
 
-                    for (int i = 0; i < listControls.Count; i++)
-                    {
-                        string controlName = listControls[i].ControlName;
-                        if (!LoadedAssembly.ContainsKey(controlName))
-                        {
-                            listControls[i].CheckDllReferences(dll);
-                            if (listControls[i].IsReady)
-                            {
-                                LoadedAssembly.Add(controlName, LoadingAssembly[controlName]);
-                                LoadingAssembly.Remove(controlName);
-                                if (listControls[i].ControlName == downloadingControlName && bAdd == true)
-                                {
-                                    AddControl(downloadingControlName);
-                                    HidePopup();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch { }
-        }
+        //            for (int i = 0; i < listControls.Count; i++)
+        //            {
+        //                string controlName = listControls[i].ControlName;
+        //                if (!LoadedAssembly.ContainsKey(controlName))
+        //                {
+        //                    listControls[i].CheckDllReferences(dll);
+        //                    if (listControls[i].IsReady)
+        //                    {
+        //                        LoadedAssembly.Add(controlName, LoadingAssembly[controlName]);
+        //                        LoadingAssembly.Remove(controlName);
+        //                        if (listControls[i].ControlName == downloadingControlName && bAdd == true)
+        //                        {
+        //                            AddControl(downloadingControlName);
+        //                            HidePopup();
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch { }
+        //}
 
         private void AddControl(string controlName)
         {
-            FrameworkElement uc = LoadedAssembly[controlName].CreateInstance(controlName) as FrameworkElement;
+            FrameworkElement uc = LoadedControlAssembly[controlName].CreateInstance(controlName) as FrameworkElement;
             if (uc != null)
                 designCanvas1.AddControl(uc, 100.0, 100.0, 400, 300);
         }
@@ -469,13 +483,20 @@ namespace MashupDesignTool
                     AddFrameworkControl(ci.ControlName);
                     return;
                 }
-                if (!LoadedAssembly.ContainsKey(ci.ControlName))
+                if (!LoadedControlAssembly.ContainsKey(ci.ControlName))
                 {
-                    bDownloadControl = true;
-                    downloadingControlName = ci.ControlName;
-                    downloadControlInfo = ci;
-                    ShowPopup();
-                    return;
+                    if (controlDownloader.GetAssembly(ci) != null)
+                    {
+                        LoadedControlAssembly.Add(ci.ControlName, controlDownloader.GetAssembly(ci));
+                    }
+                    else
+                    {
+                        bDownloadControl = true;
+                        downloadingControlName = ci.ControlName;
+                        downloadControlInfo = ci;
+                        ShowPopup();
+                        return;
+                    }
                 }
                 AddControl(ci.ControlName);
             }
@@ -510,9 +531,26 @@ namespace MashupDesignTool
         void openPopup_Completed(object sender, EventArgs e)
         {
             if (bDownloadControl)
-                DownloadControl(downloadControlInfo);
+            {
+                //DownloadControl(downloadControlInfo);
+                controlDownloader.DownloadControl(downloadControlInfo);
+            }
             else
-                DownloadEffect(downloadEffectInfo);
+            {
+                //DownloadEffect(downloadEffectInfo);
+                effectDownloader.DownloadEffect(downloadEffectInfo);
+            }
+        }
+
+        void controlDownloader_DownloadControlCompleted(ControlInfo ci, Assembly assembly)
+        {
+            if (!LoadedControlAssembly.ContainsKey(ci.ControlName))
+                LoadedControlAssembly.Add(ci.ControlName, assembly);
+            if (ci.ControlName == downloadingControlName && bAdd == true)
+            {
+                AddControl(downloadingControlName);
+                HidePopup();
+            }
         }
 
         private void HidePopup()
@@ -865,11 +903,18 @@ namespace MashupDesignTool
             piEffect = (PropertyInfo)listView.Tag;
             if (!LoadedEffectAssembly.ContainsKey(ei.EffectName))
             {
-                bDownloadControl = false;
-                downloadEffectInfo = ei;
-                downloadingEffectName = ei.EffectName;
-                ShowPopup();
-                return;
+                if (effectDownloader.GetAssembly(ei) != null)
+                {
+                    LoadedEffectAssembly.Add(ei.EffectName, effectDownloader.GetAssembly(ei));
+                }
+                else
+                {
+                    bDownloadControl = false;
+                    downloadEffectInfo = ei;
+                    downloadingEffectName = ei.EffectName;
+                    ShowPopup();
+                    return;
+                }
             }
             ChangeEffect(ei.EffectName);
         }
@@ -896,145 +941,156 @@ namespace MashupDesignTool
                 ((BasicEffect)effectPropertiesGrid.SelectedObject).Start();
         }
 
-        private void DownloadEffect(EffectInfo ei)
+        void effectDownloader_DownloadEffectCompleted(EffectInfo ei, Assembly assembly)
         {
-            String assemblyPath = clientRoot + "Effects/EffectDll/" + ei.DllFilename;
-
-            if (!ei.IsDllFileDownloaded)
+            if (!LoadedEffectAssembly.ContainsKey(ei.EffectName))
+                LoadedEffectAssembly.Add(ei.EffectName, assembly);
+            if (ei.EffectName == downloadingEffectName && bChange == true)
             {
-                if (!downloadingEffectDllFilenames.ContainsValue(assemblyPath))
-                {
-                    Uri uri = new Uri(assemblyPath, UriKind.Absolute);
-                    //Start an async download:
-                    WebClient webClient = new WebClient();
-                    webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_DownloadEffectCompleted);
-                    webClient.OpenReadAsync(uri);
-                    downloadingEffectDllFilenames.Add(webClient, ei.EffectName);
-                }
-            }
-
-            for (int i = 0; i < ei.DllReferences.Count; i++)
-            {
-                if (!ei.IsDllReferencesDownloaded[i])
-                {
-                    assemblyPath = clientRoot + "Effects/ReferenceDll/" + ei.DllReferences[i];
-                    if (!downloadingEffectDllReferences.ContainsValue(ei.DllReferences[i]))
-                    {
-                        Uri uri = new Uri(assemblyPath, UriKind.Absolute);
-                        //Start an async download:
-                        WebClient webClient = new WebClient();
-                        webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_DownloadEffectDllDependenceCompleted);
-                        webClient.OpenReadAsync(uri);
-                        downloadingEffectDllReferences.Add(webClient, ei.DllReferences[i]);
-                    }
-                }
+                ChangeEffect(downloadingEffectName);
+                HidePopup();
             }
         }
 
-        private void webClient_DownloadEffectCompleted(object sender, OpenReadCompletedEventArgs e)
-        {
-            try
-            {
-                if (e.Error == null)
-                {
-                    string effectName = downloadingEffectDllFilenames[(WebClient)sender];
-                    downloadingEffectDllFilenames.Remove((WebClient)sender);
-                    AssemblyPart assemblyPart = new AssemblyPart();
-                    Assembly assembly = assemblyPart.Load(e.Result);
-                    for (int i = 0; i < listSingleEffects.Count; i++)
-                    {
-                        if (listSingleEffects[i].EffectName == effectName)
-                        {
-                            listSingleEffects[i].IsDllFileDownloaded = true;
-                            if (listSingleEffects[i].IsReady)
-                            {
-                                LoadedEffectAssembly.Add(effectName, assembly);
-                                if (listSingleEffects[i].EffectName == downloadingEffectName && bChange == true)
-                                {
-                                    ChangeEffect(downloadingEffectName);
-                                    HidePopup();
-                                }
-                            }
-                            else
-                                LoadingEffectAssembly.Add(effectName, assembly);
-                        }
-                    }
+        //private void DownloadEffect(EffectInfo ei)
+        //{
+        //    String assemblyPath = clientRoot + "Effects/EffectDll/" + ei.DllFilename;
 
-                    for (int i = 0; i < listListEffects.Count; i++)
-                    {
-                        if (listListEffects[i].EffectName == effectName)
-                        {
-                            listListEffects[i].IsDllFileDownloaded = true;
-                            if (listListEffects[i].IsReady)
-                            {
-                                LoadedEffectAssembly.Add(effectName, assembly);
-                                if (listListEffects[i].EffectName == downloadingEffectName && bChange == true)
-                                {
-                                    ChangeEffect(downloadingEffectName);
-                                    HidePopup();
-                                }
-                            }
-                            else
-                                LoadingEffectAssembly.Add(effectName, assembly);
-                        }
-                    }
-                }
-            }
-            catch { }
-        }
+        //    if (!ei.IsDllFileDownloaded)
+        //    {
+        //        if (!downloadingEffectDllFilenames.ContainsValue(assemblyPath))
+        //        {
+        //            Uri uri = new Uri(assemblyPath, UriKind.Absolute);
+        //            //Start an async download:
+        //            WebClient webClient = new WebClient();
+        //            webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_DownloadEffectCompleted);
+        //            webClient.OpenReadAsync(uri);
+        //            downloadingEffectDllFilenames.Add(webClient, ei.EffectName);
+        //        }
+        //    }
 
-        private void webClient_DownloadEffectDllDependenceCompleted(object sender, OpenReadCompletedEventArgs e)
-        {
-            try
-            {
-                if (e.Error == null)
-                {
-                    string dll = downloadingEffectDllReferences[(WebClient)sender];
-                    downloadingEffectDllReferences.Remove((WebClient)sender);
-                    AssemblyPart assemblyPart = new AssemblyPart();
-                    Assembly assembly = assemblyPart.Load(e.Result);
+        //    for (int i = 0; i < ei.DllReferences.Count; i++)
+        //    {
+        //        if (!ei.IsDllReferencesDownloaded[i])
+        //        {
+        //            assemblyPath = clientRoot + "Effects/ReferenceDll/" + ei.DllReferences[i];
+        //            if (!downloadingEffectDllReferences.ContainsValue(ei.DllReferences[i]))
+        //            {
+        //                Uri uri = new Uri(assemblyPath, UriKind.Absolute);
+        //                //Start an async download:
+        //                WebClient webClient = new WebClient();
+        //                webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_DownloadEffectDllDependenceCompleted);
+        //                webClient.OpenReadAsync(uri);
+        //                downloadingEffectDllReferences.Add(webClient, ei.DllReferences[i]);
+        //            }
+        //        }
+        //    }
+        //}
 
-                    for (int i = 0; i < listSingleEffects.Count; i++)
-                    {
-                        string effectName = listSingleEffects[i].EffectName;
-                        if (!LoadedEffectAssembly.ContainsKey(effectName))
-                        {
-                            listSingleEffects[i].CheckDllReferences(dll);
-                            if (listSingleEffects[i].IsReady)
-                            {
-                                LoadedEffectAssembly.Add(effectName, LoadingEffectAssembly[effectName]);
-                                LoadingEffectAssembly.Remove(effectName);
-                                if (listSingleEffects[i].EffectName == downloadingEffectName && bChange == true)
-                                {
-                                    ChangeEffect(downloadingEffectName);
-                                    HidePopup();
-                                }
-                            }
-                        }
-                    }
+        //private void webClient_DownloadEffectCompleted(object sender, OpenReadCompletedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (e.Error == null)
+        //        {
+        //            string effectName = downloadingEffectDllFilenames[(WebClient)sender];
+        //            downloadingEffectDllFilenames.Remove((WebClient)sender);
+        //            AssemblyPart assemblyPart = new AssemblyPart();
+        //            Assembly assembly = assemblyPart.Load(e.Result);
+        //            for (int i = 0; i < listSingleEffects.Count; i++)
+        //            {
+        //                if (listSingleEffects[i].EffectName == effectName)
+        //                {
+        //                    listSingleEffects[i].IsDllFileDownloaded = true;
+        //                    if (listSingleEffects[i].IsReady)
+        //                    {
+        //                        LoadedEffectAssembly.Add(effectName, assembly);
+        //                        if (listSingleEffects[i].EffectName == downloadingEffectName && bChange == true)
+        //                        {
+        //                            ChangeEffect(downloadingEffectName);
+        //                            HidePopup();
+        //                        }
+        //                    }
+        //                    else
+        //                        LoadingEffectAssembly.Add(effectName, assembly);
+        //                }
+        //            }
 
-                    for (int i = 0; i < listListEffects.Count; i++)
-                    {
-                        string effectName = listListEffects[i].EffectName;
-                        if (!LoadedEffectAssembly.ContainsKey(effectName))
-                        {
-                            listListEffects[i].CheckDllReferences(dll);
-                            if (listListEffects[i].IsReady)
-                            {
-                                LoadedEffectAssembly.Add(effectName, LoadingEffectAssembly[effectName]);
-                                LoadingEffectAssembly.Remove(effectName);
-                                if (listListEffects[i].EffectName == downloadingEffectName && bChange == true)
-                                {
-                                    ChangeEffect(downloadingEffectName);
-                                    HidePopup();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch { }
-        }
+        //            for (int i = 0; i < listListEffects.Count; i++)
+        //            {
+        //                if (listListEffects[i].EffectName == effectName)
+        //                {
+        //                    listListEffects[i].IsDllFileDownloaded = true;
+        //                    if (listListEffects[i].IsReady)
+        //                    {
+        //                        LoadedEffectAssembly.Add(effectName, assembly);
+        //                        if (listListEffects[i].EffectName == downloadingEffectName && bChange == true)
+        //                        {
+        //                            ChangeEffect(downloadingEffectName);
+        //                            HidePopup();
+        //                        }
+        //                    }
+        //                    else
+        //                        LoadingEffectAssembly.Add(effectName, assembly);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch { }
+        //}
+
+        //private void webClient_DownloadEffectDllDependenceCompleted(object sender, OpenReadCompletedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (e.Error == null)
+        //        {
+        //            string dll = downloadingEffectDllReferences[(WebClient)sender];
+        //            downloadingEffectDllReferences.Remove((WebClient)sender);
+        //            AssemblyPart assemblyPart = new AssemblyPart();
+        //            Assembly assembly = assemblyPart.Load(e.Result);
+
+        //            for (int i = 0; i < listSingleEffects.Count; i++)
+        //            {
+        //                string effectName = listSingleEffects[i].EffectName;
+        //                if (!LoadedEffectAssembly.ContainsKey(effectName))
+        //                {
+        //                    listSingleEffects[i].CheckDllReferences(dll);
+        //                    if (listSingleEffects[i].IsReady)
+        //                    {
+        //                        LoadedEffectAssembly.Add(effectName, LoadingEffectAssembly[effectName]);
+        //                        LoadingEffectAssembly.Remove(effectName);
+        //                        if (listSingleEffects[i].EffectName == downloadingEffectName && bChange == true)
+        //                        {
+        //                            ChangeEffect(downloadingEffectName);
+        //                            HidePopup();
+        //                        }
+        //                    }
+        //                }
+        //            }
+
+        //            for (int i = 0; i < listListEffects.Count; i++)
+        //            {
+        //                string effectName = listListEffects[i].EffectName;
+        //                if (!LoadedEffectAssembly.ContainsKey(effectName))
+        //                {
+        //                    listListEffects[i].CheckDllReferences(dll);
+        //                    if (listListEffects[i].IsReady)
+        //                    {
+        //                        LoadedEffectAssembly.Add(effectName, LoadingEffectAssembly[effectName]);
+        //                        LoadingEffectAssembly.Remove(effectName);
+        //                        if (listListEffects[i].EffectName == downloadingEffectName && bChange == true)
+        //                        {
+        //                            ChangeEffect(downloadingEffectName);
+        //                            HidePopup();
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch { }
+        //}
 
         void rb_OnClick(object sender, RoutedEventArgs e)
         {
@@ -1156,6 +1212,7 @@ namespace MashupDesignTool
             pp.BackToEditor += new PreviewPage.BackToEditorHandler(pp_BackToEditor);
             this.Content = pp;
             pp.Preview(DockCanvasSerializer.Serialize(designCanvas1));
+            
             string str = Save();
         }
 
@@ -1167,32 +1224,45 @@ namespace MashupDesignTool
         #region Save
         private string Save()
         {
-            List<string> dll = GetNecessaryDll();
             StringBuilder sb = new StringBuilder();
             XmlWriter xm = XmlWriter.Create(sb, new XmlWriterSettings() { OmitXmlDeclaration = true });
 
             xm.WriteStartElement("Page");
-            xm.WriteStartElement("NeccesaryDlls");
-            foreach (string str in dll)
-                xm.WriteElementString("Dll", str);
-            xm.WriteEndElement();
+            WriteNeccesaryDlls(xm);
             xm.WriteRaw(DockCanvasSerializer.Serialize(designCanvas1));
-
             xm.WriteEndElement();
+
             xm.Flush();
             xm.Close();
             return sb.ToString();
         }
 
-        private List<string> GetNecessaryDll()
+        private void WriteNeccesaryDlls(XmlWriter xm)
         {
-            List<string> dll = new List<string>();
-            dll.Add("Effects/EffectDll/EffectLibrary.dll");
-            Type[] frameworkTypes = { typeof(Border), typeof(Button), typeof(CheckBox),typeof(ComboBox),
-                                        typeof(DataGrid), typeof(Image), typeof(Label), typeof(ListBox),
-                                        typeof(RadioButton), typeof(Rectangle), typeof(TabControl), 
-                                        typeof(TextBlock), typeof(TextBox) };
+            List<string> controlDll = new List<string>();
+            List<string> controlReferenceDll = new List<string>();
+            List<string> effectDll = new List<string>();
+            List<string> effectReferenceDll = new List<string>();
+            GetDlls(controlDll, controlReferenceDll, effectDll, effectReferenceDll);
 
+            xm.WriteStartElement("NeccesaryDlls");
+            WriteDllList(xm, controlDll, "ControlDll");
+            WriteDllList(xm, controlReferenceDll, "ControlReferenceDll");
+            WriteDllList(xm, effectDll, "EffectDll");
+            WriteDllList(xm, effectReferenceDll, "EffectReferenceDll");
+            xm.WriteEndElement();
+        }
+
+        private void WriteDllList(XmlWriter xm, List<string> dlls, string rootName)
+        {
+            xm.WriteStartElement(rootName);
+            foreach (string str in dlls)
+                xm.WriteElementString("Dll", str);
+            xm.WriteEndElement();
+        }
+        
+        private void GetDlls(List<string> controlDll, List<string> controlReferenceDll, List<string> effectDll, List<string> effectReferenceDll)
+        {
             foreach (EffectableControl ec in designCanvas1.Controls)
             {
                 Type type = ec.Control.GetType();
@@ -1202,7 +1272,7 @@ namespace MashupDesignTool
                     foreach (ControlInfo ci in listControls)
                         if (ci.ControlName == fullName)
                         {
-                            AddDllList(dll, ci.DllFilename, ci.DllReferences, "Controls/ControlDll", "Controls/ReferenceDll");
+                            AddDllList(controlDll, controlReferenceDll, ci.DllFilename, ci.DllReferences);
                             break;
                         }
 
@@ -1212,13 +1282,13 @@ namespace MashupDesignTool
                         IBasic effect = ec.GetEffect(effectName);
                         if (effect == null)
                             continue;
-                        fullName = effectName.GetType().FullName;
+                        fullName = effect.GetType().FullName;
                         if (typeof(BasicEffect).IsAssignableFrom(effect.GetType()))
                         {
                             foreach (EffectInfo ei in listSingleEffects)
                                 if (ei.EffectName == fullName)
                                 {
-                                    AddDllList(dll, ei.DllFilename, ei.DllReferences, "Effects/EffectDll", "Effects/ReferenceDll");
+                                    AddDllList(effectDll, effectReferenceDll, ei.DllFilename, ei.DllReferences);
                                     break;
                                 }
                         }
@@ -1227,24 +1297,85 @@ namespace MashupDesignTool
                             foreach (EffectInfo ei in listListEffects)
                                 if (ei.EffectName == fullName)
                                 {
-                                    AddDllList(dll, ei.DllFilename, ei.DllReferences, "Effects/EffectDll", "Effects/ReferenceDll");
+                                    AddDllList(effectDll, effectReferenceDll, ei.DllFilename, ei.DllReferences);
                                     break;
                                 }
                         }
                     }
                 }
             }
-            return dll;
         }
 
-        private void AddDllList(List<string> dll, string dllFilename, List<string> dllReferences, string dllFolder, string dllReferenceFolder)
+        private void AddDllList(List<string> dll, List<string> references, string dllFilename, List<string> dllReferences)
         {
-            if (dllFilename.Length != 0 && !dll.Contains(dllFolder + "/" + dllFilename))
-                dll.Add(dllFolder + "/" + dllFilename);
+            if (dllFilename.Length != 0 && !dll.Contains(dllFilename))
+                dll.Add(dllFilename);
             foreach (string str in dllReferences)
-                if (!dll.Contains(dllReferenceFolder + "/" + str))
-                    dll.Add(dllReferenceFolder + "/" + str);
+                if (!references.Contains(str))
+                    references.Add(str);
         }
+
+        //private List<string> GetNecessaryDll()
+        //{
+        //    List<string> dll = new List<string>();
+        //    dll.Add("Effects/EffectDll/EffectLibrary.dll");
+        //    Type[] frameworkTypes = { typeof(Border), typeof(Button), typeof(CheckBox),typeof(ComboBox),
+        //                                typeof(DataGrid), typeof(Image), typeof(Label), typeof(ListBox),
+        //                                typeof(RadioButton), typeof(Rectangle), typeof(TabControl), 
+        //                                typeof(TextBlock), typeof(TextBox) };
+
+        //    foreach (EffectableControl ec in designCanvas1.Controls)
+        //    {
+        //        Type type = ec.Control.GetType();
+        //        if (!Utility.IsFrameworkControl(ec.Control))
+        //        {
+        //            string fullName = type.FullName;
+        //            foreach (ControlInfo ci in listControls)
+        //                if (ci.ControlName == fullName)
+        //                {
+        //                    AddDllList(dll, ci.DllFilename, ci.DllReferences, "Controls/ControlDll", "Controls/ReferenceDll");
+        //                    break;
+        //                }
+
+        //            List<string> effectList = ec.GetListEffectPropertyName();
+        //            foreach (string effectName in effectList)
+        //            {
+        //                IBasic effect = ec.GetEffect(effectName);
+        //                if (effect == null)
+        //                    continue;
+        //                fullName = effectName.GetType().FullName;
+        //                if (typeof(BasicEffect).IsAssignableFrom(effect.GetType()))
+        //                {
+        //                    foreach (EffectInfo ei in listSingleEffects)
+        //                        if (ei.EffectName == fullName)
+        //                        {
+        //                            AddDllList(dll, ei.DllFilename, ei.DllReferences, "Effects/EffectDll", "Effects/ReferenceDll");
+        //                            break;
+        //                        }
+        //                }
+        //                else
+        //                {
+        //                    foreach (EffectInfo ei in listListEffects)
+        //                        if (ei.EffectName == fullName)
+        //                        {
+        //                            AddDllList(dll, ei.DllFilename, ei.DllReferences, "Effects/EffectDll", "Effects/ReferenceDll");
+        //                            break;
+        //                        }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return dll;
+        //}
+
+        //private void AddDllList(List<string> dll, string dllFilename, List<string> dllReferences, string dllFolder, string dllReferenceFolder)
+        //{
+        //    if (dllFilename.Length != 0 && !dll.Contains(dllFolder + "/" + dllFilename))
+        //        dll.Add(dllFolder + "/" + dllFilename);
+        //    foreach (string str in dllReferences)
+        //        if (!dll.Contains(dllReferenceFolder + "/" + str))
+        //            dll.Add(dllReferenceFolder + "/" + str);
+        //}
         #endregion Save
     }
 }

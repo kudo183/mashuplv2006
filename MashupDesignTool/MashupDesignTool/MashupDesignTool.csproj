@@ -86,6 +86,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Downloader\ControlDownloader.cs" />
     <Compile Include="ControlInfo.cs" />
     <Compile Include="CursorManager.cs" />
     <Compile Include="CustomCursor.xaml.cs">
@@ -100,6 +101,8 @@
     <Compile Include="DesignPage.xaml.cs">
       <DependentUpon>DesignPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Downloader\DownloadArgs.cs" />
+    <Compile Include="Downloader\EffectDownloader.cs" />
     <Compile Include="EffectInfo.cs" />
     <Compile Include="Event\ControlComboBoxItemData.cs" />
     <Compile Include="Event\EventBindingGrid.xaml.cs">
