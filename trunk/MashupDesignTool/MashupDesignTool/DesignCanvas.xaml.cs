@@ -34,11 +34,14 @@ namespace MashupDesignTool
         }
         #endregion enum resize direction
 
-        public delegate void PositionChangedHander(object sender, bool multiControl);
-        public event PositionChangedHander PositionChanged;
+        public delegate void ControlPositionChangedHander(object sender, bool multiControl);
+        public event ControlPositionChangedHander ControlPositionChanged;
+
+        public delegate void ControlSizeChangedHander(object sender, Size newSize);
+        public event ControlSizeChangedHander ControlSizeChanged;
         
-        public delegate void ZIndexChangedHandler(object sender, int zindex);
-        public event ZIndexChangedHandler ZIndexChanged;
+        public delegate void ControlZIndexChangedHandler(object sender, int zindex);
+        public event ControlZIndexChangedHandler ControlZIndexChanged;
 
         public delegate void OnSelectMenu(object sender, UIElement element);
         public event OnSelectMenu SelectPropertiesMenu;
@@ -174,8 +177,8 @@ namespace MashupDesignTool
             }
             SetZindex(selectedProxyControls[0], newZindex);
 
-            if (ZIndexChanged != null)
-                ZIndexChanged(selectedControls[0].Control, newZindex);
+            if (ControlZIndexChanged != null)
+                ControlZIndexChanged(selectedControls[0].Control, newZindex);
 
             HideContextMenu();
         }
@@ -200,8 +203,8 @@ namespace MashupDesignTool
                 SetZindex(swapPC, zindex);
             }
 
-            if (ZIndexChanged != null)
-                ZIndexChanged(selectedControls[0].Control, newZindex);
+            if (ControlZIndexChanged != null)
+                ControlZIndexChanged(selectedControls[0].Control, newZindex);
 
             HideContextMenu();
         }
@@ -221,8 +224,8 @@ namespace MashupDesignTool
             }
             SetZindex(selectedProxyControls[0], newZindex);
 
-            if (ZIndexChanged != null)
-                ZIndexChanged(selectedControls[0].Control, newZindex);
+            if (ControlZIndexChanged != null)
+                ControlZIndexChanged(selectedControls[0].Control, newZindex);
             
             HideContextMenu();
         }
@@ -247,8 +250,8 @@ namespace MashupDesignTool
                 SetZindex(swapPC, zindex);
             }
 
-            if (ZIndexChanged != null)
-                ZIndexChanged(selectedControls[0].Control, newZindex);
+            if (ControlZIndexChanged != null)
+                ControlZIndexChanged(selectedControls[0].Control, newZindex);
 
             HideContextMenu();
         }
@@ -512,12 +515,12 @@ namespace MashupDesignTool
 
         void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            if (PositionChanged != null)
+            if (ControlPositionChanged != null)
             {
                 if (selectedControls.Count == 1)
-                    PositionChanged(this, false);
+                    ControlPositionChanged(this, false);
                 else
-                    PositionChanged(this, true);
+                    ControlPositionChanged(this, true);
             }
             if (!isCaptured)
             {
@@ -898,6 +901,11 @@ namespace MashupDesignTool
             selectedProxyControl.ResizeControl(width, height);
             selectedProxyControl.MoveControl(x, y);
             CursorManager.UpdateCursorPosition(pt);
+
+            if (ControlSizeChanged != null)
+            {
+                ControlSizeChanged(selectedProxyControl.RealControl.Control, new Size(width, height));
+            }
         }
 
         public void UpdateAllProxyControlPosition()
@@ -1138,12 +1146,12 @@ namespace MashupDesignTool
                 pc.MoveControl(pts[i].X - delta.X, pts[i].Y - delta.Y);
             }
 
-            if (b == true && PositionChanged != null)
+            if (b == true && ControlPositionChanged != null)
             {
                 if (selectedControls.Count == 1)
-                    PositionChanged(this, false);
+                    ControlPositionChanged(this, false);
                 else
-                    PositionChanged(this, true);
+                    ControlPositionChanged(this, true);
             }
         }
         #endregion keyboard
