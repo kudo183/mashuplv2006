@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
           xmlns:bl="clr-namespace:BasicLibrary;assembly=BasicLibrary"                 
     mc:Ignorable="d"
-    d:DesignHeight="40" d:DesignWidth="46" Loaded="UserControl_Loaded" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    d:DesignHeight="28" d:DesignWidth="30" Loaded="UserControl_Loaded" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
     
     <Grid x:Name="LayoutRoot" Background="Pink">
         <Image HorizontalAlignment="Left" Name="image1" Stretch="None" VerticalAlignment="Top" Source="Untitled.png" />

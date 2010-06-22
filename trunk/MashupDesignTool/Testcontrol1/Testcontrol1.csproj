@@ -115,10 +115,6 @@
       <Project>{F5482342-F4A3-49C0-94DE-E61C9A21853C}</Project>
       <Name>MacStyleContactFormControl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RssSlideshowControl\RssSlideshowControl.csproj">
-      <Project>{68C26FE2-0A06-4C0A-AD42-D738A0885E2E}</Project>
-      <Name>RssSlideshowControl</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Untitled.png" />

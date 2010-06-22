@@ -51,7 +51,7 @@ namespace BasicLibrary
             XDocument doc = XDocument.Load(reader);
             XElement root = doc.Root;
 
-            return (BasicControl)MyXmlSerializer.Load(root);
+            return (BasicControl)MyXmlSerializer.Deserialize(root);
         }
     }
 }

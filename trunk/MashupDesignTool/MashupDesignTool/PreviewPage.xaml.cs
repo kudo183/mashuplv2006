@@ -24,7 +24,7 @@ namespace MashupDesignTool
 
         public void Preview(string xml)
         {
-            DockCanvasSerializer.Load(xml, dockCanvas1);
+            DockCanvasSerializer.Deserialize(xml, dockCanvas1);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
