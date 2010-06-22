@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400" Loaded="UserControl_Loaded" xmlns:my3="clr-namespace:RssSlideshowControl;assembly=RssSlideshowControl" xmlns:my="clr-namespace:MacStyleContactFormControl;assembly=MacStyleContactFormControl">
+    d:DesignHeight="300" d:DesignWidth="400" Loaded="UserControl_Loaded" xmlns:my="clr-namespace:MacStyleContactFormControl;assembly=MacStyleContactFormControl">
 
     <Canvas x:Name="LayoutRoot">
         
@@ -43,7 +43,7 @@
             </Button.RenderTransformOrigin>
         </Button>
         <Image Canvas.Left="662" Canvas.Top="0" Height="400" Name="image1" Stretch="Fill" Width="500" />
-        <my3:RssSlideshow Canvas.Left="123" Canvas.Top="0" Height="140" Name="rssSlideshow1" Width="244" Background="Yellow" />
+        <!--<my3:RssSlideshow Canvas.Left="123" Canvas.Top="0" Height="208" Name="rssSlideshow1" Width="170" Background="Yellow" RssUrl="http://vnexpress.net/rss/gl/xa-hoi.rss" />-->
         <my:MacStyleContactForm Canvas.Left="299" Canvas.Top="0" Name="macStyleContactForm1" Height="251" Width="194" />
         <Canvas Canvas.Left="800" Canvas.Top="600" Height="100" Name="canvas1" Width="200" />
         <ComboBox Canvas.Left="0" Canvas.Top="144" Height="23" Name="comboBox1" Width="120">
@@ -58,5 +58,7 @@
             </ComboBox.Items>
             
         </ComboBox>
+        <!--<my2:ImageTitleDataListItem Canvas.Left="62" Canvas.Top="21" Name="imageTitleDataListItem1" Height="217" Width="252" />-->
+        <!--<my2:ListDataListItem Canvas.Left="69" Canvas.Top="12" Name="listDataListItem1" Width="161" />-->
     </Canvas>
 </UserControl>

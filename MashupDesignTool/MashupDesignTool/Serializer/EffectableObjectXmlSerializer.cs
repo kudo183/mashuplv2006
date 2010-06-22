@@ -58,16 +58,16 @@ namespace MashupDesignTool
             return sb.ToString();
         }
 
-        public static EffectableControl Load(string xml)
+        public static EffectableControl Deserialize(string xml)
         {
             XmlReader reader = XmlReader.Create(new StringReader(xml));
             XDocument doc = XDocument.Load(reader);
             XElement root = doc.Root;
 
-            return Load(root);
+            return Deserialize(root);
         }
 
-        public static EffectableControl Load(XElement root)
+        public static EffectableControl Deserialize(XElement root)
         {
             double top = 0, left = 0, width = 2, height = 2;
             int zindex = 1;
@@ -98,7 +98,7 @@ namespace MashupDesignTool
                         height = double.Parse(element.Value);
                         break;
                     case "Control":
-                        fe = ControlSerializer.Load(element.FirstNode.ToString());
+                        fe = ControlSerializer.Deserialize(element.FirstNode.ToString());
                         break;
                     default:
                         break;
@@ -115,7 +115,7 @@ namespace MashupDesignTool
                         string effectName = child.Name.LocalName;
                         Type effectType = Type.GetType(child.Attribute("Type").Value);
                         control.ChangeEffect(effectName, effectType);
-                        MyXmlSerializer.Load(child.FirstNode.ToString(), control.GetEffect(effectName));
+                        MyXmlSerializer.Deserialize(child.FirstNode.ToString(), control.GetEffect(effectName));
                     }
                 }
             }

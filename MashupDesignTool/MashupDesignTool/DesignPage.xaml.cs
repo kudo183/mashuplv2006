@@ -18,6 +18,7 @@ using BasicLibrary;
 using MapulRibbon;
 using ItemCollectionEditor;
 using System.Text;
+using System.IO;
 
 namespace MashupDesignTool
 {
@@ -44,6 +45,7 @@ namespace MashupDesignTool
         double toolbarWidthBeforeCollapse;
         double propertiesGridWidthBeforeCollapse;
         List<ControlInfo> listControls = new List<ControlInfo>();
+        List<ControlInfo> listListItemControls = new List<ControlInfo>();
         List<EffectInfo> listSingleEffects = new List<EffectInfo>();
         List<EffectInfo> listListEffects = new List<EffectInfo>();
         
@@ -171,6 +173,7 @@ namespace MashupDesignTool
             clientRoot = absoluteUri.Substring(0, lastSlash + 1);
 
             DownloadControlInfo();
+            DownloadListItemControlInfo();
             DownloadEffectInfo();
             doubleClickTimer = new DispatcherTimer();
             doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
@@ -305,6 +308,38 @@ namespace MashupDesignTool
             }
         }
         #endregion download Effects/info.xml
+
+        #region download Controls/ListItemControlInfo.xml
+        private void DownloadListItemControlInfo()
+        {
+            //Get the Uri to ClientBin directory:
+            string absoluteUri = Application.Current.Host.Source.AbsoluteUri;
+            int lastSlash = absoluteUri.LastIndexOf("/");
+            string assemblyPath = absoluteUri.Substring(0, lastSlash + 1);
+            //And tack on name of assembly:
+            assemblyPath += "Controls/listItemControlInfo.xml";
+
+            Uri uri = new Uri(assemblyPath, UriKind.Absolute);
+            //Start an async download:
+            WebClient webClient = new WebClient();
+            webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_DownloadListItemControlInfoCompleted);
+            webClient.OpenReadAsync(uri);
+        }
+
+        private void webClient_DownloadListItemControlInfoCompleted(object sender, OpenReadCompletedEventArgs e)
+        {
+            XmlReader reader = XmlReader.Create(e.Result);
+            XDocument document = XDocument.Load(reader);
+            string imageFolder = clientRoot + @"Controls/Images";
+            List<ControlGroupInfo> list = new List<ControlGroupInfo>();
+
+            foreach (XElement element in document.Descendants("Control"))
+            {
+                ControlInfo ci = new ControlInfo(element, imageFolder);
+                listListItemControls.Add(ci);
+            }
+        }
+        #endregion download Controls/ListItemControlInfo.xml
 
         #region control tree
         //private void DownloadControl(ControlInfo ci)
@@ -771,7 +806,7 @@ namespace MashupDesignTool
 
         void rbDataListEditor_OnClick(object sender, RoutedEventArgs e)
         {
-            DataListEditor d = new DataListEditor(designCanvas1.ControlContainer, designCanvas1.SelectedControls[0].Control as BasicDataListControl);
+            DataListEditor d = new DataListEditor(designCanvas1.ControlContainer, designCanvas1.SelectedControls[0].Control as BasicDataListControl, listListItemControls, controlDownloader);
             d.ShowDialog();
         }
 
@@ -1275,6 +1310,27 @@ namespace MashupDesignTool
                             AddDllList(controlDll, controlReferenceDll, ci.DllFilename, ci.DllReferences);
                             break;
                         }
+                    if (typeof(BasicDataListControl).IsAssignableFrom(type))
+                    {
+                        BasicDataListControl bdlc = (BasicDataListControl)ec.Control;
+                        try
+                        {
+                            XmlReader reader = XmlReader.Create(new StringReader(bdlc.ListItemXMlString));
+                            XDocument doc = XDocument.Load(reader);
+                            XElement root = doc.Root;
+
+                            Type itemType = Type.GetType(root.Attribute("Type").Value);
+                            string itemTypeFullname = itemType.FullName;
+
+                            foreach (ControlInfo ci in listListItemControls)
+                                if (ci.ControlName == itemTypeFullname)
+                                {
+                                    AddDllList(controlDll, controlReferenceDll, ci.DllFilename, ci.DllReferences);
+                                    break;
+                                }
+                        }
+                        catch { }
+                    }
 
                     List<string> effectList = ec.GetListEffectPropertyName();
                     foreach (string effectName in effectList)

@@ -340,7 +340,7 @@ namespace BasicLibrary
             }
         }
         #region load
-        public static object Load(string xml)
+        public static object Deserialize(string xml)
         {
             object obj = null;
             try
@@ -349,23 +349,23 @@ namespace BasicLibrary
                 XDocument doc = XDocument.Load(reader);
                 XElement root = doc.Root;
 
-                obj = Load(root);
+                obj = Deserialize(root);
             }
             catch { }
             return obj;
         }
 
-        public static object Load(XElement root)
+        public static object Deserialize(XElement root)
         {
             object obj = null;
             try
             {
                 Type type = Type.GetType(root.Attribute("Type").Value);
                 if (type.IsArray)
-                    return LoadArray(null, root);
+                    return DeserializeArray(null, root);
 
                 if (typeof(IList).IsAssignableFrom(type))
-                    return LoadList(root);
+                    return DeserializeList(root);
 
                 obj = Activator.CreateInstance(type);
                 if (root.HasElements)
@@ -376,21 +376,21 @@ namespace BasicLibrary
                     foreach (XElement element in root.Elements())
                     {
                         propertyName = element.Name.ToString();
-                        value = Load(obj, element);
+                        value = Deserialize(obj, element);
                         if (!typeof(IList).IsAssignableFrom(value.GetType()))
                             type.GetProperty(propertyName).SetValue(obj, value, null);
                     }
                 }
                 else
                 {
-                    return MyXmlSerializer.Load(new object(), root);
+                    return MyXmlSerializer.Deserialize(new object(), root);
                 }
             }
             catch { }
             return obj;
         }
 
-        public static void Load(string xml, object obj)
+        public static void Deserialize(string xml, object obj)
         {
             try
             {
@@ -412,7 +412,7 @@ namespace BasicLibrary
                 foreach (XElement element in root.Elements())
                 {
                     propertyName = element.Name.ToString();
-                    value = Load(obj, element);
+                    value = Deserialize(obj, element);
                     if (!typeof(IList).IsAssignableFrom(value.GetType()))
                         type.GetProperty(propertyName).SetValue(obj, value, null);
                 }
@@ -420,34 +420,34 @@ namespace BasicLibrary
             catch { }
         }
 
-        private static object Load(object obj, XElement element)
+        private static object Deserialize(object obj, XElement element)
         {
             Type type = Type.GetType(element.Attribute("Type").Value);
             if (type.IsPrimitive)
             {
-                return LoadPrimitive(element);
+                return DeserializePrimitive(element);
             }
             else if (type.IsArray)
             {
-                return LoadArray(obj, element);
+                return DeserializeArray(obj, element);
             }
             else if (typeof(IList).IsAssignableFrom(type))
             {
-                return LoadList(obj, element);
+                return DeserializeList(obj, element);
             }
             else
             {
-                return LoadNotPrimitive(obj, element);
+                return DeserializeNonePrimitive(obj, element);
             }
         }
 
-        private static object LoadPrimitive(XElement element)
+        private static object DeserializePrimitive(XElement element)
         {
             Type type = Type.GetType(element.Attribute("Type").Value);
             return Convert.ChangeType(element.Value, type, null);
         }
 
-        private static object LoadArray(object obj, XElement element)
+        private static object DeserializeArray(object obj, XElement element)
         {
             Type type = Type.GetType(element.Attribute("Type").Value);
 
@@ -459,14 +459,14 @@ namespace BasicLibrary
             count = 0;
             foreach (XElement child in element.Elements("Child"))
             {
-                object temp = Load(array, child);
+                object temp = Deserialize(array, child);
                 array.SetValue(temp, count);
                 count++;
             }
             return array;
         }
 
-        private static object LoadList(object obj, XElement element)
+        private static object DeserializeList(object obj, XElement element)
         {
             Type type = Type.GetType(element.Attribute("Type").Value);
             //IList list = (IList)Activator.CreateInstance(type);
@@ -475,26 +475,26 @@ namespace BasicLibrary
             foreach (XElement child in element.Elements("Child"))
             {
                 //object temp = Load(list, child);
-                object temp = Load(child.ToString(SaveOptions.DisableFormatting));
+                object temp = Deserialize(child.ToString(SaveOptions.DisableFormatting));
                 list.Add(temp);
             }
             return list;
         }
 
-        private static object LoadList(XElement element)
+        private static object DeserializeList(XElement element)
         {
             Type type = Type.GetType(element.Attribute("Type").Value);
             IList list = (IList)Activator.CreateInstance(type);
             foreach (XElement child in element.Elements("Child"))
             {
                 //object temp = Load(list, child);
-                object temp = Load(child.ToString(SaveOptions.DisableFormatting));
+                object temp = Deserialize(child.ToString(SaveOptions.DisableFormatting));
                 list.Add(temp);
             }
             return list;
         }
 
-        private static object LoadNotPrimitive(object obj, XElement element)
+        private static object DeserializeNonePrimitive(object obj, XElement element)
         {
             Type type = Type.GetType(element.Attribute("Type").Value);
             if (type == typeof(System.String))
@@ -521,7 +521,7 @@ namespace BasicLibrary
                 if (type == typeof(ControlTemplate))
                     continue;
                 propertyName = child.Name.ToString();
-                value = Load(obj1, child);
+                value = Deserialize(obj1, child);
                 if (!typeof(IList).IsAssignableFrom(value.GetType()))
                     type.GetProperty(propertyName).SetValue(obj1, value, null);
             }

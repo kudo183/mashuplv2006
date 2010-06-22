@@ -4,7 +4,6 @@
     <Name>MacStyleContactFormControl.MacStyleContactForm</Name>
     <DllFilename>MacStyleContactFormControl.dll</DllFilename>
     <DllReferences>
-      <Dll>DockCanvas.dll</Dll>
       <Dll>System.ComponentModel.DataAnnotations.dll</Dll>
       <Dll>System.Windows.Controls.Data.Input.dll</Dll>
     </DllReferences>
@@ -17,7 +16,6 @@
     <Name>ControlLibrary.ImageListControl</Name>
     <DllFilename>ImageListControl.dll</DllFilename>
     <DllReferences>
-      <Dll>BasicLibrary.dll</Dll>
       <Dll>EffectLibrary.dll</Dll>
     </DllReferences>
     <DisplayName>Image List</DisplayName>
@@ -41,7 +39,6 @@
     <Name>RssSlideshowControl.RssSlideshow</Name>
     <DllFilename>RssSlideshowControl.dll</DllFilename>
     <DllReferences>
-      <Dll>DockCanvas.dll</Dll>
       <Dll>System.ComponentModel.DataAnnotations.dll</Dll>
       <Dll>System.Windows.Controls.Data.Input.dll</Dll>
       <Dll>Liquid.RichText.dll</Dll>

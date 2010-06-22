@@ -647,7 +647,7 @@
                                                     <RadioButton Margin="8,0,6,0" Height="Auto" Width="Auto" x:Name="Control" Style="{StaticResource RadioButtonControlStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Control_Click">
                                                         <StackPanel Orientation="Horizontal">
                                                             <Image Width="15" Height="15" Source="{Binding IconName}" Stretch="Uniform"></Image>
-                                                            <TextBlock Margin="2,0,2,0" FontFamily="Verdana" FontSize="11" Text="{Binding DisplayName}" UseLayoutRounding="False" Style="{StaticResource TextBlockControlDisplayNameStyle}" Width="{Binding Width}" TextTrimming="WordEllipsis" />
+                                                            <TextBlock Margin="2,0,2,0" FontFamily="Verdana" FontSize="11" Text="{Binding DisplayName}" UseLayoutRounding="False" Style="{StaticResource TextBlockControlDisplayNameStyle}" TextTrimming="WordEllipsis" />
                                                         </StackPanel>
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip Content="{Binding Description}"></ToolTip>

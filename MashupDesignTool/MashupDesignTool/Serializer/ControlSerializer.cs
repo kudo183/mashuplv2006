@@ -31,13 +31,13 @@ namespace MashupDesignTool
             return BasicControlSerializer.Serialize(control as BasicControl);
         }
 
-        public static FrameworkElement Load(string xml)
+        public static FrameworkElement Deserialize(string xml)
         {
             XmlReader reader = XmlReader.Create(new StringReader(xml));
             XDocument doc = XDocument.Load(reader);
             XElement root = doc.Root;
 
-            return (FrameworkElement)MyXmlSerializer.Load(root);
+            return (FrameworkElement)MyXmlSerializer.Deserialize(root);
         }
     }
 }

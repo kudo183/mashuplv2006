@@ -68,7 +68,7 @@ namespace MashupDesignTool
             return sb.ToString();
         }
 
-        public static void Load(string xml, DockCanvas.DockCanvas canvas)
+        public static void Deserialize(string xml, DockCanvas.DockCanvas canvas)
         {
             XmlReader reader = XmlReader.Create(new StringReader(xml));
             XDocument doc = XDocument.Load(reader);
@@ -86,11 +86,11 @@ namespace MashupDesignTool
                         canvas.Height = double.Parse(element.Value);
                         break;
                     case "Background":
-                        canvas.Background = (Brush)MyXmlSerializer.Load(element.FirstNode.ToString());
+                        canvas.Background = (Brush)MyXmlSerializer.Deserialize(element.FirstNode.ToString());
                         break;
                     case "Controls":
                         foreach (XElement child in element.Elements())
-                            canvas.Children.Add(EffectableObjectXmlSerializer.Load(child));
+                            canvas.Children.Add(EffectableObjectXmlSerializer.Deserialize(child));
                         canvas.UpdateChildrenPosition();
                         break;
                     case "Events":
@@ -137,11 +137,11 @@ namespace MashupDesignTool
                         canvas.Height = double.Parse(element.Value);
                         break;
                     case "Background":
-                        canvas.Background = (Brush)MyXmlSerializer.Load(element.FirstNode.ToString());
+                        canvas.Background = (Brush)MyXmlSerializer.Deserialize(element.FirstNode.ToString());
                         break;
                     case "Controls":
                         foreach (XElement child in element.Elements())
-                            designCanvas.AddControl(EffectableObjectXmlSerializer.Load(child));
+                            designCanvas.AddControl(EffectableObjectXmlSerializer.Deserialize(child));
                         break;
                     case "Events":
                         eventsElement = element;
