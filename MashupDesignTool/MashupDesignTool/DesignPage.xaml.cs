@@ -56,6 +56,7 @@ namespace MashupDesignTool
             designCanvas1.ControlPositionChanged += new DesignCanvas.ControlPositionChangedHander(designCanvas1_PositionChanged);
             designCanvas1.ControlZIndexChanged += new DesignCanvas.ControlZIndexChangedHandler(designCanvas1_ZIndexChanged);
             designCanvas1.ControlSizeChanged += new DesignCanvas.ControlSizeChangedHander(designCanvas1_ControlSizeChanged);
+            designCanvas1.ControlDelete += new DesignCanvas.ControlDeleteHandler(designCanvas1_ControlDelete);
 
             propertiesGrid.PropertyValueChange += new SL30PropertyGrid.PropertyGrid.OnPropertyValueChange(propertiesGrid_PropertyValueChange);
 
@@ -163,6 +164,18 @@ namespace MashupDesignTool
         {
             propertiesGrid.UpdatePropertyValue("Width");
             propertiesGrid.UpdatePropertyValue("Height");
+        }
+
+        void designCanvas1_ControlDelete(object sender, List<EffectableControl> list)
+        {
+            foreach (EffectableControl ec in list)
+            {
+                BasicControl bc = ec.Control as BasicControl;
+                if (bc != null)
+                {
+                    MDTEventManager.RemoveEventInfoRelateTo(bc);
+                }
+            }
         }
         #endregion handle event from designCanvas
 
