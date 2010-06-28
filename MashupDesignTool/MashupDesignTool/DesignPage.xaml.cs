@@ -183,12 +183,28 @@ namespace MashupDesignTool
 
             ////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////
-            //test t = new test();
-            //t.Width = t.Height = 100;
-            //SilverlightControl1 sc1 = new SilverlightControl1();
-            ////sc1.Width = sc1.Height = 10;
-            //designCanvas1.AddControl(t, 0, 0, 0, 0);
-            //designCanvas1.AddControl(sc1, 0, 0, 0, 0);
+            test t = new test();
+            t.Width = t.Height = 100;
+            SilverlightControl1 sc1 = new SilverlightControl1();
+            sc1.Width = sc1.Height = 10;
+            designCanvas1.AddControl(sc1);
+            designCanvas1.AddControl(t);
+            SilverlightControl1 sc2 = new SilverlightControl1();
+            sc2.Width = sc2.Height = 100;
+            designCanvas1.AddControl(sc2);
+
+            //string str = "<Page><NeccesaryDlls><ControlDll><Dll>MacStyleContactFormControl.dll</Dll><Dll>ImageListControl.dll</Dll></ControlDll><ControlReferenceDll><Dll>System.ComponentModel.DataAnnotations.dll</Dll><Dll>System.Windows.Controls.Data.Input.dll</Dll><Dll>EffectLibrary.dll</Dll></ControlReferenceDll><EffectDll><Dll>EffectLibrary.dll</Dll></EffectDll><EffectReferenceDll><Dll>DockCanvas.dll</Dll></EffectReferenceDll></NeccesaryDlls><DockCanvas><Width>400</Width><Height>200</Height><Background><Root Type=\"System.Windows.Media.SolidColorBrush, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Color Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</B></Color><Opacity Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</Opacity><Transform Type=\"System.Windows.Media.MatrixTransform, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Matrix Type=\"System.Windows.Media.Matrix, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><M11 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M11><M12 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M12><M21 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M21><M22 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M22><OffsetX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetX><OffsetY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetY></Matrix></Transform><RelativeTransform Type=\"System.Windows.Media.MatrixTransform, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Matrix Type=\"System.Windows.Media.Matrix, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><M11 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M11><M12 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M12><M21 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M21><M22 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M22><OffsetX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetX><OffsetY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetY></Matrix></RelativeTransform></Root></Background><Controls><EffectableControl><Top>0</Top><Left>0</Left><ZIndex>1</ZIndex><DockType>Left</DockType><Width>168</Width><Height>200</Height><Control Type=\"MacStyleContactFormControl.MacStyleContactForm, MacStyleContactFormControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><MacStyleContactForm Type=\"MacStyleContactFormControl.MacStyleContactForm, MacStyleContactFormControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><Width Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">168</Width><Height Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">200</Height><Name Type=\"System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">macstylecontactform_5977c226-fca1-4a4f-92ff-bd860b3c1410</Name><Visibility Type=\"System.Windows.Visibility, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">Visible</Visibility><ReceiveEmail Type=\"System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">tranphuonghai@gmail.com</ReceiveEmail><LabelColor Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</B></LabelColor><ButtonColor Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">122</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">122</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">122</B></ButtonColor><ContentColor Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</B></ContentColor><ContentBackgroundColor Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">128</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">128</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">128</B></ContentBackgroundColor></MacStyleContactForm></Control><Effects /></EffectableControl><EffectableControl><Top>0</Top><Left>168</Left><ZIndex>2</ZIndex><DockType>Fill</DockType><Width>232</Width><Height>200</Height><Control Type=\"ControlLibrary.ImageListControl, ImageListControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><ImageListControl Type=\"ControlLibrary.ImageListControl, ImageListControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><Width Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">232</Width><Height Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">200</Height><Name Type=\"System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">imagelistcontrol_b10c7a87-8ce5-4107-bff4-0b39c957c203</Name><Visibility Type=\"System.Windows.Visibility, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">Visible</Visibility></ImageListControl></Control><Effects><ListEffect Type=\"EffectLibrary.Carousel, EffectLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><Root Type=\"EffectLibrary.Carousel, EffectLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><ScaleX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</ScaleX><ScaleY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</ScaleY><Duration Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">5000</Duration><PaddingLeft Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</PaddingLeft><PaddingRight Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</PaddingRight><PaddingTop Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</PaddingTop><PaddingBottom Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</PaddingBottom><ItemWidth Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">20</ItemWidth><ItemHeight Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">20</ItemHeight><BackgroundColor Type=\"System.Windows.Media.SolidColorBrush, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Color Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</B></Color><Opacity Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</Opacity><Transform Type=\"System.Windows.Media.MatrixTransform, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Matrix Type=\"System.Windows.Media.Matrix, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><M11 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M11><M12 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M12><M21 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M21><M22 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M22><OffsetX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetX><OffsetY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetY></Matrix></Transform><RelativeTransform Type=\"System.Windows.Media.MatrixTransform, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Matrix Type=\"System.Windows.Media.Matrix, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><M11 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M11><M12 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M12><M21 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M21><M22 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M22><OffsetX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetX><OffsetY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetY></Matrix></RelativeTransform></BackgroundColor><IsSelfHandle Type=\"System.Boolean, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">True</IsSelfHandle></Root></ListEffect></Effects></EffectableControl></Controls><Events /></DockCanvas></Page>";
+            //PageControl pc = new PageControl();
+            //pc.LoadControl(str);
+            //designCanvas1.AddControl(pc);
+
+            //PageControl pc1 = new PageControl();
+            //pc1.LoadControl(str);
+            //designCanvas1.AddControl(pc1);
+
+            //designCanvas1.Clear();
+            //PageSerializer pc = new PageSerializer();
+            //pc.DeserializeInDesign(str, designCanvas1, controlDownloader, effectDownloader);
 
             //List<int> abc = new List<int>();
             //abc.Add(1);
@@ -199,7 +215,7 @@ namespace MashupDesignTool
             //abc.Add(3);
 
             //List<int> def = (List<int>)MyXmlSerializer.Load(MyXmlSerializer.Serialize(abc));
-
+            
             //int[] array = new int[] { 1};
             //string st = MyXmlSerializer.Serialize(array);
             //int[] array1 = (int[])MyXmlSerializer.Load(st);
@@ -219,7 +235,18 @@ namespace MashupDesignTool
 
             //MessageBox.Show(abc);
 
-            //MDTEventManager.RegisterEvent(t, "Test1", sc1,, "Hello1");
+            List<BasicControl> bsc = new List<BasicControl>();
+            bsc.Add(sc1);
+            bsc.Add(sc2);
+            List<string> strs = new List<string>();
+            strs.Add("Hello1");
+            strs.Add("Hello1");
+            MDTEventManager.RegisterEvent(t, "Test1", bsc, strs);
+
+            List<string> strs1 = new List<string>();
+            strs1.Add("Hello2");
+            strs1.Add("Hello2");
+            MDTEventManager.RegisterEvent(t, "Test2", bsc, strs1);
             /////////////////////////////////////////////// "Hello1");
             //MDTEventManager.RegisterEvent(t, "Test1", sc1/////////////////
             ////////////////////////////////////////////////////////////////
@@ -448,7 +475,7 @@ namespace MashupDesignTool
         {
             FrameworkElement uc = LoadedControlAssembly[controlName].CreateInstance(controlName) as FrameworkElement;
             if (uc != null)
-                designCanvas1.AddControl(uc, 100.0, 100.0, 400, 300);
+                designCanvas1.AddControl(uc);
         }
 
         private void AddFrameworkControl(string controlName)
@@ -504,7 +531,7 @@ namespace MashupDesignTool
                     break;
             }
             if (uc != null)
-                designCanvas1.AddControl(uc, 100.0, 100.0, 400, 300);
+                designCanvas1.AddControl(uc);
         }
 
         private void Control_Click(object sender, RoutedEventArgs e)
@@ -1225,18 +1252,19 @@ namespace MashupDesignTool
 
         private void btnFullScreen_OnClick(object sender, RoutedEventArgs e)
         {
-            RibbonToggleButton rtb = (RibbonToggleButton)sender;
-            Application.Current.Host.Content.IsFullScreen = rtb.IsChecked;
-            if (rtb.IsChecked == true)
-            {
-                rtb.TooltipText = "Switch to full screen mode";
-                rtb.ImageUrl = new BitmapImage(new Uri("/MashupDesignTool;component/Images/nofullscreen.png", UriKind.Relative));
-            }
-            else
-            {
-                rtb.TooltipText = "Escape full screen mode";
-                rtb.ImageUrl = new BitmapImage(new Uri("/MashupDesignTool;component/Images/fullscreen.png", UriKind.Relative));
-            }
+            //RibbonToggleButton rtb = (RibbonToggleButton)sender;
+            //Application.Current.Host.Content.IsFullScreen = rtb.IsChecked;
+            //if (rtb.IsChecked == true)
+            //{
+            //    rtb.TooltipText = "Switch to full screen mode";
+            //    rtb.ImageUrl = new BitmapImage(new Uri("/MashupDesignTool;component/Images/nofullscreen.png", UriKind.Relative));
+            //}
+            //else
+            //{
+            //    rtb.TooltipText = "Escape full screen mode";
+            //    rtb.ImageUrl = new BitmapImage(new Uri("/MashupDesignTool;component/Images/fullscreen.png", UriKind.Relative));
+            //}
+            Application.Current.Host.Content.IsFullScreen = !Application.Current.Host.Content.IsFullScreen;
         }
 
         UIElement oldPage;
@@ -1248,7 +1276,12 @@ namespace MashupDesignTool
             this.Content = pp;
             pp.Preview(DockCanvasSerializer.Serialize(designCanvas1));
             
-            string str = Save();
+            List<string> controlDll = new List<string>();
+            List<string> controlReferenceDll = new List<string>();
+            List<string> effectDll = new List<string>();
+            List<string> effectReferenceDll = new List<string>();
+            GetDlls(controlDll, controlReferenceDll, effectDll, effectReferenceDll);
+            string str = PageSerializer.Serialize(designCanvas1, controlDll, controlReferenceDll, effectDll, effectReferenceDll);
         }
 
         void pp_BackToEditor(object sender)
@@ -1257,45 +1290,6 @@ namespace MashupDesignTool
         }
 
         #region Save
-        private string Save()
-        {
-            StringBuilder sb = new StringBuilder();
-            XmlWriter xm = XmlWriter.Create(sb, new XmlWriterSettings() { OmitXmlDeclaration = true });
-
-            xm.WriteStartElement("Page");
-            WriteNeccesaryDlls(xm);
-            xm.WriteRaw(DockCanvasSerializer.Serialize(designCanvas1));
-            xm.WriteEndElement();
-
-            xm.Flush();
-            xm.Close();
-            return sb.ToString();
-        }
-
-        private void WriteNeccesaryDlls(XmlWriter xm)
-        {
-            List<string> controlDll = new List<string>();
-            List<string> controlReferenceDll = new List<string>();
-            List<string> effectDll = new List<string>();
-            List<string> effectReferenceDll = new List<string>();
-            GetDlls(controlDll, controlReferenceDll, effectDll, effectReferenceDll);
-
-            xm.WriteStartElement("NeccesaryDlls");
-            WriteDllList(xm, controlDll, "ControlDll");
-            WriteDllList(xm, controlReferenceDll, "ControlReferenceDll");
-            WriteDllList(xm, effectDll, "EffectDll");
-            WriteDllList(xm, effectReferenceDll, "EffectReferenceDll");
-            xm.WriteEndElement();
-        }
-
-        private void WriteDllList(XmlWriter xm, List<string> dlls, string rootName)
-        {
-            xm.WriteStartElement(rootName);
-            foreach (string str in dlls)
-                xm.WriteElementString("Dll", str);
-            xm.WriteEndElement();
-        }
-        
         private void GetDlls(List<string> controlDll, List<string> controlReferenceDll, List<string> effectDll, List<string> effectReferenceDll)
         {
             foreach (EffectableControl ec in designCanvas1.Controls)

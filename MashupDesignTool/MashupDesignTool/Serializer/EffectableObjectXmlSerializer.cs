@@ -19,6 +19,15 @@ namespace MashupDesignTool
 {
     public class EffectableObjectXmlSerializer
     {
+        public delegate void DeserializeCompletedHandler(EffectableControl control);
+        public event DeserializeCompletedHandler DeserializeCompleted;
+        
+        FrameworkElement fe = null;
+        XElement effectsElement = null, controlElement = null;
+        double top = 0, left = 0, width = 2, height = 2;
+        int zindex = 1;
+        DockCanvas.DockCanvas.DockType dockType = DockCanvas.DockCanvas.DockType.None;
+
         public static string Serialize(EffectableControl control)
         {
             StringBuilder sb = new StringBuilder();
@@ -34,7 +43,21 @@ namespace MashupDesignTool
             xm.WriteElementString("Height", control.Height.ToString());
 
             xm.WriteStartElement("Control");
-            xm.WriteRaw(ControlSerializer.Serialize(control.Control));
+            xm.WriteAttributeString("Type", control.Control.GetType().AssemblyQualifiedName);
+            if (typeof(PageControl) == control.Control.GetType())
+            {
+                PageControl pc = control.Control as PageControl;
+                xm.WriteElementString("Xml", pc.Xml);
+                List<string> propertyList = pc.GetParameterNameList();
+                foreach (string propertyName in propertyList)
+                {
+                    object value = pc.GetParameterValue(propertyName);
+                    if (value != null)
+                        xm.WriteRaw(MyXmlSerializer.Serialize(value, propertyName));
+                }
+            }
+            else
+                xm.WriteRaw(ControlSerializer.Serialize(control.Control));
             xm.WriteEndElement();
 
             xm.WriteStartElement("Effects");
@@ -58,22 +81,22 @@ namespace MashupDesignTool
             return sb.ToString();
         }
 
-        public static EffectableControl Deserialize(string xml)
+        #region deserialize
+        public void Deserialize(string xml)
         {
             XmlReader reader = XmlReader.Create(new StringReader(xml));
             XDocument doc = XDocument.Load(reader);
             XElement root = doc.Root;
-
-            return Deserialize(root);
+            Deserialize(root);
         }
 
-        public static EffectableControl Deserialize(XElement root)
+        public void Deserialize(XElement root)
         {
-            double top = 0, left = 0, width = 2, height = 2;
-            int zindex = 1;
-            DockCanvas.DockCanvas.DockType dockType = DockCanvas.DockCanvas.DockType.None;
-            FrameworkElement fe = null;
-            BasicEffect mainEffect = null;
+            top = left = 0;
+            width = height = 2;
+            zindex = 1;
+            dockType = DockCanvas.DockCanvas.DockType.None;
+            bool isPageControl = false;
 
             foreach (XElement element in root.Elements())
             {
@@ -98,25 +121,44 @@ namespace MashupDesignTool
                         height = double.Parse(element.Value);
                         break;
                     case "Control":
-                        fe = ControlSerializer.Deserialize(element.FirstNode.ToString());
+                        Type type = Type.GetType(element.Attribute("Type").Value);
+                        if (type == typeof(PageControl))
+                        {
+                            controlElement = element;
+                            string xml = element.Element("Xml").Value;
+                            PageControl pageControl = new PageControl();
+                            fe = pageControl;
+                            pageControl.LoadControlCompleted += new PageControl.LoadControlCompletedHandler(pageControl_LoadControlCompleted);
+                            pageControl.LoadControl(xml);
+                        }
+                        else
+                            fe = ControlSerializer.Deserialize(element.FirstNode.ToString());
+                        break;
+                    case "Effects":
+                        effectsElement = element;
                         break;
                     default:
                         break;
                 }
             }
 
-            EffectableControl control = new EffectableControl(fe);
-            foreach (XElement element in root.Elements())
+            if (!isPageControl)
             {
-                if (element.Name == "Effects")
+                AddEffect();
+            }
+        }
+
+        private void AddEffect()
+        {
+            EffectableControl control = new EffectableControl(fe);
+            if (effectsElement != null)
+            {
+                foreach (XElement child in effectsElement.Elements())
                 {
-                    foreach (XElement child in element.Elements())
-                    {
-                        string effectName = child.Name.LocalName;
-                        Type effectType = Type.GetType(child.Attribute("Type").Value);
-                        control.ChangeEffect(effectName, effectType);
-                        MyXmlSerializer.Deserialize(child.FirstNode.ToString(), control.GetEffect(effectName));
-                    }
+                    string effectName = child.Name.LocalName;
+                    Type effectType = Type.GetType(child.Attribute("Type").Value);
+                    control.ChangeEffect(effectName, effectType);
+                    MyXmlSerializer.Deserialize(child.FirstNode.ToString(), control.GetEffect(effectName));
                 }
             }
 
@@ -127,7 +169,24 @@ namespace MashupDesignTool
             DockCanvas.DockCanvas.SetZIndex(control, zindex);
             DockCanvas.DockCanvas.SetDockType(control, dockType);
 
-            return control;
+            if (DeserializeCompleted != null)
+                DeserializeCompleted(control);
         }
+
+        void pageControl_LoadControlCompleted(PageControl pc)
+        {
+            PageControl pageControl = fe as PageControl;
+            foreach (XElement element in controlElement.Elements())
+            {
+                if (element.Name != "Xml")
+                {
+                    object value = MyXmlSerializer.Deserialize(element);
+                    pageControl.SetParameterValue(element.Name.ToString(), value);
+                }
+            }
+
+            AddEffect();
+        }
+        #endregion deserialize
     }
 }

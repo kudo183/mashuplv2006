@@ -17,6 +17,9 @@ namespace MashupDesignTool
     {
         bool b = false;
         string oldHandleOperation = "";
+        BasicControl raiseControl;
+        MDTEventInfo mdtei;
+        List<ControlComboBoxItemData> listControls;
 
         internal EventBindingGridItem()
         {
@@ -27,79 +30,53 @@ namespace MashupDesignTool
             : this()
         {
             lblEventName.Content = eventName;
-            lblEventName.Tag = raiseControl;
-            cbbControl.ItemsSource = listControl;
-            cbbControl.SelectedIndex = 0;
+            this.raiseControl = raiseControl;
+            this.listControls = listControl;
+            mdtei = MDTEventManager.GetEventInfo(raiseControl, eventName);
+            if (mdtei == null)
+                btnHandle.Content = "None";
+            else
+                btnHandle.Content = "Handled";
         }
 
-        public EventBindingGridItem(BasicControl raiseControl, string eventName, List<ControlComboBoxItemData> listControl, BasicControl handleControl, string handleOperation)
-            : this(raiseControl, eventName, listControl)
+        private void btnHandle_Click(object sender, RoutedEventArgs e)
         {
-            for (int i = 1; i < listControl.Count; i++)
+            EventEditor ee = new EventEditor(raiseControl, (string)lblEventName.Content, listControls, mdtei);
+            ee.Closed += new EventHandler(ee_Closed);
+            ee.Show();
+        }
+
+        void ee_Closed(object sender, EventArgs e)
+        {
+            EventEditor ee = (EventEditor)sender;
+            if (ee.DialogResult == true)
             {
-                if (listControl[i].Control.Name == handleControl.Name)
+                if (ee.IsHandled)
                 {
-                    b = true;
-                    oldHandleOperation = handleOperation;
-                    cbbControl.SelectedIndex = i;
+                    mdtei = ee.NewMdtei;
+                    btnHandle.Content = "Handled";
+                }
+                else
+                {
+                    mdtei = null;
+                    btnHandle.Content = "None";
                 }
             }
         }
 
-        private void cbbControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbbControl.SelectedIndex == 0)
-            {
-                MDTEventManager.RegisterEvent((BasicControl)lblEventName.Tag, (string)lblEventName.Content, null, "");
-                cbbOperation.ItemsSource = new List<string>();
-                cbbOperation.IsEnabled = false;
-                return;
-            }
-            ControlComboBoxItemData item = (ControlComboBoxItemData)cbbControl.SelectedItem;
-            if (item == null)
-            {
-                cbbOperation.IsEnabled = false;
-                return;
-            }
-            List<string> list = item.Control.GetListOperationName();
-            cbbOperation.Tag = item.Control;
-            cbbOperation.IsEnabled = true;
-            cbbOperation.ItemsSource = list;
-            if (b == true)
-            {
-                for (int i = 0; i < list.Count; i++)
-                    if (list[i] == oldHandleOperation)
-                    {
-                        cbbOperation.SelectedIndex = i;
-                        break;
-                    }
-                b = false;
-            }
-        }
+        //private void UserControl_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    lblEventNameRegion.Background = new SolidColorBrush(Color.FromArgb(255, 254, 201, 0));
+        //}
 
-        private void cbbOperation_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbbOperation.SelectedIndex == -1)
-                return;
-            string operation = (string)cbbOperation.SelectedItem;
-            if (operation == null)
-                return;
-            MDTEventManager.RegisterEvent((BasicControl)lblEventName.Tag, (string)lblEventName.Content, (BasicControl)cbbOperation.Tag, operation);
-        }
+        //private void UserControl_LostFocus(object sender, RoutedEventArgs e)
+        //{
+        //    lblEventNameRegion.Background = new SolidColorBrush(Color.FromArgb(255, 233, 236, 255));
+        //}
 
-        private void UserControl_GotFocus(object sender, RoutedEventArgs e)
-        {
-            lblEventNameRegion.Background = new SolidColorBrush(Color.FromArgb(255, 254, 201, 0));
-        }
-
-        private void UserControl_LostFocus(object sender, RoutedEventArgs e)
-        {
-            lblEventNameRegion.Background = new SolidColorBrush(Color.FromArgb(255, 233, 236, 255));
-        }
-
-        private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            this.Focus();
-        }
+        //private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    this.Focus();
+        //}
     }
 }

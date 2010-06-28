@@ -4,24 +4,26 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="70" d:DesignWidth="273" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" GotFocus="UserControl_GotFocus" LostFocus="UserControl_LostFocus" MouseLeftButtonUp="Label_MouseLeftButtonDown">
+    d:DesignHeight="21" d:DesignWidth="273" Height="21" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" >
 
-    <Border BorderBrush="#FFE9ECFA" BorderThickness="1">
+    <Border BorderBrush="#FFE9ECFA" BorderThickness="1,0,1,1">
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="70"></ColumnDefinition>
+                <ColumnDefinition Width="16"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
                 <!--<ColumnDefinition Width="1"></ColumnDefinition>-->
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
         
-            <Grid.RowDefinitions>
+            <!--<Grid.RowDefinitions>
                 <RowDefinition Height="18"></RowDefinition>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="22"></RowDefinition>
-            </Grid.RowDefinitions>
+            </Grid.RowDefinitions>-->
 
+            
 
-            <sdk:Label Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFE9ECFA" x:Name="lblEventNameRegion">
+            <!--<sdk:Label Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFE9ECFA" x:Name="lblEventNameRegion">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Image Source="/MashupDesignTool;component/Images/EventIcon.png" Margin="0,2,4,0"></Image>
                     <sdk:Label Name="lblEventName" Foreground="#FF808080" FontWeight="Bold"></sdk:Label>
@@ -29,9 +31,9 @@
             </sdk:Label>
             <Border BorderBrush="#FFE9ECFA" BorderThickness="0,1,1,0" Grid.Row="1" MouseLeftButtonUp="Label_MouseLeftButtonDown" >
                 <sdk:Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2,0,2,0" Content="Control" MouseLeftButtonUp="Label_MouseLeftButtonDown" />
-            </Border>
+            </Border>-->
             <!--<sdk:GridSplitter Grid.RowSpan="2" Grid.Column="1" Name="gridSplitter1" Background="#FFE9ECFA" Width="1" />-->
-            <Border BorderBrush="#FFE9ECFA" BorderThickness="0,1,0,0" Grid.Row="1" Grid.Column="1" >
+            <!--<Border BorderBrush="#FFE9ECFA" BorderThickness="0,1,0,0" Grid.Row="1" Grid.Column="1" >
                 <ComboBox Grid.Column="1" Grid.Row="1" Name="cbbControl" Margin="1" SelectionChanged="cbbControl_SelectionChanged">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -48,7 +50,31 @@
             </Border>
             <Border BorderBrush="#FFE9ECFA" BorderThickness="0,1,0,0" Grid.Row="2" Grid.Column="1" >
                 <ComboBox Grid.Column="2" Grid.Row="2" Name="cbbOperation" IsEnabled="False" Margin="1" SelectionChanged="cbbOperation_SelectionChanged" />
+            </Border>-->
+            <sdk:Label HorizontalAlignment="Stretch" Name="label1" VerticalAlignment="Stretch" Background="#FFE9ECFA" />
+            <Border BorderBrush="#FFE9ECFA" BorderThickness="0,0,1,0" Grid.Column="1" x:Name="border" >
+                <sdk:Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,0,6,0" x:Name="lblEventName">
+                    <!--<sdk:Label.Resources>
+                        <Storyboard x:Name="sbMouseLeave">
+                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="#FFE9ECFA"/>
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <Storyboard x:Name="sbMouseEnter">
+                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rootBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFFEC900"/>
+                                <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="#FFFEDB60"/>
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <Storyboard x:Name="sbMouseDown">
+                            <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="rootBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                <SplineColorKeyFrame KeyTime="00:00:00" Value="#FFFEC900"/>
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </sdk:Label.Resources>-->
+                </sdk:Label>
             </Border>
+            <Button Grid.Column="2" HorizontalAlignment="Stretch" Name="btnHandle" VerticalAlignment="Stretch" Click="btnHandle_Click" />
         </Grid>
     </Border>
 </UserControl>

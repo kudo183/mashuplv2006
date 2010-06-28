@@ -185,6 +185,8 @@ namespace BasicLibrary
             parameterNameList.Add("Height");
             parameterNameList.Add("DockType");
             parameterNameList.Add("ZIndex");
+            parameterNameList.Add("Name");
+            parameterNameList.Add("Visibility");
         }
 
         public virtual void ChangeEffect(string propertyName, Type effectType, EffectableControl owner)

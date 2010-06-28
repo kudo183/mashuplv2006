@@ -10,13 +10,16 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using BasicLibrary;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace MashupDesignTool
 {
     public class MDTEventInfo
     {
-        BasicControl raiseControl, handleControl;
-        string eventName, handleOperation;
+        BasicControl raiseControl;
+        List<BasicControl> handleControls;
+        string eventName;
+        List<string> handleOperations;
 
         #region Property
         public BasicControl RaiseControl
@@ -24,9 +27,9 @@ namespace MashupDesignTool
             get { return raiseControl; }
         }
 
-        public BasicControl HandleControl
+        public List<BasicControl> HandleControls
         {
-            get { return handleControl; }
+            get { return handleControls; }
         }
 
         public string EventName
@@ -34,30 +37,43 @@ namespace MashupDesignTool
             get { return eventName; }
         }
 
-        public string HandleOperation
+        public List<string> HandleOperations
         {
-            get { return handleOperation; }
+            get { return handleOperations; }
         }
         #endregion Property
 
-        internal MDTEventInfo(BasicControl raiseControl, string eventName, BasicControl handleControl, string handleOperation)
+        internal MDTEventInfo(BasicControl raiseControl, string eventName, List<BasicControl> handleControls, List<string> handleOperations)
         {
             this.raiseControl = raiseControl;
-            this.handleControl = handleControl;
+            this.handleControls = handleControls;
             this.eventName = eventName;
-            this.handleOperation = handleOperation;
+            this.handleOperations = handleOperations;
         }
 
-        public static MDTEventInfo RegisterEvent(BasicControl raiseControl, string eventName, BasicControl handleControl, string handleOperation)
+        public static MDTEventInfo RegisterEvent(BasicControl raiseControl, string eventName, List<BasicControl> handleControls, List<string> handleOperations)
         {
-            if (raiseControl == null || handleControl == null)
+            if (raiseControl == null || handleControls == null)
                 return null;
-            EventInfo ei = raiseControl.GetEventInfoByName(eventName);
-            MethodInfo mi = handleControl.GetOperationInfoByName(handleOperation);
-            if (ei == null || mi == null)
+            if (handleOperations.Count != handleControls.Count)
                 return null;
+            if (handleOperations.Count == 0)
+                return null;
+            foreach (BasicControl bs in handleControls)
+                if (bs == null)
+                    return null;
 
-            MDTEventInfo mei = new MDTEventInfo(raiseControl, eventName, handleControl, handleOperation);
+            EventInfo ei = raiseControl.GetEventInfoByName(eventName);
+            if (ei == null)
+                return null;
+            for (int i = 0; i < handleControls.Count; i++)
+            {
+                MethodInfo mi = handleControls[i].GetOperationInfoByName(handleOperations[i]);
+                if (mi == null)
+                    return null;
+            }
+
+            MDTEventInfo mei = new MDTEventInfo(raiseControl, eventName, handleControls, handleOperations);
             Type delegateType = ei.EventHandlerType;
             try { ei.AddEventHandler(raiseControl, Delegate.CreateDelegate(delegateType, mei, "HandleFunction")); }
             catch { return null; }
@@ -66,7 +82,23 @@ namespace MashupDesignTool
 
         public void HandleFunction(object sender, string xmlString)
         {
-            handleControl.GetOperationInfoByName(handleOperation).Invoke(handleControl, new object[] { xmlString });
+            for (int i = 0; i < handleControls.Count; i++)
+            {
+                handleControls[i].GetOperationInfoByName(handleOperations[i]).Invoke(handleControls[i], new object[] { xmlString });
+            }
+        }
+
+        public void DetachEvent()
+        {
+            EventInfo ei = raiseControl.GetEventInfoByName(eventName);
+            if (ei == null)
+                return;
+
+            try 
+            { 
+                ei.AddEventHandler(raiseControl, Delegate.CreateDelegate(ei.EventHandlerType, this, "HandleFunction")); 
+            }
+            catch {}
         }
     }
 }
