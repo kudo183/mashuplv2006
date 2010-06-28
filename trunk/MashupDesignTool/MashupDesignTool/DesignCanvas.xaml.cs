@@ -43,6 +43,9 @@ namespace MashupDesignTool
         public delegate void ControlZIndexChangedHandler(object sender, int zindex);
         public event ControlZIndexChangedHandler ControlZIndexChanged;
 
+        public delegate void ControlDeleteHandler(object sender, List<EffectableControl> list);
+        public event ControlDeleteHandler ControlDelete;
+
         public delegate void OnSelectMenu(object sender, UIElement element);
         public event OnSelectMenu SelectPropertiesMenu;
 
@@ -1214,6 +1217,10 @@ namespace MashupDesignTool
                     ((BasicControl)pc.RealControl.Control).Dispose();
                 }
             }
+
+            if (ControlDelete != null)
+                ControlDelete(this, selectedControls);
+
             selectedProxyControls.Clear();
             selectedControls.Clear();
 
