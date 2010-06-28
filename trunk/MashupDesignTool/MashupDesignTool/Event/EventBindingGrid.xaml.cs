@@ -36,7 +36,8 @@ namespace MashupDesignTool
 
         private void UpdateGrid(List<EffectableControl> controls)
         {
-            stackPanel.Children.Clear();
+            for (int i = stackPanel.Children.Count - 1; i > 0 ; i--)
+                stackPanel.Children.RemoveAt(i);
             List<string> listEvent;
             if (selectedObject == null)
                 listEvent = new List<string>();
@@ -57,18 +58,20 @@ namespace MashupDesignTool
             List<MDTEventInfo> listEventInfo = MDTEventManager.GetListEventInfoRaiseBy(selectedObject);
             foreach (string eventName in listEvent)
             {
-                MDTEventInfo mei = null;
-                EventBindingGridItem item;
-                foreach(MDTEventInfo ei in listEventInfo)
-                    if (ei.EventName == eventName)
-                    {
-                        mei = ei;
-                        break;
-                    }
-                if (mei == null)
-                    item = new EventBindingGridItem(selectedObject, eventName, listControls);
-                else
-                    item = new EventBindingGridItem(selectedObject, eventName, listControls, mei.HandleControl, mei.HandleOperation);
+                //MDTEventInfo mei = null;
+                //EventBindingGridItem item;
+                //foreach(MDTEventInfo ei in listEventInfo)
+                //    if (ei.EventName == eventName)
+                //    {
+                //        mei = ei;
+                //        break;
+                //    }
+                //if (mei == null)
+                EventBindingGridItem item = new EventBindingGridItem(selectedObject, eventName, listControls);
+                //else
+
+                //    ///////////////////////////////////////////////////////////////////////////
+                //    item = new EventBindingGridItem(selectedObject, eventName, listControls, mei.HandleControls[0], mei.HandleOperations[0]);
                 stackPanel.Children.Add(item);
             }
         }

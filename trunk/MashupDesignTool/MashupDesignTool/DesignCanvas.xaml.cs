@@ -130,6 +130,22 @@ namespace MashupDesignTool
             get { return ControlContainer; }
         }
 
+        public void Clear()
+        {
+            selectedControls.Clear();
+            selectedProxyControls.Clear();
+            for (int i = 0; i < controls.Count; i++)
+            {
+                ControlContainer.Children.Remove(controls[i]);
+                LayoutRoot.Children.Remove(proxyControls[i]);
+            }
+            controls.Clear();
+            proxyControls.Clear();
+            LayoutRoot.Width = ControlContainer.Width = 800;
+            LayoutRoot.Height = ControlContainer.Height = 500;
+            ControlContainer.Background = new SolidColorBrush(Colors.White);
+        }
+
         #region context menu
         private void CreateContextMenu()
         {
@@ -284,53 +300,9 @@ namespace MashupDesignTool
         #endregion context menu
 
         #region add new control to canvas
-        public void AddControl(FrameworkElement uc, double x, double y, int width, int height)
+        public void AddEffectableControl(EffectableControl ec)
         {
-            EffectableControl ec = new EffectableControl(uc);
-            uc.Name = iCount.ToString();
-            ec.Name = (iCount + 1).ToString();
-            iCount += 2;
-            uc.Margin = new Thickness(0, 0, 0, 0);
-            //ProxyControl pc = new ProxyControl(uc, x, y, width, height);
-            ProxyControl pc = new ProxyControl(ec, 10, 10);
-            proxyControls.Add(pc);
-            controls.Add(ec);
-            int index = FindTopProxyControlIndex();
-            SetZindex(pc, index + 1);
-
-            ControlContainer.Children.Add(ec);
-            LayoutRoot.Children.Add(pc);
-
-            pc.MouseLeftButtonDown += new MouseButtonEventHandler(control_MouseLeftButtonDown);
-            pc.MouseMove += new MouseEventHandler(control_MouseMove);
-            pc.MouseLeftButtonUp += new MouseButtonEventHandler(control_MouseLeftButtonUp);
-
-            ClearSelectedList();
-            AddSelectedControl(pc);
-
-            textBox1.Focus();
-
-            if (SelectionChanged != null)
-                SelectionChanged(this, uc);
-
-            this.Focus();
-            HideContextMenu();
-
-            uc.Tag = ec;
-            uc.SizeChanged += new SizeChangedEventHandler(uc_SizeChanged);
-        }
-
-        void uc_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            FrameworkElement uc = (FrameworkElement)sender;
-            uc.SizeChanged -= new SizeChangedEventHandler(uc_SizeChanged);
-            ((EffectableControl)uc.Tag).Width = e.NewSize.Width;
-            ((EffectableControl)uc.Tag).Height = e.NewSize.Height;
-        }
-
-        public void AddControl(EffectableControl ec)
-        {
-            ProxyControl pc = new ProxyControl(ec, DockCanvas.DockCanvas.GetLeft(ec), DockCanvas.DockCanvas.GetTop(ec));
+            ProxyControl pc = new ProxyControl(ec);
             proxyControls.Add(pc);
             controls.Add(ec);
             int index = FindTopProxyControlIndex();
@@ -353,6 +325,58 @@ namespace MashupDesignTool
 
             this.Focus();
             HideContextMenu();
+
+            ec.Control.Tag = ec;
+            ec.Control.SizeChanged += new SizeChangedEventHandler(uc_SizeChanged);
+        }
+
+        public void AddControl(FrameworkElement uc)
+        {
+            EffectableControl ec = new EffectableControl(uc);
+            //uc.Name = iCount.ToString();
+            //ec.Name = (iCount + 1).ToString();
+            uc.Name = uc.GetType().Name.ToLower() + "_" + Guid.NewGuid().ToString();
+            ec.Name = uc.GetType().Name.ToLower() + "_" + Guid.NewGuid().ToString();
+            iCount += 2;
+            uc.Margin = new Thickness(0, 0, 0, 0);
+            Canvas.SetLeft(ec, 200);
+            Canvas.SetTop(ec, 200);
+            AddEffectableControl(ec);
+
+            //ProxyControl pc = new ProxyControl(ec, 10, 10);
+            //proxyControls.Add(pc);
+            //controls.Add(ec);
+            //int index = FindTopProxyControlIndex();
+            //SetZindex(pc, index + 1);
+
+            //ControlContainer.Children.Add(ec);
+            //LayoutRoot.Children.Add(pc);
+
+            //pc.MouseLeftButtonDown += new MouseButtonEventHandler(control_MouseLeftButtonDown);
+            //pc.MouseMove += new MouseEventHandler(control_MouseMove);
+            //pc.MouseLeftButtonUp += new MouseButtonEventHandler(control_MouseLeftButtonUp);
+
+            //ClearSelectedList();
+            //AddSelectedControl(pc);
+
+            //textBox1.Focus();
+
+            //if (SelectionChanged != null)
+            //    SelectionChanged(this, uc);
+
+            //this.Focus();
+            //HideContextMenu();
+
+            //uc.Tag = ec;
+            //uc.SizeChanged += new SizeChangedEventHandler(uc_SizeChanged);
+        }
+
+        void uc_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            FrameworkElement uc = (FrameworkElement)sender;
+            uc.SizeChanged -= new SizeChangedEventHandler(uc_SizeChanged);
+            ((EffectableControl)uc.Tag).Width = e.NewSize.Width;
+            ((EffectableControl)uc.Tag).Height = e.NewSize.Height;
         }
 
         private int FindTopProxyControlIndex()

@@ -19,6 +19,16 @@ namespace MashupDesignTool
 {
     public class DockCanvasSerializer
     {
+        public delegate void DeserializeCompletedHandler();
+        public event DeserializeCompletedHandler DeserializeCompleted;
+        
+        private DockCanvas.DockCanvas dockCanvas;
+        private DesignCanvas designCanvas;
+        private XElement eventsElement = null;
+        private int controlCount;
+        private int numControl;
+        private bool design;
+
         public static string Serialize(DesignCanvas designCanvas)
         {
             List<EffectableControl> controls = designCanvas.Controls;
@@ -41,9 +51,9 @@ namespace MashupDesignTool
             xm.WriteEndElement();
 
             xm.WriteStartElement("Events");
-            Dictionary<FrameworkElement, string> dictionary = new Dictionary<FrameworkElement, string>();
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
             for (int i = 0; i < controls.Count; i++)
-                dictionary.Add(controls[i].Control, i.ToString());
+                dictionary.Add(controls[i].Control.Name, i.ToString());
             for (int i = 0; i < controls.Count; i++)
             {
                 if (typeof(BasicControl).IsAssignableFrom(controls[i].Control.GetType()))
@@ -51,11 +61,19 @@ namespace MashupDesignTool
                     List<MDTEventInfo> list = MDTEventManager.GetListEventInfoRaiseBy((BasicControl)controls[i].Control);
                     foreach (MDTEventInfo mei in list)
                     {
+                        int count = mei.HandleControls.Count;
                         xm.WriteStartElement("Event");
-                        xm.WriteAttributeString("RaiseControlIndex", i.ToString());
-                        xm.WriteAttributeString("EventName", mei.EventName);
-                        xm.WriteAttributeString("HandleControlIndex", dictionary[mei.HandleControl]);
-                        xm.WriteAttributeString("HandleOperation", mei.HandleOperation);
+                        xm.WriteElementString("RaiseControlIndex", i.ToString());
+                        xm.WriteElementString("EventName", mei.EventName);
+                        xm.WriteStartElement("Handles");
+                        for (int j = 0; j < count; j++)
+                        {
+                            xm.WriteStartElement("Handle");
+                            xm.WriteElementString("HandleControlIndex", dictionary[mei.HandleControls[j].Name]);
+                            xm.WriteElementString("HandleOperation", mei.HandleOperations[j]);
+                            xm.WriteEndElement();
+                        }
+                        xm.WriteEndElement();
                         xm.WriteEndElement();
                     }
                 }
@@ -68,12 +86,23 @@ namespace MashupDesignTool
             return sb.ToString();
         }
 
-        public static void Deserialize(string xml, DockCanvas.DockCanvas canvas)
+        #region deserialize
+        public void Deserialize(string xml, DockCanvas.DockCanvas canvas)
         {
             XmlReader reader = XmlReader.Create(new StringReader(xml));
             XDocument doc = XDocument.Load(reader);
             XElement root = doc.Root;
-            XElement eventsElement = null;
+            Deserialize(root, canvas);
+        }
+
+        public void Deserialize(XElement root, DockCanvas.DockCanvas canvas)
+        {
+            design = false;
+            dockCanvas = canvas;
+            controlCount = 0;
+            numControl = 0;
+            eventsElement = null;
+            XElement controlsElement = null;
 
             foreach (XElement element in root.Elements())
             {
@@ -89,9 +118,7 @@ namespace MashupDesignTool
                         canvas.Background = (Brush)MyXmlSerializer.Deserialize(element.FirstNode.ToString());
                         break;
                     case "Controls":
-                        foreach (XElement child in element.Elements())
-                            canvas.Children.Add(EffectableObjectXmlSerializer.Deserialize(child));
-                        canvas.UpdateChildrenPosition();
+                        controlsElement = element;
                         break;
                     case "Events":
                         eventsElement = element;
@@ -101,29 +128,33 @@ namespace MashupDesignTool
                 }
             }
 
-            if (eventsElement != null)
+            if (controlsElement != null)
             {
-                foreach (XElement child in eventsElement.Elements("Event"))
+                foreach (XElement child in controlsElement.Elements())
+                    numControl++;
+                foreach (XElement child in controlsElement.Elements())
                 {
-                    try
-                    {
-                        BasicControl raiseControl = (BasicControl)((EffectableControl)canvas.Children[int.Parse(child.Attribute("RaiseControlIndex").Value)]).Control;
-                        BasicControl handleControl = (BasicControl)((EffectableControl)canvas.Children[int.Parse(child.Attribute("HandleControlIndex").Value)]).Control;
-                        string eventName = child.Attribute("EventName").Value;
-                        string handleOperation = child.Attribute("HandleOperation").Value;
-                        MDTEventManager.RegisterEvent(raiseControl, eventName, handleControl, handleOperation);
-                    }
-                    catch { }
+                    EffectableObjectXmlSerializer eoxs = new EffectableObjectXmlSerializer();
+                    eoxs.DeserializeCompleted += new EffectableObjectXmlSerializer.DeserializeCompletedHandler(eoxs_DeserializeCompleted);
+                    eoxs.Deserialize(child);
                 }
             }
         }
 
-        public static void LoadInDesign(string xml, DesignCanvas designCanvas)
+        public void DeserializeInDesign(string xml, DesignCanvas designCanvas)
         {
+            XmlReader reader = XmlReader.Create(new StringReader(xml));
+            XDocument doc = XDocument.Load(reader);
+            XElement root = doc.Root;
+
+            DeserializeInDesign(root, designCanvas);
+        }
+
+        public void DeserializeInDesign(XElement root, DesignCanvas designCanvas)
+        {
+            design = true;
             DockCanvas.DockCanvas canvas = designCanvas.ControlContainer;
-            XmlReader reader = XmlReader.Create(new StringReader(xml));
-            XDocument doc = XDocument.Load(reader);
-            XElement root = doc.Root;
+            this.designCanvas = designCanvas;
             XElement eventsElement = null;
 
             foreach (XElement element in root.Elements())
@@ -132,16 +163,24 @@ namespace MashupDesignTool
                 {
                     case "Width":
                         canvas.Width = double.Parse(element.Value);
+                        designCanvas.LayoutRoot.Width = canvas.Width;
                         break;
                     case "Height":
                         canvas.Height = double.Parse(element.Value);
+                        designCanvas.LayoutRoot.Height = canvas.Height;
                         break;
                     case "Background":
                         canvas.Background = (Brush)MyXmlSerializer.Deserialize(element.FirstNode.ToString());
                         break;
                     case "Controls":
                         foreach (XElement child in element.Elements())
-                            designCanvas.AddControl(EffectableObjectXmlSerializer.Deserialize(child));
+                            numControl++;
+                        foreach (XElement child in element.Elements())
+                        {
+                            EffectableObjectXmlSerializer eoxs = new EffectableObjectXmlSerializer();
+                            eoxs.DeserializeCompleted += new EffectableObjectXmlSerializer.DeserializeCompletedHandler(eoxs_DeserializeCompleted);
+                            eoxs.Deserialize(child);
+                        }
                         break;
                     case "Events":
                         eventsElement = element;
@@ -150,22 +189,47 @@ namespace MashupDesignTool
                         break;
                 }
             }
+        }
 
-            if (eventsElement != null)
+        void eoxs_DeserializeCompleted(EffectableControl control)
+        {
+            if (design)
+                designCanvas.AddEffectableControl(control);
+            else
+                dockCanvas.Children.Add(control);
+            controlCount++;
+            if (controlCount == numControl)
             {
-                foreach (XElement child in eventsElement.Elements("Event"))
+                dockCanvas.UpdateChildrenPosition();
+                if (eventsElement != null)
                 {
-                    try
+                    foreach (XElement child in eventsElement.Elements("Event"))
                     {
-                        BasicControl raiseControl = (BasicControl)designCanvas.Controls[int.Parse(child.Attribute("RaiseControlIndex").Value)].Control;
-                        BasicControl handleControl = (BasicControl)designCanvas.Controls[int.Parse(child.Attribute("HandleControlIndex").Value)].Control;
-                        string eventName = child.Attribute("EventName").Value;
-                        string handleOperation = child.Attribute("HandleOperation").Value;
-                        MDTEventManager.RegisterEvent(raiseControl, eventName, handleControl, handleOperation);
+                        BasicControl raiseControl;
+                        List<BasicControl> handleControls = new List<BasicControl>();
+                        string eventName;
+                        List<string> handleOperations = new List<string>();
+                        try
+                        {
+                            raiseControl = (BasicControl)((EffectableControl)dockCanvas.Children[int.Parse(child.Element("RaiseControlIndex").Value)]).Control;
+                            eventName = child.Element("EventName").Value;
+                            XElement handlesElement = child.Element("Handles");
+                            foreach (XElement handle in handlesElement.Elements("Handle"))
+                            {
+                                BasicControl handleControl = (BasicControl)((EffectableControl)dockCanvas.Children[int.Parse(handle.Element("HandleControlIndex").Value)]).Control;
+                                string handleOperation = handle.Element("HandleOperation").Value;
+                                handleControls.Add(handleControl);
+                                handleOperations.Add(handleOperation);
+                            }
+                            MDTEventManager.RegisterEvent(raiseControl, eventName, handleControls, handleOperations);
+                        }
+                        catch { }
                     }
-                    catch { }
                 }
+                if (DeserializeCompleted != null)
+                    DeserializeCompleted();
             }
         }
+        #endregion deserialize
     }
 }

@@ -36,6 +36,9 @@ namespace MashupDesignTool
         {
             InitializeComponent();
             realControl = uc;
+            double x = Canvas.GetLeft(realControl);
+            double y = Canvas.GetTop(realControl);
+            MoveControl(x, y);
             uc.SizeChanged += new SizeChangedEventHandler(uc_SizeChanged);
         }
 

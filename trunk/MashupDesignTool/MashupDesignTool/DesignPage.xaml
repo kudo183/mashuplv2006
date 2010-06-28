@@ -582,20 +582,56 @@
                             OnSelectionTabChanged="menu_OnSelectionTabChanged">
             <MapulRibbon:Tabs>
                 <MapulRibbon:Tabs.Items>
-                    <!-- Home TabItem -->
                     <MapulRibbon:TabsItem Header="Home">
                         <MapulRibbon:TabsItem.Content>
                             <MapulRibbon:RibbonItems>
-                                <!-- Clipboard RibbonItem -->
+                                <MapulRibbon:RibbonItem Title="File">
+                                    <MapulRibbon:RibbonItem.Content>
+                                        <MapulRibbon:RibbonButtonsGroup Orientation="Horizontal">
+                                            <MapulRibbon:RibbonButton x:Name="btnNew" ImageUrl="Images/new.png" Text="New"
+                                                                      TooltipTitle="New" 
+                                                                      TooltipText="New">
+                                                <MapulRibbon:RibbonButton.RibbonList>
+                                                    <MapulRibbon:RibbonList>
+                                                        <MapulRibbon:RibbonList.Items>
+                                                            <MapulRibbon:RibbonListItem x:Name="btnNewPage" ImageSource="Images/new.png" Text="New page" />
+                                                            <MapulRibbon:RibbonListItem x:Name="btnNewSite" ImageSource="Images/new.png" Text="New site" />
+                                                        </MapulRibbon:RibbonList.Items>
+                                                    </MapulRibbon:RibbonList>
+                                                </MapulRibbon:RibbonButton.RibbonList>
+                                            </MapulRibbon:RibbonButton>
+                                            <MapulRibbon:RibbonButtonsGroup Orientation="Horizontal">
+                                                <MapulRibbon:RibbonButton x:Name="btnOpen" ImageUrl="Images/open.png" Text="Open"
+                                                                            TooltipTitle="Open"
+                                                                            TooltipText="Open page or site">
+                                                    <MapulRibbon:RibbonButton.RibbonList>
+                                                        <MapulRibbon:RibbonList>
+                                                            <MapulRibbon:RibbonList.Items>
+                                                                <MapulRibbon:RibbonListItem x:Name="btnOpenPage" ImageSource="Images/open.png" Text="Open page" />
+                                                                <MapulRibbon:RibbonListItem x:Name="btnOpenSite" ImageSource="Images/open.png" Text="Open site" />
+                                                            </MapulRibbon:RibbonList.Items>
+                                                        </MapulRibbon:RibbonList>
+                                                    </MapulRibbon:RibbonButton.RibbonList>
+                                                </MapulRibbon:RibbonButton>
+                                            </MapulRibbon:RibbonButtonsGroup>
+                                            <MapulRibbon:RibbonButtonsGroup>
+                                                <MapulRibbon:RibbonButton x:Name="btnSave" ImageUrl="Images/save.png" Text="Save"
+                                                                                TooltipTitle="Save"
+                                                                                TooltipText="Save">
+                                                </MapulRibbon:RibbonButton>
+                                            </MapulRibbon:RibbonButtonsGroup>
+                                        </MapulRibbon:RibbonButtonsGroup>
+                                    </MapulRibbon:RibbonItem.Content>
+                                </MapulRibbon:RibbonItem>
                                 <MapulRibbon:RibbonItem Title="View">
                                     <MapulRibbon:RibbonItem.Content>
                                         <MapulRibbon:RibbonButtonsGroup Orientation="Horizontal">
-                                            <MapulRibbon:RibbonButton Name="btnPreview" ImageUrl="Images/Preview.png" Text="Preview" Height="70" Width="70"
+                                            <MapulRibbon:RibbonButton Name="btnPreview" ImageUrl="Images/Preview.png" Text="Preview" Height="70"
                                                                       TooltipTitle="Preview" TooltipText="Preview page" OnClick="btnPreview_OnClick">
                                             </MapulRibbon:RibbonButton>
-                                            <MapulRibbon:RibbonToggleButton Name="btnFullScreen" ImageUrl="Images/fullscreen.png" Text="Switch" Height="70" Width="70"
+                                            <MapulRibbon:RibbonButton Name="btnFullScreen" ImageUrl="Images/fullscreen.png" Text="Switch" Height="70"
                                                                     TooltipTitle="Switch/Escape full screen mode" TooltipText="Switch to/escape full screen mode" OnClick="btnFullScreen_OnClick">
-                                            </MapulRibbon:RibbonToggleButton>
+                                            </MapulRibbon:RibbonButton>
                                         </MapulRibbon:RibbonButtonsGroup>
                                     </MapulRibbon:RibbonItem.Content>
                                 </MapulRibbon:RibbonItem>

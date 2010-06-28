@@ -58,6 +58,34 @@ namespace MashupDesignTool
                     webClient.OpenReadAsync(uri);
                     downloadingDllReferences.Add(webClient, str);
                 }
+                else
+                    count++;
+            }
+
+            if (count == dllReferences.Count)
+            {
+                count = 0;
+                assemblyPath = clientRoot + DownloadArgs.EffectDllFolder;
+                foreach (string str in dllFilenames)
+                {
+                    if (!downloadedDllFilenames.Contains(str))
+                    {
+                        Uri uri = new Uri(assemblyPath + str, UriKind.Absolute);
+                        //Start an async download:
+                        WebClient webClient = new WebClient();
+                        webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_OpenReadCompleted1);
+                        webClient.OpenReadAsync(uri);
+                        downloadingDllFilenames.Add(webClient, str);
+                    }
+                    else
+                        count++;
+                }
+
+                if (count == dllFilenames.Count)
+                {
+                    if (DownloadCompleted != null)
+                        DownloadCompleted();
+                }
             }
         }
 
@@ -75,7 +103,7 @@ namespace MashupDesignTool
                 if (count == dllReferences.Count)
                 {
                     count = 0;
-                    string assemblyPath = clientRoot + DownloadArgs.ControlReferenceDllFolder;
+                    string assemblyPath = clientRoot + DownloadArgs.EffectDllFolder;
                     foreach (string str in dllFilenames)
                     {
                         if (!downloadedDllFilenames.Contains(str))
@@ -101,6 +129,7 @@ namespace MashupDesignTool
                 downloadingDllFilenames.Remove((WebClient)sender);
                 AssemblyPart assemblyPart = new AssemblyPart();
                 Assembly assembly = assemblyPart.Load(e.Result);
+                LoadedAssembly.Add(dllFilename, assembly);
                 count++;
 
                 if (count == dllFilenames.Count)

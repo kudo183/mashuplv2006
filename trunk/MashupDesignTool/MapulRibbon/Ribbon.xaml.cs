@@ -269,6 +269,7 @@ namespace MapulRibbon
                 _tabs.ApplyStyle(RibbonTabControlStyle);
 
             //RibbonButton.Click += new RoutedEventHandler(RibbonButton_Click);
+            HideButton.OnClick -= new RoutedEventHandler(HideButton_OnClick);
             HideButton.OnClick += new RoutedEventHandler(HideButton_OnClick);
             //HelpButton.OnClick += new RoutedEventHandler(HelpButton_OnClick);            
             MailButton.OnClick += new RoutedEventHandler(MailButton_OnClick);

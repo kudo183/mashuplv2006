@@ -215,8 +215,8 @@ namespace MapulRibbon
         # region Fields  
      
         public event RoutedEventHandler OnClick;
-        
-        private const string arrowImageSource = "img/arrowImage.png";
+
+        private const string arrowImageSource = "/MapulRibbon;component/img/arrowImage.png";
        
         private string _tooltipTitle = "";
 

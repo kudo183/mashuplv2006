@@ -18,23 +18,15 @@ namespace MashupDesignTool
     {
         private static List<MDTEventInfo> listEventInfo = new List<MDTEventInfo>();
 
-        public static bool RegisterEvent(BasicControl raiseControl, string eventName, BasicControl handleControl, string handleOperation)
+        public static MDTEventInfo RegisterEvent(BasicControl raiseControl, string eventName, List<BasicControl> handleControls, List<string> handleOperations)
         {
-            List<MDTEventInfo> list = GetListEventInfoRaiseBy(raiseControl);
-            foreach (MDTEventInfo mdtei in list)
-                if (mdtei.EventName == eventName)
-                {
-                    EventInfo ei = raiseControl.GetEventInfoByName(mdtei.EventName);
-                    ei.RemoveEventHandler(mdtei.RaiseControl, Delegate.CreateDelegate(ei.EventHandlerType, mdtei, "HandleFunction"));
-                    listEventInfo.Remove(mdtei);
-                    break;
-                }
+            RemoveEvent(raiseControl, eventName);
 
-            MDTEventInfo mei = MDTEventInfo.RegisterEvent(raiseControl, eventName, handleControl, handleOperation);
+            MDTEventInfo mei = MDTEventInfo.RegisterEvent(raiseControl, eventName, handleControls, handleOperations);
             if (mei == null)
-                return false;
+                return null;
             listEventInfo.Add(mei);
-            return true;
+            return mei;
         }
 
         public static List<MDTEventInfo> GetListEventInfoRaiseBy(BasicControl raiseControl)
@@ -48,15 +40,61 @@ namespace MashupDesignTool
             return list;
         }
 
-        public static List<MDTEventInfo> GetListEventInfoHandleBy(BasicControl handleControl)
+        public static MDTEventInfo GetEventInfo(BasicControl raiseControl, string eventName)
+        {
+            List<MDTEventInfo> list = GetListEventInfoRaiseBy(raiseControl);
+            foreach (MDTEventInfo mdtei in list)
+                if (mdtei.EventName == eventName)
+                    return mdtei;
+
+            return null;
+        }
+
+        private static List<MDTEventInfo> GetListEventInfoHandleBy(BasicControl handleControl)
         {
             List<MDTEventInfo> list = new List<MDTEventInfo>();
             foreach (MDTEventInfo mei in listEventInfo)
             {
-                if (mei.HandleControl.Name == handleControl.Name)
-                    list.Add(mei);
+                foreach (BasicControl bc in mei.HandleControls)
+                {
+                    if (bc.Name == handleControl.Name)
+                    {
+                        list.Add(mei);
+                        break;
+                    }
+                }
             }
             return list;
+        }
+
+        public static void RemoveEventInfoRelateTo(BasicControl control)
+        {
+            List<MDTEventInfo> list = GetListEventInfoRaiseBy(control);
+            foreach (MDTEventInfo mei in list)
+                RemoveEvent(mei);
+
+            list = GetListEventInfoHandleBy(control);
+            foreach (MDTEventInfo mei in list)
+                RemoveEvent(mei);
+        }
+
+        public static void RemoveEvent(BasicControl raiseControl, string eventName)
+        {
+            List<MDTEventInfo> list = GetListEventInfoRaiseBy(raiseControl);
+            foreach (MDTEventInfo mdtei in list)
+                if (mdtei.EventName == eventName)
+                {
+                    RemoveEvent(mdtei);
+                    return;
+                }
+        }
+
+        private static void RemoveEvent(MDTEventInfo mei)
+        {
+            if (mei == null)
+                return;
+            mei.DetachEvent();
+            listEventInfo.Remove(mei);
         }
     }
 }

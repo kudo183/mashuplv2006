@@ -4,12 +4,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="289" d:DesignWidth="214">
+    d:DesignHeight="289" d:DesignWidth="214" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
     
     <Grid x:Name="LayoutRoot" Background="White">
-        <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" x:Name="scrollViewer">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" x:Name="scrollViewer">
             <StackPanel x:Name="stackPanel">
-                
+                <sdk:Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Background="#FFE9ECFA" x:Name="lblEventNameRegion" Height="21">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Source="/MashupDesignTool;component/Images/EventIcon.png" Margin="16,0,4,0" Stretch="None"></Image>
+                        <sdk:Label Name="lblEventName" Foreground="#FF808080" FontWeight="Bold">Event</sdk:Label>
+                    </StackPanel>
+                </sdk:Label>
             </StackPanel>
         </ScrollViewer>
     </Grid>
