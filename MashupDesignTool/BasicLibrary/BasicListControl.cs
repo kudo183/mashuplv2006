@@ -75,12 +75,19 @@ namespace BasicLibrary
         {
             return _items[index];
         }
-        
+
         protected BasicListEffect listEffect;
 
         public BasicListEffect ListEffect
         {
-            get { return listEffect; }            
+            get { return listEffect; }
+        }
+
+        protected BasicEffect listItemEffect;
+
+        public BasicEffect ListItemEffect
+        {
+            get { return listItemEffect; }
         }
 
         public override void ChangeEffect(string propertyName, Type effectType, EffectableControl owner)
@@ -93,12 +100,22 @@ namespace BasicLibrary
                 ConstructorInfo ci = effectType.GetConstructor(new Type[] { typeof(BasicListControl) });
                 listEffect = (BasicListEffect)ci.Invoke(new object[] { this });
             }
+            else if (propertyName == "ListItemEffect")
+            {
+                ConstructorInfo ci = effectType.GetConstructor(new Type[] { typeof(EffectableControl) });
+                listItemEffect = (BasicEffect)ci.Invoke(new object[] { new EffectableControl(new TextBlock()) });
+                foreach (EffectableControl ec in _items)
+                {
+                    ec.ChangeEffect("MainEffect", effectType);
+                }
+            }
         }
 
         public BasicListControl()
             : base()
         {
             effectPropertyNameList.Add("ListEffect");
+            effectPropertyNameList.Add("ListItemEffect");
         }
     }
 }
