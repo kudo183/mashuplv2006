@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 
 namespace BasicLibrary
 {
-    public class ImageListControlItems : EffectableControl
+    public class ImageListControlItems : BasicControl
     {
         private string _ImageUrl = "";
 
