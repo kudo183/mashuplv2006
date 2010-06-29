@@ -76,7 +76,7 @@ namespace SL_Menu
         void _menu_ItemSelected(object sender, MenuEventArgs e)
         {
             if (e.Parameter != null)
-                OnSelectionChanged((e.Parameter as Liquid.MenuItem).Text);
+                OnSelectionChanged("");//(e.Parameter as Liquid.MenuItem).Text);
         }
 
         public MyMenu(Liquid.MainMenu menu)
@@ -100,6 +100,8 @@ namespace SL_Menu
             System.Xml.Linq.XAttribute att;
             att = e.Attribute("Text");
             mmi.Item.Text = att.Value;
+            att = e.Attribute("Icon");
+            mmi.Item.Icon = att.Value;
             return mmi;
         }
 
@@ -115,6 +117,8 @@ namespace SL_Menu
             System.Xml.Linq.XAttribute att;
             att = e.Attribute("Text");
             msmi.Item.Text = att.Value;
+            att = e.Attribute("Icon");
+            msmi.Item.Icon = att.Value;
             return msmi;
         }
     }
