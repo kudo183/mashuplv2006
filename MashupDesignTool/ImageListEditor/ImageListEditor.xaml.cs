@@ -37,7 +37,8 @@ namespace ItemCollectionEditor
         }
 
         BasicImageListControl listControl;
-        List<ImageListControlItems> listControlItems = new List<ImageListControlItems>();
+        List<EffectableControl> listControlItems = new List<EffectableControl>();
+        //List<ImageListControlItems> listControlItems = new List<ImageListControlItems>();
         public ImageListEditor(Panel p, BasicImageListControl list)
             : this()
         {
@@ -49,12 +50,13 @@ namespace ItemCollectionEditor
             f.Title = "Image list editor";
             f.Width = 600;
             f.Height = 400;
-            foreach (ImageListControlItems ec in list.Items)
-            {
+            foreach (EffectableControl ec in list.Items)
+            {                
                 Image img = new Image();
-                Image temp = ec.Content as Image;
+                Image temp = ((BasicControl) ec.Control).Content as Image;
                 img.Source = temp.Source;
                 listBox.Items.Add(img);
+                //listControlItems.Add(ec.Control as ImageListControlItems);
                 listControlItems.Add(ec);
             }
             if (listBox.Items.Count > 0)
@@ -85,7 +87,8 @@ namespace ItemCollectionEditor
                 return;
             Image img = e.AddedItems[0] as Image;
             imgPreview.Source = img.Source;
-            txtURL.Text = listControlItems[listBox.SelectedIndex].ImageUrl;
+            ImageListControlItems item = listControlItems[listBox.SelectedIndex].Control as ImageListControlItems;
+            txtURL.Text = item.ImageUrl;
         }
        
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -141,7 +144,7 @@ namespace ItemCollectionEditor
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             ImageListControlItems item = new ImageListControlItems();
-            listControl.AddItem(item);
+            listControl.AddItem(new EffectableControl( item));
             Image img = new Image();
             Image temp = item.Content as Image;
             img.Source = temp.Source;
@@ -152,7 +155,8 @@ namespace ItemCollectionEditor
         {
             if (e.Key == Key.Enter)
             {
-                ImageListControlItems item = listControl.GetAt(listBox.SelectedIndex) as ImageListControlItems;
+                EffectableControl ec = listControl.GetAt(listBox.SelectedIndex) as EffectableControl;
+                ImageListControlItems item = ec.Control as ImageListControlItems; 
                 item.ImageUrl = txtURL.Text;
                 Image temp = item.Content as Image;
                 Image temp1 = listBox.SelectedItem as Image;
@@ -164,7 +168,8 @@ namespace ItemCollectionEditor
         {
             if (e.Key == Key.Enter)
             {
-                ImageListControlItems item = listControl.GetAt(listBox.SelectedIndex) as ImageListControlItems;
+                EffectableControl ec = listControl.GetAt(listBox.SelectedIndex) as EffectableControl;
+                ImageListControlItems item = ec.Control as ImageListControlItems; 
                 item.Title = txtTitle.Text;             
             }
         }
@@ -173,7 +178,8 @@ namespace ItemCollectionEditor
         {
             if (e.Key == Key.Enter)
             {
-                ImageListControlItems item = listControl.GetAt(listBox.SelectedIndex) as ImageListControlItems;
+                EffectableControl ec = listControl.GetAt(listBox.SelectedIndex) as EffectableControl;
+                ImageListControlItems item = ec.Control as ImageListControlItems; 
                 item.Description = txtDescription.Text;
             }
         }
