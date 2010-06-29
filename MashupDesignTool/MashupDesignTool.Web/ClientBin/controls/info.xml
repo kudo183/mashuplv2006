@@ -1,6 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Controls>
   <Control>
+    <Name>SL_Menu.MyMenu</Name>
+    <DllFilename>MenuClassic.dll</DllFilename>
+    <DllReferences>
+      <Dll>Liquid.Menu.dll</Dll>
+    </DllReferences>
+    <DisplayName>MyMenu</DisplayName>
+    <Description>Basic contact form control</Description>
+    <IconName>MacStyleContactForm.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>MyMenu.SevenMenu</Name>
+    <DllFilename>MenuSeven.dll</DllFilename>
+    <DllReferences>
+      <Dll>Liquid.Menu.dll</Dll>
+      <Dll>EffectLibrary.dll</Dll>
+    </DllReferences>
+    <DisplayName>SevenMenu</DisplayName>
+    <Description>Basic contact form control</Description>
+    <IconName>MacStyleContactForm.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
     <Name>MacStyleContactFormControl.MacStyleContactForm</Name>
     <DllFilename>MacStyleContactFormControl.dll</DllFilename>
     <DllReferences>
