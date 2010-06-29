@@ -9,7 +9,7 @@
     <DisplayName>Checkerboard</DisplayName>
     <Description>Checkerboard</Description>
     <IconName>Checkerboard.png</IconName>
-    <Group>Single</Group>
+    <Group>Appear</Group>
   </Effect>
   <Effect>
     <Name>EffectLibrary.Dissolve</Name>
@@ -20,18 +20,29 @@
     <DisplayName>Dissolve</DisplayName>
     <Description>Dissolve</Description>
     <IconName>Dissolve.png</IconName>
-    <Group>Single</Group>
+    <Group>Appear</Group>
   </Effect>
   <Effect>
-    <Name>EffectLibrary.Fade</Name>
+    <Name>EffectLibrary.FadeIn</Name>
     <DllFilename>EffectLibrary.dll</DllFilename>
     <DllReferences>
       <Dll>DockCanvas.dll</Dll>
     </DllReferences>
-    <DisplayName>Fade</DisplayName>
-    <Description>Fade</Description>
+    <DisplayName>FadeIn</DisplayName>
+    <Description>FadeIn</Description>
     <IconName>Fade.png</IconName>
-    <Group>Single</Group>
+    <Group>Appear</Group>
+  </Effect>
+  <Effect>
+    <Name>EffectLibrary.FadeOut</Name>
+    <DllFilename>EffectLibrary.dll</DllFilename>
+    <DllReferences>
+      <Dll>DockCanvas.dll</Dll>
+    </DllReferences>
+    <DisplayName>FadeOut</DisplayName>
+    <Description>FadeOut</Description>
+    <IconName>FadeOut.png</IconName>
+    <Group>Disappear</Group>
   </Effect>
   <Effect>
     <Name>EffectLibrary.GlowWinSeven</Name>
@@ -56,15 +67,26 @@
     <Group>Single</Group>
   </Effect>
   <Effect>
-    <Name>EffectLibrary.Push</Name>
+    <Name>EffectLibrary.PushIn</Name>
     <DllFilename>EffectLibrary.dll</DllFilename>
     <DllReferences>
       <Dll>DockCanvas.dll</Dll>
     </DllReferences>
-    <DisplayName>Push</DisplayName>
-    <Description>Push</Description>
+    <DisplayName>PushIn</DisplayName>
+    <Description>PushIn</Description>
     <IconName>Push.png</IconName>
-    <Group>Single</Group>
+    <Group>Appear</Group>
+  </Effect>
+  <Effect>
+    <Name>EffectLibrary.PushOut</Name>
+    <DllFilename>EffectLibrary.dll</DllFilename>
+    <DllReferences>
+      <Dll>DockCanvas.dll</Dll>
+    </DllReferences>
+    <DisplayName>PushOut</DisplayName>
+    <Description>PushOut</Description>
+    <IconName>PushOut.png</IconName>
+    <Group>Disappear</Group>
   </Effect>
   <Effect>
     <Name>EffectLibrary.Ripple</Name>
@@ -89,15 +111,26 @@
     <Group>Single</Group>
   </Effect>
   <Effect>
-    <Name>EffectLibrary.Wipe</Name>
+    <Name>EffectLibrary.WipeIn</Name>
     <DllFilename>EffectLibrary.dll</DllFilename>
     <DllReferences>
       <Dll>DockCanvas.dll</Dll>
     </DllReferences>
-    <DisplayName>Wipe</DisplayName>
-    <Description>Wipe</Description>
+    <DisplayName>WipeIn</DisplayName>
+    <Description>WipeIn</Description>
     <IconName>Wipe.png</IconName>
-    <Group>Single</Group>
+    <Group>Appear</Group>
+  </Effect>
+  <Effect>
+    <Name>EffectLibrary.WipeOut</Name>
+    <DllFilename>EffectLibrary.dll</DllFilename>
+    <DllReferences>
+      <Dll>DockCanvas.dll</Dll>
+    </DllReferences>
+    <DisplayName>WipeOut</DisplayName>
+    <Description>WipeOut</Description>
+    <IconName>WipeOut.png</IconName>
+    <Group>Disappear</Group>
   </Effect>
   <Effect>
     <Name>EffectLibrary.Zoom</Name>

@@ -34,9 +34,6 @@ namespace BasicLibrary
             this.Width = control.Width;
             this.Height = control.Height;
             this.SizeChanged += new SizeChangedEventHandler(LayoutRoot_SizeChanged);
-
-            if (typeof(BasicControl).IsAssignableFrom(control.GetType()))
-                ((BasicControl)control).CallEffect += new BasicControl.CallEffectHandle(EffectableControl_CallEffect);
         }
 
         void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -71,41 +68,17 @@ namespace BasicLibrary
             get { return LayoutRoot; }
         }
 
-        protected BasicEffect mainEffect;
-
-        public BasicEffect MainEffect
-        {
-            get { return mainEffect; }
-        }
-
         public void ChangeEffect(string propertyName, Type effectType)
         {
-            if (propertyName == "MainEffect")
+            if (typeof(BasicControl).IsAssignableFrom(control.GetType()))
             {
-                if (mainEffect != null)
-                    mainEffect.DetachEffect();
-                ConstructorInfo ci = effectType.GetConstructor(new Type[] { typeof(EffectableControl) });
-                mainEffect = (BasicEffect)ci.Invoke(new object[] { this });
+                ((BasicControl)control).ChangeEffect(propertyName, effectType, this);
             }
-            else
-            {
-                if (typeof(BasicControl).IsAssignableFrom(control.GetType()))
-                {
-                    ((BasicControl)control).ChangeEffect(propertyName, effectType, this);
-                }
-            }
-        }
-
-        void EffectableControl_CallEffect(object sender)
-        {
-            if (mainEffect != null)
-                mainEffect.Start();
         }
 
         public List<string> GetListEffectPropertyName()
         {
             List<string> list = new List<string>();
-            list.Add("MainEffect");
 
             if (typeof(BasicControl).IsAssignableFrom(control.GetType()))
             {
@@ -118,14 +91,7 @@ namespace BasicLibrary
 
         public Type GetEffectType(string effectName)
         {
-            if (effectName == "MainEffect")
-            {
-                if (mainEffect == null)
-                    return typeof(BasicEffect);
-                else
-                    return mainEffect.GetType();
-            }
-            else if (typeof(BasicControl).IsAssignableFrom(control.GetType()))
+            if (typeof(BasicControl).IsAssignableFrom(control.GetType()))
             {
                 return ((BasicControl)control).GetEffectType(effectName);
             }
@@ -134,11 +100,7 @@ namespace BasicLibrary
 
         public IBasic GetEffect(string effectName)
         {
-            if (effectName == "MainEffect")
-            {
-                return mainEffect;
-            }
-            else if (typeof(BasicControl).IsAssignableFrom(control.GetType()))
+            if (typeof(BasicControl).IsAssignableFrom(control.GetType()))
             {
                 return ((BasicControl)control).GetEffect(effectName);
             }

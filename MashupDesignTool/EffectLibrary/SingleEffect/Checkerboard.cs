@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 
 namespace EffectLibrary
 {
-    public class Checkerboard : BasicEffect
+    public class Checkerboard : BasicAppearEffect
     {
         public enum CheckDirection
         {
@@ -26,6 +26,7 @@ namespace EffectLibrary
         #region attributes
         private CheckDirection direction;
         private TimeSpan cellDuration = TimeSpan.FromMilliseconds(600);
+        private TimeSpan beginTime = TimeSpan.FromMilliseconds(0);
         private Color cellColor = Colors.Black;
         private Storyboard sb;
         double width, height, cellWidth, cellHeight;
@@ -74,12 +75,22 @@ namespace EffectLibrary
             }
         }
 
-        public TimeSpan CellDuration
+        public double CellDuration
         {
-            get { return cellDuration; }
+            get { return cellDuration.TotalMilliseconds; }
             set
             {
-                cellDuration = value;
+                cellDuration = TimeSpan.FromMilliseconds(value);
+                InitStoryboard();
+            }
+        }
+
+        public double BeginTime
+        {
+            get { return beginTime.TotalMilliseconds; }
+            set
+            {
+                beginTime = TimeSpan.FromMilliseconds(value);
                 InitStoryboard();
             }
         }
@@ -91,6 +102,7 @@ namespace EffectLibrary
             parameterNameList.Add("Direction");
             parameterNameList.Add("CellColor");
             parameterNameList.Add("CellDuration");
+            parameterNameList.Add("BeginTime");
 
             width = control.Width;
             height = control.Height;
@@ -245,6 +257,10 @@ namespace EffectLibrary
                 }
             }
 
+            for (int i = 0; i < begins.Length; i++)
+                for (int j = 0; j < begins[i].Length; j++)
+                    begins[i][j] += beginTime.TotalMilliseconds;
+
             return begins;
         }
         #endregion calculate paramter
@@ -304,7 +320,15 @@ namespace EffectLibrary
                 }
                 x += cellWidth;
             }
+            sb.Completed += new EventHandler(sb_Completed);
             sb.Begin();
+        }
+
+        void sb_Completed(object sender, EventArgs e)
+        {
+            Storyboard sb = (Storyboard)sender;
+            sb.Completed -= new EventHandler(sb_Completed);
+            base.RaiseEffectCompleteEvent(this);
         }
 
         public override void Stop()

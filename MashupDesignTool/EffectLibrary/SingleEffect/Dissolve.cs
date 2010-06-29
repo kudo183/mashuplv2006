@@ -12,12 +12,13 @@ using BasicLibrary;
 
 namespace EffectLibrary
 {
-    public class Dissolve : BasicEffect
+    public class Dissolve : BasicAppearEffect
     {
         private const int MIN = 20;
         private const int MAX_NUM_CELLS = 10;
         #region attributes
         private TimeSpan cellDuration = TimeSpan.FromMilliseconds(600);
+        private TimeSpan beginTime = TimeSpan.FromMilliseconds(0);
         private Color cellColor = Colors.Black;
         private Storyboard sb;
         double width, height, cellWidth, cellHeight;
@@ -37,14 +38,22 @@ namespace EffectLibrary
             }
         }
 
-        public TimeSpan CellDuration
+        public double CellDuration
         {
-            get { return cellDuration; }
+            get { return cellDuration.TotalMilliseconds; }
             set
             {
-                if (value == null)
-                    return;
-                cellDuration = value;
+                cellDuration = TimeSpan.FromMilliseconds(value);
+                InitStoryboard();
+            }
+        }
+
+        public double BeginTime
+        {
+            get { return beginTime.TotalMilliseconds; }
+            set
+            {
+                beginTime = TimeSpan.FromMilliseconds(value);
                 InitStoryboard();
             }
         }
@@ -55,6 +64,7 @@ namespace EffectLibrary
         {
             parameterNameList.Add("CellColor");
             parameterNameList.Add("CellDuration");
+            parameterNameList.Add("BeginTime");
 
             width = control.Width;
             height = control.Height;
@@ -89,6 +99,7 @@ namespace EffectLibrary
             Random random = new Random();
             int max = (int)(cellDuration.TotalMilliseconds * 0.9);
             sb = new Storyboard();
+            sb.Completed += new EventHandler(sb_Completed);
             double x, y;
             x = y = 0;
             cells = new Rectangle[col][];
@@ -106,7 +117,7 @@ namespace EffectLibrary
                     Canvas.SetTop(cells[i][j], y);
                     control.CanvasRoot.Children.Add(cells[i][j]);
 
-                    TimeSpan ts = TimeSpan.FromMilliseconds(random.Next(0, max));
+                    TimeSpan ts = TimeSpan.FromMilliseconds(random.Next(0, max) + beginTime.TotalMilliseconds);
                     DoubleAnimation doubleAnimation1 = new DoubleAnimation() { BeginTime = ts, Duration = cellDuration, From = cellWidth, To = 0 };
                     Storyboard.SetTarget(doubleAnimation1, cells[i][j]);
                     Storyboard.SetTargetProperty(doubleAnimation1, new PropertyPath("Width"));
@@ -169,6 +180,12 @@ namespace EffectLibrary
                 x += cellWidth;
             }
             sb.Begin();
+        }
+
+        void sb_Completed(object sender, EventArgs e)
+        {
+            Storyboard sb = (Storyboard)sender;
+            base.RaiseEffectCompleteEvent(this);
         }
 
         public override void Stop()

@@ -12,7 +12,7 @@ using BasicLibrary;
 
 namespace EffectLibrary
 {
-    public class Wipe : BasicEffect
+    public class WipeOut : BasicDisappearEffect
     {
         public enum BeginWipe
         {
@@ -30,6 +30,7 @@ namespace EffectLibrary
         private BeginWipe beginPos = BeginWipe.TOP;
         private Storyboard sb;
         private TimeSpan duration = TimeSpan.FromMilliseconds(500);
+        private TimeSpan beginTime = TimeSpan.FromMilliseconds(0);
         double width, height;
         private Rectangle rectangle;
         private GradientStop gs1, gs2;
@@ -46,12 +47,34 @@ namespace EffectLibrary
                 UpdateRectangle();
             }
         }
+
+        public double Duration
+        {
+            get { return duration.TotalMilliseconds; }
+            set
+            {
+                duration = TimeSpan.FromMilliseconds(value);
+                InitStoryboard();
+            }
+        }
+
+        public double BeginTime
+        {
+            get { return beginTime.TotalMilliseconds; }
+            set
+            {
+                beginTime = TimeSpan.FromMilliseconds(value);
+                InitStoryboard();
+            }
+        }
         #endregion properties
 
-        public Wipe(EffectableControl control)
+        public WipeOut(EffectableControl control)
             : base(control)
         {
             parameterNameList.Add("BeginPos");
+            parameterNameList.Add("Duration");
+            parameterNameList.Add("BeginTime");
             width = control.Width;
             height = control.Height;
             if (((double.IsNaN(width) && double.IsNaN(height)) || (width == 0 && height == 0)) && !double.IsNaN(control.ActualWidth) && !double.IsNaN(control.ActualHeight))
@@ -96,15 +119,21 @@ namespace EffectLibrary
         {
             TimeSpan ts = TimeSpan.FromMilliseconds(duration.TotalMilliseconds * 0.4 / 1.4);
             sb = new Storyboard();
-            DoubleAnimation doubleAnimation1 = new DoubleAnimation() { BeginTime = TimeSpan.FromMilliseconds(0), Duration = duration.Subtract(ts), From = 1, To = 0 };
+            sb.Completed += new EventHandler(sb_Completed);
+            DoubleAnimation doubleAnimation1 = new DoubleAnimation() { BeginTime = ts + beginTime, Duration = duration.Subtract(ts), From = 1, To = 0 };
             Storyboard.SetTarget(doubleAnimation1, gs1);
             Storyboard.SetTargetProperty(doubleAnimation1, new PropertyPath("Offset"));
             sb.Children.Add(doubleAnimation1);
 
-            DoubleAnimation doubleAnimation2 = new DoubleAnimation() { BeginTime = ts, Duration = duration, From = 1, To = 0 };
+            DoubleAnimation doubleAnimation2 = new DoubleAnimation() { BeginTime = beginTime, Duration = duration.Subtract(ts), From = 1, To = 0 };
             Storyboard.SetTarget(doubleAnimation2, gs2);
             Storyboard.SetTargetProperty(doubleAnimation2, new PropertyPath("Offset"));
             sb.Children.Add(doubleAnimation2);
+        }
+
+        void sb_Completed(object sender, EventArgs e)
+        {
+            base.RaiseEffectCompleteEvent(this);
         }
 
         private void UpdateRectangle()

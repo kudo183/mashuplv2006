@@ -12,7 +12,7 @@ using BasicLibrary;
 
 namespace EffectLibrary
 {
-    public class Push : BasicEffect
+    public class PushIn : BasicAppearEffect
     {
         public enum PushOrientation
         {
@@ -22,18 +22,11 @@ namespace EffectLibrary
             BOTTOM_TO_TOP
         }
 
-        public enum PushSpeed
-        {
-            SLOW,
-            MEDIUM,
-            FAST
-        }
-
         #region attributes
         private PushOrientation orientation;
-        private PushSpeed speed;
         private Storyboard sb;
-        private TimeSpan pushDuration = new TimeSpan();
+        private TimeSpan duration = TimeSpan.FromMilliseconds(350);
+        private TimeSpan beginTime = new TimeSpan();
         double width, height;
         Geometry oldClip;
         Brush oldBackground;
@@ -50,36 +43,33 @@ namespace EffectLibrary
             }
         }
 
-        public PushSpeed Speed
+        public double Duration
         {
-            get { return speed; }
-            set 
-            { 
-                speed = value;
-                switch (speed)
-                {
-                    case PushSpeed.SLOW:
-                        pushDuration = TimeSpan.FromMilliseconds(1000);
-                        break;
-                    case PushSpeed.MEDIUM:
-                        pushDuration = TimeSpan.FromMilliseconds(650);
-                        break;
-                    case PushSpeed.FAST:
-                        pushDuration = TimeSpan.FromMilliseconds(300);
-                        break;
-                    default:
-                        break;
-                }
+            get { return duration.TotalMilliseconds; }
+            set
+            {
+                duration = TimeSpan.FromMilliseconds(value);
+                InitStoryboard();
+            }
+        }
+
+        public double BeginTime
+        {
+            get { return beginTime.TotalMilliseconds; }
+            set
+            {
+                beginTime = TimeSpan.FromMilliseconds(value);
                 InitStoryboard();
             }
         }
         #endregion properties
 
-        public Push(EffectableControl control)
+        public PushIn(EffectableControl control)
             : base(control)
         {
             parameterNameList.Add("Orientation");
-            parameterNameList.Add("Speed");
+            parameterNameList.Add("Duration");
+            parameterNameList.Add("BeginTime");
             
             width = control.Width;
             height = control.Height;
@@ -90,10 +80,10 @@ namespace EffectLibrary
             }
 
             orientation = PushOrientation.BOTTOM_TO_TOP;
-            Speed = PushSpeed.MEDIUM;
             oldClip = control.CanvasRoot.Clip;
             control.CanvasRoot.Clip = new RectangleGeometry() { Rect = new Rect(0, 0, width, height) };
             oldBackground = control.CanvasRoot.Background;
+            InitStoryboard();
 
             control.SizeChanged += new SizeChangedEventHandler(control_SizeChanged);
         }
@@ -140,7 +130,7 @@ namespace EffectLibrary
             sb = new Storyboard();
             sb.Completed += new EventHandler(sb_Completed);
 
-            DoubleAnimation doubleAnimation = new DoubleAnimation() { BeginTime = TimeSpan.FromSeconds(0), Duration = pushDuration, From = from, To = to };
+            DoubleAnimation doubleAnimation = new DoubleAnimation() { BeginTime = beginTime, Duration = duration, From = from, To = to };
             Storyboard.SetTarget(doubleAnimation, control.Control);
             Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath(propertyPath));
 
@@ -150,6 +140,7 @@ namespace EffectLibrary
         void sb_Completed(object sender, EventArgs e)
         {
             control.CanvasRoot.Background = oldBackground;
+            base.RaiseEffectCompleteEvent(this);
         }
 
         #region override methods

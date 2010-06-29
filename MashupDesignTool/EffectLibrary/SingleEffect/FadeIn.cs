@@ -12,32 +12,44 @@ using BasicLibrary;
 
 namespace EffectLibrary
 {
-    public class Fade : BasicEffect
+    public class FadeIn : BasicAppearEffect
     {
         #region attributes
         private Storyboard sb;
         private TimeSpan duration = new TimeSpan();
+        private TimeSpan beginTime = new TimeSpan();
         double width, height;
         Brush oldBackground;
         double oldOpacity;
         #endregion attributes
 
         #region properties
-        public TimeSpan Duration
+        public double Duration
         {
-            get { return duration; }
+            get { return duration.TotalMilliseconds; }
             set
             {
-                duration = value;
+                duration = TimeSpan.FromMilliseconds(value);
+                InitStoryboard();
+            }
+        }
+
+        public double BeginTime
+        {
+            get { return beginTime.TotalMilliseconds; }
+            set
+            {
+                beginTime = TimeSpan.FromMilliseconds(value);
                 InitStoryboard();
             }
         }
         #endregion properties
 
-        public Fade(EffectableControl control)
+        public FadeIn(EffectableControl control)
             : base(control)
         {
             parameterNameList.Add("Duration");
+            parameterNameList.Add("BeginTime");
 
             width = control.Width;
             height = control.Height;
@@ -58,7 +70,7 @@ namespace EffectLibrary
             sb = new Storyboard();
             sb.Completed += new EventHandler(sb_Completed);
 
-            DoubleAnimation doubleAnimation = new DoubleAnimation() { BeginTime = TimeSpan.FromSeconds(0), Duration = duration, From = 0, To = 1 };
+            DoubleAnimation doubleAnimation = new DoubleAnimation() { BeginTime = beginTime, Duration = duration, From = 0, To = 1 };
             Storyboard.SetTarget(doubleAnimation, control.Control);
             Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("(UIElement.Opacity)"));
 
@@ -68,6 +80,7 @@ namespace EffectLibrary
         void sb_Completed(object sender, EventArgs e)
         {
             control.CanvasRoot.Background = oldBackground;
+            base.RaiseEffectCompleteEvent(this);
         }
 
         #region override methods
