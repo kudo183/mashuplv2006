@@ -1,0 +1,68 @@
+﻿<controls:ChildWindow x:Class="MashupDesignTool.EventEditor"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           Width="500" Height="550" 
+           Title="EventEditor" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    
+    <controls:ChildWindow.Resources>
+        <DataTemplate x:Key="cbbControlDataTemplate">
+            <StackPanel Orientation="Horizontal" Background="Transparent" Margin="2,0,2,0">
+                <Image Source="{Binding ControlImage}" Width="25" Height="20" HorizontalAlignment="Center" Stretch="Uniform"></Image>
+                <TextBlock Text="{Binding ControlName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Verdana" FontSize="11" Margin="2,0,0,0"></TextBlock>
+            </StackPanel>
+        </DataTemplate>
+    </controls:ChildWindow.Resources>
+    
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <StackPanel>
+            <sdk:Label Margin="5,2,0,0" FontWeight="Bold" FontSize="11" x:Name="lblEventName"></sdk:Label>
+            <RadioButton x:Name="rdNone" Content="None" Margin="20,0,0,0" GroupName="event"></RadioButton>
+            <RadioButton x:Name="rdHandle" Content="Handle" Margin="20,0,0,0" GroupName="event"></RadioButton>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <Grid x:Name="gridTitle" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="*" MinWidth="0" />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+           
+                <Border Grid.Column="0" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
+                    <TextBlock Text="Control" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" Margin="2,0,0,0" BorderThickness="1">
+                    <TextBlock Text="Operation" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                </Border>
+                <sdk:GridSplitter Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="2" Background="#FF94ADEB" MouseMove="GridSplitter_MouseMove" MouseLeftButtonDown="GridSplitter_MouseLeftButtonDown" MouseLeftButtonUp="GridSplitter_MouseLeftButtonUp"></sdk:GridSplitter>
+            </Grid>
+
+            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" x:Name="scrollViewer" IsEnabled="{Binding IsChecked,ElementName=rdHandle}"
+									VerticalScrollBarVisibility="Visible" BorderThickness="1" BorderBrush="#FF94ADEB">
+                <Grid Name="gridEventBinding">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ScrollViewer>
+            <Button Grid.Row="2" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,4,0,4" x:Name="btnAddRow" Content="Add row" Click="btnAddRow_Click"></Button>
+        </Grid>
+
+        <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,0,0" Grid.Row="2" />
+        <Button x:Name="OKButton" Content="OK" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,79,0" Grid.Row="2" />
+    </Grid>
+</controls:ChildWindow>
