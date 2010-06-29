@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuClassic", "MenuClassic\MenuClassic.csproj", "{7F073641-0C53-4769-8481-9FE4E9AC68F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightApplication1", "SilverlightApplication1\SilverlightApplication1.csproj", "{783FA2B6-8B92-43B9-922E-7BA380B7CF9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightApplication1.Web", "SilverlightApplication1.Web\SilverlightApplication1.Web.csproj", "{00658E0A-7CFC-4643-AEC4-4F1B31E06309}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{7F073641-0C53-4769-8481-9FE4E9AC68F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F073641-0C53-4769-8481-9FE4E9AC68F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F073641-0C53-4769-8481-9FE4E9AC68F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{783FA2B6-8B92-43B9-922E-7BA380B7CF9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{783FA2B6-8B92-43B9-922E-7BA380B7CF9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{783FA2B6-8B92-43B9-922E-7BA380B7CF9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{783FA2B6-8B92-43B9-922E-7BA380B7CF9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00658E0A-7CFC-4643-AEC4-4F1B31E06309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00658E0A-7CFC-4643-AEC4-4F1B31E06309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00658E0A-7CFC-4643-AEC4-4F1B31E06309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00658E0A-7CFC-4643-AEC4-4F1B31E06309}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
