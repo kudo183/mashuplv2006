@@ -78,6 +78,15 @@ namespace BasicLibrary
         protected List<string> parameterNameList = new List<string>();
         protected bool _isSelfHandle;
 
+        public delegate void MDTEffectCompleteHandler(object sender);
+        public event MDTEffectCompleteHandler MDTEffectCompleted;
+
+        protected void RaiseEffectCompleteEvent(object sender)
+        {
+            if (MDTEffectCompleted != null)
+                MDTEffectCompleted(sender);
+        }
+
         public bool IsSelfHandle
         {
             get { return _isSelfHandle; }

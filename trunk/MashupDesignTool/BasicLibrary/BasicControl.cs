@@ -97,9 +97,6 @@ namespace BasicLibrary
 
         public delegate void MDTEventHandler(object sender, string xmlString);
 
-        public delegate void CallEffectHandle(object sender);
-        public event CallEffectHandle CallEffect;
-
         protected List<string> effectPropertyNameList = new List<string>();
         private List<string> eventNameList = new List<string>();
         private List<string> operationNameList = new List<string>();
@@ -187,20 +184,95 @@ namespace BasicLibrary
             parameterNameList.Add("ZIndex");
             parameterNameList.Add("Name");
             parameterNameList.Add("Visibility");
+
+            effectPropertyNameList.Add("MainEffect");
+            effectPropertyNameList.Add("AppearEffect");
+            effectPropertyNameList.Add("DisappearEffect");
+
+            AddOperationNameToList("Show");
+            AddOperationNameToList("Hide");
+        }
+
+        protected BasicEffect mainEffect;
+        protected BasicAppearEffect appearEffect;
+        protected BasicDisappearEffect disappearEffect;
+
+        public BasicEffect MainEffect
+        {
+            get { return mainEffect; }
+        }
+
+        public BasicAppearEffect AppearEffect
+        {
+            get { return appearEffect; }
+        }
+
+        public BasicDisappearEffect DisappearEffect
+        {
+            get { return disappearEffect; }
         }
 
         public virtual void ChangeEffect(string propertyName, Type effectType, EffectableControl owner)
         {
+            if (propertyName == "MainEffect")
+            {
+                if (mainEffect != null)
+                    mainEffect.DetachEffect();
+                ConstructorInfo ci = effectType.GetConstructor(new Type[] { typeof(EffectableControl) });
+                mainEffect = (BasicEffect)ci.Invoke(new object[] { owner });
+            }
+            else if (propertyName == "AppearEffect")
+            {
+                if (appearEffect != null)
+                    appearEffect.DetachEffect();
+                ConstructorInfo ci = effectType.GetConstructor(new Type[] { typeof(EffectableControl) });
+                appearEffect = (BasicAppearEffect)ci.Invoke(new object[] { owner });
+            }
+            else if (propertyName == "DisappearEffect")
+            {
+                if (disappearEffect != null)
+                    disappearEffect.DetachEffect();
+                ConstructorInfo ci = effectType.GetConstructor(new Type[] { typeof(EffectableControl) });
+                disappearEffect = (BasicDisappearEffect)ci.Invoke(new object[] { owner });
+            }
         }
 
         protected void StartMainEffect()
         {
-            if (CallEffect != null)
-                CallEffect(this);
+            if (mainEffect != null)
+                mainEffect.Start();
         }
 
         public virtual void Dispose()
         {
+        }
+
+        public void Show(string xml)
+        {
+            if (this.Visibility == System.Windows.Visibility.Visible)
+                return;
+            this.Visibility = System.Windows.Visibility.Visible;
+            if (appearEffect != null)
+                appearEffect.Start();
+        }
+
+        public void Hide(string xml)
+        {
+            if (this.Visibility == System.Windows.Visibility.Collapsed)
+                return;
+            if (disappearEffect != null)
+            {
+                disappearEffect.MDTEffectCompleted += new BasicEffect.MDTEffectCompleteHandler(disappearEffect_MDTEffectCompleted);
+                disappearEffect.Start();
+            }
+            else
+                this.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        void disappearEffect_MDTEffectCompleted(object sender)
+        {
+            disappearEffect.MDTEffectCompleted -= new BasicEffect.MDTEffectCompleteHandler(disappearEffect_MDTEffectCompleted);
+            this.Visibility = System.Windows.Visibility.Collapsed;
         }
     }   
 }

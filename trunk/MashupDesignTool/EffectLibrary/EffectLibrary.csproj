@@ -55,15 +55,17 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SingleEffect\FadeOut.cs" />
     <Compile Include="ListEffect\FishEye.cs" />
+    <Compile Include="SingleEffect\PushOut.cs" />
     <Compile Include="SingleEffect\ChangeFillColor.cs" />
     <Compile Include="SingleEffect\Checkerboard.cs" />
     <Compile Include="SingleEffect\GlowWinSeven.cs" />
     <Compile Include="SingleEffect\Dissolve.cs" />
-    <Compile Include="SingleEffect\Fade.cs" />
+    <Compile Include="SingleEffect\FadeIn.cs" />
     <Compile Include="ListEffect\Carousel.cs" />
     <Compile Include="ListEffect\CoverFlow.cs" />
-    <Compile Include="SingleEffect\Push.cs" />
+    <Compile Include="SingleEffect\PushIn.cs" />
     <Compile Include="SingleEffect\Jump.cs" />
     <Compile Include="SingleEffect\Ripple.cs" />
     <Compile Include="CustomPixelShader\ReflectionShader.cs" />
@@ -71,8 +73,9 @@
     <Compile Include="CustomPixelShader\Ultily.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SingleEffect\SplitScreen.cs" />
-    <Compile Include="SingleEffect\Wipe.cs" />
+    <Compile Include="SingleEffect\WipeIn.cs" />
     <Compile Include="SingleEffect\Zoom.cs" />
+    <Compile Include="SingleEffect\WipeOut.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">

@@ -33,12 +33,12 @@ namespace EffectLibrary
             }
         }
 
-        public TimeSpan Duration
+        public double Duration
         {
-            get { return duration; }
+            get { return duration.TotalMilliseconds; }
             set
             {
-                duration = value;
+                duration = TimeSpan.FromMilliseconds(value);
                 InitStoryboard();
             }
         }
