@@ -64,6 +64,7 @@
     <Compile Include="BasicDataListItem.cs" />
     <Compile Include="BasicListEffect.cs" />
     <Compile Include="BasicImageListControl.cs" />
+    <Compile Include="BasicMenu.cs" />
     <Compile Include="serializer\BasicControlSerializer.cs" />
     <Compile Include="EffectableControl.xaml.cs">
       <DependentUpon>EffectableControl.xaml</DependentUpon>
