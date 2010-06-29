@@ -26,7 +26,7 @@ namespace BasicLibrary
             VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
            // Width = Height = 150;
             for (int i = 0; i < count; i++)
-                AddItem(new ImageListControlItems() { Width = 50, Height = 50 });
+                AddItem(new EffectableControl(new ImageListControlItems() { Width = 50, Height = 50 }));
         }
     }
 }
