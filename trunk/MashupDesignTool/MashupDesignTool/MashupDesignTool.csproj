@@ -173,8 +173,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Event\EventEditor.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="PageControl.xaml">
       <SubType>Designer</SubType>
@@ -257,6 +257,7 @@
     <Folder Include="Images\.svn\tmp\prop-base\" />
     <Folder Include="Images\.svn\tmp\props\" />
     <Folder Include="Images\.svn\tmp\text-base\" />
+    <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
@@ -278,6 +279,10 @@
     <ProjectReference Include="..\MapulRibbon\MapulRibbon.csproj">
       <Project>{E6875CC4-6311-41E3-B8F0-F4E3B27E8A59}</Project>
       <Name>MapulRibbon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MenuEditor\MenuEditor.csproj">
+      <Project>{31290C15-807E-4F92-895D-C8035D58AAC3}</Project>
+      <Name>MenuEditor</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyPropertyGrid\MyPropertyGrid.csproj">
       <Project>{EBE7ECFD-0942-49A9-BF98-0FE9378C1472}</Project>

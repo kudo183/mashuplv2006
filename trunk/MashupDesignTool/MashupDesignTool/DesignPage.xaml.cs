@@ -579,6 +579,7 @@ namespace MashupDesignTool
                 RemoveImageListEditorButtonFromHome();
                 RemoveRichTextEditorButtonFromHome();
                 RemoveDataListEditorButtonFromHome();
+                RemoveMenuEditorButtonFromHome();
             }
 
             if (element.Equals(designCanvas1.ControlContainer))
@@ -613,6 +614,10 @@ namespace MashupDesignTool
                     else if (typeof(BasicDataListControl).IsAssignableFrom(designCanvas1.SelectedControls[0].Control.GetType()))
                     {
                         AddDataListEditorButtonToHome();
+                    }
+                    else if (typeof(BasicLibrary.Menu.BasicMenu).IsAssignableFrom(designCanvas1.SelectedControls[0].Control.GetType()))
+                    {
+                        AddMenuEditorButtonToHome();
                     }
                 }
                 previousElement = designCanvas1.SelectedControls[0].Control;
@@ -753,6 +758,51 @@ namespace MashupDesignTool
             {
                 RibbonItems ris = (RibbonItems)((TabsItem)menu.Tabs.Items[0]).Content;
                 ris.Children.Remove(riDataList);
+
+                ((TabsItem)menu.Tabs.Items[0]).Content = ris;
+            }
+        }
+        #endregion
+
+        #region imagelist editor button
+        RibbonItem riMenu = new RibbonItem();
+        private void AddMenuEditorButtonToHome()
+        {
+            riMenu = new RibbonItem() { Title = "Menu" };
+            riMenu.Height = 84;
+            riMenu.Width = 75;
+
+            RibbonButtonsGroup rbg = new RibbonButtonsGroup();
+            RibbonButton rb = new RibbonButton()
+            {
+                Text = "Editor",
+                TooltipText = "Edit Menu",
+                VerticalAlignment = System.Windows.VerticalAlignment.Stretch,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+            };
+            rb.ImageUrl = new BitmapImage(new Uri(@"/MashupDesignTool;component/Images/ImageListEditor.png", UriKind.Relative));
+            rb.OnClick += new RoutedEventHandler(rbMenuEditor_OnClick);
+            rbg.Children.Add(rb);
+            riMenu.Content = rbg;
+
+            RibbonItems ris = (RibbonItems)((TabsItem)menu.Tabs.Items[0]).Content;
+            ris.Children.Add(riMenu);
+
+            ((TabsItem)menu.Tabs.Items[0]).Content = ris;
+        }
+
+        void rbMenuEditor_OnClick(object sender, RoutedEventArgs e)
+        {
+            MenuEditor.MenuEditor im = new MenuEditor.MenuEditor(designCanvas1.ControlContainer, designCanvas1.SelectedControls[0].Control as BasicLibrary.Menu.BasicMenu);
+            im.ShowDialog();
+        }
+
+        private void RemoveMenuEditorButtonFromHome()
+        {
+            if (riMenu != null)
+            {
+                RibbonItems ris = (RibbonItems)((TabsItem)menu.Tabs.Items[0]).Content;
+                ris.Children.Remove(riMenu);
 
                 ((TabsItem)menu.Tabs.Items[0]).Content = ris;
             }
