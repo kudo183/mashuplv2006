@@ -93,20 +93,24 @@ namespace BasicLibrary.Menu
         private void LoadMenu()
         {
             ClearMenu();
-            XDocument doc = XDocument.Parse(_xmlString);
-            XElement root = doc.Element("Menu");
-            foreach (XElement element in root.Elements())
+            try
             {
-                XElement e = new XElement("Root");
-                foreach (XAttribute attri in element.Attributes())
+                XDocument doc = XDocument.Parse(_xmlString);
+                XElement root = doc.Element("Menu");
+                foreach (XElement element in root.Elements())
                 {
-                    e.SetAttributeValue(attri.Name, attri.Value);
-                }
-                IMenuItem mi = CreateMenuItem(e);
+                    XElement e = new XElement("Root");
+                    foreach (XAttribute attri in element.Attributes())
+                    {
+                        e.SetAttributeValue(attri.Name, attri.Value);
+                    }
+                    IMenuItem mi = CreateMenuItem(e);
 
-                AddMenuItem(mi);
-                LoadSubMenu(mi, element);
+                    AddMenuItem(mi);
+                    LoadSubMenu(mi, element);
+                }
             }
+            catch { }
         }
 
         private void LoadSubMenu(IMenuItem mi, XElement MenuItemElement)
