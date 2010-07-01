@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="Editor.BrushEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="450" d:DesignWidth="630" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" Loaded="UserControl_Loaded">
+    
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="262*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <sdk:TabControl Name="tabControl1">
+            <sdk:TabItem Header="SolidBrush" Name="tabItem1">
+                <Grid x:Name="gridSolid">                    
+                </Grid>
+            </sdk:TabItem>
+            <sdk:TabItem Header="GradientBrush" Name="tabItem2">
+                <Grid x:Name="gridGradient">                    
+                </Grid>
+            </sdk:TabItem>
+            <sdk:TabItem Header="ImageBrush" Name="tabItem3">
+                <Grid x:Name="gridImage">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="200*" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="1" Name="grid2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="190*" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="110" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Name="textBlock1" Text="Image URL:" Height="25" Margin="0,5,0,0"/>
+                        <TextBox Grid.Column="1" Name="textBox1" Height="25" KeyUp="textBox1_KeyUp" />
+                        <TextBlock Grid.Column="2" Name="textBlock2" Text="Stretch mode:" Height="25" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                        <ComboBox Grid.Column="3" Name="comboBox1" Height="25" SelectionChanged="comboBox1_SelectionChanged">                            
+                        </ComboBox>
+                    </Grid>
+                    <Rectangle Name="rectImagePreview"/>
+                </Grid>
+            </sdk:TabItem>
+        </sdk:TabControl>
+        <Grid Grid.Row="1" Name="grid1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="272*" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            <Button Content="Cancel" Grid.Column="1" Height="20" HorizontalAlignment="Center" Name="btnCancel" VerticalAlignment="Center" Width="50" Click="btnCancel_Click" />
+            <Button Content="Ok" Grid.Column="2" Height="20" HorizontalAlignment="Center" Name="btnOk" VerticalAlignment="Center" Width="50" Click="btnOk_Click" />
+        </Grid>
+    </Grid>
+</UserControl>
