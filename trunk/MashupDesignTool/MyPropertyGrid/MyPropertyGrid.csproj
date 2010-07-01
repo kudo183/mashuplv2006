@@ -12,11 +12,12 @@
     <RootNamespace>MyPropertyGrid</RootNamespace>
     <AssemblyName>MyPropertyGrid</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -84,8 +85,9 @@
     <Compile Include="DisplayNameAttribute.cs" />
     <Compile Include="Editor\BooleanValueEditor.cs" />
     <Compile Include="Editor\ColorValueEditor.cs" />
-    <Compile Include="Editor\ImageSourceValueEditor.cs" />
     <Compile Include="Editor\SolidBrushValueEditor.cs" />
+    <Compile Include="Editor\ImageSourceValueEditor.cs" />
+    <Compile Include="Editor\BrushValueEditor.cs" />
     <Compile Include="Editor\ComboBoxEditorBase.cs" />
     <Compile Include="Editor\FontStyleValueEditor.cs" />
     <Compile Include="Editor\FontWeightValueEditor.cs" />
@@ -111,6 +113,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BrushEditor\BrushEditor.csproj">
+      <Project>{D3161FDC-CA40-42E7-90A8-02075AB1027B}</Project>
+      <Name>BrushEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ColorPicker\ColorPicker.csproj">
       <Project>{DCA68119-D086-44AF-A067-A6B9F3FEEA80}</Project>
       <Name>ColorPicker</Name>
