@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml.Linq;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using System.Linq;
 
@@ -47,7 +48,7 @@ namespace BasicLibrary
                 xm.Close();
                 return sb.ToString();
             }
-            
+
             xm.WriteStartElement(rootName);
             xm.WriteAttributeString("Type", o.GetType().AssemblyQualifiedName);
             Serialize(o, xm);
@@ -145,13 +146,13 @@ namespace BasicLibrary
             object lst = o;
             if (lst == null)
                 return;
-            
+
             Array a = (Array)lst;
-            if(a.Rank > 1)
+            if (a.Rank > 1)
                 return;
 
             string elementType = a.GetType().GetElementType().AssemblyQualifiedName;
-            
+
             xm.WriteStartElement(rootName);
             xm.WriteAttributeString("Type", o.GetType().AssemblyQualifiedName);
 
@@ -292,7 +293,7 @@ namespace BasicLibrary
             //write element value, stop recursive
             if (t.IsPrimitive)
                 xm.WriteValue(o.ToString());
-            if (t == typeof(string) || typeof(Enum).IsAssignableFrom(t) || t == typeof(TimeSpan) || t == typeof(DateTime))
+            if (t == typeof(string) || typeof(Enum).IsAssignableFrom(t) || t == typeof(TimeSpan) || t == typeof(DateTime) || t == typeof(Uri))
             {
                 xm.WriteValue(o.ToString());
                 return;
@@ -317,6 +318,11 @@ namespace BasicLibrary
                 if (pi.CanWrite == false || pi.GetSetMethod() == null)
                     continue;
 
+                if (pi.Name == "UriSource")
+                {
+                    int i = 0;
+                    i++;
+                }
                 object value = null;
                 try { value = pi.GetValue(o, null); }
                 catch { }
@@ -330,7 +336,7 @@ namespace BasicLibrary
                 }
                 if (typeof(IList).IsAssignableFrom(pi.PropertyType))
                 {
-                    MyXmlSerializer.SerializeList(value, xm);
+                    MyXmlSerializer.SerializeList(value, xm, pi.Name);
                     continue;
                 }
                 xm.WriteStartElement(pi.Name);
@@ -512,7 +518,8 @@ namespace BasicLibrary
                 return TimeSpan.Parse(element.Value);
             if (type == typeof(DateTime))
                 return DateTime.Parse(element.Value);
-
+            if (type == typeof(Uri))
+                return new Uri(element.Value, UriKind.RelativeOrAbsolute);
             object obj1 = Activator.CreateInstance(type);
             string propertyName;
             object value;
