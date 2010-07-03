@@ -49,7 +49,7 @@ namespace MashupDesignTool
         public MainPage()
         {
             InitializeComponent();
-            propertiesGrid.SelectedObjectParent = designCanvas1.ControlContainer;
+            propertiesGrid.SelectedObjectParent = designCanvas1.ControlContainerCanvas;
             designCanvas1.ControlPositionChanged += new DesignCanvas.ControlPositionChangedHander(designCanvas1_PositionChanged);
             designCanvas1.ControlZIndexChanged += new DesignCanvas.ControlZIndexChangedHandler(designCanvas1_ZIndexChanged);
             designCanvas1.ControlSizeChanged += new DesignCanvas.ControlSizeChangedHander(designCanvas1_ControlSizeChanged);
@@ -63,17 +63,17 @@ namespace MashupDesignTool
 
         void propertiesGrid_PropertyValueChange(UIElement ui, string name, object value)
         {
-            if (ui.Equals(designCanvas1.ControlContainer))
+            if (ui.Equals(designCanvas1.ControlContainerCanvas))
             {
                 switch (name)
                 {
                     case "Width":
-                        designCanvas1.LayoutRoot.Width = designCanvas1.ControlContainer.Width;
-                        designCanvas1.ControlContainer.UpdateChildrenPosition();
+                        //designCanvas1.LayoutRoot.Width = designCanvas1.ControlContainer.Width;
+                        designCanvas1.ControlContainerCanvas.UpdateChildrenPosition();
                         break;
                     case "Height":
-                        designCanvas1.LayoutRoot.Height = designCanvas1.ControlContainer.Height;
-                        designCanvas1.ControlContainer.UpdateChildrenPosition();
+                        //designCanvas1.LayoutRoot.Height = designCanvas1.ControlContainer.Height;
+                        designCanvas1.ControlContainerCanvas.UpdateChildrenPosition();
                         break;
                     default:
                         break;
@@ -102,6 +102,7 @@ namespace MashupDesignTool
                         propertiesGrid.UpdatePropertyValue("Top");
                         propertiesGrid.UpdatePropertyValue("Width");
                         propertiesGrid.UpdatePropertyValue("Height");
+                        designCanvas1.ControlContainerCanvas.UpdateChildrenPosition();
                         break;
                     case "Width":
                         if (dt == DockCanvas.DockCanvas.DockType.None
@@ -109,7 +110,7 @@ namespace MashupDesignTool
                             || dt == DockCanvas.DockCanvas.DockType.Right)
                         {
                             pc.SetWidth(double.Parse((string)value));
-                            designCanvas1.ControlContainer.UpdateChildrenPosition();
+                            designCanvas1.ControlContainerCanvas.UpdateChildrenPosition();
                             designCanvas1.UpdateAllProxyControlPosition();
                         }
                         break;
@@ -119,13 +120,13 @@ namespace MashupDesignTool
                             || dt == DockCanvas.DockCanvas.DockType.Bottom)
                         {
                             pc.SetHeight(double.Parse((string)value));
-                            designCanvas1.ControlContainer.UpdateChildrenPosition();
+                            designCanvas1.ControlContainerCanvas.UpdateChildrenPosition();
                             designCanvas1.UpdateAllProxyControlPosition();
                         }
                         break;
                     case "DockType":
                         DockCanvas.DockCanvas.SetDockType(designCanvas1.SelectedControls[0], (DockCanvas.DockCanvas.DockType)Enum.Parse(typeof(DockCanvas.DockCanvas.DockType), (string)value, true));
-                        designCanvas1.ControlContainer.UpdateChildrenPosition();
+                        designCanvas1.ControlContainerCanvas.UpdateChildrenPosition();
                         designCanvas1.UpdateAllProxyControlPosition();
                         propertiesGrid.UpdatePropertyValue("Left");
                         propertiesGrid.UpdatePropertyValue("Top");
@@ -189,7 +190,7 @@ namespace MashupDesignTool
             doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
 
-            propertiesGrid.SetSelectedObject(designCanvas1.RootCanvas, designCanvas1.GetPropertyNameList());
+            propertiesGrid.SetSelectedObject(designCanvas1.ControlContainerCanvas, designCanvas1.GetPropertyNameList());
 
             ////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////
@@ -582,7 +583,7 @@ namespace MashupDesignTool
                 RemoveMenuEditorButtonFromHome();
             }
 
-            if (element.Equals(designCanvas1.ControlContainer))
+            if (element.Equals(designCanvas1.ControlContainerCanvas))
             {
                 propertiesGrid.SetSelectedObject(element, designCanvas1.GetPropertyNameList());
                 eventBindingGrid.ChangeSelectedObject(null, designCanvas1.Controls);
@@ -658,7 +659,7 @@ namespace MashupDesignTool
 
         void rbImageListEditor_OnClick(object sender, RoutedEventArgs e)
         {
-            ImageListEditor im = new ImageListEditor(designCanvas1.ControlContainer, designCanvas1.SelectedControls[0].Control as BasicImageListControl);
+            ImageListEditor im = new ImageListEditor(designCanvas1.ControlContainerCanvas, designCanvas1.SelectedControls[0].Control as BasicImageListControl);
             im.ShowDialog();
         }
 
@@ -703,7 +704,7 @@ namespace MashupDesignTool
 
         void rbRichTextEditor_OnClick(object sender, RoutedEventArgs e)
         {
-            Liquid.RichTextEditor rte = new Liquid.RichTextEditor(designCanvas1.ControlContainer, designCanvas1.SelectedControls[0].Control as Liquid.RichTextBox);
+            Liquid.RichTextEditor rte = new Liquid.RichTextEditor(designCanvas1.ControlContainerCanvas, designCanvas1.SelectedControls[0].Control as Liquid.RichTextBox);
             rte.ShowDialog();
         }
 
@@ -748,7 +749,7 @@ namespace MashupDesignTool
 
         void rbDataListEditor_OnClick(object sender, RoutedEventArgs e)
         {
-            DataListEditor d = new DataListEditor(designCanvas1.ControlContainer, designCanvas1.SelectedControls[0].Control as BasicDataListControl, listListItemControls, controlDownloader);
+            DataListEditor d = new DataListEditor(designCanvas1.ControlContainerCanvas, designCanvas1.SelectedControls[0].Control as BasicDataListControl, listListItemControls, controlDownloader);
             d.ShowDialog();
         }
 
@@ -793,7 +794,7 @@ namespace MashupDesignTool
 
         void rbMenuEditor_OnClick(object sender, RoutedEventArgs e)
         {
-            MenuEditor.MenuEditor im = new MenuEditor.MenuEditor(designCanvas1.ControlContainer, designCanvas1.SelectedControls[0].Control as BasicLibrary.Menu.BasicMenu);
+            MenuEditor.MenuEditor im = new MenuEditor.MenuEditor(designCanvas1.ControlContainerCanvas, designCanvas1.SelectedControls[0].Control as BasicLibrary.Menu.BasicMenu);
             im.ShowDialog();
         }
 

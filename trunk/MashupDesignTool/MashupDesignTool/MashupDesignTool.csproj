@@ -86,52 +86,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Downloader\ControlDownloader.cs" />
-    <Compile Include="ControlInfo.cs" />
-    <Compile Include="CursorManager.cs" />
-    <Compile Include="CustomCursor.xaml.cs">
-      <DependentUpon>CustomCursor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DeleteConfirm.xaml.cs">
-      <DependentUpon>DeleteConfirm.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DesignCanvas.xaml.cs">
-      <DependentUpon>DesignCanvas.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DesignPage.xaml.cs">
       <DependentUpon>DesignPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Downloader\DownloadArgs.cs" />
-    <Compile Include="Downloader\EffectDownloader.cs" />
-    <Compile Include="EffectInfo.cs" />
-    <Compile Include="Event\ControlComboBoxItemData.cs" />
-    <Compile Include="Event\EventBindingGrid.xaml.cs">
-      <DependentUpon>EventBindingGrid.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Event\EventBindingGridItem.xaml.cs">
-      <DependentUpon>EventBindingGridItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Event\EventEditor.xaml.cs">
-      <DependentUpon>EventEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Event\MDTEventInfo.cs" />
-    <Compile Include="Event\MDTEventManager.cs" />
-    <Compile Include="PageControl.xaml.cs">
-      <DependentUpon>PageControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Serializer\ControlSerializer.cs" />
     <Compile Include="ObjectConverter.cs" />
-    <Compile Include="Serializer\DockCanvasSerializer.cs" />
     <Compile Include="PreviewPage.xaml.cs">
       <DependentUpon>PreviewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProxyControl.xaml.cs">
-      <DependentUpon>ProxyControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ControlGroupInfo.cs" />
-    <Compile Include="Serializer\EffectableObjectXmlSerializer.cs" />
-    <Compile Include="Serializer\PageSerializer.cs" />
     <Compile Include="SilverlightControl1.xaml.cs">
       <DependentUpon>SilverlightControl1.xaml</DependentUpon>
     </Compile>
@@ -141,52 +104,19 @@
     <Compile Include="test.xaml.cs">
       <DependentUpon>test.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="CustomCursor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DeleteConfirm.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DesignCanvas.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="DesignPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Event\EventBindingGrid.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Event\EventBindingGridItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Event\EventEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PageControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="PreviewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ProxyControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="SilverlightControl1.xaml">
       <SubType>Designer</SubType>
@@ -240,7 +170,6 @@
     <Resource Include="Images\ImageListEditor.png" />
     <Resource Include="Images\minus.png" />
     <Resource Include="Images\plus.png" />
-    <Content Include="dll\Liquid.Menu.dll" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\BringForward.png" />
@@ -257,16 +186,31 @@
     <Folder Include="Images\.svn\tmp\prop-base\" />
     <Folder Include="Images\.svn\tmp\props\" />
     <Folder Include="Images\.svn\tmp\text-base\" />
-    <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
       <Project>{CAC33183-F531-43AD-A288-6575775B4BE1}</Project>
       <Name>BasicLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DesignCanvas\DesignCanvas.csproj">
+      <Project>{6A28EAFE-1B8B-4801-8382-7B312F0774E7}</Project>
+      <Name>DesignCanvas</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DockCanvas\DockCanvas.csproj">
       <Project>{C38EEC60-122E-4002-A7B1-E6465DC41201}</Project>
       <Name>DockCanvas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Downloader\Downloader.csproj">
+      <Project>{E1ED4C5B-2B09-4C19-BB7D-1A07A9804365}</Project>
+      <Name>Downloader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventGrid\EventGrid.csproj">
+      <Project>{04202A79-FC40-4DCD-9D08-D55214D814D8}</Project>
+      <Name>EventGrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Event\Event.csproj">
+      <Project>{6AB4A417-5F76-48C6-92C1-080AFBA52D8B}</Project>
+      <Name>Event</Name>
     </ProjectReference>
     <ProjectReference Include="..\FloatableWindow\FloatableWindow.csproj">
       <Project>{018E725A-830D-4913-B646-067E2222B4EE}</Project>
@@ -291,6 +235,10 @@
     <ProjectReference Include="..\RichText\RichText.csproj">
       <Project>{0FDB4ACD-0F11-43CC-B777-D58D112A9763}</Project>
       <Name>RichText</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Serializer\Serializer.csproj">
+      <Project>{FFF9DFD8-6B8C-4BE3-967D-4A532FBBD6DD}</Project>
+      <Name>Serializer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />

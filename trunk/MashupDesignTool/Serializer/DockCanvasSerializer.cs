@@ -25,6 +25,7 @@ namespace MashupDesignTool
         private DockCanvas.DockCanvas dockCanvas;
         private DesignCanvas designCanvas;
         private XElement eventsElement = null;
+        private List<XElement> controlElements;
         private int controlCount;
         private int numControl;
         private bool design;
@@ -37,10 +38,10 @@ namespace MashupDesignTool
 
             xm.WriteStartElement("DockCanvas");
 
-            xm.WriteElementString("Width", designCanvas.ControlContainer.Width.ToString());
-            xm.WriteElementString("Height", designCanvas.ControlContainer.Height.ToString());
+            xm.WriteElementString("Width", designCanvas.ControlContainerCanvas.Width.ToString());
+            xm.WriteElementString("Height", designCanvas.ControlContainerCanvas.Height.ToString());
             xm.WriteStartElement("Background");
-            xm.WriteRaw(MyXmlSerializer.Serialize(designCanvas.ControlContainer.Background));
+            xm.WriteRaw(MyXmlSerializer.Serialize(designCanvas.ControlContainerCanvas.Background));
             xm.WriteEndElement();
 
             xm.WriteStartElement("Controls");
@@ -130,13 +131,17 @@ namespace MashupDesignTool
 
             if (controlsElement != null)
             {
+                controlElements = new List<XElement>();
                 foreach (XElement child in controlsElement.Elements())
+                {
                     numControl++;
-                foreach (XElement child in controlsElement.Elements())
+                    controlElements.Add(child);
+                }
+                if (numControl > 0)
                 {
                     EffectableObjectXmlSerializer eoxs = new EffectableObjectXmlSerializer();
                     eoxs.DeserializeCompleted += new EffectableObjectXmlSerializer.DeserializeCompletedHandler(eoxs_DeserializeCompleted);
-                    eoxs.Deserialize(child);
+                    eoxs.Deserialize(controlElements[0]);
                 }
             }
         }
@@ -153,9 +158,12 @@ namespace MashupDesignTool
         public void DeserializeInDesign(XElement root, DesignCanvas designCanvas)
         {
             design = true;
-            DockCanvas.DockCanvas canvas = designCanvas.ControlContainer;
+            DockCanvas.DockCanvas canvas = designCanvas.ControlContainerCanvas;
             this.designCanvas = designCanvas;
-            XElement eventsElement = null;
+            controlCount = 0;
+            numControl = 0;
+            eventsElement = null;
+            XElement controlsElement = null;
 
             foreach (XElement element in root.Elements())
             {
@@ -163,30 +171,39 @@ namespace MashupDesignTool
                 {
                     case "Width":
                         canvas.Width = double.Parse(element.Value);
-                        designCanvas.LayoutRoot.Width = canvas.Width;
+                        //designCanvas.LayoutRoot.Width = canvas.Width;
                         break;
                     case "Height":
                         canvas.Height = double.Parse(element.Value);
-                        designCanvas.LayoutRoot.Height = canvas.Height;
+                        //designCanvas.LayoutRoot.Height = canvas.Height;
                         break;
                     case "Background":
                         canvas.Background = (Brush)MyXmlSerializer.Deserialize(element.FirstNode.ToString());
                         break;
                     case "Controls":
-                        foreach (XElement child in element.Elements())
-                            numControl++;
-                        foreach (XElement child in element.Elements())
-                        {
-                            EffectableObjectXmlSerializer eoxs = new EffectableObjectXmlSerializer();
-                            eoxs.DeserializeCompleted += new EffectableObjectXmlSerializer.DeserializeCompletedHandler(eoxs_DeserializeCompleted);
-                            eoxs.Deserialize(child);
-                        }
+                        controlsElement = element;
                         break;
                     case "Events":
                         eventsElement = element;
                         break;
                     default:
                         break;
+                }
+            }
+
+            if (controlsElement != null)
+            {
+                controlElements = new List<XElement>();
+                foreach (XElement child in controlsElement.Elements())
+                {
+                    numControl++;
+                    controlElements.Add(child);
+                }
+                if (numControl > 0)
+                {
+                    EffectableObjectXmlSerializer eoxs = new EffectableObjectXmlSerializer();
+                    eoxs.DeserializeCompleted += new EffectableObjectXmlSerializer.DeserializeCompletedHandler(eoxs_DeserializeCompleted);
+                    eoxs.Deserialize(controlElements[0]);
                 }
             }
         }
@@ -198,7 +215,13 @@ namespace MashupDesignTool
             else
                 dockCanvas.Children.Add(control);
             controlCount++;
-            if (controlCount == numControl)
+            if (controlCount != numControl)
+            {
+                EffectableObjectXmlSerializer eoxs = new EffectableObjectXmlSerializer();
+                eoxs.DeserializeCompleted += new EffectableObjectXmlSerializer.DeserializeCompletedHandler(eoxs_DeserializeCompleted);
+                eoxs.Deserialize(controlElements[controlCount]);
+            }
+            else
             {
                 dockCanvas.UpdateChildrenPosition();
                 if (eventsElement != null)
