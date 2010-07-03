@@ -441,15 +441,15 @@ namespace EffectLibrary
             }
         }
 
-        private SolidColorBrush _BackgroundColor;
+        private Brush _Background;
 
-        public SolidColorBrush BackgroundColor
+        public Brush Background
         {
-            get { return LayoutRoot.Background as SolidColorBrush; }
+            get { return LayoutRoot.Background; }
             set
             {
-                _BackgroundColor = value;
-                LayoutRoot.Background = _BackgroundColor;
+                _Background = value;
+                LayoutRoot.Background = _Background;
             }
         }
 
@@ -575,7 +575,7 @@ namespace EffectLibrary
             parameterNameList.Add("ItemHeight");
             parameterNameList.Add("ScaleX");
             parameterNameList.Add("ScaleY");
-            parameterNameList.Add("BackgroundColor");
+            parameterNameList.Add("Background");
 
             LayoutRoot = new Canvas();
             LayoutRoot.Background = new SolidColorBrush(Colors.Transparent);

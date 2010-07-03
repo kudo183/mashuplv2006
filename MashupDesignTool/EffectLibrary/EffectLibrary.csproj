@@ -55,6 +55,7 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ListEffect\Basic.cs" />
     <Compile Include="SingleEffect\FadeOut.cs" />
     <Compile Include="ListEffect\FishEye.cs" />
     <Compile Include="SingleEffect\PushOut.cs" />

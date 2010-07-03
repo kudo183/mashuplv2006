@@ -84,15 +84,15 @@ namespace EffectLibrary
         }
 
 
-        private SolidColorBrush _BackgroundColor;
+        private Brush _Background;
 
-        public SolidColorBrush BackgroundColor
+        public Brush Background
         {
-            get { return LayoutRoot.Background as SolidColorBrush; }
+            get { return LayoutRoot.Background; }
             set
             {
-                _BackgroundColor = value;
-                LayoutRoot.Background = _BackgroundColor;
+                _Background = value;
+                LayoutRoot.Background = _Background;
             }
         }
 
@@ -171,7 +171,7 @@ namespace EffectLibrary
             element.Width = _ItemWidth;
             element.Height = _ItemHeight;
             LayoutRoot.Children.Insert(index, element);
-
+            
             Storyboard sb;
             DoubleAnimationUsingKeyFrames dakf;
             SplineDoubleKeyFrame sdkf;
@@ -290,7 +290,7 @@ namespace EffectLibrary
             parameterNameList.Add("ItemHeight");
             parameterNameList.Add("Scale");
             parameterNameList.Add("Range");
-            parameterNameList.Add("BackgroundColor");
+            parameterNameList.Add("Background");
             parameterNameList.Add("ReflectionShader");
 
             LayoutRoot = new StackPanel();
