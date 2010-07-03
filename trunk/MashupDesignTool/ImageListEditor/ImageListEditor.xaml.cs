@@ -107,8 +107,10 @@ namespace ItemCollectionEditor
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
+            int temp = listBox.SelectedIndex;
             listControl.RemoveItemAt(listBox.SelectedIndex);
-            listBox.Items.RemoveAt(listBox.SelectedIndex);            
+            listBox.Items.RemoveAt(listBox.SelectedIndex);
+            listBox.SelectedIndex = temp;
         }
 
         private void btnDeleteAll_Click(object sender, RoutedEventArgs e)
@@ -119,6 +121,8 @@ namespace ItemCollectionEditor
 
         private void btnMoveUp_Click(object sender, RoutedEventArgs e)
         {
+            if (listBox.SelectedIndex == 0)
+                return;
             object temp = listBox.SelectedItem;
             int selectedIndex = listBox.SelectedIndex;
             listBox.Items.RemoveAt(selectedIndex);
@@ -131,6 +135,8 @@ namespace ItemCollectionEditor
 
         private void btnMoveDown_Click(object sender, RoutedEventArgs e)
         {
+            if (listBox.SelectedIndex == listBox.Items.Count - 1)
+                return;
             object temp = listBox.SelectedItem;
             int selectedIndex = listBox.SelectedIndex;
             listBox.Items.RemoveAt(selectedIndex);
