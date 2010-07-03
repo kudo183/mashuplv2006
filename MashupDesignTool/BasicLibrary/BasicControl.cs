@@ -97,6 +97,9 @@ namespace BasicLibrary
 
         public delegate void MDTEventHandler(object sender, string xmlString);
 
+        public delegate void BCVisibilityChangedHandler(object sender, System.Windows.Visibility newValue);
+        public event BCVisibilityChangedHandler BCVisibilityChanged;
+
         protected List<string> effectPropertyNameList = new List<string>();
         private List<string> eventNameList = new List<string>();
         private List<string> operationNameList = new List<string>();
@@ -182,8 +185,8 @@ namespace BasicLibrary
             parameterNameList.Add("Height");
             parameterNameList.Add("DockType");
             parameterNameList.Add("ZIndex");
-            parameterNameList.Add("Name");
-            parameterNameList.Add("Visibility");
+            parameterNameList.Add("ControlName");
+            parameterNameList.Add("Visible");
 
             effectPropertyNameList.Add("MainEffect");
             effectPropertyNameList.Add("AppearEffect");
@@ -196,6 +199,7 @@ namespace BasicLibrary
         protected BasicEffect mainEffect;
         protected BasicAppearEffect appearEffect;
         protected BasicDisappearEffect disappearEffect;
+        protected string controlName;
 
         public BasicEffect MainEffect
         {
@@ -210,6 +214,35 @@ namespace BasicLibrary
         public BasicDisappearEffect DisappearEffect
         {
             get { return disappearEffect; }
+        }
+
+        public string ControlName
+        {
+            get { return controlName; }
+            set { controlName = value; }
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                if (this.Visibility == System.Windows.Visibility.Collapsed) 
+                    return false;
+                else
+                    return true;
+            }
+            set
+            {
+                System.Windows.Visibility vis = System.Windows.Visibility.Collapsed;
+                if (value == true)
+                    vis = System.Windows.Visibility.Visible;
+                if (this.Visibility != vis)
+                {
+                    this.Visibility = vis;
+                    if (BCVisibilityChanged != null)
+                        BCVisibilityChanged(this, vis);
+                }
+            }
         }
 
         public virtual void ChangeEffect(string propertyName, Type effectType, EffectableControl owner)
@@ -251,7 +284,8 @@ namespace BasicLibrary
         {
             if (this.Visibility == System.Windows.Visibility.Visible)
                 return;
-            this.Visibility = System.Windows.Visibility.Visible;
+            this.Visible = true;
+            //this.Visibility = System.Windows.Visibility.Visible;
             if (appearEffect != null)
                 appearEffect.Start();
         }
@@ -266,13 +300,15 @@ namespace BasicLibrary
                 disappearEffect.Start();
             }
             else
-                this.Visibility = System.Windows.Visibility.Collapsed;
+                //this.Visibility = System.Windows.Visibility.Collapsed;
+                this.Visible = false;
         }
 
         void disappearEffect_MDTEffectCompleted(object sender)
         {
             disappearEffect.MDTEffectCompleted -= new BasicEffect.MDTEffectCompleteHandler(disappearEffect_MDTEffectCompleted);
-            this.Visibility = System.Windows.Visibility.Collapsed;
+            //this.Visibility = System.Windows.Visibility.Collapsed;
+            this.Visible = false;
         }
     }   
 }
