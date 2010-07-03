@@ -6,8 +6,9 @@
     xmlns:propertyGrid="clr-namespace:SL30PropertyGrid;assembly=MyPropertyGrid"
     xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
     xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:my4="clr-namespace:MashupDesignTool;assembly=DesignCanvas"
     mc:Ignorable="d" x:Name="rootUserControl"
-    d:DesignHeight="300" d:DesignWidth="400" xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" Loaded="UserControl_Loaded" xmlns:my="clr-namespace:MashupDesignTool" xmlns:MapulRibbon="clr-namespace:MapulRibbon;assembly=MapulRibbon">
+    d:DesignHeight="300" d:DesignWidth="400" xmlns:controlsToolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" Loaded="UserControl_Loaded" xmlns:my="clr-namespace:MashupDesignTool" xmlns:MapulRibbon="clr-namespace:MapulRibbon;assembly=MapulRibbon" xmlns:my3="clr-namespace:MashupDesignTool;assembly=EventGrid">
     
     <UserControl.Resources>
         <Style x:Key="ExpanderButtonStyle" TargetType="Button">
@@ -716,11 +717,11 @@
             <my1:GlassBorder Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ContentZIndex="1"
                              BorderThickness="0" GlassOpacity="0" Style="{StaticResource DesignCanvasBorderStyle}">
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource DesignCanvasGridStyle}">
-                    <my:DesignCanvas x:Name="designCanvas1" IsHitTestVisible="True" Opacity="1"
+                    <my4:DesignCanvas x:Name="designCanvas1" IsHitTestVisible="True" Opacity="1"
                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                                     SelectPropertiesMenu="designCanvas1_SelectPropertiesMenu" SelectionChanged="designCanvas1_SelectionChanged"
                                     BorderThickness="0" BorderBrush="Transparent">
-                    </my:DesignCanvas>
+                    </my4:DesignCanvas>
                 </Grid>
             </my1:GlassBorder>
 
@@ -759,9 +760,9 @@
                             </propertyGrid:PropertyGrid>
                         </controls:TabItem>
                         <controls:TabItem Header="Event">
-                            <my:EventBindingGrid x:Name="eventBindingGrid"
+                            <my3:EventBindingGrid x:Name="eventBindingGrid"
                                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            </my:EventBindingGrid>
+                            </my3:EventBindingGrid>
                         </controls:TabItem>
                     </controls:TabControl>
                     <Button Grid.Column="0" x:Name="PropertiesGridExpander" Width="15" Height="15" Margin="2,2,0,0"

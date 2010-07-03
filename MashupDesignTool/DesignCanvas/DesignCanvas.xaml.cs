@@ -128,9 +128,14 @@ namespace MashupDesignTool
             CreateContextMenu();
         }
 
-        public DockCanvas.DockCanvas RootCanvas
+        public DockCanvas.DockCanvas ControlContainerCanvas
         {
             get { return ControlContainer; }
+        }
+
+        public Canvas ProxyContainerCanvas
+        {
+            get { return LayoutRoot; }
         }
 
         public void Clear()
@@ -1283,6 +1288,12 @@ namespace MashupDesignTool
         private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
             textBox1.Text = "";
+        }
+
+        private void ControlContainer_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            LayoutRoot.Width = ControlContainer.Width;
+            LayoutRoot.Height = ControlContainer.Height;
         }
     }
 }
