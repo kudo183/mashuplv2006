@@ -340,6 +340,10 @@ namespace MashupDesignTool
             //ec.Name = (iCount + 1).ToString();
             uc.Name = uc.GetType().Name.ToLower() + "_" + Guid.NewGuid().ToString();
             ec.Name = uc.GetType().Name.ToLower() + "_" + Guid.NewGuid().ToString();
+            BasicControl bc = uc as BasicControl;
+            if (bc != null)
+                bc.ControlName = uc.Name;
+
             iCount += 2;
             uc.Margin = new Thickness(0, 0, 0, 0);
             Canvas.SetLeft(ec, 200);

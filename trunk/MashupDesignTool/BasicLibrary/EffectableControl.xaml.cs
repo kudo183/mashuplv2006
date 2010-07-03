@@ -34,6 +34,15 @@ namespace BasicLibrary
             this.Width = control.Width;
             this.Height = control.Height;
             this.SizeChanged += new SizeChangedEventHandler(LayoutRoot_SizeChanged);
+
+            BasicControl bc = control as BasicControl;
+            if (bc !=null)
+                bc.BCVisibilityChanged +=new BasicControl.BCVisibilityChangedHandler(bc_BCVisibilityChanged);
+        }
+
+        void bc_BCVisibilityChanged(object sender, Visibility newValue)
+        {
+            this.Visibility = newValue;
         }
 
         void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e)

@@ -128,7 +128,7 @@ namespace MashupDesignTool
             ControlComboBoxItemData item = null;
             int index = 0;
             for (int i = 0; i < listControls.Count; i++)
-                if (listControls[i].ControlName == handleControl.Name)
+                if (listControls[i].ControlName == handleControl.ControlName)
                 {
                     index = i;
                     item = listControls[i];

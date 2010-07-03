@@ -37,7 +37,13 @@ namespace MashupDesignTool
 
         public string ControlName
         {
-            get { return controlName; }
+            get 
+            {
+                if (control == null)
+                    return controlName;
+                else
+                    return control.ControlName;
+            }
         }
 
         public ImageSource ControlImage
