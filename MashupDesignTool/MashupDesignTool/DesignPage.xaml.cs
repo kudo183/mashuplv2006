@@ -974,8 +974,13 @@ namespace MashupDesignTool
                     effectPropertiesGrid.SetSelectedObject(be, be.GetParameterNameList());
                 else
                     effectPropertiesGrid.SetSelectedObject(null, null);
+                
                 if (effectPropertiesGrid.SelectedObject != null)
-                    ((BasicEffect)effectPropertiesGrid.SelectedObject).Start();
+                {
+                    BasicEffect b = effectPropertiesGrid.SelectedObject as BasicEffect;
+                    if (b != null)
+                        b.Start();
+                }
             }
         }
 
