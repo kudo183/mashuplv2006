@@ -19,6 +19,7 @@
         </Grid.RowDefinitions>
         
         <Rectangle Name="controlBound" StrokeThickness="2" Stroke="#8B211D1D" Grid.Column="1" Grid.Row="1"></Rectangle>
+        <Rectangle Name="controlBound2" StrokeThickness="1" Stroke="#ABA2BBF5" Grid.Column="1" Grid.Row="1" Margin="1"></Rectangle>
         <Rectangle Name="controlBoundTopLeft" StrokeThickness="1" Stroke="#8B211D1D" Grid.Column="0" Grid.Row="2"></Rectangle>
         <Rectangle Name="controlBoundTopRight" StrokeThickness="1" Stroke="#8B211D1D" Grid.Column="2" Grid.Row="0"></Rectangle>
         <Rectangle Name="controlBoundBottomLeft" StrokeThickness="1" Stroke="#8B211D1D" Grid.Column="2" Grid.Row="2"></Rectangle>

@@ -115,6 +115,10 @@ namespace MashupDesignTool
             controlBoundBottomRight.Visibility = vis;
             controlBoundTopLeft.Visibility = vis;
             controlBoundTopRight.Visibility = vis;
+            if (vis == System.Windows.Visibility.Collapsed)
+                controlBound2.Visibility = System.Windows.Visibility.Visible;
+            else
+                controlBound2.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }
