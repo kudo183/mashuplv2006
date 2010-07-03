@@ -32,6 +32,8 @@ namespace BasicLibrary
         }
         public virtual void AddItem(EffectableControl control)
         {
+            if (listItemEffect != null)
+                control.ChangeEffect("MainEffect", listItemEffect.GetType());
             if (OnListChange != null)
                 OnListChange("ADD", -1, control, -1);
             _items.Add(control);
