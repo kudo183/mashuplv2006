@@ -144,6 +144,17 @@
     <Group>Single</Group>
   </Effect>
   <Effect>
+    <Name>EffectLibrary.Basic</Name>
+    <DllFilename>EffectLibrary.dll</DllFilename>
+    <DllReferences>
+      <Dll>DockCanvas.dll</Dll>
+    </DllReferences>
+    <DisplayName>Basic</DisplayName>
+    <Description>Fish eye</Description>
+    <IconName>FishEye.png</IconName>
+    <Group>List</Group>
+  </Effect>
+  <Effect>
     <Name>EffectLibrary.Carousel</Name>
     <DllFilename>EffectLibrary.dll</DllFilename>
     <DllReferences>
@@ -172,6 +183,19 @@
       <Dll>DockCanvas.dll</Dll>
     </DllReferences>
     <DisplayName>FishEye</DisplayName>
+    <Description>Fish eye</Description>
+    <IconName>FishEye.png</IconName>
+    <Group>List</Group>
+  </Effect>
+  <Effect>
+    <Name>CustomListEffect.Matrix</Name>
+    <DllFilename>MatrixListEffect.dll</DllFilename>
+    <DllReferences>
+      <Dll>DockCanvas.dll</Dll>
+      <Dll>EffectLibrary.dll</Dll>
+      <Dll>BasicLibrary.dll</Dll>
+    </DllReferences>
+    <DisplayName>Matrix</DisplayName>
     <Description>Fish eye</Description>
     <IconName>FishEye.png</IconName>
     <Group>List</Group>
