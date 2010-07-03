@@ -106,6 +106,7 @@ namespace BasicLibrary
             {
                 // BasicDataListItem fe = Activator.CreateInstance(_ListItem) as BasicDataListItem;
                 BasicDataListItem fe = BasicControlSerializer.Deserialize(_ListItemXMlString) as BasicDataListItem;
+                fe.Name = Guid.NewGuid().ToString();
                 int i = 0;
                 foreach (string s in fe.GetParameterCanBindingNameList())
                 {
