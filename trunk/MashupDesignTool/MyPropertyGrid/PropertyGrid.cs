@@ -372,6 +372,8 @@ namespace SL30PropertyGrid
             #region Create Display Objects
             PropertyGridLabel label = CreateLabel(item.Name, item.DisplayName);
             ValueEditorBase editor = EditorService.GetEditor(item, label);
+            editor.Name = Guid.NewGuid().ToString();
+            label = CreateLabel(item.Name, item.DisplayName);
             if (null == editor)
                 return;
             editor.GotFocus += new RoutedEventHandler(this.Editor_GotFocus);
