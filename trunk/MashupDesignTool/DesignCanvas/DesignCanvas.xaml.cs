@@ -154,6 +154,12 @@ namespace MashupDesignTool
             ControlContainer.Background = new SolidColorBrush(Colors.White);
         }
 
+        public bool ControlCanMove
+        {
+            get { return canMove; }
+            set { canMove = value; }
+        }
+
         #region context menu
         private void CreateContextMenu()
         {

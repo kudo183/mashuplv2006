@@ -128,6 +128,10 @@ namespace MashupDesignTool
                         DockCanvas.DockCanvas.SetDockType(designCanvas1.SelectedControls[0], (DockCanvas.DockCanvas.DockType)Enum.Parse(typeof(DockCanvas.DockCanvas.DockType), (string)value, true));
                         designCanvas1.ControlContainerCanvas.UpdateChildrenPosition();
                         designCanvas1.UpdateAllProxyControlPosition();
+                        if (DockCanvas.DockCanvas.GetDockType(designCanvas1.SelectedControls[0]) == DockCanvas.DockCanvas.DockType.None)
+                            designCanvas1.ControlCanMove = true;
+                        else
+                            designCanvas1.ControlCanMove = false;
                         propertiesGrid.UpdatePropertyValue("Left");
                         propertiesGrid.UpdatePropertyValue("Top");
                         propertiesGrid.UpdatePropertyValue("Width");
