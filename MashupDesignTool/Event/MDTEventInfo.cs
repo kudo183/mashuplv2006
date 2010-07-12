@@ -96,7 +96,7 @@ namespace MashupDesignTool
 
             try 
             { 
-                ei.AddEventHandler(raiseControl, Delegate.CreateDelegate(ei.EventHandlerType, this, "HandleFunction")); 
+                ei.RemoveEventHandler(raiseControl, Delegate.CreateDelegate(ei.EventHandlerType, this, "HandleFunction")); 
             }
             catch {}
         }
