@@ -140,26 +140,6 @@
     <Resource Include="Images\Back.png" />
     <Resource Include="Images\DefaultImage.png" />
     <Content Include="dll\Liquid.RichText.dll" />
-    <None Include="Images\.svn\all-wcprops" />
-    <None Include="Images\.svn\entries" />
-    <None Include="Images\.svn\prop-base\BringForward.png.svn-base" />
-    <None Include="Images\.svn\prop-base\BringToFront.png.svn-base" />
-    <None Include="Images\.svn\prop-base\Delete.png.svn-base" />
-    <None Include="Images\.svn\prop-base\Properties.png.svn-base" />
-    <None Include="Images\.svn\prop-base\SendBackward.png.svn-base" />
-    <None Include="Images\.svn\prop-base\SendToBack.png.svn-base" />
-    <None Include="Images\.svn\prop-base\SizeENWS.png.svn-base" />
-    <None Include="Images\.svn\prop-base\SizeWNES.png.svn-base" />
-    <None Include="Images\.svn\prop-base\Thumbs.db.svn-base" />
-    <None Include="Images\.svn\text-base\BringForward.png.svn-base" />
-    <None Include="Images\.svn\text-base\BringToFront.png.svn-base" />
-    <None Include="Images\.svn\text-base\Delete.png.svn-base" />
-    <None Include="Images\.svn\text-base\Properties.png.svn-base" />
-    <None Include="Images\.svn\text-base\SendBackward.png.svn-base" />
-    <None Include="Images\.svn\text-base\SendToBack.png.svn-base" />
-    <None Include="Images\.svn\text-base\SizeENWS.png.svn-base" />
-    <None Include="Images\.svn\text-base\SizeWNES.png.svn-base" />
-    <None Include="Images\.svn\text-base\Thumbs.db.svn-base" />
     <None Include="Properties\AppManifest.xml" />
     <Content Include="dll\Blacklight.Controls.dll" />
     <Resource Include="Images\bg_body.jpg" />
@@ -181,12 +161,7 @@
     <Resource Include="Images\SizeENWS.png" />
     <Resource Include="Images\SizeWNES.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Images\.svn\props\" />
-    <Folder Include="Images\.svn\tmp\prop-base\" />
-    <Folder Include="Images\.svn\tmp\props\" />
-    <Folder Include="Images\.svn\tmp\text-base\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
       <Project>{CAC33183-F531-43AD-A288-6575775B4BE1}</Project>
