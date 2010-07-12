@@ -152,12 +152,6 @@
     <Resource Include="Images\plus.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\BringForward.png" />
-    <Resource Include="Images\BringToFront.png" />
-    <Resource Include="Images\Delete.png" />
-    <Resource Include="Images\Properties.png" />
-    <Resource Include="Images\SendBackward.png" />
-    <Resource Include="Images\SendToBack.png" />
     <Resource Include="Images\SizeENWS.png" />
     <Resource Include="Images\SizeWNES.png" />
   </ItemGroup>
