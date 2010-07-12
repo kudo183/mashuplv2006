@@ -211,15 +211,20 @@ namespace DockCanvas
             preventUpdateChildrenPosition = false;
         }
 
-        //public DockCanvas()
-        //    : base()
-        //{
-        //    this.LayoutUpdated += new EventHandler(DockCanvas_LayoutUpdated);
-        //}
-
+        public DockCanvas()
+            : base()
+        {
+            this.SizeChanged+=new SizeChangedEventHandler(DockCanvas_SizeChanged);
+        }
+        void DockCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateChildrenPosition();
+        }
         //void DockCanvas_LayoutUpdated(object sender, EventArgs e)
         //{
         //    UpdateChildrenPosition();            
         //}
     }
+
+
 }
