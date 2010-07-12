@@ -104,6 +104,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dll\Liquid.Menu.dll" />
+    <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\Properties.png" />
+    <Resource Include="Images\BringForward.png" />
+    <Resource Include="Images\BringToFront.png" />
+    <Resource Include="Images\SendBackward.png" />
+    <Resource Include="Images\SendToBack.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
