@@ -74,8 +74,8 @@ namespace SL30PropertyGrid
             if (typeof(ImageSource).IsAssignableFrom(propertyType))
                 return new ImageSourceValueEditor(label, property);
 
-            if (IsNumber(propertyType))
-                return new NumberValueEditor(label, property);
+            //if (IsNumber(propertyType))
+            //    return new NumberValueEditor(label, property);
 
             if (typeof(ValueType).IsAssignableFrom(propertyType))
                 return new StringValueEditor(label, property);
