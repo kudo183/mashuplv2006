@@ -75,14 +75,16 @@ namespace EffectLibrary
        
         RadialGradientBrush brushLight;
         Point tempPoint = new Point();
-
+        Rectangle rect1, rect2;
         public GlowWinSeven(EffectableControl control)
             : base(control)
         {
             parameterNameList.Add("TransitionColor");
             parameterNameList.Add("TransitionAlpha");
 
-            Rectangle rect1 = new Rectangle();
+            control.SizeChanged += new SizeChangedEventHandler(control_SizeChanged);
+
+            rect1 = new Rectangle();
             rect1.Fill = new SolidColorBrush(Color.FromArgb(0x20, 0x00, 0x00, 0x00));
             rect1.Stroke = new SolidColorBrush(Colors.White);
             rect1.StrokeThickness = 0.3;
@@ -90,7 +92,7 @@ namespace EffectLibrary
             rect1.Width = control.Width;
             rect1.Height = control.Height;
 
-            Rectangle rect2 = new Rectangle();
+            rect2 = new Rectangle();
             rect2.IsHitTestVisible = false;
             brushLight = new RadialGradientBrush();
             brushLight.RadiusX = 0.7253;
@@ -139,6 +141,14 @@ namespace EffectLibrary
             Storyboard.SetTargetProperty(da, new PropertyPath("FrameworkElement.Opacity"));
 
             sbLeave.Children.Add(da);
+        }
+
+        void control_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            rect1.Width = e.NewSize.Width;
+            rect1.Height = e.NewSize.Height;
+            rect2.Width = e.NewSize.Width;
+            rect2.Height = e.NewSize.Height;
         }
 
         private void control_MouseMove(object sender, MouseEventArgs e)
