@@ -12,6 +12,18 @@
     <Group>User defined control</Group>
   </Control>
   <Control>
+    <Name>MyMenu.FishEyeMenu</Name>
+    <DllFilename>MenuFishEye.dll</DllFilename>
+    <DllReferences>
+      <Dll>ISNet.Silverlight.dll</Dll>
+      <Dll>ISNet.Silverlight.WebAqua.dll</Dll>
+    </DllReferences>
+    <DisplayName>FishEyeMenu</DisplayName>
+    <Description>Basic contact form control</Description>
+    <IconName>MacStyleContactForm.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
     <Name>MyMenu.SevenMenu</Name>
     <DllFilename>MenuSeven.dll</DllFilename>
     <DllReferences>
