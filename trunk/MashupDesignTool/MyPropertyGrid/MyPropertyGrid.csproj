@@ -83,8 +83,12 @@
     <Compile Include="Converter\UInt32Converter.cs" />
     <Compile Include="Converter\UInt64Converter.cs" />
     <Compile Include="DisplayNameAttribute.cs" />
+    <Compile Include="EditableSlider.xaml.cs">
+      <DependentUpon>EditableSlider.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Editor\BooleanValueEditor.cs" />
     <Compile Include="Editor\ColorValueEditor.cs" />
+    <Compile Include="Editor\NumberValueEditor.cs" />
     <Compile Include="Editor\SolidBrushValueEditor.cs" />
     <Compile Include="Editor\ImageSourceValueEditor.cs" />
     <Compile Include="Editor\BrushValueEditor.cs" />
@@ -107,6 +111,10 @@
     <Compile Include="PropertyItem.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="EditableSlider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -121,6 +129,9 @@
       <Project>{DCA68119-D086-44AF-A067-A6B9F3FEEA80}</Project>
       <Name>ColorPicker</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

@@ -122,8 +122,18 @@ namespace SL30PropertyGrid
             {
                 if (string.IsNullOrEmpty(_category))
                 {
-                    if (_attached == true)
-                        _category = "Attached property";
+                    if (Name == "DockType" ||
+                        Name == "Left" ||
+                        Name == "Top" ||
+                        Name == "ZIndex" ||
+                        Name == "Visible")
+
+                        _category = " Layout";
+                    else if (Name == "Width" ||
+                        Name == "Height")
+                        _category = " Size";
+                    else if (Name == "ControlName")
+                        _category = " ControlName";
                     else
                     {
                         CategoryAttribute attr = GetAttribute<CategoryAttribute>(_propertyInfo);

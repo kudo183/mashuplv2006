@@ -366,9 +366,8 @@ namespace SL30PropertyGrid
         }
         void AddPropertyRow(PropertyItem item, ref int rowIndex)
         {
-            if (item.DisplayName == "Projection")
-                return;
             item.PropertyChanged += new PropertyChangedEventHandler(item_PropertyChanged);
+
             #region Create Display Objects
             PropertyGridLabel label = CreateLabel(item.Name, item.DisplayName);
             ValueEditorBase editor = EditorService.GetEditor(item, label);
@@ -378,6 +377,48 @@ namespace SL30PropertyGrid
                 return;
             editor.GotFocus += new RoutedEventHandler(this.Editor_GotFocus);
             editors.Add(editor);
+            #endregion
+
+            Border brd;
+            rowIndex++;
+            MainGrid.RowDefinitions.Add(new RowDefinition());
+            string tagValue = item.Category;
+
+            if (item.Category == " ControlName")
+            {
+                brd = GetItemMargin(tagValue);
+                MainGrid.Children.Add(brd);
+                Grid.SetRow(brd, rowIndex);
+                Grid.SetColumn(brd, 0);
+
+                editor.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+                brd = GetItemEditor(editor, item.Category);                
+                MainGrid.Children.Add(brd);
+                Grid.SetRow(brd, rowIndex);
+                Grid.SetColumnSpan(brd, 2);
+                Grid.SetColumn(brd, 1);
+                return;
+            }            
+            
+            #region Column 0 - Margin
+            brd = GetItemMargin(tagValue);
+            MainGrid.Children.Add(brd);
+            Grid.SetRow(brd, rowIndex);
+            Grid.SetColumn(brd, 0);
+            #endregion
+
+            #region Column 1 - Label
+            brd = GetItemLabel(label, tagValue);
+            MainGrid.Children.Add(brd);
+            Grid.SetRow(brd, rowIndex);
+            Grid.SetColumn(brd, 1);
+            #endregion
+
+            #region Column 2 - Editor
+            brd = GetItemEditor(editor, tagValue);
+            MainGrid.Children.Add(brd);
+            Grid.SetRow(brd, rowIndex);
+            Grid.SetColumn(brd, 2);
             #endregion
 
             #region create storyboard
@@ -402,31 +443,6 @@ namespace SL30PropertyGrid
             label.MouseEnter += new MouseEventHandler(label_MouseEnter);
             label.MouseLeave += new MouseEventHandler(label_MouseLeave);
             #endregion create storyboard
-
-            rowIndex++;
-            MainGrid.RowDefinitions.Add(new RowDefinition());
-            string tagValue = item.Category;
-
-            #region Column 0 - Margin
-            Border brd = GetItemMargin(tagValue);
-            MainGrid.Children.Add(brd);
-            Grid.SetRow(brd, rowIndex);
-            Grid.SetColumn(brd, 0);
-            #endregion
-
-            #region Column 1 - Label
-            brd = GetItemLabel(label, tagValue);
-            MainGrid.Children.Add(brd);
-            Grid.SetRow(brd, rowIndex);
-            Grid.SetColumn(brd, 1);
-            #endregion
-
-            #region Column 2 - Editor
-            brd = GetItemEditor(editor, tagValue);
-            MainGrid.Children.Add(brd);
-            Grid.SetRow(brd, rowIndex);
-            Grid.SetColumn(brd, 2);
-            #endregion
 
             if (item.DisplayName == "Left")
             {
@@ -927,7 +943,11 @@ namespace SL30PropertyGrid
             selectedEditor = sender as ValueEditorBase;
             if (null != selectedEditor)
             {
-                listStoryboardMouseLeave[selectedEditor.Label].Stop();
+                try
+                {
+                    listStoryboardMouseLeave[selectedEditor.Label].Stop();
+                }
+                catch { }
                 selectedEditor.IsSelected = true;
 
                 //double editorX = ((UIElement)selectedEditor.Parent).RenderTransformOrigin.X;
