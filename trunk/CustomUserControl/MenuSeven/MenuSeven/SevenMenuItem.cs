@@ -58,7 +58,7 @@ namespace MyMenu
             set
             {
                 _Title = value;
-                ToolTipService.SetToolTip(_Icon, _Title);
+                //ToolTipService.SetToolTip(_Icon, _Title);
             }
         }
 
@@ -71,9 +71,9 @@ namespace MyMenu
             Content = LayoutRoot;
             LayoutRoot.Children.Add(_Icon);
             LayoutRoot.Children.Add(p);
-            _Icon.MouseEnter += new MouseEventHandler(_Icon_MouseEnter);
-            _Icon.MouseLeave += new MouseEventHandler(_Icon_MouseLeave);
-            ToolTipService.SetPlacement(_Icon, System.Windows.Controls.Primitives.PlacementMode.Top);
+            LayoutRoot.MouseEnter += new MouseEventHandler(_Icon_MouseEnter);
+            LayoutRoot.MouseLeave += new MouseEventHandler(_Icon_MouseLeave);
+            //ToolTipService.SetPlacement(_Icon, System.Windows.Controls.Primitives.PlacementMode.Top);
         }
 
         void Menu_MouseEnter(object sender, MouseEventArgs e)
@@ -93,6 +93,7 @@ namespace MyMenu
         
         void _Icon_MouseEnter(object sender, MouseEventArgs e)
         {
+            _menu.TbTooptip.Text = Title;            
             Show();
         }
 
