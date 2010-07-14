@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Browser;
+using System.Windows.Data;
 using System.IO;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -199,5 +200,16 @@ namespace BasicLibrary
             return result;
         }
 
+        public static void RegisterForNotification(string propertyName, FrameworkElement element, PropertyChangedCallback callback)
+        {
+            //Bind to a depedency property
+            Binding b = new Binding(propertyName) { Source = element };
+            var prop = System.Windows.DependencyProperty.RegisterAttached(
+                "ListenAttached" + propertyName,
+                typeof(object),
+                typeof(UserControl),
+                new System.Windows.PropertyMetadata(callback));
+            element.SetBinding(prop, b);
+        }
     }
 }
