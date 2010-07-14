@@ -33,7 +33,7 @@ namespace MenuEditor
         }
         public void ShowDialog()
         {
-            f.Width = f.Height = 600;
+            f.Width = f.Height = 500;
             f.ShowDialog();
         }
 
