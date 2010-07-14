@@ -1,0 +1,70 @@
+﻿<navigation:Page x:Class="WebServer.Designed" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+  xmlns:local="clr-namespace:WebServer.Controls"
+  mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"  
+  Loaded="Page_Loaded"
+  Style="{StaticResource PageStyle}" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" xmlns:riaControls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.DomainServices" xmlns:my="clr-namespace:WebServer.Web">
+
+    <Grid x:Name="LayoutRoot">
+        <!--<local:BusyIndicator x:Name="busyIndicator" BusyContent="Loading" IsBusy="False">-->
+            <Grid x:Name="ContentStackPanel" Style="{StaticResource ContentGridStyle}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="HeaderText" Style="{StaticResource HeaderTextStyle}" 
+                           Text="DESIGN"/>
+
+                <Button Grid.Row="1" Content="Create new application" Name="button1" Height="56" Width="285" Margin="0,20" Click="button1_Click"/>
+
+                <TextBlock Grid.Row="2" Style="{StaticResource ContentTextStyle}" Margin="40,0"
+                           Text="Designed applications:"/>
+
+                <Grid x:Name="gridTitle" Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="80" MinWidth="0" />
+                        <ColumnDefinition Width="80" MinWidth="0" />
+                        <ColumnDefinition Width="80" MinWidth="0" />
+                        <ColumnDefinition Width="20" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
+                        <TextBlock Text="Application" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
+                        <TextBlock HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                    </Border>
+                    <Border Grid.Column="2" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
+                        <TextBlock HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                    </Border>
+                    <Border Grid.Column="3" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
+                        <TextBlock HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                    </Border>
+                    <Border Grid.Column="4" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
+                        <TextBlock HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                    </Border>
+                </Grid>
+
+                <ScrollViewer Grid.Row="4" HorizontalScrollBarVisibility="Disabled" x:Name="scrollViewer"
+									VerticalScrollBarVisibility="Visible" BorderThickness="1" BorderBrush="#FF94ADEB">
+                    <Grid Name="grid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="80" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        <!--</local:BusyIndicator>-->
+    </Grid>
+</navigation:Page>
