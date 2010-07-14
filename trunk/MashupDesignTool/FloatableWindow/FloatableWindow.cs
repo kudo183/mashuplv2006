@@ -21,6 +21,7 @@ namespace System.Windows.Controls
     /// <QualityBand>Preview</QualityBand>
     [TemplatePart(Name = PART_Chrome, Type = typeof(FrameworkElement))]
     [TemplatePart(Name = PART_CloseButton, Type = typeof(ButtonBase))]
+    [TemplatePart(Name = PART_MinimizeButton, Type = typeof(ButtonBase))]
     [TemplatePart(Name = PART_ContentPresenter, Type = typeof(FrameworkElement))]
     [TemplatePart(Name = PART_ContentRoot, Type = typeof(FrameworkElement))]
     [TemplatePart(Name = PART_Overlay, Type = typeof(Panel))]
@@ -46,6 +47,11 @@ namespace System.Windows.Controls
         /// The name of the CloseButton template part.
         /// </summary>
         private const string PART_CloseButton = "CloseButton";
+
+        /// <summary>
+        /// The name of the MinimizeButton template part.
+        /// </summary>
+        private const string PART_MinimizeButton = "MinimizeButton";
 
         /// <summary>
         /// The name of the ContentPresenter template part.
@@ -139,6 +145,64 @@ namespace System.Windows.Controls
         }
 
         #endregion public bool HasCloseButton
+
+        #region public bool HasMinimizeButton
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the
+        /// <see cref="T:System.Windows.Controls.FloatableWindow" /> has a Minimize
+        /// button.
+        /// </summary>
+        /// <value>
+        /// True if the child window has a Minimize button; otherwise, false. The
+        /// default is true.
+        /// </value>
+        public bool HasMinimizeButton
+        {
+            get { return (bool)GetValue(HasMinimizeButtonProperty); }
+            set { SetValue(HasMinimizeButtonProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the
+        /// <see cref="P:System.Windows.Controls.FloatableWindow.HasMinimizeButton" />
+        /// dependency property.
+        /// </summary>
+        /// <value>
+        /// The identifier for the
+        /// <see cref="P:System.Windows.Controls.FloatableWindow.HasMinimizeButton" />
+        /// dependency property.
+        /// </value>
+        public static readonly DependencyProperty HasMinimizeButtonProperty =
+            DependencyProperty.Register(
+            "HasMinimizeButton",
+            typeof(bool),
+            typeof(FloatableWindow),
+            new PropertyMetadata(true, OnHasMinimizeButtonPropertyChanged));
+
+        /// <summary>
+        /// HasMinimizeButtonProperty PropertyChangedCallback call back static function.
+        /// </summary>
+        /// <param name="d">FloatableWindow object whose HasMinimizeButton property is changed.</param>
+        /// <param name="e">DependencyPropertyChangedEventArgs which contains the old and new values.</param>
+        private static void OnHasMinimizeButtonPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            FloatableWindow cw = (FloatableWindow)d;
+
+            if (cw.MinimizeButton != null)
+            {
+                if ((bool)e.NewValue)
+                {
+                    cw.MinimizeButton.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    cw.MinimizeButton.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        #endregion public bool HasMinimizeButton
 
         #region public Brush OverlayBrush
 
@@ -527,6 +591,15 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
+        /// Gets the internal accessor for the minimize button of the window.
+        /// </summary>
+        internal ButtonBase MinimizeButton
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Gets the InteractionState for the FloatableWindow.
         /// </summary>
         internal WindowInteractionState InteractionState
@@ -787,6 +860,27 @@ namespace System.Windows.Controls
             this.Close();
         }
 
+        /// <summary>
+        /// Executed when the MinimizeButton is clicked.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Routed event args.</param>
+        internal void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (isMinimized)
+            {
+                Height = currentHeight;
+            }
+            else
+            {
+                currentHeight = (_modal) ? _desiredContentHeight : Height;
+                Height = 20;
+            }
+            isMinimized = !isMinimized;
+
+        }
+        bool isMinimized = false;
+        double currentHeight;
         /// <summary>
         /// Executed when the Closing storyboard ends.
         /// </summary>
@@ -1063,6 +1157,20 @@ namespace System.Windows.Controls
                 else
                 {
                     this.CloseButton.Visibility = Visibility.Collapsed;
+                }
+            }
+
+            this.MinimizeButton = GetTemplateChild(PART_MinimizeButton) as ButtonBase;
+
+            if (this.MinimizeButton != null)
+            {
+                if (this.HasMinimizeButton)
+                {
+                    this.MinimizeButton.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    this.MinimizeButton.Visibility = Visibility.Collapsed;
                 }
             }
 
@@ -1393,7 +1501,7 @@ namespace System.Windows.Controls
             else
             {
                 this.ChangeVisualState();
-            } 
+            }
         }
 
         /// <summary>
@@ -1442,6 +1550,11 @@ namespace System.Windows.Controls
                 this.CloseButton.Click += new RoutedEventHandler(this.CloseButton_Click);
             }
 
+            if (this.MinimizeButton != null)
+            {
+                this.MinimizeButton.Click += new RoutedEventHandler(this.MinimizeButton_Click);
+            }
+
             if (this._chrome != null)
             {
                 this._chrome.MouseLeftButtonDown += new MouseButtonEventHandler(this.Chrome_MouseLeftButtonDown);
@@ -1482,6 +1595,11 @@ namespace System.Windows.Controls
             if (this.CloseButton != null)
             {
                 this.CloseButton.Click -= new RoutedEventHandler(this.CloseButton_Click);
+            }
+
+            if (this.MinimizeButton != null)
+            {
+                this.MinimizeButton.Click -= new RoutedEventHandler(this.MinimizeButton_Click);
             }
 
             if (this._chrome != null)
