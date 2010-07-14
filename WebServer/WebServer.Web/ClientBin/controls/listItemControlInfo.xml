@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Controls>
+  <Control>
+    <Name>ListDataListItemControl.ListDataListItem</Name>
+    <DllFilename>ListDataListItemControl.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>List data item</DisplayName>
+    <Description>Control used to show multi link in a category</Description>
+    <IconName>ListDataListItemControl.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>ImageTitleDataListItemControl.ImageTitleDataListItem</Name>
+    <DllFilename>ImageTitleDataListItemControl.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Image and tilte item</DisplayName>
+    <Description>Control used to show news with image and title</Description>
+    <IconName>ImageTitleDataListItem.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>QuickViewContentControl.QuickViewContent</Name>
+    <DllFilename>QuickViewContentControl.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Quick view content</DisplayName>
+    <Description>Control used to display summary content</Description>
+    <IconName>QuickViewContentControl.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>CategoryQuickViewControl.CategoryQuickView</Name>
+    <DllFilename>CategoryQuickViewControl.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Category quick view</DisplayName>
+    <Description>Control used to display summary category</Description>
+    <IconName>CategoryQuickView.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+</Controls>

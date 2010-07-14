@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8024F451-B730-4E97-B671-84CCB93DF036}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WebServer.Web</RootNamespace>
+    <AssemblyName>WebServer.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightApplicationList>{DDC018A3-31BB-4C3C-9C7F-0C8EE16BDCCC}|..\WebServer\WebServer.csproj|ClientBin|False</SilverlightApplicationList>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.2.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.Services" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.DomainServices.EntityFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ServiceModel.DomainServices.Server" />
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Hosting" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\ASPNETDB.MDF" />
+    <Content Include="App_Data\aspnetdb_log.LDF">
+      <DependentUpon>ASPNETDB.MDF</DependentUpon>
+    </Content>
+    <Content Include="ClientAccessPolicy.xml" />
+    <Content Include="ClientBin\controls\ControlDll\AnimatedGifImage.dll" />
+    <Content Include="ClientBin\controls\ControlDll\C1.Silverlight.Extended.dll" />
+    <Content Include="ClientBin\controls\ControlDll\C1.Silverlight.Maps.dll" />
+    <Content Include="ClientBin\controls\ControlDll\CategoryQuickViewControl.dll" />
+    <Content Include="ClientBin\controls\ControlDll\DataListControl.dll" />
+    <Content Include="ClientBin\controls\ControlDll\HtmlHostControl.dll" />
+    <Content Include="ClientBin\controls\ControlDll\ImageListControl.dll" />
+    <Content Include="ClientBin\controls\ControlDll\ImageTitleDataListItemControl.dll" />
+    <Content Include="ClientBin\controls\ControlDll\ListDataListItemControl.dll" />
+    <Content Include="ClientBin\controls\ControlDll\MacStyleContactFormControl.dll" />
+    <Content Include="ClientBin\controls\ControlDll\MenuClassic.dll" />
+    <Content Include="ClientBin\controls\ControlDll\MenuSeven.dll" />
+    <Content Include="ClientBin\controls\ControlDll\QuickViewContentControl.dll" />
+    <Content Include="ClientBin\controls\ControlDll\RssSlideshowControl.dll" />
+    <Content Include="ClientBin\controls\Images\Border.png" />
+    <Content Include="ClientBin\controls\Images\Button.png" />
+    <Content Include="ClientBin\controls\Images\CheckBox.png" />
+    <Content Include="ClientBin\controls\Images\ComboBox.png" />
+    <Content Include="ClientBin\controls\Images\control1.png" />
+    <Content Include="ClientBin\controls\Images\control2.png" />
+    <Content Include="ClientBin\controls\Images\control3.png" />
+    <Content Include="ClientBin\controls\Images\control4.png" />
+    <Content Include="ClientBin\controls\Images\DataGrid.png" />
+    <Content Include="ClientBin\controls\Images\GifIcon.png" />
+    <Content Include="ClientBin\controls\Images\HtmlIcon.png" />
+    <Content Include="ClientBin\controls\Images\Image.png" />
+    <Content Include="ClientBin\controls\Images\Label.png" />
+    <Content Include="ClientBin\controls\Images\ListBox.png" />
+    <Content Include="ClientBin\controls\Images\MacStyleContactForm.png" />
+    <Content Include="ClientBin\controls\Images\RadioButton.png" />
+    <Content Include="ClientBin\controls\Images\Rectangle.png" />
+    <Content Include="ClientBin\controls\Images\RssSlideshow.png" />
+    <Content Include="ClientBin\controls\Images\TabControl.png" />
+    <Content Include="ClientBin\controls\Images\TextBlock.png" />
+    <Content Include="ClientBin\controls\Images\TextBox.png" />
+    <Content Include="ClientBin\controls\info.xml" />
+    <Content Include="ClientBin\controls\listItemControlInfo.xml" />
+    <Content Include="ClientBin\controls\ReferenceDll\BasicLibrary.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\C1.Silverlight.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\DockCanvas.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\EffectLibrary.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\ImageTools.Controls.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\ImageTools.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\ImageTools.Filtering.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\ImageTools.IO.Bmp.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\ImageTools.IO.Gif.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\ImageTools.IO.Jpeg.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\ImageTools.IO.Png.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\ImageTools.Utils.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\Liquid.Menu.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\Liquid.RichText.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\System.ComponentModel.DataAnnotations.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\System.ServiceModel.DomainServices.Client.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\System.ServiceModel.DomainServices.Client.Web.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\System.ServiceModel.Syndication.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\System.ServiceModel.Web.Extensions.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\System.Windows.Controls.Data.Input.dll" />
+    <Content Include="ClientBin\controls\ReferenceDll\System.Xml.Serialization.dll" />
+    <Content Include="ClientBin\Effects\EffectDll\EffectLibrary.dll" />
+    <Content Include="ClientBin\Effects\EffectDll\MatrixListEffect.dll" />
+    <Content Include="ClientBin\Effects\Images\Carousel.png" />
+    <Content Include="ClientBin\Effects\Images\Checkerboard.png" />
+    <Content Include="ClientBin\Effects\Images\control4.png" />
+    <Content Include="ClientBin\Effects\Images\CoverFlow.png" />
+    <Content Include="ClientBin\Effects\Images\Dissolve.png" />
+    <Content Include="ClientBin\Effects\Images\Fade.png" />
+    <Content Include="ClientBin\Effects\Images\FishEye.png" />
+    <Content Include="ClientBin\Effects\Images\Jump.png" />
+    <Content Include="ClientBin\Effects\Images\Push.png" />
+    <Content Include="ClientBin\Effects\Images\Ripple.png" />
+    <Content Include="ClientBin\Effects\Images\SplitScreen.png" />
+    <Content Include="ClientBin\Effects\Images\Wipe.png" />
+    <Content Include="ClientBin\Effects\Images\Zoom.png" />
+    <Content Include="ClientBin\Effects\info.xml" />
+    <Content Include="ClientBin\Effects\ReferenceDll\BasicLibrary.dll" />
+    <Content Include="ClientBin\Effects\ReferenceDll\DockCanvas.dll" />
+    <Content Include="ClientBin\Effects\ReferenceDll\EffectLibrary.dll" />
+    <Content Include="ClientBin\MashupDesignTool.xap" />
+    <Content Include="ClientBin\Present.xap" />
+    <Content Include="ClientBin\WebServer.xap" />
+    <Content Include="crossdomain.xml" />
+    <Content Include="DataService.svc" />
+    <Content Include="Design\design.aspx" />
+    <Content Include="dll\MySql.Data.dll" />
+    <Content Include="index.aspx" />
+    <Content Include="Present\present.aspx" />
+    <Content Include="WebServerTestPage.html" />
+    <Content Include="Silverlight.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataService.svc.cs">
+      <DependentUpon>DataService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="GetBinaryData.ashx.cs">
+      <DependentUpon>GetBinaryData.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="GetListDataFromDatabase.ashx.cs">
+      <DependentUpon>GetListDataFromDatabase.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="GetListDataFromDatabaseStructure.ashx.cs">
+      <DependentUpon>GetListDataFromDatabaseStructure.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="GetListDataFromXml.ashx.cs">
+      <DependentUpon>GetListDataFromXml.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="GetListDataFromXmlStructure.ashx.cs">
+      <DependentUpon>GetListDataFromXmlStructure.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="GetStringDataFromURL.ashx.cs">
+      <DependentUpon>GetStringDataFromURL.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="IDataService.cs" />
+    <Compile Include="linqtosql\DataClasses1.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataClasses1.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ValidationErrorResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ValidationErrorResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\RegistrationDataResources.Designer.cs">
+      <DependentUpon>RegistrationDataResources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Services\AuthenticationService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\RegistrationData.cs" />
+    <Compile Include="Services\UserRegistrationService.cs" />
+    <Compile Include="Models\Shared\User.shared.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GetBinaryData.ashx" />
+    <Content Include="GetListDataFromDatabase.ashx" />
+    <Content Include="GetListDataFromDatabaseStructure.ashx" />
+    <Content Include="GetListDataFromXml.ashx" />
+    <Content Include="GetListDataFromXmlStructure.ashx" />
+    <Content Include="GetStringDataFromURL.ashx" />
+    <Content Include="Design\Web.config" />
+    <None Include="linqtosql\DataClasses1.dbml.layout">
+      <DependentUpon>DataClasses1.dbml</DependentUpon>
+    </None>
+    <EmbeddedResource Include="Resources\ValidationErrorResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ValidationErrorResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RegistrationDataResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegistrationDataResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="linqtosql\DataClasses1.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>52878</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Controls>
+  <Control>
+    <Name>SL_Menu.MyMenu</Name>
+    <DllFilename>MenuClassic.dll</DllFilename>
+    <DllReferences>
+      <Dll>Liquid.Menu.dll</Dll>
+    </DllReferences>
+    <DisplayName>MyMenu</DisplayName>
+    <Description>Basic contact form control</Description>
+    <IconName>MacStyleContactForm.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>MyMenu.SevenMenu</Name>
+    <DllFilename>MenuSeven.dll</DllFilename>
+    <DllReferences>
+      <Dll>Liquid.Menu.dll</Dll>
+      <Dll>EffectLibrary.dll</Dll>
+    </DllReferences>
+    <DisplayName>SevenMenu</DisplayName>
+    <Description>Basic contact form control</Description>
+    <IconName>MacStyleContactForm.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>MacStyleContactFormControl.MacStyleContactForm</Name>
+    <DllFilename>MacStyleContactFormControl.dll</DllFilename>
+    <DllReferences>
+      <Dll>System.ComponentModel.DataAnnotations.dll</Dll>
+      <Dll>System.Windows.Controls.Data.Input.dll</Dll>
+    </DllReferences>
+    <DisplayName>Basic contact form</DisplayName>
+    <Description>Basic contact form control</Description>
+    <IconName>MacStyleContactForm.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>ControlLibrary.ImageListControl</Name>
+    <DllFilename>ImageListControl.dll</DllFilename>
+    <DllReferences>
+      <Dll>EffectLibrary.dll</Dll>
+    </DllReferences>
+    <DisplayName>Image List</DisplayName>
+    <Description>Image List Control</Description>
+    <IconName>control4.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>ControlLibrary.DataListControl</Name>
+    <DllFilename>DataListControl.dll</DllFilename>
+    <DllReferences>
+      <Dll>BasicLibrary.dll</Dll>
+      <Dll>EffectLibrary.dll</Dll>
+    </DllReferences>
+    <DisplayName>Data List</DisplayName>
+    <Description>List control support binding data from Xml file and Database.</Description>
+    <IconName>control4.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>RssSlideshowControl.RssSlideshow</Name>
+    <DllFilename>RssSlideshowControl.dll</DllFilename>
+    <DllReferences>
+      <Dll>System.ComponentModel.DataAnnotations.dll</Dll>
+      <Dll>System.Windows.Controls.Data.Input.dll</Dll>
+      <Dll>Liquid.RichText.dll</Dll>
+      <Dll>System.ServiceModel.Syndication.dll</Dll>
+      <Dll>System.Xml.Serialization.dll</Dll>
+    </DllReferences>
+    <DisplayName>Rss Slideshow</DisplayName>
+    <Description>Rss Slideshow view</Description>
+    <IconName>RssSlideshow.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>ControlLibrary.HtmlHost</Name>
+    <DllFilename>HtmlHostControl.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Html host</DisplayName>
+    <Description>Html host</Description>
+    <IconName>HtmlIcon.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>QuickViewContentControl.QuickViewContent</Name>
+    <DllFilename>QuickViewContentControl.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Quick view content</DisplayName>
+    <Description>Control used to display summary content</Description>
+    <IconName>QuickViewContentControl.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>CategoryQuickViewControl.CategoryQuickView</Name>
+    <DllFilename>CategoryQuickViewControl.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Category quick view</DisplayName>
+    <Description>Control used to display summary category</Description>
+    <IconName>CategoryQuickView.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>ControlLibrary.AnimatedGifImage</Name>
+    <DllFilename>AnimatedGifImage.dll</DllFilename>
+    <DllReferences>
+      <Dll>ImageTools.Controls.dll</Dll>
+      <Dll>ImageTools.dll</Dll>
+      <Dll>ImageTools.Filtering.dll</Dll>
+      <Dll>ImageTools.IO.Bmp.dll</Dll>
+      <Dll>ImageTools.IO.Png.dll</Dll>
+      <Dll>ImageTools.IO.Jpeg.dll</Dll>
+      <Dll>ImageTools.IO.Gif.dll</Dll>
+      <Dll>ImageTools.Utils.dll</Dll>
+    </DllReferences>
+    <DisplayName>Animated gif image</DisplayName>
+    <Description>Control để hiển thị ảnh</Description>
+    <IconName>GifIcon.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>C1.Silverlight.Extended.C1HtmlHost</Name>
+    <DllFilename>C1.Silverlight.Extended.dll</DllFilename>
+    <DllReferences>
+      <Dll>C1.Silverlight.dll</Dll>
+    </DllReferences>
+    <DisplayName>C1 Html Host</DisplayName>
+    <Description>Control để hiển thị trang nội dung html</Description>
+    <IconName>HtmlIcon.png</IconName>
+    <Group>ComponentOne</Group>
+  </Control>
+  <Control>
+    <Name>C1.Silverlight.Extended.C1Cube</Name>
+    <DllFilename>C1.Silverlight.Extended.dll</DllFilename>
+    <DllReferences>
+      <Dll>C1.Silverlight.dll</Dll>
+    </DllReferences>
+    <DisplayName>C1 Cube</DisplayName>
+    <Description>Control để hiển thị trang nội dung html</Description>
+    <IconName>control4.png</IconName>
+    <Group>ComponentOne</Group>
+  </Control>
+  <Control>
+    <Name>C1.Silverlight.Maps.C1Maps</Name>
+    <DllFilename>C1.Silverlight.Maps.dll</DllFilename>
+    <DllReferences>
+      <Dll>C1.Silverlight.dll</Dll>
+    </DllReferences>
+    <DisplayName>C1 Map</DisplayName>
+    <Description>Control để hiển thị trang nội dung html</Description>
+    <IconName>control4.png</IconName>
+    <Group>ComponentOne</Group>
+  </Control>
+  <Control>
+    <Name>Border</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Border</DisplayName>
+    <Description>Border</Description>
+    <IconName>Border.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>Button</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Button</DisplayName>
+    <Description>Button</Description>
+    <IconName>Button.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>CheckBox</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>CheckBox</DisplayName>
+    <Description>CheckBox</Description>
+    <IconName>CheckBox.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>ComboBox</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>ComboBox</DisplayName>
+    <Description>ComboBox</Description>
+    <IconName>ComboBox.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>DataGrid</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>DataGrid</DisplayName>
+    <Description>DataGrid</Description>
+    <IconName>DataGrid.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>Image</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Image</DisplayName>
+    <Description>Image</Description>
+    <IconName>Image.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>Label</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Label</DisplayName>
+    <Description>Label</Description>
+    <IconName>Label.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>ListBox</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>ListBox</DisplayName>
+    <Description>ListBox</Description>
+    <IconName>ListBox.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>RadioButton</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Radio Button</DisplayName>
+    <Description>Radio button</Description>
+    <IconName>RadioButton.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>Rectangle</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Rectangle</DisplayName>
+    <Description>Rectangle</Description>
+    <IconName>Rectangle.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>TabControl</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Tab Control</DisplayName>
+    <Description>Tab control</Description>
+    <IconName>TabControl.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>TextBlock</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Text Block</DisplayName>
+    <Description>Text block</Description>
+    <IconName>TextBlock.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>TextBox</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>TextBox</DisplayName>
+    <Description>TextBox</Description>
+    <IconName>TextBox.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>Liquid.RichTextBox</Name>
+    <DllFilename></DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>RichTextBox (Liquid)</DisplayName>
+    <Description>RichTextBox</Description>
+    <IconName>TextBox.png</IconName>
+    <Group>Common Silverlight Controls</Group>
+  </Control>
+</Controls>
