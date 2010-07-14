@@ -150,6 +150,15 @@ namespace ControlLibrary
             divIFrameHost.SetStyleAttribute("top", _htmlControlTop.ToString() + "px");
             
             HtmlPage.Document.Body.AppendChild(divIFrameHost);
+            Ultility.RegisterForNotification("Visibility", this, VisibilityChanged);
+        }
+
+        void VisibilityChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+        {
+            if (Visibility == System.Windows.Visibility.Collapsed)
+                divIFrameHost.SetStyleAttribute("display", "none");
+            else
+                divIFrameHost.SetStyleAttribute("display", "block");
         }
 
         private void SetIFrameSrc(string url)
@@ -195,18 +204,6 @@ namespace ControlLibrary
             return element;
         }
         
-        //private void RegisterForNotification(string propertyName, FrameworkElement element, PropertyChangedCallback callback)
-        //{
-        //    //Bind to a depedency property
-        //    Binding b = new Binding(propertyName) { Source = element };
-        //    var prop = System.Windows.DependencyProperty.RegisterAttached(
-        //        "ListenAttached" + propertyName,
-        //        typeof(object),
-        //        typeof(UserControl),
-        //        new System.Windows.PropertyMetadata(callback));
-        //    element.SetBinding(prop, b);
-        //}
-
         public override void Dispose()
         {
             HtmlPage.Document.Body.RemoveChild(divIFrameHost);
