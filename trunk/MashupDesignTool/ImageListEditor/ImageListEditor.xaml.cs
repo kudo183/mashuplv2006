@@ -16,7 +16,7 @@ namespace ItemCollectionEditor
     public partial class ImageListEditor : UserControl
     {
         FloatableWindow f;
-
+        bool isCancelled = true;
         Panel root;
 
         public Panel Root
@@ -46,10 +46,11 @@ namespace ItemCollectionEditor
             root = p;
             f.ParentLayoutRoot = root;
             f.Content = this;
-            f.HasCloseButton = false;
+            //f.HasCloseButton = false;
             f.Title = "Image list editor";
             f.Width = 600;
             f.Height = 400;
+            f.Closed += new EventHandler(f_Closed);
             foreach (EffectableControl ec in list.Items)
             {                
                 Image img = new Image();
@@ -63,6 +64,15 @@ namespace ItemCollectionEditor
                 listBox.SelectedIndex = 0;
         }
 
+        void f_Closed(object sender, EventArgs e)
+        {
+            if (isCancelled == false)
+                return;
+            listControl.RemoveAllItem();
+            foreach (EffectableControl ec in listControlItems)
+                listControl.AddItem(ec);            
+        }
+        
         public void Close()
         {
             f.Close();
@@ -93,15 +103,12 @@ namespace ItemCollectionEditor
        
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            listControl.RemoveAllItem();
-            foreach (EffectableControl ec in listControlItems)
-                listControl.AddItem(ec);
-
             f.Close();
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
+            isCancelled = false;
             f.Close();
         }
 

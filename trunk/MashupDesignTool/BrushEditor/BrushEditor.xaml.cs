@@ -29,9 +29,9 @@ namespace Editor
         public BrushEditor(Panel p)
         {
             InitializeComponent();
-            
+
             f.ParentLayoutRoot = p;
-            f.HasCloseButton = false;
+            //f.HasCloseButton = false;
             f.OverlayBrush = new SolidColorBrush(Colors.Transparent);
             f.OverlayOpacity = 0;
             f.ResizeMode = ResizeMode.NoResize;
@@ -58,6 +58,12 @@ namespace Editor
 
         void f_Closed(object sender, EventArgs e)
         {
+            if (isCancelled)
+            {
+                _brush = BasicLibrary.MyXmlSerializer.Deserialize(_strOrginBrush) as Brush;
+                if (BrushChanged != null)
+                    BrushChanged(this, _brush);
+            }
             if (Closed != null)
                 Closed(this, e);
         }
@@ -67,19 +73,21 @@ namespace Editor
             init(brush);
             f.Width = 630;
             f.Height = 430;
-            f.ShowDialog();
+            f.ShowDialog();           
         }
 
+        bool isCancelled = true;
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            _brush = BasicLibrary.MyXmlSerializer.Deserialize(_strOrginBrush) as Brush;
-            if (BrushChanged != null)
-                BrushChanged(this, _brush);
+            //_brush = BasicLibrary.MyXmlSerializer.Deserialize(_strOrginBrush) as Brush;
+            //if (BrushChanged != null)
+            //    BrushChanged(this, _brush);
             f.Close();
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
+            isCancelled = false;
             f.Close();
         }
 
