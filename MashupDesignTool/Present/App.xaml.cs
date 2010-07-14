@@ -9,10 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using WebServer;
-using System.ServiceModel.DomainServices.Client.ApplicationServices;
 
-namespace MashupDesignTool
+namespace Present
 {
     public partial class App : Application
     {
@@ -23,29 +21,19 @@ namespace MashupDesignTool
             this.Exit += this.Application_Exit;
             this.UnhandledException += this.Application_UnhandledException;
 
-            WebContext webContext = new WebContext();
-            webContext.Authentication = new FormsAuthentication();
-            this.ApplicationLifetimeObjects.Add(webContext);
-
             InitializeComponent();
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            this.Resources.Add("WebContext", WebContext.Current);
-            WebContext.Current.Authentication.LoadUser(this.Application_UserLoaded, null);
-
             this.RootVisual = new MainPage();
-        }
-
-        private void Application_UserLoaded(LoadUserOperation operation)
-        {
         }
 
         private void Application_Exit(object sender, EventArgs e)
         {
 
         }
+
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
             // If the app is running outside of the debugger then report the exception using
@@ -62,6 +50,7 @@ namespace MashupDesignTool
                 Deployment.Current.Dispatcher.BeginInvoke(delegate { ReportErrorToDOM(e); });
             }
         }
+
         private void ReportErrorToDOM(ApplicationUnhandledExceptionEventArgs e)
         {
             try
@@ -69,7 +58,7 @@ namespace MashupDesignTool
                 string errorMsg = e.ExceptionObject.Message + e.ExceptionObject.StackTrace;
                 errorMsg = errorMsg.Replace('"', '\'').Replace("\r\n", @"\n");
 
-                System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight 2 Application " + errorMsg + "\");");
+                System.Windows.Browser.HtmlPage.Window.Eval("throw new Error(\"Unhandled Error in Silverlight Application " + errorMsg + "\");");
             }
             catch (Exception)
             {

@@ -64,8 +64,14 @@
     <Reference Include="Liquid.Menu, Version=5.3.1.31637, Culture=neutral, PublicKeyToken=7fbdd25c3fcc3919, processorArchitecture=MSIL" />
     <Reference Include="Liquid.RichText, Version=5.3.1.31638, Culture=neutral, PublicKeyToken=7fbdd25c3fcc3919, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.DomainServices.Client, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ServiceModel.DomainServices.Client.Web, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.ServiceModel.Syndication, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.ServiceModel.Web.Extensions, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -86,6 +92,21 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChildWindow\NewConfirm.xaml.cs">
+      <DependentUpon>NewConfirm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindow\InsertApplicationName.xaml.cs">
+      <DependentUpon>InsertApplicationName.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindow\ErrorWindow.xaml.cs">
+      <DependentUpon>ErrorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindow\LoadingWindow.xaml.cs">
+      <DependentUpon>LoadingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindow\SavingWindow.xaml.cs">
+      <DependentUpon>SavingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DesignPage.xaml.cs">
       <DependentUpon>DesignPage.xaml</DependentUpon>
     </Compile>
@@ -95,6 +116,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ControlGroupInfo.cs" />
+    <Compile Include="Resources\RegistrationDataResources.Designer.cs" />
+    <Compile Include="Resources\ValidationErrorResources.Designer.cs" />
+    <Compile Include="Service References\Reference.cs" />
     <Compile Include="SilverlightControl1.xaml.cs">
       <DependentUpon>SilverlightControl1.xaml</DependentUpon>
     </Compile>
@@ -104,12 +128,33 @@
     <Compile Include="test.xaml.cs">
       <DependentUpon>test.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WebServer.Web.g.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <ApplicationDefinition Include="ChildWindow\NewConfirm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="ChildWindow\InsertApplicationName.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindow\ErrorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindow\LoadingWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindow\SavingWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DesignPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -132,6 +177,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\saveas.png" />
+    <Content Include="ServiceReferences.ClientConfig" />
+    <Resource Include="Images\error.png" />
     <Resource Include="Images\new.png" />
     <Resource Include="Images\open.png" />
     <Resource Include="Images\save.png" />
@@ -155,7 +203,6 @@
     <Resource Include="Images\SizeENWS.png" />
     <Resource Include="Images\SizeWNES.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BasicLibrary\BasicLibrary.csproj">
       <Project>{CAC33183-F531-43AD-A288-6575775B4BE1}</Project>
@@ -209,6 +256,10 @@
       <Project>{FFF9DFD8-6B8C-4BE3-967D-4A532FBBD6DD}</Project>
       <Name>Serializer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\RegistrationDataResources.resx" />
+    <EmbeddedResource Include="Resources\ValidationErrorResources.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

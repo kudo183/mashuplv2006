@@ -591,17 +591,17 @@
                                         <MapulRibbon:RibbonButtonsGroup Orientation="Horizontal">
                                             <MapulRibbon:RibbonButton x:Name="btnNew" ImageUrl="Images/new.png" Text="New"
                                                                       TooltipTitle="New" 
-                                                                      TooltipText="New">
-                                                <MapulRibbon:RibbonButton.RibbonList>
+                                                                      TooltipText="New" OnClick="btnNew_OnClick">
+                                                <!--<MapulRibbon:RibbonButton.RibbonList>
                                                     <MapulRibbon:RibbonList>
                                                         <MapulRibbon:RibbonList.Items>
                                                             <MapulRibbon:RibbonListItem x:Name="btnNewPage" ImageSource="Images/new.png" Text="New page" />
                                                             <MapulRibbon:RibbonListItem x:Name="btnNewSite" ImageSource="Images/new.png" Text="New site" />
                                                         </MapulRibbon:RibbonList.Items>
                                                     </MapulRibbon:RibbonList>
-                                                </MapulRibbon:RibbonButton.RibbonList>
+                                                </MapulRibbon:RibbonButton.RibbonList>-->
                                             </MapulRibbon:RibbonButton>
-                                            <MapulRibbon:RibbonButtonsGroup Orientation="Horizontal">
+                                            <!--<MapulRibbon:RibbonButtonsGroup Orientation="Horizontal">
                                                 <MapulRibbon:RibbonButton x:Name="btnOpen" ImageUrl="Images/open.png" Text="Open"
                                                                             TooltipTitle="Open"
                                                                             TooltipText="Open page or site">
@@ -614,11 +614,17 @@
                                                         </MapulRibbon:RibbonList>
                                                     </MapulRibbon:RibbonButton.RibbonList>
                                                 </MapulRibbon:RibbonButton>
-                                            </MapulRibbon:RibbonButtonsGroup>
+                                            </MapulRibbon:RibbonButtonsGroup>-->
                                             <MapulRibbon:RibbonButtonsGroup>
                                                 <MapulRibbon:RibbonButton x:Name="btnSave" ImageUrl="Images/save.png" Text="Save"
                                                                                 TooltipTitle="Save"
-                                                                                TooltipText="Save">
+                                                                                TooltipText="Save" OnClick="btnSave_OnClick">
+                                                </MapulRibbon:RibbonButton>
+                                            </MapulRibbon:RibbonButtonsGroup>
+                                            <MapulRibbon:RibbonButtonsGroup>
+                                                <MapulRibbon:RibbonButton x:Name="btnSaveAs" ImageUrl="Images/saveas.png" Text="Save As"
+                                                                                TooltipTitle="Save As"
+                                                                                TooltipText="Save As" OnClick="btnSaveAs_OnClick">
                                                 </MapulRibbon:RibbonButton>
                                             </MapulRibbon:RibbonButtonsGroup>
                                         </MapulRibbon:RibbonButtonsGroup>

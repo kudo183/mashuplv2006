@@ -29,7 +29,7 @@ namespace BasicLibrary
 
         public Ultility()
         {
-            _ServerURL = HtmlPage.Document.DocumentUri;
+            _ServerURL = new Uri(HtmlPage.Document.DocumentUri, "../index.aspx");
         }
 
         #region GetImage

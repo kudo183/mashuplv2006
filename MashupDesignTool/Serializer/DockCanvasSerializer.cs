@@ -223,7 +223,10 @@ namespace MashupDesignTool
             }
             else
             {
-                dockCanvas.UpdateChildrenPosition();
+                if (design)
+                    designCanvas.ControlContainerCanvas.UpdateChildrenPosition();
+                else
+                    dockCanvas.UpdateChildrenPosition();
                 if (eventsElement != null)
                 {
                     foreach (XElement child in eventsElement.Elements("Event"))

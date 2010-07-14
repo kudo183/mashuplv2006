@@ -158,6 +158,7 @@ namespace MashupDesignTool
 
         void controlDownloader_DownloadCompleted()
         {
+            controlDownloader.DownloadCompleted -= new ControlDownloader.DownloadCompletedHandler(controlDownloader_DownloadCompleted);
             effectDownloader.DownloadCompleted += new EffectDownloader.DownloadCompletedHandler(effectDownloader_DownloadCompleted);
             effectDownloader.Download(effectDll, effectReferenceDll);
         }
@@ -170,6 +171,7 @@ namespace MashupDesignTool
                 dcs.Deserialize(canvasElement, dockCanvas);
             else
                 dcs.DeserializeInDesign(canvasElement, designCanvas);
+            effectDownloader.DownloadCompleted -= new EffectDownloader.DownloadCompletedHandler(effectDownloader_DownloadCompleted);
         }
 
         void dcs_DeserializeCompleted()

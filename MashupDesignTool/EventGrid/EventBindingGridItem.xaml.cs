@@ -15,8 +15,6 @@ namespace MashupDesignTool
 {
     public partial class EventBindingGridItem : UserControl
     {
-        bool b = false;
-        string oldHandleOperation = "";
         BasicControl raiseControl;
         MDTEventInfo mdtei;
         List<ControlComboBoxItemData> listControls;

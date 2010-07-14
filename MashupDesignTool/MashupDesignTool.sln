@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignCanvas", "DesignCanva
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serializer", "Serializer\Serializer.csproj", "{FFF9DFD8-6B8C-4BE3-967D-4A532FBBD6DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Present", "Present\Present.csproj", "{BE85779E-34C2-47DA-ABF5-0A629C04029B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,10 @@ Global
 		{FFF9DFD8-6B8C-4BE3-967D-4A532FBBD6DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFF9DFD8-6B8C-4BE3-967D-4A532FBBD6DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFF9DFD8-6B8C-4BE3-967D-4A532FBBD6DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE85779E-34C2-47DA-ABF5-0A629C04029B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE85779E-34C2-47DA-ABF5-0A629C04029B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE85779E-34C2-47DA-ABF5-0A629C04029B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE85779E-34C2-47DA-ABF5-0A629C04029B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
