@@ -19,6 +19,8 @@ using MapulRibbon;
 using ItemCollectionEditor;
 using System.Text;
 using System.IO;
+using System.Windows.Browser;
+using WebServer;
 
 namespace MashupDesignTool
 {
@@ -45,6 +47,10 @@ namespace MashupDesignTool
         List<EffectInfo> listAppearEffects = new List<EffectInfo>();
         List<EffectInfo> listDisappearEffects = new List<EffectInfo>();
         List<EffectInfo> listListEffects = new List<EffectInfo>();
+        LoadingWindow lw;
+        bool newApp;
+        Present.DataService.DesignedApplicationData appData = null;
+        bool backToEditor = false;
         
         public MainPage()
         {
@@ -193,79 +199,226 @@ namespace MashupDesignTool
             doubleClickTimer = new DispatcherTimer();
             doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
+           
+            Uri uri = HtmlPage.Document.DocumentUri;
+            IDictionary<string, string> dic = ParseParams(uri.Query);
+            if (dic.ContainsKey("app") && !backToEditor)
+            {
+                newApp = false;
+                lw = new LoadingWindow();
+                lw.Closed += new EventHandler(lw_Closed);
+                lw.Show();
 
-            propertiesGrid.SetSelectedObject(designCanvas1.ControlContainerCanvas, designCanvas1.GetPropertyNameList());
+                bool ret = true;
+                Guid id = new Guid();
+                try { id = Guid.Parse(dic["app"]); }
+                catch { ret = false; }
 
-            ////////////////////////////////////////////////////////////////
-            ////////////////////////////////////////////////////////////////
-            test t = new test();
-            t.Width = t.Height = 100;
-            SilverlightControl1 sc1 = new SilverlightControl1();
-            sc1.Width = sc1.Height = 10;
-            designCanvas1.AddControl(sc1);
-            designCanvas1.AddControl(t);
-            SilverlightControl1 sc2 = new SilverlightControl1();
-            sc2.Width = sc2.Height = 100;
-            designCanvas1.AddControl(sc2);
+                Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
+                client.GetDataCompleted += new EventHandler<Present.DataService.GetDataCompletedEventArgs>(client_GetDataCompleted);
+                client.GetDataAsync(id);
 
-            //string str = "<Page><NeccesaryDlls><ControlDll><Dll>MacStyleContactFormControl.dll</Dll><Dll>ImageListControl.dll</Dll></ControlDll><ControlReferenceDll><Dll>System.ComponentModel.DataAnnotations.dll</Dll><Dll>System.Windows.Controls.Data.Input.dll</Dll><Dll>EffectLibrary.dll</Dll></ControlReferenceDll><EffectDll><Dll>EffectLibrary.dll</Dll></EffectDll><EffectReferenceDll><Dll>DockCanvas.dll</Dll></EffectReferenceDll></NeccesaryDlls><DockCanvas><Width>400</Width><Height>200</Height><Background><Root Type=\"System.Windows.Media.SolidColorBrush, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Color Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</B></Color><Opacity Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</Opacity><Transform Type=\"System.Windows.Media.MatrixTransform, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Matrix Type=\"System.Windows.Media.Matrix, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><M11 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M11><M12 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M12><M21 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M21><M22 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M22><OffsetX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetX><OffsetY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetY></Matrix></Transform><RelativeTransform Type=\"System.Windows.Media.MatrixTransform, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Matrix Type=\"System.Windows.Media.Matrix, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><M11 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M11><M12 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M12><M21 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M21><M22 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M22><OffsetX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetX><OffsetY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetY></Matrix></RelativeTransform></Root></Background><Controls><EffectableControl><Top>0</Top><Left>0</Left><ZIndex>1</ZIndex><DockType>Left</DockType><Width>168</Width><Height>200</Height><Control Type=\"MacStyleContactFormControl.MacStyleContactForm, MacStyleContactFormControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><MacStyleContactForm Type=\"MacStyleContactFormControl.MacStyleContactForm, MacStyleContactFormControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><Width Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">168</Width><Height Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">200</Height><Name Type=\"System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">macstylecontactform_5977c226-fca1-4a4f-92ff-bd860b3c1410</Name><Visibility Type=\"System.Windows.Visibility, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">Visible</Visibility><ReceiveEmail Type=\"System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">tranphuonghai@gmail.com</ReceiveEmail><LabelColor Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</B></LabelColor><ButtonColor Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">122</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">122</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">122</B></ButtonColor><ContentColor Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</B></ContentColor><ContentBackgroundColor Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">128</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">128</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">128</B></ContentBackgroundColor></MacStyleContactForm></Control><Effects /></EffectableControl><EffectableControl><Top>0</Top><Left>168</Left><ZIndex>2</ZIndex><DockType>Fill</DockType><Width>232</Width><Height>200</Height><Control Type=\"ControlLibrary.ImageListControl, ImageListControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><ImageListControl Type=\"ControlLibrary.ImageListControl, ImageListControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><Width Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">232</Width><Height Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">200</Height><Name Type=\"System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">imagelistcontrol_b10c7a87-8ce5-4107-bff4-0b39c957c203</Name><Visibility Type=\"System.Windows.Visibility, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">Visible</Visibility></ImageListControl></Control><Effects><ListEffect Type=\"EffectLibrary.Carousel, EffectLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><Root Type=\"EffectLibrary.Carousel, EffectLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><ScaleX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</ScaleX><ScaleY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</ScaleY><Duration Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">5000</Duration><PaddingLeft Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</PaddingLeft><PaddingRight Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</PaddingRight><PaddingTop Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</PaddingTop><PaddingBottom Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</PaddingBottom><ItemWidth Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">20</ItemWidth><ItemHeight Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">20</ItemHeight><BackgroundColor Type=\"System.Windows.Media.SolidColorBrush, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Color Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</B></Color><Opacity Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</Opacity><Transform Type=\"System.Windows.Media.MatrixTransform, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Matrix Type=\"System.Windows.Media.Matrix, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><M11 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M11><M12 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M12><M21 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M21><M22 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M22><OffsetX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetX><OffsetY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetY></Matrix></Transform><RelativeTransform Type=\"System.Windows.Media.MatrixTransform, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Matrix Type=\"System.Windows.Media.Matrix, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><M11 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M11><M12 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M12><M21 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M21><M22 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M22><OffsetX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetX><OffsetY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetY></Matrix></RelativeTransform></BackgroundColor><IsSelfHandle Type=\"System.Boolean, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">True</IsSelfHandle></Root></ListEffect></Effects></EffectableControl></Controls><Events /></DockCanvas></Page>";
-            //PageControl pc = new PageControl();
-            //pc.LoadControl(str);
-            //designCanvas1.AddControl(pc);
+                if (ret == true)
+                    return;
 
-            //PageControl pc1 = new PageControl();
-            //pc1.LoadControl(str);
-            //designCanvas1.AddControl(pc1);
+                ErrorWindow ew = new ErrorWindow("Unknown application");
+                ew.Closed += new EventHandler(ew_Closed);
+                ew.Show();
+            }
 
-            //designCanvas1.Clear();
-            //PageSerializer pc = new PageSerializer();
-            //pc.DeserializeInDesign(str, designCanvas1, controlDownloader, effectDownloader);
+            else
+            {
+                if (!backToEditor)
+                    newApp = true;
+                propertiesGrid.SetSelectedObject(designCanvas1.ControlContainerCanvas, designCanvas1.GetPropertyNameList());
+            }
 
-            //List<int> abc = new List<int>();
-            //abc.Add(1);
-            //abc.Add(1);
-            //abc.Add(3);
-            //abc.Add(1);
-            //abc.Add(1);
-            //abc.Add(3);
+            #region test code
+            //////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////
+                //test t = new test();
+                //t.Width = t.Height = 100;
+                //SilverlightControl1 sc1 = new SilverlightControl1();
+                //sc1.Width = sc1.Height = 10;
+                //designCanvas1.AddControl(sc1);
+                //designCanvas1.AddControl(t);
+                //SilverlightControl1 sc2 = new SilverlightControl1();
+                //sc2.Width = sc2.Height = 100;
+                //designCanvas1.AddControl(sc2);
 
-            //List<int> def = (List<int>)MyXmlSerializer.Load(MyXmlSerializer.Serialize(abc));
-            
-            //int[] array = new int[] { 1};
-            //string st = MyXmlSerializer.Serialize(array);
-            //int[] array1 = (int[])MyXmlSerializer.Load(st);
-            //string abc = "";
-            //foreach (string str in t.GetListEventName())
-            //    abc += str + "\t";
-            //abc += "\r\n";
-            //foreach (string str in t.GetListOperationName())
-            //    abc += str + "\t";
+                ////string str = "<Page><NeccesaryDlls><ControlDll><Dll>MacStyleContactFormControl.dll</Dll><Dll>ImageListControl.dll</Dll></ControlDll><ControlReferenceDll><Dll>System.ComponentModel.DataAnnotations.dll</Dll><Dll>System.Windows.Controls.Data.Input.dll</Dll><Dll>EffectLibrary.dll</Dll></ControlReferenceDll><EffectDll><Dll>EffectLibrary.dll</Dll></EffectDll><EffectReferenceDll><Dll>DockCanvas.dll</Dll></EffectReferenceDll></NeccesaryDlls><DockCanvas><Width>400</Width><Height>200</Height><Background><Root Type=\"System.Windows.Media.SolidColorBrush, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Color Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</B></Color><Opacity Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</Opacity><Transform Type=\"System.Windows.Media.MatrixTransform, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Matrix Type=\"System.Windows.Media.Matrix, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><M11 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M11><M12 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M12><M21 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M21><M22 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M22><OffsetX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetX><OffsetY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetY></Matrix></Transform><RelativeTransform Type=\"System.Windows.Media.MatrixTransform, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Matrix Type=\"System.Windows.Media.Matrix, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><M11 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M11><M12 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M12><M21 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M21><M22 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M22><OffsetX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetX><OffsetY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetY></Matrix></RelativeTransform></Root></Background><Controls><EffectableControl><Top>0</Top><Left>0</Left><ZIndex>1</ZIndex><DockType>Left</DockType><Width>168</Width><Height>200</Height><Control Type=\"MacStyleContactFormControl.MacStyleContactForm, MacStyleContactFormControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><MacStyleContactForm Type=\"MacStyleContactFormControl.MacStyleContactForm, MacStyleContactFormControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><Width Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">168</Width><Height Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">200</Height><Name Type=\"System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">macstylecontactform_5977c226-fca1-4a4f-92ff-bd860b3c1410</Name><Visibility Type=\"System.Windows.Visibility, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">Visible</Visibility><ReceiveEmail Type=\"System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">tranphuonghai@gmail.com</ReceiveEmail><LabelColor Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</B></LabelColor><ButtonColor Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">122</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">122</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">122</B></ButtonColor><ContentColor Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</B></ContentColor><ContentBackgroundColor Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">128</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">128</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">128</B></ContentBackgroundColor></MacStyleContactForm></Control><Effects /></EffectableControl><EffectableControl><Top>0</Top><Left>168</Left><ZIndex>2</ZIndex><DockType>Fill</DockType><Width>232</Width><Height>200</Height><Control Type=\"ControlLibrary.ImageListControl, ImageListControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><ImageListControl Type=\"ControlLibrary.ImageListControl, ImageListControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><Width Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">232</Width><Height Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">200</Height><Name Type=\"System.String, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">imagelistcontrol_b10c7a87-8ce5-4107-bff4-0b39c957c203</Name><Visibility Type=\"System.Windows.Visibility, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">Visible</Visibility></ImageListControl></Control><Effects><ListEffect Type=\"EffectLibrary.Carousel, EffectLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><Root Type=\"EffectLibrary.Carousel, EffectLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\"><ScaleX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</ScaleX><ScaleY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</ScaleY><Duration Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">5000</Duration><PaddingLeft Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</PaddingLeft><PaddingRight Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</PaddingRight><PaddingTop Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</PaddingTop><PaddingBottom Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</PaddingBottom><ItemWidth Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">20</ItemWidth><ItemHeight Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">20</ItemHeight><BackgroundColor Type=\"System.Windows.Media.SolidColorBrush, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Color Type=\"System.Windows.Media.Color, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><A Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</A><R Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</R><G Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</G><B Type=\"System.Byte, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">255</B></Color><Opacity Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</Opacity><Transform Type=\"System.Windows.Media.MatrixTransform, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Matrix Type=\"System.Windows.Media.Matrix, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><M11 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M11><M12 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M12><M21 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M21><M22 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M22><OffsetX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetX><OffsetY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetY></Matrix></Transform><RelativeTransform Type=\"System.Windows.Media.MatrixTransform, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><Matrix Type=\"System.Windows.Media.Matrix, System.Windows, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\"><M11 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M11><M12 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M12><M21 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</M21><M22 Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">1</M22><OffsetX Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetX><OffsetY Type=\"System.Double, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">0</OffsetY></Matrix></RelativeTransform></BackgroundColor><IsSelfHandle Type=\"System.Boolean, mscorlib, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e\">True</IsSelfHandle></Root></ListEffect></Effects></EffectableControl></Controls><Events /></DockCanvas></Page>";
+                ////PageControl pc = new PageControl();
+                ////pc.LoadControl(str);
+                ////designCanvas1.AddControl(pc);
 
-            //abc += "\r\n";
-            //foreach (string str in sc1.GetListEventName())
-            //    abc += str + "\t";
-            //abc += "\r\n";
-            //foreach (string str in sc1.GetListOperationName())
-            //    abc += str + "\t";
+                ////PageControl pc1 = new PageControl();
+                ////pc1.LoadControl(str);
+                ////designCanvas1.AddControl(pc1);
 
-            //MessageBox.Show(abc);
+                ////designCanvas1.Clear();
+                ////PageSerializer pc = new PageSerializer();
+                ////pc.DeserializeInDesign(str, designCanvas1, controlDownloader, effectDownloader);
 
-            List<BasicControl> bsc = new List<BasicControl>();
-            bsc.Add(sc1);
-            bsc.Add(sc2);
-            List<string> strs = new List<string>();
-            strs.Add("Hello1");
-            strs.Add("Hello1");
-            MDTEventManager.RegisterEvent(t, "Test1", bsc, strs);
+                ////List<int> abc = new List<int>();
+                ////abc.Add(1);
+                ////abc.Add(1);
+                ////abc.Add(3);
+                ////abc.Add(1);
+                ////abc.Add(1);
+                ////abc.Add(3);
 
-            List<string> strs1 = new List<string>();
-            strs1.Add("Hello2");
-            strs1.Add("Hello2");
-            MDTEventManager.RegisterEvent(t, "Test2", bsc, strs1);
-            /////////////////////////////////////////////// "Hello1");
-            //MDTEventManager.RegisterEvent(t, "Test1", sc1/////////////////
-            ////////////////////////////////////////////////////////////////
+                ////List<int> def = (List<int>)MyXmlSerializer.Load(MyXmlSerializer.Serialize(abc));
+
+                ////int[] array = new int[] { 1};
+                ////string st = MyXmlSerializer.Serialize(array);
+                ////int[] array1 = (int[])MyXmlSerializer.Load(st);
+                ////string abc = "";
+                ////foreach (string str in t.GetListEventName())
+                ////    abc += str + "\t";
+                ////abc += "\r\n";
+                ////foreach (string str in t.GetListOperationName())
+                ////    abc += str + "\t";
+
+                ////abc += "\r\n";
+                ////foreach (string str in sc1.GetListEventName())
+                ////    abc += str + "\t";
+                ////abc += "\r\n";
+                ////foreach (string str in sc1.GetListOperationName())
+                ////    abc += str + "\t";
+
+                ////MessageBox.Show(abc);
+
+                //List<BasicControl> bsc = new List<BasicControl>();
+                //bsc.Add(sc1);
+                //bsc.Add(sc2);
+                //List<string> strs = new List<string>();
+                //strs.Add("Hello1");
+                //strs.Add("Hello1");
+                //MDTEventManager.RegisterEvent(t, "Test1", bsc, strs);
+
+                //List<string> strs1 = new List<string>();
+                //strs1.Add("Hello2");
+                //strs1.Add("Hello2");
+                //MDTEventManager.RegisterEvent(t, "Test2", bsc, strs1);
+                ///////////////////////////////////////////////// "Hello1");
+                ////MDTEventManager.RegisterEvent(t, "Test1", sc1/////////////////
+            //////////////////////////////////////////////////////////////////
+            #endregion test code
         }
+
+        #region reload designed application
+        bool loaded = false;
+        void lw_Closed(object sender, EventArgs e)
+        {
+            if (loaded == true)
+                return;
+            if (lw.DialogResult == false)
+                NavigateToIndex();
+        }
+
+        void ew_Closed(object sender, EventArgs e)
+        {
+            if (lw != null)
+                lw.Close();
+            NavigateToIndex();
+        }
+
+        private void NavigateToIndex()
+        {
+            Uri uri = HtmlPage.Document.DocumentUri;
+            Uri uri1 = new Uri(uri, "../index.aspx");
+            HtmlPage.Window.Navigate(uri1);
+        }
+
+        void client_GetDataCompleted(object sender, Present.DataService.GetDataCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                ErrorWindow ew = new ErrorWindow("A error occusr while loading application\r\n" + e.Error.Message);
+                ew.Closed += new EventHandler(ew_Closed);
+                ew.Show();
+                return;
+            }
+            if (e.Result == null)
+            {
+                ErrorWindow ew = new ErrorWindow("Unknown application");
+                ew.Closed += new EventHandler(ew_Closed);
+                ew.Show();
+                return;
+            }
+            appData = e.Result;
+            LoadDesign(e.Result.XmlString);
+        }
+
+        private void LoadDesign(string xml)
+        {
+            PageSerializer ps = new PageSerializer();
+            ps.DeserializeCompleted += new PageSerializer.DeserializeCompletedHandler(ps_DeserializeCompleted);
+            ps.DeserializeInDesign(xml, designCanvas1, controlDownloader, effectDownloader);
+        }
+
+        void ps_DeserializeCompleted()
+        {
+            loaded = true;
+            if (lw != null)
+                lw.Close();
+        }
+
+        private IDictionary<string, string> ParseParams(string paramsString)
+        {
+            if (string.IsNullOrEmpty(paramsString))
+                return new Dictionary<string, string>();
+
+            var dict = new Dictionary<string, string>();
+            if (paramsString.StartsWith("?"))
+                paramsString = paramsString.Substring(1);
+            var length = paramsString.Length;
+
+            for (var i = 0; i < length; i++)
+            {
+                var startIndex = i;
+                var pivotIndex = -1;
+
+                while (i < length)
+                {
+                    char ch = paramsString[i];
+                    if (ch == '=')
+                    {
+                        if (pivotIndex < 0)
+                        {
+                            pivotIndex = i;
+                        }
+                    }
+                    else if (ch == '&')
+                    {
+                        break;
+                    }
+                    i++;
+                }
+
+                string name;
+                string value;
+                if (pivotIndex >= 0)
+                {
+                    name = paramsString.Substring(startIndex, pivotIndex - startIndex);
+                    value = paramsString.Substring(pivotIndex + 1, (i - pivotIndex) - 1);
+                }
+                else
+                {
+                    name = paramsString.Substring(startIndex, i - startIndex);
+                    value = null;
+                }
+
+                dict.Add(HttpUtility.UrlDecode(name), HttpUtility.UrlDecode(value));
+
+                // if string ends with ampersand, add another empty token
+                if ((i == (length - 1)) && (paramsString[i] == '&'))
+                    dict.Add(null, string.Empty);
+            }
+
+            return dict;
+        }
+        #endregion reload designed application
 
         #region download Controls/info.xml and contruct control tree
         private void DownloadControlInfo()
@@ -1131,17 +1284,11 @@ namespace MashupDesignTool
             pp.BackToEditor += new PreviewPage.BackToEditorHandler(pp_BackToEditor);
             this.Content = pp;
             pp.Preview(DockCanvasSerializer.Serialize(designCanvas1));
-            
-            List<string> controlDll = new List<string>();
-            List<string> controlReferenceDll = new List<string>();
-            List<string> effectDll = new List<string>();
-            List<string> effectReferenceDll = new List<string>();
-            GetDlls(controlDll, controlReferenceDll, effectDll, effectReferenceDll);
-            string str = PageSerializer.Serialize(designCanvas1, controlDll, controlReferenceDll, effectDll, effectReferenceDll);
         }
 
         void pp_BackToEditor(object sender)
         {
+            backToEditor = true;
             this.Content = oldPage;
         }
 
@@ -1221,6 +1368,245 @@ namespace MashupDesignTool
                     references.Add(str);
         }
         #endregion Save
+
+        #region save, save as
+        bool saveCompleted;
+        SavingWindow sw;
+        Guid userId;
+        bool gotUserId = false;
+        string xmlString;
+        string appName = "";
+        bool saveAs = false;
+
+        private void btnSave_OnClick(object sender, RoutedEventArgs e)
+        {
+            saveAs = false;
+            List<string> controlDll = new List<string>();
+            List<string> controlReferenceDll = new List<string>();
+            List<string> effectDll = new List<string>();
+            List<string> effectReferenceDll = new List<string>();
+            GetDlls(controlDll, controlReferenceDll, effectDll, effectReferenceDll);
+            xmlString = PageSerializer.Serialize(designCanvas1, controlDll, controlReferenceDll, effectDll, effectReferenceDll);
+            Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
+
+            saveCompleted = false;
+            sw = new SavingWindow();
+            sw.Closed += new EventHandler(sw_Closed);
+            sw.Show();
+
+            if (newApp)
+            {
+                InsertApplicationName ian = new InsertApplicationName(false);
+                ian.Closed += new EventHandler(ian_Closed);
+                ian.Show();
+            }
+            else
+            {
+                appData.XmlString = xmlString;
+                client.UpdateCompleted += new EventHandler<Present.DataService.UpdateCompletedEventArgs>(client_UpdateCompleted);
+                client.UpdateAsync(appData);
+            }
+        }
+
+        void ian_Closed(object sender, EventArgs e)
+        {
+            InsertApplicationName ian = (InsertApplicationName)sender;
+            if (ian.DialogResult == true)
+            {
+                appName = ian.ApplicationName;
+                if (saveAs == true)
+                {
+                    userId = appData.UserId;
+                    gotUserId = true;
+                    InsertApp();
+                }
+                else
+                {
+                    if (gotUserId == false)
+                    {
+                        Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
+                        client.GetUserIdFromNameCompleted += new EventHandler<Present.DataService.GetUserIdFromNameCompletedEventArgs>(client_GetUserIdFromNameCompleted);
+                        client.GetUserIdFromNameAsync(WebContext.Current.User.Name);
+                    }
+                    else
+                        InsertApp();
+                }
+            }
+            else
+            {
+                sw.Close();
+            }
+        }
+
+        void client_GetUserIdFromNameCompleted(object sender, Present.DataService.GetUserIdFromNameCompletedEventArgs e)
+        {
+            gotUserId = true;
+            userId = e.Result;
+            InsertApp();
+        }
+
+        void InsertApp()
+        {
+            appData = new Present.DataService.DesignedApplicationData()
+            {
+                XmlString = xmlString,
+                UserId = userId,
+                ApplicationName = appName
+            };
+            Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
+            client.InsertCompleted += new EventHandler<Present.DataService.InsertCompletedEventArgs>(client_InsertCompleted);
+            client.InsertAsync(appData);
+        }
+
+        void sw_Closed(object sender, EventArgs e)
+        {
+        }
+
+        void client_UpdateCompleted(object sender, Present.DataService.UpdateCompletedEventArgs e)
+        {
+            saveCompleted = true;
+            sw.Close();
+        }
+
+        void client_InsertCompleted(object sender, Present.DataService.InsertCompletedEventArgs e)
+        {
+            newApp = false;
+            appData = e.Result;
+            saveCompleted = true;
+            sw.Close();
+        }
+
+        private void btnSaveAs_OnClick(object sender, RoutedEventArgs e)
+        {
+            saveAs = true;
+
+            List<string> controlDll = new List<string>();
+            List<string> controlReferenceDll = new List<string>();
+            List<string> effectDll = new List<string>();
+            List<string> effectReferenceDll = new List<string>();
+            GetDlls(controlDll, controlReferenceDll, effectDll, effectReferenceDll);
+            xmlString = PageSerializer.Serialize(designCanvas1, controlDll, controlReferenceDll, effectDll, effectReferenceDll);
+            Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
+
+            saveCompleted = false;
+            sw = new SavingWindow();
+            sw.Closed += new EventHandler(sw_Closed);
+            sw.Show();
+
+            InsertApplicationName ian = new InsertApplicationName(true);
+            ian.Closed += new EventHandler(ian_Closed);
+            ian.Show();
+        }
+        #endregion save, save as
+
+        #region new
+        private void btnNew_OnClick(object sender, RoutedEventArgs e)
+        {
+            NewConfirm nc = new NewConfirm();
+            nc.Closed += new EventHandler(nc_Closed);
+            nc.Show();
+        }
+
+        void nc_Closed(object sender, EventArgs e)
+        {
+            NewConfirm nc = (NewConfirm)sender;
+            if (nc.DialogResult == true)
+            {
+                List<string> controlDll = new List<string>();
+                List<string> controlReferenceDll = new List<string>();
+                List<string> effectDll = new List<string>();
+                List<string> effectReferenceDll = new List<string>();
+                GetDlls(controlDll, controlReferenceDll, effectDll, effectReferenceDll);
+                xmlString = PageSerializer.Serialize(designCanvas1, controlDll, controlReferenceDll, effectDll, effectReferenceDll);
+                Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
+
+                saveCompleted = false;
+                sw = new SavingWindow();
+                sw.Closed += new EventHandler(sw1_Closed);
+                sw.Show();
+
+                if (newApp)
+                {
+                    InsertApplicationName ian = new InsertApplicationName(false);
+                    ian.Closed += new EventHandler(ian1_Closed);
+                    ian.Show();
+                }
+                else
+                {
+                    appData.XmlString = xmlString;
+                    client.UpdateCompleted += new EventHandler<Present.DataService.UpdateCompletedEventArgs>(client_UpdateCompleted1);
+                    client.UpdateAsync(appData);
+                }
+            }
+        }
+            
+        void ian1_Closed(object sender, EventArgs e)
+        {
+            InsertApplicationName ian = (InsertApplicationName)sender;
+            if (ian.DialogResult == true)
+            {
+                appName = ian.ApplicationName;
+                if (saveAs == true)
+                {
+                    userId = appData.UserId;
+                    gotUserId = true;
+                }
+                else
+                {
+                    if (gotUserId == false)
+                    {
+                        Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
+                        client.GetUserIdFromNameCompleted += new EventHandler<Present.DataService.GetUserIdFromNameCompletedEventArgs>(client_GetUserIdFromNameCompleted1);
+                        client.GetUserIdFromNameAsync(WebContext.Current.User.Name);
+                    }
+                    else
+                        InsertApp1();
+                }
+            }
+            else
+            {
+                sw.Close();
+            }
+        }
+
+        void client_GetUserIdFromNameCompleted1(object sender, Present.DataService.GetUserIdFromNameCompletedEventArgs e)
+        {
+            gotUserId = true;
+            userId = e.Result;
+            InsertApp1();
+        }
+
+        void InsertApp1()
+        {
+            appData = new Present.DataService.DesignedApplicationData()
+            {
+                XmlString = xmlString,
+                UserId = userId,
+                ApplicationName = appName
+            };
+            Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
+            client.InsertCompleted += new EventHandler<Present.DataService.InsertCompletedEventArgs>(client_InsertCompleted1);
+            client.InsertAsync(appData);
+        }
+
+        void sw1_Closed(object sender, EventArgs e)
+        {
+        }
+
+        void client_UpdateCompleted1(object sender, Present.DataService.UpdateCompletedEventArgs e)
+        {
+            newApp = true;
+            designCanvas1.Clear();
+            sw.Close();
+        }
+
+        void client_InsertCompleted1(object sender, Present.DataService.InsertCompletedEventArgs e)
+        {
+            newApp = true;
+            designCanvas1.Clear();
+            sw.Close();
+        }
+        #endregion new
     }
 }
 

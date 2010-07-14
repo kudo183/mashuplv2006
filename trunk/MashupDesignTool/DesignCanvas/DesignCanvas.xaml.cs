@@ -316,6 +316,7 @@ namespace MashupDesignTool
         #region add new control to canvas
         public void AddEffectableControl(EffectableControl ec)
         {
+            ec.Control.Name = Guid.NewGuid().ToString();
             ProxyControl pc = new ProxyControl(ec);
             proxyControls.Add(pc);
             controls.Add(ec);
