@@ -52,11 +52,9 @@ namespace ItemCollectionEditor
             f.Height = 400;
             f.Closed += new EventHandler(f_Closed);
             foreach (EffectableControl ec in list.Items)
-            {                
-                Image img = new Image();
-                Image temp = ((BasicControl) ec.Control).Content as Image;
-                img.Source = temp.Source;
-                listBox.Items.Add(img);
+            {
+                ImageListControlItems item = ec.Control as ImageListControlItems;
+                AddItemToListBox(item);
                 //listControlItems.Add(ec.Control as ImageListControlItems);
                 listControlItems.Add(ec);
             }
@@ -70,9 +68,9 @@ namespace ItemCollectionEditor
                 return;
             listControl.RemoveAllItem();
             foreach (EffectableControl ec in listControlItems)
-                listControl.AddItem(ec);            
+                listControl.AddItem(ec);
         }
-        
+
         public void Close()
         {
             f.Close();
@@ -95,12 +93,17 @@ namespace ItemCollectionEditor
         {
             if (e.AddedItems.Count == 0)
                 return;
-            Image img = e.AddedItems[0] as Image;
-            imgPreview.Source = img.Source;
-            ImageListControlItems item = listControlItems[listBox.SelectedIndex].Control as ImageListControlItems;
-            txtURL.Text = item.ImageUrl;
+            Border b = e.AddedItems[0] as Border;
+            ImageListControlItems item = b.Child as ImageListControlItems;
+            
+            previewImg.Source = item.Img.Source;
+            previewTitle.Text = item.Title;
+
+            txtURL.Text = item.ImageUrl;            
+            txtDescription.Text = item.Description;
+            txtTitle.Text = item.Title;
         }
-       
+
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             f.Close();
@@ -117,6 +120,8 @@ namespace ItemCollectionEditor
             int temp = listBox.SelectedIndex;
             listControl.RemoveItemAt(listBox.SelectedIndex);
             listBox.Items.RemoveAt(listBox.SelectedIndex);
+            if (temp == listBox.Items.Count && temp > 0)
+                temp--;
             listBox.SelectedIndex = temp;
         }
 
@@ -157,11 +162,9 @@ namespace ItemCollectionEditor
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             ImageListControlItems item = new ImageListControlItems();
-            listControl.AddItem(new EffectableControl( item));
-            Image img = new Image();
-            Image temp = item.Content as Image;
-            img.Source = temp.Source;
-            listBox.Items.Add(img);
+            listControl.AddItem(new EffectableControl(item));
+
+            AddItemToListBox(item);
         }
 
         private void txtURL_KeyDown(object sender, KeyEventArgs e)
@@ -169,11 +172,13 @@ namespace ItemCollectionEditor
             if (e.Key == Key.Enter)
             {
                 EffectableControl ec = listControl.GetAt(listBox.SelectedIndex) as EffectableControl;
-                ImageListControlItems item = ec.Control as ImageListControlItems; 
+                ImageListControlItems item = ec.Control as ImageListControlItems;
                 item.ImageUrl = txtURL.Text;
-                Image temp = item.Content as Image;
-                Image temp1 = listBox.SelectedItem as Image;
-                temp1.Source = temp.Source;                
+                Image temp = item.Img as Image;
+                previewImg.Source = temp.Source;
+
+                ImageListControlItems temp1 = ((listBox.SelectedItem as Border).Child as ImageListControlItems);
+                temp1.ImageUrl = txtURL.Text;
             }
         }
 
@@ -182,8 +187,10 @@ namespace ItemCollectionEditor
             if (e.Key == Key.Enter)
             {
                 EffectableControl ec = listControl.GetAt(listBox.SelectedIndex) as EffectableControl;
-                ImageListControlItems item = ec.Control as ImageListControlItems; 
-                item.Title = txtTitle.Text;             
+                ImageListControlItems item = ec.Control as ImageListControlItems;
+                ((listBox.SelectedItem as Border).Child as ImageListControlItems).Title = txtTitle.Text;
+                item.Title = txtTitle.Text;
+                previewTitle.Text = txtTitle.Text;
             }
         }
 
@@ -192,10 +199,24 @@ namespace ItemCollectionEditor
             if (e.Key == Key.Enter)
             {
                 EffectableControl ec = listControl.GetAt(listBox.SelectedIndex) as EffectableControl;
-                ImageListControlItems item = ec.Control as ImageListControlItems; 
+                ImageListControlItems item = ec.Control as ImageListControlItems;
+                ((listBox.SelectedItem as Border).Child as ImageListControlItems).Description = txtDescription.Text;
                 item.Description = txtDescription.Text;
+                ToolTipService.SetToolTip(previewImg, txtDescription.Text);
             }
         }
 
+        private void AddItemToListBox(ImageListControlItems item)
+        {
+            ImageListControlItems temp = new ImageListControlItems();
+            temp.Title = item.Title;
+            temp.Description = item.Description;
+            temp.Img.Source = item.Img.Source;
+            temp.Width = temp.Height = 130;
+            temp.Margin = new Thickness(20, 0, 0, 0);
+            temp.IsShowTitle = item.IsShowTitle;
+            Border b = new Border() { Child = temp };
+            listBox.Items.Add(b);
+        }
     }
 }
