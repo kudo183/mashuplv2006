@@ -143,6 +143,11 @@ namespace MashupDesignTool
                     eoxs.DeserializeCompleted += new EffectableObjectXmlSerializer.DeserializeCompletedHandler(eoxs_DeserializeCompleted);
                     eoxs.Deserialize(controlElements[0]);
                 }
+                else
+                {
+                    if (DeserializeCompleted != null)
+                        DeserializeCompleted();
+                }
             }
         }
 
@@ -204,6 +209,11 @@ namespace MashupDesignTool
                     EffectableObjectXmlSerializer eoxs = new EffectableObjectXmlSerializer();
                     eoxs.DeserializeCompleted += new EffectableObjectXmlSerializer.DeserializeCompletedHandler(eoxs_DeserializeCompleted);
                     eoxs.Deserialize(controlElements[0]);
+                }
+                else
+                {
+                    if (DeserializeCompleted != null)
+                        DeserializeCompleted();
                 }
             }
         }

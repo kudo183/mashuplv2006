@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="DesignedApplicationData" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>Present.DataService.DesignedApplicationData, Service References.DataService.Reference.cs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>MashupDesignTool.DataService.DesignedApplicationData</TypeInfo>
 </GenericObjectDataSource>

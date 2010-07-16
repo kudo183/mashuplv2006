@@ -24,6 +24,8 @@ namespace WebServer
         public Designed()
         {
             InitializeComponent();
+
+            this.Title = ApplicationStrings.DesignApplicationPageTitle;
         }
 
         void Authentication_LoggedIn(object sender, System.ServiceModel.DomainServices.Client.ApplicationServices.AuthenticationEventArgs e)
@@ -74,7 +76,7 @@ namespace WebServer
             bd1.Margin = new Thickness(0, 3, 0, 0);
 
             Border bd2 = new Border();
-            bd2.Child = new TextBlock() { Text = da.LastUpdate.ToString("hh:mm dd/MM/yyyy"), VerticalAlignment = System.Windows.VerticalAlignment.Center, HorizontalAlignment = System.Windows.HorizontalAlignment.Center };
+            bd2.Child = new TextBlock() { Text = da.LastUpdate.ToString("HH:mm dd/MM/yyyy"), VerticalAlignment = System.Windows.VerticalAlignment.Center, HorizontalAlignment = System.Windows.HorizontalAlignment.Center };
             bd2.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 148, 173, 235));
             bd2.BorderThickness = new Thickness(0, 0, 0, 1);
             bd2.Margin = new Thickness(0, 3, 0, 0);

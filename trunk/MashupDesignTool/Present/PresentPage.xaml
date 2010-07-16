@@ -1,8 +1,9 @@
-﻿<UserControl x:Class="Present.MainPage"
+﻿<navigation:Page x:Class="Present.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
     xmlns:my="clr-namespace:DockCanvas;assembly=DockCanvas"            
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400" Loaded="UserControl_Loaded" xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit">
@@ -26,4 +27,4 @@
             <!--</Grid>-->
         </ScrollViewer>
     </Grid>
-</UserControl>
+</navigation:Page>
