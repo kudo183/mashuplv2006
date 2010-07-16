@@ -104,15 +104,23 @@ namespace ControlLibrary
         private int padding = 10;
         HtmlElement iFrame;
         string str_iFrame_id = "";
-
+        bool _Visible;
         public HtmlHost()
         {
             Loaded += new RoutedEventHandler(HtmlHost_Loaded);
+            Unloaded += new RoutedEventHandler(HtmlHost_Unloaded);
             LayoutUpdated += new EventHandler(HtmlHost_LayoutUpdated);
             SizeChanged += new SizeChangedEventHandler(HtmlHost_SizeChanged);
             Width = Height = 100;
             parameterNameList.Add("HTMLString");
             parameterNameList.Add("HTMLUrl");
+            _Visible = true;
+        }
+
+        void HtmlHost_Unloaded(object sender, RoutedEventArgs e)
+        {
+            _Visible = (Visibility == System.Windows.Visibility.Visible) ? true : false;
+            Visibility = System.Windows.Visibility.Collapsed;
         }
 
         void HtmlHost_LayoutUpdated(object sender, EventArgs e)
@@ -133,9 +141,26 @@ namespace ControlLibrary
             divIFrameHost.SetStyleAttribute("width", (Width - padding * 2).ToString() + "px");
         }
 
+        void UpdateControl()
+        {
+            if (divIFrameHost == null)
+                return;
+
+            divIFrameHost.SetStyleAttribute("height", (Height - padding * 2).ToString() + "px");
+            divIFrameHost.SetStyleAttribute("width", (Width - padding * 2).ToString() + "px");
+
+            GeneralTransform gt = TransformToVisual(Application.Current.RootVisual);
+            Point p = gt.Transform(new Point(0, 0));
+
+            HtmlControlLeft = (int)p.X + padding - 1;
+            HtmlControlTop = (int)p.Y + padding - 1;
+        }
+
         void HtmlHost_Loaded(object sender, RoutedEventArgs e)
         {
             InitializeComponent();
+            Visibility = (_Visible) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            UpdateControl();
         }
 
         public void InitializeComponent()
@@ -143,7 +168,7 @@ namespace ControlLibrary
             if (divIFrameHost != null)
                 return;
             divIFrameHost = HtmlPage.Document.CreateElement("div");
-            divIFrameHost.SetAttribute("id", System.Guid.NewGuid().ToString());
+            divIFrameHost.SetAttribute("id", _htmlControlId);
 
             divIFrameHost.SetStyleAttribute("position", "absolute");
             divIFrameHost.SetStyleAttribute("left", _htmlControlLeft.ToString() + "px");
@@ -151,6 +176,8 @@ namespace ControlLibrary
             
             HtmlPage.Document.Body.AppendChild(divIFrameHost);
             Ultility.RegisterForNotification("Visibility", this, VisibilityChanged);
+
+            HTMLUrl = HTMLUrl;
         }
 
         void VisibilityChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
