@@ -630,31 +630,31 @@ namespace EffectLibrary
             _Axis = new Size(radiusX, radiusY);
         }
 
-        void control_OnListChange(string action, int index1, EffectableControl control, int index2)
+        void control_OnListChange(BasicListControl.ListItemsAction action, int index1, EffectableControl control, int index2)
         {
             switch (action)
             {
-                case "ADD":
+                case BasicListControl.ListItemsAction.ADD:
                     Stop();
                     AddItem(control);
                     break;
-                case "INSERT":
+                case BasicListControl.ListItemsAction.INSERT:
                     Stop();
                     InsertItem(index1, control);
                     break;
-                case "SWAP":
+                case BasicListControl.ListItemsAction.SWAP:
                     Stop();
                     Swap(index1, index2);
                     break;
-                case "REMOVEAT":
+                case BasicListControl.ListItemsAction.REMOVEAT:
                     Stop();
                     RemoveItemAt(index1);
                     break;
-                case "REMOVE":
+                case BasicListControl.ListItemsAction.REMOVE:
                     Stop();
                     RemoveItem(control);
                     break;
-                case "REMOVEALL":
+                case BasicListControl.ListItemsAction.REMOVEALL:
                     Stop();
                     RemoveAllItem();
                     break;
