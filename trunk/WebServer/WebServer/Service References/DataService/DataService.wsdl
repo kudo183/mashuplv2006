@@ -7,11 +7,11 @@
       <xsd:import schemaLocation="http://localhost:52878/DataService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WebServer.Web" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IDataService_GetList_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetList" />
+  <wsdl:message name="IDataService_GetDesignedApplicationList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDesignedApplicationList" />
   </wsdl:message>
-  <wsdl:message name="IDataService_GetList_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetListResponse" />
+  <wsdl:message name="IDataService_GetDesignedApplicationList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDesignedApplicationListResponse" />
   </wsdl:message>
   <wsdl:message name="IDataService_Insert_InputMessage">
     <wsdl:part name="parameters" element="tns:Insert" />
@@ -31,11 +31,11 @@
   <wsdl:message name="IDataService_Delete_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteResponse" />
   </wsdl:message>
-  <wsdl:message name="IDataService_GetData_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetData" />
+  <wsdl:message name="IDataService_GetDesignedApplication_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDesignedApplication" />
   </wsdl:message>
-  <wsdl:message name="IDataService_GetData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataResponse" />
+  <wsdl:message name="IDataService_GetDesignedApplication_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDesignedApplicationResponse" />
   </wsdl:message>
   <wsdl:message name="IDataService_GetUserIdFromName_InputMessage">
     <wsdl:part name="parameters" element="tns:GetUserIdFromName" />
@@ -44,9 +44,9 @@
     <wsdl:part name="parameters" element="tns:GetUserIdFromNameResponse" />
   </wsdl:message>
   <wsdl:portType name="IDataService">
-    <wsdl:operation name="GetList">
-      <wsdl:input wsaw:Action="http://tempuri.org/IDataService/GetList" message="tns:IDataService_GetList_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IDataService/GetListResponse" message="tns:IDataService_GetList_OutputMessage" />
+    <wsdl:operation name="GetDesignedApplicationList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDataService/GetDesignedApplicationList" message="tns:IDataService_GetDesignedApplicationList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDataService/GetDesignedApplicationListResponse" message="tns:IDataService_GetDesignedApplicationList_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Insert">
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/Insert" message="tns:IDataService_Insert_InputMessage" />
@@ -60,9 +60,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/Delete" message="tns:IDataService_Delete_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDataService/DeleteResponse" message="tns:IDataService_Delete_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetData">
-      <wsdl:input wsaw:Action="http://tempuri.org/IDataService/GetData" message="tns:IDataService_GetData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IDataService/GetDataResponse" message="tns:IDataService_GetData_OutputMessage" />
+    <wsdl:operation name="GetDesignedApplication">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDataService/GetDesignedApplication" message="tns:IDataService_GetDesignedApplication_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDataService/GetDesignedApplicationResponse" message="tns:IDataService_GetDesignedApplication_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetUserIdFromName">
       <wsdl:input wsaw:Action="http://tempuri.org/IDataService/GetUserIdFromName" message="tns:IDataService_GetUserIdFromName_InputMessage" />
@@ -71,8 +71,8 @@
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IDataService" type="tns:IDataService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetList">
-      <soap:operation soapAction="http://tempuri.org/IDataService/GetList" style="document" />
+    <wsdl:operation name="GetDesignedApplicationList">
+      <soap:operation soapAction="http://tempuri.org/IDataService/GetDesignedApplicationList" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -107,8 +107,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetData">
-      <soap:operation soapAction="http://tempuri.org/IDataService/GetData" style="document" />
+    <wsdl:operation name="GetDesignedApplication">
+      <soap:operation soapAction="http://tempuri.org/IDataService/GetDesignedApplication" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

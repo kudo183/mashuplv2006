@@ -11,6 +11,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="ApplicationName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="LastUpdate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="UserId" type="ser:guid" />
       <xs:element minOccurs="0" name="XmlString" nillable="true" type="xs:string" />
     </xs:sequence>

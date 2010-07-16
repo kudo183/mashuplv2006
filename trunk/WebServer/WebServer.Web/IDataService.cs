@@ -12,7 +12,7 @@ namespace WebServer.Web
     public interface IDataService
     {
         [OperationContract]
-        List<DesignedApplicationData> GetList(string userName);
+        List<DesignedApplicationData> GetDesignedApplicationList(string userName);
 
         [OperationContract]
         DesignedApplicationData Insert(DesignedApplicationData data);
@@ -24,7 +24,7 @@ namespace WebServer.Web
         DesignedApplicationData Delete(Guid id);
 
         [OperationContract]
-        DesignedApplicationData GetData(Guid id);
+        DesignedApplicationData GetDesignedApplication(Guid id);
 
         [OperationContract]
         Guid GetUserIdFromName(string userName);
@@ -37,6 +37,7 @@ namespace WebServer.Web
         Guid userId;
         string applicationName;
         string xmlString;
+        DateTime lastUpdate = new DateTime();
 
         [DataMember]
         public Guid Id
@@ -64,6 +65,13 @@ namespace WebServer.Web
         {
             get { return xmlString; }
             set { xmlString = value; }
+        }
+
+        [DataMember]
+        public DateTime LastUpdate
+        {
+            get { return lastUpdate; }
+            set { lastUpdate = value; }
         }
     }
 }

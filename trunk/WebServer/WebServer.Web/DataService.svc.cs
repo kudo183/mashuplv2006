@@ -13,10 +13,10 @@ namespace WebServer.Web
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class DataService : IDataService
     {
-        public List<DesignedApplicationData> GetList(string userName)
+        public List<DesignedApplicationData> GetDesignedApplicationList(string userName)
         {
             DataClasses1DataContext dc = new DataClasses1DataContext();
-            aspnet_User user = dc.GetUserByName(userName);
+            aspnet_User user = GetUserByName(userName, dc);
             var dads = from p in dc.DesignedApplications
                        where p.UserId == user.UserId
                        select p;
@@ -32,6 +32,8 @@ namespace WebServer.Web
         {
             DesignedApplication da = Convert(data);
             da.Id = Guid.NewGuid();
+            da.LastUpdate = new DateTime();
+
             DataClasses1DataContext dc = new DataClasses1DataContext();
             dc.DesignedApplications.InsertOnSubmit(da);
             dc.SubmitChanges();
@@ -45,6 +47,7 @@ namespace WebServer.Web
             DesignedApplication da = dc.DesignedApplications.Single(p => p.Id == data.Id);
             da.ApplicationName = data.ApplicationName;
             da.XmlString = data.XmlString;
+            da.LastUpdate = new DateTime();
             dc.SubmitChanges();
             data.UserId = da.UserId;
             return data;
@@ -60,7 +63,7 @@ namespace WebServer.Web
             return data;
         }
 
-        public DesignedApplicationData GetData(Guid id)
+        public DesignedApplicationData GetDesignedApplication(Guid id)
         {
             DataClasses1DataContext dc = new DataClasses1DataContext();
             DesignedApplication da1 = dc.DesignedApplications.Single(p => p.Id == id);
@@ -70,7 +73,7 @@ namespace WebServer.Web
         public Guid GetUserIdFromName(string userName)
         {
             DataClasses1DataContext dc = new DataClasses1DataContext();
-            return dc.GetUserByName(userName).UserId;
+            return GetUserByName(userName, dc).UserId;
         }
 
         private DesignedApplicationData Convert(DesignedApplication data)
@@ -80,7 +83,8 @@ namespace WebServer.Web
                 Id = data.Id,
                 UserId = data.UserId,
                 ApplicationName = data.ApplicationName,
-                XmlString = data.XmlString
+                XmlString = data.XmlString,
+                LastUpdate = data.LastUpdate
             };
             return dad;
         }
@@ -92,9 +96,15 @@ namespace WebServer.Web
                 Id = data.Id,
                 UserId = data.UserId,
                 ApplicationName = data.ApplicationName,
-                XmlString = data.XmlString
+                XmlString = data.XmlString,
+                LastUpdate = data.LastUpdate
             };
             return da;
+        }
+
+        private aspnet_User GetUserByName(string userName, DataClasses1DataContext dc)
+        {
+            return dc.aspnet_Users.Single(p => p.UserName == userName);
         }
     }
 }
