@@ -38,6 +38,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>dll\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="PivotServerTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\PivotServerTools.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
@@ -81,6 +85,7 @@
     <Content Include="ClientBin\Present.xap" />
     <Content Include="crossdomain.xml" />
     <Content Include="dll\MySql.Data.dll" />
+    <Content Include="dll\PivotServerTools.dll" />
     <Content Include="MashupDesignToolTestPage.aspx" />
     <Content Include="MashupDesignToolTestPage.html" />
     <Content Include="PresentTestPage.aspx" />
@@ -115,6 +120,7 @@
     <Compile Include="GetListDataFromXmlStructure.ashx.cs">
       <DependentUpon>GetListDataFromXmlStructure.ashx</DependentUpon>
     </Compile>
+    <Compile Include="HttpHandlers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
