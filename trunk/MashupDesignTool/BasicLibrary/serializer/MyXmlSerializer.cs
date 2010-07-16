@@ -373,19 +373,20 @@ namespace BasicLibrary
                 if (typeof(IList).IsAssignableFrom(type))
                     return DeserializeList(root);
 
-                obj = Activator.CreateInstance(type);
                 if (root.HasElements)
                 {
-                    object value;
-                    string propertyName;
+                    //obj = Activator.CreateInstance(type);
+                    //object value;
+                    //string propertyName;
 
-                    foreach (XElement element in root.Elements())
-                    {
-                        propertyName = element.Name.ToString();
-                        value = Deserialize(obj, element);
-                        if (!typeof(IList).IsAssignableFrom(value.GetType()))
-                            type.GetProperty(propertyName).SetValue(obj, value, null);
-                    }
+                    //foreach (XElement element in root.Elements())
+                    //{
+                    //    propertyName = element.Name.ToString();
+                    //    value = Deserialize(obj, element);
+                    //    if (!typeof(IList).IsAssignableFrom(value.GetType()))
+                    //        type.GetProperty(propertyName).SetValue(obj, value, null);
+                    //}
+                    return Deserialize(new object(), root);
                 }
                 else
                 {
@@ -430,21 +431,13 @@ namespace BasicLibrary
         {
             Type type = Type.GetType(element.Attribute("Type").Value);
             if (type.IsPrimitive)
-            {
                 return DeserializePrimitive(element);
-            }
             else if (type.IsArray)
-            {
                 return DeserializeArray(obj, element);
-            }
             else if (typeof(IList).IsAssignableFrom(type))
-            {
                 return DeserializeList(obj, element);
-            }
             else
-            {
                 return DeserializeNonePrimitive(obj, element);
-            }
         }
 
         private static object DeserializePrimitive(XElement element)
