@@ -39,12 +39,12 @@ namespace WebServer
         void GetDesignedApplicationList()
         {
             DataServiceClient client = new DataServiceClient();
-            client.GetListCompleted += new EventHandler<GetListCompletedEventArgs>(client_GetListCompleted);
-            client.GetListAsync(WebContext.Current.User.Name);
+            client.GetDesignedApplicationListCompleted += new EventHandler<GetDesignedApplicationListCompletedEventArgs>(client_GetDesignedApplicationListCompleted);
+            client.GetDesignedApplicationListAsync(WebContext.Current.User.Name);
             //busyIndicator.IsBusy = true;
         }
 
-        void client_GetListCompleted(object sender, GetListCompletedEventArgs e)
+        void client_GetDesignedApplicationListCompleted(object sender, GetDesignedApplicationListCompletedEventArgs e)
         {
             //busyIndicator.IsBusy = false;
             list.Clear();
@@ -73,42 +73,51 @@ namespace WebServer
             bd1.BorderThickness = new Thickness(0, 0, 0, 1);
             bd1.Margin = new Thickness(0, 3, 0, 0);
 
-            HyperlinkButton hb1 = new HyperlinkButton() { Content = "View", DataContext = da.Id, VerticalAlignment = System.Windows.VerticalAlignment.Center, HorizontalAlignment = System.Windows.HorizontalAlignment.Center };
-            hb1.Click += new RoutedEventHandler(hb1_Click);
             Border bd2 = new Border();
-            bd2.Child = hb1;
+            bd2.Child = new TextBlock() { Text = da.LastUpdate.ToString("hh:mm dd/MM/yyyy"), VerticalAlignment = System.Windows.VerticalAlignment.Center, HorizontalAlignment = System.Windows.HorizontalAlignment.Center };
             bd2.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 148, 173, 235));
             bd2.BorderThickness = new Thickness(0, 0, 0, 1);
             bd2.Margin = new Thickness(0, 3, 0, 0);
 
-            HyperlinkButton hb2 = new HyperlinkButton() { Content = "Edit", DataContext = da.Id, VerticalAlignment = System.Windows.VerticalAlignment.Center, HorizontalAlignment = System.Windows.HorizontalAlignment.Center };
-            hb2.Click += new RoutedEventHandler(hb2_Click);
+            HyperlinkButton hb1 = new HyperlinkButton() { Content = "View", DataContext = da.Id, VerticalAlignment = System.Windows.VerticalAlignment.Center, HorizontalAlignment = System.Windows.HorizontalAlignment.Center };
+            hb1.Click += new RoutedEventHandler(hb1_Click);
             Border bd3 = new Border();
-            bd3.Child = hb2;
+            bd3.Child = hb1;
             bd3.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 148, 173, 235));
             bd3.BorderThickness = new Thickness(0, 0, 0, 1);
             bd3.Margin = new Thickness(0, 3, 0, 0);
 
-            HyperlinkButton hb3 = new HyperlinkButton() { Content = "Delete", DataContext = da.Id, VerticalAlignment = System.Windows.VerticalAlignment.Center, HorizontalAlignment = System.Windows.HorizontalAlignment.Center };
-            hb3.Click += new RoutedEventHandler(hb3_Click);
+            HyperlinkButton hb2 = new HyperlinkButton() { Content = "Edit", DataContext = da.Id, VerticalAlignment = System.Windows.VerticalAlignment.Center, HorizontalAlignment = System.Windows.HorizontalAlignment.Center };
+            hb2.Click += new RoutedEventHandler(hb2_Click);
             Border bd4 = new Border();
-            bd4.Child = hb3;
+            bd4.Child = hb2;
             bd4.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 148, 173, 235));
             bd4.BorderThickness = new Thickness(0, 0, 0, 1);
             bd4.Margin = new Thickness(0, 3, 0, 0);
+
+            HyperlinkButton hb3 = new HyperlinkButton() { Content = "Delete", DataContext = da.Id, VerticalAlignment = System.Windows.VerticalAlignment.Center, HorizontalAlignment = System.Windows.HorizontalAlignment.Center };
+            hb3.Click += new RoutedEventHandler(hb3_Click);
+            Border bd5 = new Border();
+            bd5.Child = hb3;
+            bd5.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 148, 173, 235));
+            bd5.BorderThickness = new Thickness(0, 0, 0, 1);
+            bd5.Margin = new Thickness(0, 3, 0, 0);
 
             grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(rowHeight, GridUnitType.Pixel) });
             Grid.SetRow(bd1, i);
             Grid.SetRow(bd2, i);
             Grid.SetRow(bd3, i);
             Grid.SetRow(bd4, i);
+            Grid.SetRow(bd5, i);
             Grid.SetColumn(bd2, 1);
             Grid.SetColumn(bd3, 2);
             Grid.SetColumn(bd4, 3);
+            Grid.SetColumn(bd5, 4);
             grid.Children.Add(bd1);
             grid.Children.Add(bd2);
             grid.Children.Add(bd3);
             grid.Children.Add(bd4);
+            grid.Children.Add(bd5);
         }
 
        void hb1_Click(object sender, RoutedEventArgs e)

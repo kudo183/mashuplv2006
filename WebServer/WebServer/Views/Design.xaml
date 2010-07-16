@@ -30,6 +30,7 @@
                 <Grid x:Name="gridTitle" Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="150" MinWidth="0" />
                         <ColumnDefinition Width="80" MinWidth="0" />
                         <ColumnDefinition Width="80" MinWidth="0" />
                         <ColumnDefinition Width="80" MinWidth="0" />
@@ -40,7 +41,7 @@
                         <TextBlock Text="Application" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
-                        <TextBlock HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                        <TextBlock HorizontalAlignment="Center" FontWeight="SemiBold" Text="Last Update"></TextBlock>
                     </Border>
                     <Border Grid.Column="2" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
                         <TextBlock HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
@@ -51,20 +52,24 @@
                     <Border Grid.Column="4" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
                         <TextBlock HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
                     </Border>
-                </Grid>
-
-                <ScrollViewer Grid.Row="4" HorizontalScrollBarVisibility="Disabled" x:Name="scrollViewer"
-									VerticalScrollBarVisibility="Visible" BorderThickness="1" BorderBrush="#FF94ADEB">
-                    <Grid Name="grid">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="80" />
-                            <ColumnDefinition Width="80" />
-                            <ColumnDefinition Width="80" />
-                        </Grid.ColumnDefinitions>
-                    </Grid>
-                </ScrollViewer>
+                    <Border Grid.Column="5" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
+                        <TextBlock HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                    </Border>
             </Grid>
+
+            <ScrollViewer Grid.Row="4" HorizontalScrollBarVisibility="Disabled" x:Name="scrollViewer"
+									VerticalScrollBarVisibility="Visible" BorderThickness="1" BorderBrush="#FF94ADEB">
+                <Grid Name="grid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
         <!--</local:BusyIndicator>-->
     </Grid>
 </navigation:Page>
