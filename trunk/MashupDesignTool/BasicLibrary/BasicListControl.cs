@@ -17,8 +17,16 @@ namespace BasicLibrary
 {
     public class BasicListControl : BasicControl
     {
-
-        public delegate void ListChangeHandler(string action, int index1, EffectableControl control, int index2);
+        public enum ListItemsAction
+        {
+            ADD,
+            INSERT,
+            SWAP,
+            REMOVE,
+            REMOVEAT,
+            REMOVEALL,
+        }
+        public delegate void ListChangeHandler(ListItemsAction action, int index1, EffectableControl control, int index2);
         public event ListChangeHandler OnListChange;
 
         private List<EffectableControl> _items = new List<EffectableControl>();
@@ -35,22 +43,20 @@ namespace BasicLibrary
             if (listItemEffect != null)
                 control.ChangeEffect("MainEffect", listItemEffect.GetType());
             if (OnListChange != null)
-                OnListChange("ADD", -1, control, -1);
+                OnListChange(ListItemsAction.ADD, -1, control, -1);
             _items.Add(control);
         }
         public virtual void InsertItem(int index, EffectableControl control)
         {
             if (OnListChange != null)
-                OnListChange("INSERT", index, control, -1);
+                OnListChange(ListItemsAction.INSERT, index, control, -1);
             _items.Insert(index, control);
         }
-        public virtual void GetItemAt(int index)
-        {
-        }
+        
         public virtual void SwapItem(int index1, int index2)
         {
             if (OnListChange != null)
-                OnListChange("SWAP", index1, null, index2);
+                OnListChange(ListItemsAction.SWAP, index1, null, index2);
             EffectableControl temp = _items[index1];
             _items[index1] = _items[index2];
             _items[index2] = temp;
@@ -58,19 +64,19 @@ namespace BasicLibrary
         public virtual void RemoveItemAt(int index)
         {
             if (OnListChange != null)
-                OnListChange("REMOVEAT", index, null, -1);
+                OnListChange(ListItemsAction.REMOVEAT, index, null, -1);
             _items.RemoveAt(index);
         }
         public virtual void RemoveItem(EffectableControl control)
         {
             if (OnListChange != null)
-                OnListChange("REMOVE", -1, control, -1);
+                OnListChange(ListItemsAction.REMOVE, -1, control, -1);
             _items.Remove(control);
         }
         public virtual void RemoveAllItem()
         {
             if (OnListChange != null)
-                OnListChange("REMOVEALL", -1, null, -1);
+                OnListChange(ListItemsAction.REMOVEALL, -1, null, -1);
             _items.Clear();
         }
         public virtual EffectableControl GetAt(int index)
