@@ -24,6 +24,8 @@ namespace Present.DataService {
         
         private System.Guid IdField;
         
+        private System.DateTime LastUpdateField;
+        
         private System.Guid UserIdField;
         
         private string XmlStringField;
@@ -50,6 +52,19 @@ namespace Present.DataService {
                 if ((this.IdField.Equals(value) != true)) {
                     this.IdField = value;
                     this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LastUpdate {
+            get {
+                return this.LastUpdateField;
+            }
+            set {
+                if ((this.LastUpdateField.Equals(value) != true)) {
+                    this.LastUpdateField = value;
+                    this.RaisePropertyChanged("LastUpdate");
                 }
             }
         }
@@ -94,10 +109,10 @@ namespace Present.DataService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="DataService.IDataService")]
     public interface IDataService {
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IDataService/GetList", ReplyAction="http://tempuri.org/IDataService/GetListResponse")]
-        System.IAsyncResult BeginGetList(string userName, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IDataService/GetDesignedApplicationList", ReplyAction="http://tempuri.org/IDataService/GetDesignedApplicationListResponse")]
+        System.IAsyncResult BeginGetDesignedApplicationList(string userName, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.ObjectModel.ObservableCollection<Present.DataService.DesignedApplicationData> EndGetList(System.IAsyncResult result);
+        System.Collections.ObjectModel.ObservableCollection<Present.DataService.DesignedApplicationData> EndGetDesignedApplicationList(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IDataService/Insert", ReplyAction="http://tempuri.org/IDataService/InsertResponse")]
         System.IAsyncResult BeginInsert(Present.DataService.DesignedApplicationData data, System.AsyncCallback callback, object asyncState);
@@ -114,10 +129,10 @@ namespace Present.DataService {
         
         Present.DataService.DesignedApplicationData EndDelete(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IDataService/GetData", ReplyAction="http://tempuri.org/IDataService/GetDataResponse")]
-        System.IAsyncResult BeginGetData(System.Guid id, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IDataService/GetDesignedApplication", ReplyAction="http://tempuri.org/IDataService/GetDesignedApplicationResponse")]
+        System.IAsyncResult BeginGetDesignedApplication(System.Guid id, System.AsyncCallback callback, object asyncState);
         
-        Present.DataService.DesignedApplicationData EndGetData(System.IAsyncResult result);
+        Present.DataService.DesignedApplicationData EndGetDesignedApplication(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IDataService/GetUserIdFromName", ReplyAction="http://tempuri.org/IDataService/GetUserIdFromNameResponse")]
         System.IAsyncResult BeginGetUserIdFromName(string userName, System.AsyncCallback callback, object asyncState);
@@ -131,11 +146,11 @@ namespace Present.DataService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GetListCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class GetDesignedApplicationListCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public GetListCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public GetDesignedApplicationListCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -207,11 +222,11 @@ namespace Present.DataService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class GetDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class GetDesignedApplicationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public GetDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public GetDesignedApplicationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -247,11 +262,11 @@ namespace Present.DataService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class DataServiceClient : System.ServiceModel.ClientBase<Present.DataService.IDataService>, Present.DataService.IDataService {
         
-        private BeginOperationDelegate onBeginGetListDelegate;
+        private BeginOperationDelegate onBeginGetDesignedApplicationListDelegate;
         
-        private EndOperationDelegate onEndGetListDelegate;
+        private EndOperationDelegate onEndGetDesignedApplicationListDelegate;
         
-        private System.Threading.SendOrPostCallback onGetListCompletedDelegate;
+        private System.Threading.SendOrPostCallback onGetDesignedApplicationListCompletedDelegate;
         
         private BeginOperationDelegate onBeginInsertDelegate;
         
@@ -271,11 +286,11 @@ namespace Present.DataService {
         
         private System.Threading.SendOrPostCallback onDeleteCompletedDelegate;
         
-        private BeginOperationDelegate onBeginGetDataDelegate;
+        private BeginOperationDelegate onBeginGetDesignedApplicationDelegate;
         
-        private EndOperationDelegate onEndGetDataDelegate;
+        private EndOperationDelegate onEndGetDesignedApplicationDelegate;
         
-        private System.Threading.SendOrPostCallback onGetDataCompletedDelegate;
+        private System.Threading.SendOrPostCallback onGetDesignedApplicationCompletedDelegate;
         
         private BeginOperationDelegate onBeginGetUserIdFromNameDelegate;
         
@@ -336,7 +351,7 @@ namespace Present.DataService {
             }
         }
         
-        public event System.EventHandler<GetListCompletedEventArgs> GetListCompleted;
+        public event System.EventHandler<GetDesignedApplicationListCompletedEventArgs> GetDesignedApplicationListCompleted;
         
         public event System.EventHandler<InsertCompletedEventArgs> InsertCompleted;
         
@@ -344,7 +359,7 @@ namespace Present.DataService {
         
         public event System.EventHandler<DeleteCompletedEventArgs> DeleteCompleted;
         
-        public event System.EventHandler<GetDataCompletedEventArgs> GetDataCompleted;
+        public event System.EventHandler<GetDesignedApplicationCompletedEventArgs> GetDesignedApplicationCompleted;
         
         public event System.EventHandler<GetUserIdFromNameCompletedEventArgs> GetUserIdFromNameCompleted;
         
@@ -353,49 +368,49 @@ namespace Present.DataService {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Present.DataService.IDataService.BeginGetList(string userName, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetList(userName, callback, asyncState);
+        System.IAsyncResult Present.DataService.IDataService.BeginGetDesignedApplicationList(string userName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetDesignedApplicationList(userName, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.ObjectModel.ObservableCollection<Present.DataService.DesignedApplicationData> Present.DataService.IDataService.EndGetList(System.IAsyncResult result) {
-            return base.Channel.EndGetList(result);
+        System.Collections.ObjectModel.ObservableCollection<Present.DataService.DesignedApplicationData> Present.DataService.IDataService.EndGetDesignedApplicationList(System.IAsyncResult result) {
+            return base.Channel.EndGetDesignedApplicationList(result);
         }
         
-        private System.IAsyncResult OnBeginGetList(object[] inValues, System.AsyncCallback callback, object asyncState) {
+        private System.IAsyncResult OnBeginGetDesignedApplicationList(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string userName = ((string)(inValues[0]));
-            return ((Present.DataService.IDataService)(this)).BeginGetList(userName, callback, asyncState);
+            return ((Present.DataService.IDataService)(this)).BeginGetDesignedApplicationList(userName, callback, asyncState);
         }
         
-        private object[] OnEndGetList(System.IAsyncResult result) {
-            System.Collections.ObjectModel.ObservableCollection<Present.DataService.DesignedApplicationData> retVal = ((Present.DataService.IDataService)(this)).EndGetList(result);
+        private object[] OnEndGetDesignedApplicationList(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<Present.DataService.DesignedApplicationData> retVal = ((Present.DataService.IDataService)(this)).EndGetDesignedApplicationList(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnGetListCompleted(object state) {
-            if ((this.GetListCompleted != null)) {
+        private void OnGetDesignedApplicationListCompleted(object state) {
+            if ((this.GetDesignedApplicationListCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.GetListCompleted(this, new GetListCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.GetDesignedApplicationListCompleted(this, new GetDesignedApplicationListCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void GetListAsync(string userName) {
-            this.GetListAsync(userName, null);
+        public void GetDesignedApplicationListAsync(string userName) {
+            this.GetDesignedApplicationListAsync(userName, null);
         }
         
-        public void GetListAsync(string userName, object userState) {
-            if ((this.onBeginGetListDelegate == null)) {
-                this.onBeginGetListDelegate = new BeginOperationDelegate(this.OnBeginGetList);
+        public void GetDesignedApplicationListAsync(string userName, object userState) {
+            if ((this.onBeginGetDesignedApplicationListDelegate == null)) {
+                this.onBeginGetDesignedApplicationListDelegate = new BeginOperationDelegate(this.OnBeginGetDesignedApplicationList);
             }
-            if ((this.onEndGetListDelegate == null)) {
-                this.onEndGetListDelegate = new EndOperationDelegate(this.OnEndGetList);
+            if ((this.onEndGetDesignedApplicationListDelegate == null)) {
+                this.onEndGetDesignedApplicationListDelegate = new EndOperationDelegate(this.OnEndGetDesignedApplicationList);
             }
-            if ((this.onGetListCompletedDelegate == null)) {
-                this.onGetListCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetListCompleted);
+            if ((this.onGetDesignedApplicationListCompletedDelegate == null)) {
+                this.onGetDesignedApplicationListCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetDesignedApplicationListCompleted);
             }
-            base.InvokeAsync(this.onBeginGetListDelegate, new object[] {
-                        userName}, this.onEndGetListDelegate, this.onGetListCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginGetDesignedApplicationListDelegate, new object[] {
+                        userName}, this.onEndGetDesignedApplicationListDelegate, this.onGetDesignedApplicationListCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -537,49 +552,49 @@ namespace Present.DataService {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult Present.DataService.IDataService.BeginGetData(System.Guid id, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetData(id, callback, asyncState);
+        System.IAsyncResult Present.DataService.IDataService.BeginGetDesignedApplication(System.Guid id, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetDesignedApplication(id, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Present.DataService.DesignedApplicationData Present.DataService.IDataService.EndGetData(System.IAsyncResult result) {
-            return base.Channel.EndGetData(result);
+        Present.DataService.DesignedApplicationData Present.DataService.IDataService.EndGetDesignedApplication(System.IAsyncResult result) {
+            return base.Channel.EndGetDesignedApplication(result);
         }
         
-        private System.IAsyncResult OnBeginGetData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+        private System.IAsyncResult OnBeginGetDesignedApplication(object[] inValues, System.AsyncCallback callback, object asyncState) {
             System.Guid id = ((System.Guid)(inValues[0]));
-            return ((Present.DataService.IDataService)(this)).BeginGetData(id, callback, asyncState);
+            return ((Present.DataService.IDataService)(this)).BeginGetDesignedApplication(id, callback, asyncState);
         }
         
-        private object[] OnEndGetData(System.IAsyncResult result) {
-            Present.DataService.DesignedApplicationData retVal = ((Present.DataService.IDataService)(this)).EndGetData(result);
+        private object[] OnEndGetDesignedApplication(System.IAsyncResult result) {
+            Present.DataService.DesignedApplicationData retVal = ((Present.DataService.IDataService)(this)).EndGetDesignedApplication(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnGetDataCompleted(object state) {
-            if ((this.GetDataCompleted != null)) {
+        private void OnGetDesignedApplicationCompleted(object state) {
+            if ((this.GetDesignedApplicationCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.GetDataCompleted(this, new GetDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.GetDesignedApplicationCompleted(this, new GetDesignedApplicationCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void GetDataAsync(System.Guid id) {
-            this.GetDataAsync(id, null);
+        public void GetDesignedApplicationAsync(System.Guid id) {
+            this.GetDesignedApplicationAsync(id, null);
         }
         
-        public void GetDataAsync(System.Guid id, object userState) {
-            if ((this.onBeginGetDataDelegate == null)) {
-                this.onBeginGetDataDelegate = new BeginOperationDelegate(this.OnBeginGetData);
+        public void GetDesignedApplicationAsync(System.Guid id, object userState) {
+            if ((this.onBeginGetDesignedApplicationDelegate == null)) {
+                this.onBeginGetDesignedApplicationDelegate = new BeginOperationDelegate(this.OnBeginGetDesignedApplication);
             }
-            if ((this.onEndGetDataDelegate == null)) {
-                this.onEndGetDataDelegate = new EndOperationDelegate(this.OnEndGetData);
+            if ((this.onEndGetDesignedApplicationDelegate == null)) {
+                this.onEndGetDesignedApplicationDelegate = new EndOperationDelegate(this.OnEndGetDesignedApplication);
             }
-            if ((this.onGetDataCompletedDelegate == null)) {
-                this.onGetDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetDataCompleted);
+            if ((this.onGetDesignedApplicationCompletedDelegate == null)) {
+                this.onGetDesignedApplicationCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetDesignedApplicationCompleted);
             }
-            base.InvokeAsync(this.onBeginGetDataDelegate, new object[] {
-                        id}, this.onEndGetDataDelegate, this.onGetDataCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginGetDesignedApplicationDelegate, new object[] {
+                        id}, this.onEndGetDesignedApplicationDelegate, this.onGetDesignedApplicationCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -704,16 +719,16 @@ namespace Present.DataService {
                     base(client) {
             }
             
-            public System.IAsyncResult BeginGetList(string userName, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginGetDesignedApplicationList(string userName, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = userName;
-                System.IAsyncResult _result = base.BeginInvoke("GetList", _args, callback, asyncState);
+                System.IAsyncResult _result = base.BeginInvoke("GetDesignedApplicationList", _args, callback, asyncState);
                 return _result;
             }
             
-            public System.Collections.ObjectModel.ObservableCollection<Present.DataService.DesignedApplicationData> EndGetList(System.IAsyncResult result) {
+            public System.Collections.ObjectModel.ObservableCollection<Present.DataService.DesignedApplicationData> EndGetDesignedApplicationList(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.ObjectModel.ObservableCollection<Present.DataService.DesignedApplicationData> _result = ((System.Collections.ObjectModel.ObservableCollection<Present.DataService.DesignedApplicationData>)(base.EndInvoke("GetList", _args, result)));
+                System.Collections.ObjectModel.ObservableCollection<Present.DataService.DesignedApplicationData> _result = ((System.Collections.ObjectModel.ObservableCollection<Present.DataService.DesignedApplicationData>)(base.EndInvoke("GetDesignedApplicationList", _args, result)));
                 return _result;
             }
             
@@ -756,16 +771,16 @@ namespace Present.DataService {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetData(System.Guid id, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginGetDesignedApplication(System.Guid id, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = id;
-                System.IAsyncResult _result = base.BeginInvoke("GetData", _args, callback, asyncState);
+                System.IAsyncResult _result = base.BeginInvoke("GetDesignedApplication", _args, callback, asyncState);
                 return _result;
             }
             
-            public Present.DataService.DesignedApplicationData EndGetData(System.IAsyncResult result) {
+            public Present.DataService.DesignedApplicationData EndGetDesignedApplication(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                Present.DataService.DesignedApplicationData _result = ((Present.DataService.DesignedApplicationData)(base.EndInvoke("GetData", _args, result)));
+                Present.DataService.DesignedApplicationData _result = ((Present.DataService.DesignedApplicationData)(base.EndInvoke("GetDesignedApplication", _args, result)));
                 return _result;
             }
             

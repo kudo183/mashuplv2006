@@ -24,7 +24,7 @@ using WebServer;
 
 namespace MashupDesignTool
 {
-    public partial class MainPage : UserControl
+    public partial class MainPage : Page
     {
         Dictionary<string, Assembly> LoadedControlAssembly = new Dictionary<string, Assembly>();
         ControlDownloader controlDownloader = new ControlDownloader();
@@ -49,12 +49,14 @@ namespace MashupDesignTool
         List<EffectInfo> listListEffects = new List<EffectInfo>();
         LoadingWindow lw;
         bool newApp;
-        Present.DataService.DesignedApplicationData appData = null;
+        DataService.DesignedApplicationData appData = null;
         bool backToEditor = false;
         
         public MainPage()
         {
             InitializeComponent();
+            this.Title = "H2 Design Tool";
+            SetWindowTitle(this.Title);
             propertiesGrid.SelectedObjectParent = designCanvas1.ControlContainerCanvas;
             designCanvas1.ControlPositionChanged += new DesignCanvas.ControlPositionChangedHander(designCanvas1_PositionChanged);
             designCanvas1.ControlZIndexChanged += new DesignCanvas.ControlZIndexChangedHandler(designCanvas1_ZIndexChanged);
@@ -214,10 +216,10 @@ namespace MashupDesignTool
                 try { id = Guid.Parse(dic["app"]); }
                 catch { ret = false; }
 
-                Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
-                client.GetDataCompleted += new EventHandler<Present.DataService.GetDataCompletedEventArgs>(client_GetDataCompleted);
-                client.GetDataAsync(id);
-
+                DataService.DataServiceClient client = new DataService.DataServiceClient();
+                client.GetDesignedApplicationCompleted += new EventHandler<DataService.GetDesignedApplicationCompletedEventArgs>(client_GetDesignedApplicationCompleted);
+                client.GetDesignedApplicationAsync(id); 
+                
                 if (ret == true)
                     return;
 
@@ -229,7 +231,12 @@ namespace MashupDesignTool
             else
             {
                 if (!backToEditor)
+                {
                     newApp = true;
+                    appName = "Untitled";
+                    this.Title = appName;
+                    SetWindowTitle(appName + " - H2 Design Tool");
+                }
                 propertiesGrid.SetSelectedObject(designCanvas1.ControlContainerCanvas, designCanvas1.GetPropertyNameList());
             }
 
@@ -330,11 +337,11 @@ namespace MashupDesignTool
             HtmlPage.Window.Navigate(uri1);
         }
 
-        void client_GetDataCompleted(object sender, Present.DataService.GetDataCompletedEventArgs e)
+        void client_GetDesignedApplicationCompleted(object sender, DataService.GetDesignedApplicationCompletedEventArgs e)
         {
             if (e.Error != null)
             {
-                ErrorWindow ew = new ErrorWindow("A error occusr while loading application\r\n" + e.Error.Message);
+                ErrorWindow ew = new ErrorWindow("A error occurs while loading application\r\n" + e.Error.Message);
                 ew.Closed += new EventHandler(ew_Closed);
                 ew.Show();
                 return;
@@ -347,7 +354,27 @@ namespace MashupDesignTool
                 return;
             }
             appData = e.Result;
-            LoadDesign(e.Result.XmlString);
+
+            DataService.DataServiceClient client = new DataService.DataServiceClient();
+            client.GetUserIdFromNameCompleted += new EventHandler<DataService.GetUserIdFromNameCompletedEventArgs>(client_GetUserIdFromNameCompleted2);
+            client.GetUserIdFromNameAsync(WebContext.Current.User.Name);
+        }
+
+        void client_GetUserIdFromNameCompleted2(object sender, DataService.GetUserIdFromNameCompletedEventArgs e)
+        {
+            gotUserId = true;
+            userId = e.Result;
+
+            if (userId != appData.UserId)
+            {
+                NavigateToIndex();
+                return;
+            }
+
+            appName = appData.ApplicationName;
+            this.Title = appName;
+            SetWindowTitle(appName + " - H2 Design Tool");
+            LoadDesign(appData.XmlString);
         }
 
         private void LoadDesign(string xml)
@@ -1387,7 +1414,7 @@ namespace MashupDesignTool
             List<string> effectReferenceDll = new List<string>();
             GetDlls(controlDll, controlReferenceDll, effectDll, effectReferenceDll);
             xmlString = PageSerializer.Serialize(designCanvas1, controlDll, controlReferenceDll, effectDll, effectReferenceDll);
-            Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
+            DataService.DataServiceClient client = new DataService.DataServiceClient();
 
             saveCompleted = false;
             sw = new SavingWindow();
@@ -1403,7 +1430,7 @@ namespace MashupDesignTool
             else
             {
                 appData.XmlString = xmlString;
-                client.UpdateCompleted += new EventHandler<Present.DataService.UpdateCompletedEventArgs>(client_UpdateCompleted);
+                client.UpdateCompleted += new EventHandler<DataService.UpdateCompletedEventArgs>(client_UpdateCompleted);
                 client.UpdateAsync(appData);
             }
         }
@@ -1424,8 +1451,8 @@ namespace MashupDesignTool
                 {
                     if (gotUserId == false)
                     {
-                        Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
-                        client.GetUserIdFromNameCompleted += new EventHandler<Present.DataService.GetUserIdFromNameCompletedEventArgs>(client_GetUserIdFromNameCompleted);
+                        DataService.DataServiceClient client = new DataService.DataServiceClient();
+                        client.GetUserIdFromNameCompleted += new EventHandler<DataService.GetUserIdFromNameCompletedEventArgs>(client_GetUserIdFromNameCompleted);
                         client.GetUserIdFromNameAsync(WebContext.Current.User.Name);
                     }
                     else
@@ -1438,7 +1465,7 @@ namespace MashupDesignTool
             }
         }
 
-        void client_GetUserIdFromNameCompleted(object sender, Present.DataService.GetUserIdFromNameCompletedEventArgs e)
+        void client_GetUserIdFromNameCompleted(object sender, DataService.GetUserIdFromNameCompletedEventArgs e)
         {
             gotUserId = true;
             userId = e.Result;
@@ -1447,14 +1474,14 @@ namespace MashupDesignTool
 
         void InsertApp()
         {
-            appData = new Present.DataService.DesignedApplicationData()
+            appData = new DataService.DesignedApplicationData()
             {
                 XmlString = xmlString,
                 UserId = userId,
                 ApplicationName = appName
             };
-            Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
-            client.InsertCompleted += new EventHandler<Present.DataService.InsertCompletedEventArgs>(client_InsertCompleted);
+            DataService.DataServiceClient client = new DataService.DataServiceClient();
+            client.InsertCompleted += new EventHandler<DataService.InsertCompletedEventArgs>(client_InsertCompleted);
             client.InsertAsync(appData);
         }
 
@@ -1462,18 +1489,28 @@ namespace MashupDesignTool
         {
         }
 
-        void client_UpdateCompleted(object sender, Present.DataService.UpdateCompletedEventArgs e)
-        {
-            saveCompleted = true;
-            sw.Close();
-        }
-
-        void client_InsertCompleted(object sender, Present.DataService.InsertCompletedEventArgs e)
+        void client_UpdateCompleted(object sender, DataService.UpdateCompletedEventArgs e)
         {
             newApp = false;
             appData = e.Result;
             saveCompleted = true;
             sw.Close();
+            this.Title = appName;
+            SetWindowTitle(appName + " - H2 Design Tool");
+            LinkWindow linkWindow = new LinkWindow(e.Result);
+            linkWindow.Show();
+        }
+
+        void client_InsertCompleted(object sender, DataService.InsertCompletedEventArgs e)
+        {
+            newApp = false;
+            appData = e.Result;
+            saveCompleted = true;
+            sw.Close();
+            this.Title = appName;
+            SetWindowTitle(appName + " - H2 Design Tool");
+            LinkWindow linkWindow = new LinkWindow(e.Result);
+            linkWindow.Show();
         }
 
         private void btnSaveAs_OnClick(object sender, RoutedEventArgs e)
@@ -1486,7 +1523,7 @@ namespace MashupDesignTool
             List<string> effectReferenceDll = new List<string>();
             GetDlls(controlDll, controlReferenceDll, effectDll, effectReferenceDll);
             xmlString = PageSerializer.Serialize(designCanvas1, controlDll, controlReferenceDll, effectDll, effectReferenceDll);
-            Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
+            DataService.DataServiceClient client = new DataService.DataServiceClient();
 
             saveCompleted = false;
             sw = new SavingWindow();
@@ -1518,7 +1555,7 @@ namespace MashupDesignTool
                 List<string> effectReferenceDll = new List<string>();
                 GetDlls(controlDll, controlReferenceDll, effectDll, effectReferenceDll);
                 xmlString = PageSerializer.Serialize(designCanvas1, controlDll, controlReferenceDll, effectDll, effectReferenceDll);
-                Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
+                DataService.DataServiceClient client = new DataService.DataServiceClient();
 
                 saveCompleted = false;
                 sw = new SavingWindow();
@@ -1534,9 +1571,17 @@ namespace MashupDesignTool
                 else
                 {
                     appData.XmlString = xmlString;
-                    client.UpdateCompleted += new EventHandler<Present.DataService.UpdateCompletedEventArgs>(client_UpdateCompleted1);
+                    client.UpdateCompleted += new EventHandler<DataService.UpdateCompletedEventArgs>(client_UpdateCompleted1);
                     client.UpdateAsync(appData);
                 }
+            }
+            else
+            {
+                newApp = true;
+                designCanvas1.Clear();
+                appName = "Untitled";
+                this.Title = appName;
+                SetWindowTitle(appName + " - H2 Design Tool");
             }
         }
             
@@ -1555,8 +1600,8 @@ namespace MashupDesignTool
                 {
                     if (gotUserId == false)
                     {
-                        Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
-                        client.GetUserIdFromNameCompleted += new EventHandler<Present.DataService.GetUserIdFromNameCompletedEventArgs>(client_GetUserIdFromNameCompleted1);
+                        DataService.DataServiceClient client = new DataService.DataServiceClient();
+                        client.GetUserIdFromNameCompleted += new EventHandler<DataService.GetUserIdFromNameCompletedEventArgs>(client_GetUserIdFromNameCompleted1);
                         client.GetUserIdFromNameAsync(WebContext.Current.User.Name);
                     }
                     else
@@ -1569,7 +1614,7 @@ namespace MashupDesignTool
             }
         }
 
-        void client_GetUserIdFromNameCompleted1(object sender, Present.DataService.GetUserIdFromNameCompletedEventArgs e)
+        void client_GetUserIdFromNameCompleted1(object sender, DataService.GetUserIdFromNameCompletedEventArgs e)
         {
             gotUserId = true;
             userId = e.Result;
@@ -1578,14 +1623,14 @@ namespace MashupDesignTool
 
         void InsertApp1()
         {
-            appData = new Present.DataService.DesignedApplicationData()
+            appData = new DataService.DesignedApplicationData()
             {
                 XmlString = xmlString,
                 UserId = userId,
                 ApplicationName = appName
             };
-            Present.DataService.DataServiceClient client = new Present.DataService.DataServiceClient();
-            client.InsertCompleted += new EventHandler<Present.DataService.InsertCompletedEventArgs>(client_InsertCompleted1);
+            DataService.DataServiceClient client = new DataService.DataServiceClient();
+            client.InsertCompleted += new EventHandler<DataService.InsertCompletedEventArgs>(client_InsertCompleted1);
             client.InsertAsync(appData);
         }
 
@@ -1593,20 +1638,39 @@ namespace MashupDesignTool
         {
         }
 
-        void client_UpdateCompleted1(object sender, Present.DataService.UpdateCompletedEventArgs e)
+        void client_UpdateCompleted1(object sender, DataService.UpdateCompletedEventArgs e)
         {
             newApp = true;
             designCanvas1.Clear();
             sw.Close();
+            appName = "Untitled";
+            this.Title = appName;
+            SetWindowTitle(appName + " - H2 Design Tool");
+            LinkWindow linkWindow = new LinkWindow(e.Result);
+            linkWindow.Show();
         }
 
-        void client_InsertCompleted1(object sender, Present.DataService.InsertCompletedEventArgs e)
+        void client_InsertCompleted1(object sender, DataService.InsertCompletedEventArgs e)
         {
             newApp = true;
             designCanvas1.Clear();
             sw.Close();
+            appName = "Untitled"; 
+            this.Title = appName;
+            SetWindowTitle(appName + " - H2 Design Tool");
+            LinkWindow linkWindow = new LinkWindow(e.Result);
+            linkWindow.Show();
         }
         #endregion new
+
+        private void SetWindowTitle(string title)
+        {
+            //HtmlPage.Window.Eval("document.title = " + title);
+            HtmlWindow top = HtmlPage.Window.GetProperty("top") as HtmlWindow;
+            HtmlDocument doc = top.GetProperty("document") as HtmlDocument;
+            doc.SetProperty("title", title);
+            menu.Title = title;
+        }
     }
 }
 

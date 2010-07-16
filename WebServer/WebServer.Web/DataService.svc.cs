@@ -32,12 +32,13 @@ namespace WebServer.Web
         {
             DesignedApplication da = Convert(data);
             da.Id = Guid.NewGuid();
-            da.LastUpdate = new DateTime();
+            da.LastUpdate = DateTime.Now;
 
             DataClasses1DataContext dc = new DataClasses1DataContext();
             dc.DesignedApplications.InsertOnSubmit(da);
             dc.SubmitChanges();
             data.Id = da.Id;
+            data.LastUpdate = da.LastUpdate;
             return data;
         }
 
@@ -47,9 +48,10 @@ namespace WebServer.Web
             DesignedApplication da = dc.DesignedApplications.Single(p => p.Id == data.Id);
             da.ApplicationName = data.ApplicationName;
             da.XmlString = data.XmlString;
-            da.LastUpdate = new DateTime();
+            da.LastUpdate = DateTime.Now;
             dc.SubmitChanges();
             data.UserId = da.UserId;
+            data.LastUpdate = da.LastUpdate;
             return data;
         }
 

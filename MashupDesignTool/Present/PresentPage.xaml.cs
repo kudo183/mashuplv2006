@@ -14,7 +14,7 @@ using System.Windows.Browser;
 
 namespace Present
 {
-    public partial class MainPage : UserControl
+    public partial class MainPage : Page
     {
         LoadingWindow lw;
         private bool loaded = false;
@@ -26,6 +26,8 @@ namespace Present
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            dockCanvas1.Width = this.Width;
+            dockCanvas1.Height = this.Height;
             Appear.Completed += new EventHandler(Appear_Completed);
             Appear.Begin();
         }
@@ -54,8 +56,8 @@ namespace Present
                 catch { ret = false; }
 
                 DataService.DataServiceClient client = new DataService.DataServiceClient();
-                client.GetDataCompleted += new EventHandler<DataService.GetDataCompletedEventArgs>(client_GetDataCompleted);
-                client.GetDataAsync(id);
+                client.GetDesignedApplicationCompleted += new EventHandler<DataService.GetDesignedApplicationCompletedEventArgs>(client_GetDesignedApplicationCompleted);
+                client.GetDesignedApplicationAsync(id);
 
                 if (ret == true)
                     return;
@@ -65,7 +67,7 @@ namespace Present
             ew.Show();
         }
 
-        void client_GetDataCompleted(object sender, DataService.GetDataCompletedEventArgs e)
+        void client_GetDesignedApplicationCompleted(object sender, DataService.GetDesignedApplicationCompletedEventArgs e)
         {
             if (e.Error != null)
             {
@@ -81,6 +83,10 @@ namespace Present
                 ew.Show();
                 return;
             }
+            this.Title = e.Result.ApplicationName + " - H2 Design Tool";
+            HtmlWindow top = HtmlPage.Window.GetProperty("top") as HtmlWindow;
+            HtmlDocument doc = top.GetProperty("document") as HtmlDocument;
+            doc.SetProperty("title", e.Result.ApplicationName + " - H2 Design Tool");
             Preview(e.Result.XmlString);
         }
 

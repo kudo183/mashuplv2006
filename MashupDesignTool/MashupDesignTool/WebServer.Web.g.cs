@@ -91,6 +91,7 @@ namespace WebServer.Web
     using System.ServiceModel.DomainServices.Client.ApplicationServices;
     using System.ServiceModel.Web;
     using WebServer.Web.Resources;
+using System.Windows.Browser;
     
     
     /// <summary>
@@ -114,7 +115,7 @@ namespace WebServer.Web
         /// Initializes a new instance of the <see cref="AuthenticationContext"/> class.
         /// </summary>
         public AuthenticationContext() : 
-                this(new WebDomainClient<IAuthenticationServiceContract>(new Uri("WebServer-Web-AuthenticationService.svc", UriKind.Relative)))
+                this(new WebDomainClient<IAuthenticationServiceContract>(new Uri(HtmlPage.Document.DocumentUri, "../WebServer-Web-AuthenticationService.svc")))
         {
         }
         

@@ -152,6 +152,8 @@ namespace MashupDesignTool
             LayoutRoot.Width = ControlContainer.Width = 800;
             LayoutRoot.Height = ControlContainer.Height = 500;
             ControlContainer.Background = new SolidColorBrush(Colors.White);
+            if (SelectionChanged != null)
+                SelectionChanged(this, ControlContainer);
         }
 
         public bool ControlCanMove

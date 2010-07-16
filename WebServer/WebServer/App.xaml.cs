@@ -80,7 +80,11 @@
                 // For production applications this error handling should be replaced with something that will 
                 // report the error to the website and stop the application.
                 e.Handled = true;
-                ErrorWindow.CreateNew(e.ExceptionObject);
+                try
+                {
+                    ErrorWindow.CreateNew(e.ExceptionObject);
+                }
+                catch { }
             }
         }
     }
