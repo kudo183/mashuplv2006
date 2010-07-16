@@ -30,7 +30,11 @@ namespace BasicLibrary
         public string Title
         {
             get { return _Title; }
-            set { _Title = value; }
+            set
+            {
+                _Title = value;
+                tbTitle.Text = _Title;
+            }
         }
         private string _Description = "";
 
@@ -45,20 +49,62 @@ namespace BasicLibrary
         }
         private Image img = new Image();
 
+        public Image Img
+        {
+            get { return img; }
+            set { img = value; }
+        }
+
+        private bool _IsShowTitle;
+
+        public bool IsShowTitle
+        {
+            get { return _IsShowTitle; }
+            set
+            {
+                _IsShowTitle = value;
+                tbTitle.Visibility = (_IsShowTitle) ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                grid.RowDefinitions[1].Height = (_IsShowTitle) ? new GridLength(20, GridUnitType.Pixel) : new GridLength(0, GridUnitType.Pixel);
+            }
+        }
+        private TextBlock tbTitle = new TextBlock() { TextAlignment = TextAlignment.Center };
+        private Grid grid = new Grid();
+
         public ImageListControlItems()
         {
             img.Stretch = Stretch.Fill;
-            Content = img;
-            //ImageUrl = "http://img140.imageshack.us/img140/9317/untitled96hf.png";
+
+            //Content = img;
+            Content = grid;
+            // grid.Background = new SolidColorBrush(Colors.Red);
+            grid.RowDefinitions.Add(new RowDefinition());
+            Grid.SetRow(img, 0);
+            grid.Children.Add(img);
+
+            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(20, GridUnitType.Pixel) });
+            Grid.SetRow(tbTitle, 1);
+            grid.Children.Add(tbTitle);
+            //img.Source = new BitmapImage(new Uri("Images/default.png", UriKind.Relative));
             ImageUrl = "Images/default.png";
+            IsShowTitle = false;
         }
 
         public ImageListControlItems(string url)
+            : this()
         {
-            img.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-            img.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
-            Content = img;
             ImageUrl = url;
+        }
+
+        public ImageListControlItems(string url, string title)
+            : this(url)
+        {
+            Title = title;
+        }
+
+        public ImageListControlItems(string url, string title, string description)
+            : this(url, title)
+        {
+            Description = description;
         }
     }
 }
