@@ -100,6 +100,14 @@ namespace BasicLibrary
         public delegate void BCVisibilityChangedHandler(object sender, System.Windows.Visibility newValue);
         public event BCVisibilityChangedHandler BCVisibilityChanged;
 
+        public event MDTEventHandler LinkClicked;
+
+        protected virtual void OnLinkClicked(string link)
+        {
+            if (LinkClicked != null)
+                LinkClicked(this, link);
+        }
+
         protected List<string> effectPropertyNameList = new List<string>();
         private List<string> eventNameList = new List<string>();
         private List<string> operationNameList = new List<string>();
@@ -194,6 +202,8 @@ namespace BasicLibrary
 
             AddOperationNameToList("Show");
             AddOperationNameToList("Hide");
+
+            AddEventNameToList("LinkClicked");
         }
 
         protected BasicEffect mainEffect;
