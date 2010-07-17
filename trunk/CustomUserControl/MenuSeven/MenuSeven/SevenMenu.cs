@@ -238,7 +238,6 @@ namespace MyMenu
         void mmi_ItemSelected(object sender, string url)
         {
             OnLinkClicked(url);
-            MessageBox.Show("Item link clicked");
         }
 
         public override BasicLibrary.Menu.ISubMenu CreateSubMenu()
@@ -267,7 +266,6 @@ namespace MyMenu
         void msmi_ItemSelected(object sender, string url)
         {
             OnLinkClicked(url);
-            MessageBox.Show("submenu Item link clicked");
         }
     }
 }

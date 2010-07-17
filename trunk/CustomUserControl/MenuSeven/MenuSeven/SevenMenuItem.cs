@@ -94,7 +94,6 @@ namespace MyMenu
                 return;
             if (ItemSelected != null)
                 ItemSelected(this, URL);
-            MessageBox.Show("mouse up " + URL);
         }
 
         void Menu_MouseEnter(object sender, MouseEventArgs e)
