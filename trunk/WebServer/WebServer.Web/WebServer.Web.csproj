@@ -37,6 +37,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>dll\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="PivotServerTools">
+      <HintPath>dll\PivotServerTools.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
@@ -101,7 +104,6 @@
     <Compile Include="DataService.svc.cs">
       <DependentUpon>DataService.svc</DependentUpon>
     </Compile>
-    <Compile Include="ForgotPasswordService.metadata.cs" />
     <Compile Include="GetBinaryData.ashx.cs">
       <DependentUpon>GetBinaryData.ashx</DependentUpon>
     </Compile>
@@ -121,6 +123,7 @@
       <DependentUpon>GetStringDataFromURL.ashx</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="HttpHandlers.cs" />
     <Compile Include="IDataService.cs" />
     <Compile Include="linqtosql\DataClasses1.designer.cs">
       <AutoGen>True</AutoGen>

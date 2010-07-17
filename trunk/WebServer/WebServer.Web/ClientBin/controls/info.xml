@@ -1,12 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Controls>
   <Control>
+    <Name>ControlLibrary.WrappedPivotView</Name>
+    <DllFilename>PivotViewer.dll</DllFilename>
+    <DllReferences>
+      <Dll>System.Windows.Controls.dll</Dll>
+      <Dll>System.Windows.Controls.Layout.Toolkit.dll</Dll>
+      <Dll>System.Windows.Controls.Toolkit.dll</Dll>
+      <Dll>System.Windows.Controls.Toolkit.Internals.dll</Dll>
+      <Dll>System.Windows.Pivot.dll</Dll>
+      <Dll>System.Windows.Pivot.Model.dll</Dll>
+      <Dll>System.Windows.Pivot.SharedUI.dll</Dll>
+      <Dll>System.Windows.Pivot.StringResources.dll</Dll>
+      <Dll>System.Windows.Pivot.Utilities.dll</Dll>
+      <Dll>System.Xml.Linq.dll</Dll>
+      <Dll>System.Xml.Serialization.dll</Dll>
+    </DllReferences>
+    <DisplayName>Pivot viewer</DisplayName>
+    <Description>Basic contact form control</Description>
+    <IconName>MacStyleContactForm.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
     <Name>SL_Menu.MyMenu</Name>
     <DllFilename>MenuClassic.dll</DllFilename>
     <DllReferences>
       <Dll>Liquid.Menu.dll</Dll>
     </DllReferences>
     <DisplayName>MyMenu</DisplayName>
+    <Description>Basic contact form control</Description>
+    <IconName>MacStyleContactForm.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>MyMenu.FishEyeMenu</Name>
+    <DllFilename>MenuFishEye.dll</DllFilename>
+    <DllReferences>
+      <Dll>ISNet.Silverlight.dll</Dll>
+      <Dll>ISNet.Silverlight.WebAqua.dll</Dll>
+    </DllReferences>
+    <DisplayName>FishEyeMenu</DisplayName>
     <Description>Basic contact form control</Description>
     <IconName>MacStyleContactForm.png</IconName>
     <Group>User defined control</Group>
