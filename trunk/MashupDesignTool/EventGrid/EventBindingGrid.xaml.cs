@@ -45,7 +45,7 @@ namespace MashupDesignTool
                 listEvent = selectedObject.GetListEventName();
             if (listEvent.Count == 0)
             {
-                stackPanel.Children.Add(new Label() { Content = "No event availabel", Margin = new Thickness(0, 20, 0, 0), VerticalAlignment = System.Windows.VerticalAlignment.Center, HorizontalAlignment = System.Windows.HorizontalAlignment.Center });
+                stackPanel.Children.Add(new Label() { Content = "No event available", Margin = new Thickness(0, 20, 0, 0), VerticalAlignment = System.Windows.VerticalAlignment.Center, HorizontalAlignment = System.Windows.HorizontalAlignment.Center });
                 return;
             }
             
