@@ -46,7 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BasicLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="BasicLibrary">
+      <HintPath>..\..\..\MashupDesignTool\BasicLibrary\Bin\Debug\BasicLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="DockCanvas, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="EffectLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Liquid.Menu, Version=5.3.1.31637, Culture=neutral, PublicKeyToken=7fbdd25c3fcc3919, processorArchitecture=MSIL" />
@@ -67,7 +69,6 @@
     <Compile Include="SevenSubMenuItem.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dll\BasicLibrary.dll" />
     <Content Include="dll\DockCanvas.dll" />
     <Content Include="dll\EffectLibrary.dll" />
     <Content Include="dll\Liquid.Menu.dll" />

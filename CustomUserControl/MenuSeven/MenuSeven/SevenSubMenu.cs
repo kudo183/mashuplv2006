@@ -14,16 +14,18 @@ namespace MyMenu
     public class SevenSubMenu : BasicLibrary.Menu.ISubMenu
     {
         Liquid.Menu _menu = new Liquid.Menu();
-
+        
         public Liquid.Menu Menu
         {
             get { return _menu; }
             set { _menu = value; }
         }
+
         #region SubMenu Members
         public void AddSubMenuItem(BasicLibrary.Menu.ISubMenuItem subMenuItem)
         {
-            _menu.Items.Add((subMenuItem as SevenSubMenuItem).Item);
+            SevenSubMenuItem sItem = subMenuItem as SevenSubMenuItem;
+            _menu.Items.Add(sItem.Item);
         }
 
         #endregion

@@ -15,11 +15,37 @@ namespace MyMenu
     {
         Liquid.MenuItem _item = new Liquid.MenuItem();
 
+        public delegate void ItemSelectedHandler(object sender, string url);
+        public event ItemSelectedHandler ItemSelected;
+
+        private string _URL;
+
+        public string URL
+        {
+            get { return _URL; }
+            set { _URL = value; }
+        }
+
         public Liquid.MenuItem Item
         {
             get { return _item; }
             set { _item = value; }
         }
+
+        public SevenSubMenuItem()
+        {
+            _item.MouseLeftButtonDown += new MouseButtonEventHandler(_item_MouseLeftButtonDown);
+        }
+
+        void _item_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_item.Content == null || (_item.Content is Liquid.Menu) == false)
+            {
+                if (ItemSelected != null)
+                    ItemSelected(this, _URL);
+            }
+        }
+
         #region SubMenuItem Members
         public void AddItemSubMenu(BasicLibrary.Menu.ISubMenu subMenu)
         {
