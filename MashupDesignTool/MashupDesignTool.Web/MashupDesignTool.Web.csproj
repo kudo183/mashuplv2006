@@ -13,7 +13,7 @@
     <RootNamespace>MashupDesignTool.Web</RootNamespace>
     <AssemblyName>MashupDesignTool.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <SilverlightApplicationList>{6798B89C-1D97-4C82-A4D5-06F817CA2DF0}|..\MashupDesignTool\MashupDesignTool.csproj|ClientBin|False,{BE85779E-34C2-47DA-ABF5-0A629C04029B}|..\Present\Present.csproj|ClientBin|False,{156D2974-36B2-493C-BF74-6D5D6303C215}|..\MashupDesignTool\MashupDesignTool.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{BE85779E-34C2-47DA-ABF5-0A629C04029B}|..\Present\Present.csproj|ClientBin|False,{156D2974-36B2-493C-BF74-6D5D6303C215}|..\MashupDesignTool\MashupDesignTool.csproj|ClientBin|False</SilverlightApplicationList>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
