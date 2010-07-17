@@ -28,7 +28,7 @@
     <DllReferences>
       <Dll>DockCanvas.dll</Dll>
     </DllReferences>
-    <DisplayName>FadeIn</DisplayName>
+    <DisplayName>Fade In</DisplayName>
     <Description>FadeIn</Description>
     <IconName>Fade.png</IconName>
     <Group>Appear</Group>
@@ -39,7 +39,7 @@
     <DllReferences>
       <Dll>DockCanvas.dll</Dll>
     </DllReferences>
-    <DisplayName>FadeOut</DisplayName>
+    <DisplayName>Fade Out</DisplayName>
     <Description>FadeOut</Description>
     <IconName>FadeOut.png</IconName>
     <Group>Disappear</Group>
@@ -72,7 +72,7 @@
     <DllReferences>
       <Dll>DockCanvas.dll</Dll>
     </DllReferences>
-    <DisplayName>PushIn</DisplayName>
+    <DisplayName>Push In</DisplayName>
     <Description>PushIn</Description>
     <IconName>Push.png</IconName>
     <Group>Appear</Group>
@@ -83,7 +83,7 @@
     <DllReferences>
       <Dll>DockCanvas.dll</Dll>
     </DllReferences>
-    <DisplayName>PushOut</DisplayName>
+    <DisplayName>Push Out</DisplayName>
     <Description>PushOut</Description>
     <IconName>PushOut.png</IconName>
     <Group>Disappear</Group>
@@ -116,7 +116,7 @@
     <DllReferences>
       <Dll>DockCanvas.dll</Dll>
     </DllReferences>
-    <DisplayName>WipeIn</DisplayName>
+    <DisplayName>Wipe In</DisplayName>
     <Description>WipeIn</Description>
     <IconName>Wipe.png</IconName>
     <Group>Appear</Group>
@@ -127,7 +127,7 @@
     <DllReferences>
       <Dll>DockCanvas.dll</Dll>
     </DllReferences>
-    <DisplayName>WipeOut</DisplayName>
+    <DisplayName>Wipe Out</DisplayName>
     <Description>WipeOut</Description>
     <IconName>WipeOut.png</IconName>
     <Group>Disappear</Group>
@@ -150,8 +150,8 @@
       <Dll>DockCanvas.dll</Dll>
     </DllReferences>
     <DisplayName>Basic</DisplayName>
-    <Description>Fish eye</Description>
-    <IconName>FishEye.png</IconName>
+    <Description>Basic list effect</Description>
+    <IconName>basic.png</IconName>
     <Group>List</Group>
   </Effect>
   <Effect>
@@ -196,8 +196,8 @@
       <Dll>BasicLibrary.dll</Dll>
     </DllReferences>
     <DisplayName>Matrix</DisplayName>
-    <Description>Fish eye</Description>
-    <IconName>FishEye.png</IconName>
+    <Description>Matrix effect</Description>
+    <IconName>Matrix.png</IconName>
     <Group>List</Group>
   </Effect>
 </Effects>
