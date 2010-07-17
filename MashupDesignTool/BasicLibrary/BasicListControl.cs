@@ -45,14 +45,24 @@ namespace BasicLibrary
             if (OnListChange != null)
                 OnListChange(ListItemsAction.ADD, -1, control, -1);
             _items.Add(control);
+
+            BasicControl bc = control.Control as BasicControl;
+            if (bc != null)
+                bc.LinkClicked += new MDTEventHandler(bc_LinkClicked);
         }
+
+        void bc_LinkClicked(object sender, string xmlString)
+        {
+            OnLinkClicked(xmlString);
+        }
+
         public virtual void InsertItem(int index, EffectableControl control)
         {
             if (OnListChange != null)
                 OnListChange(ListItemsAction.INSERT, index, control, -1);
             _items.Insert(index, control);
         }
-        
+
         public virtual void SwapItem(int index1, int index2)
         {
             if (OnListChange != null)
@@ -63,20 +73,39 @@ namespace BasicLibrary
         }
         public virtual void RemoveItemAt(int index)
         {
+            if (index < 0 || index >= _items.Count)
+                return;
+
             if (OnListChange != null)
                 OnListChange(ListItemsAction.REMOVEAT, index, null, -1);
             _items.RemoveAt(index);
+
+            BasicControl bc = _items[index].Control as BasicControl;
+            if (bc != null)
+                bc.LinkClicked -= new MDTEventHandler(bc_LinkClicked);
         }
         public virtual void RemoveItem(EffectableControl control)
         {
             if (OnListChange != null)
                 OnListChange(ListItemsAction.REMOVE, -1, control, -1);
             _items.Remove(control);
+
+            BasicControl bc = control.Control as BasicControl;
+            if (bc != null)
+                bc.LinkClicked -= new MDTEventHandler(bc_LinkClicked);
         }
         public virtual void RemoveAllItem()
         {
             if (OnListChange != null)
                 OnListChange(ListItemsAction.REMOVEALL, -1, null, -1);
+
+            BasicControl bc;
+            foreach (EffectableControl ec in _items)
+            {
+                bc = ec.Control as BasicControl;
+                if (bc != null)
+                    bc.LinkClicked -= new MDTEventHandler(bc_LinkClicked);
+            }
             _items.Clear();
         }
         public virtual EffectableControl GetAt(int index)
