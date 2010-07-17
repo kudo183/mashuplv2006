@@ -213,7 +213,6 @@ namespace MyMenu
             BasicLibrary.EffectableControl eff = new BasicLibrary.EffectableControl(item as SevenMenuItem);
             eff.Width = _ItemWidth;
             eff.Height = _ItemHeight;
-            //eff.ChangeEffect("MainEffect", typeof(EffectLibrary.GlowWinSeven));
             lstGS.Add(new EffectLibrary.GlowWinSeven(eff) { TransitionAlpha = _TransitionAlpha, TransitionColor = _TransitionColor });
             spMenu.Children.Add(eff);
             lstEff.Add(eff);
@@ -222,14 +221,24 @@ namespace MyMenu
         public override BasicLibrary.Menu.IMenuItem CreateMenuItem(System.Xml.Linq.XElement e)
         {
             SevenMenuItem mmi = new SevenMenuItem(this);
+            mmi.ItemSelected += new SevenMenuItem.ItemSelectedHandler(mmi_ItemSelected);
             System.Xml.Linq.XAttribute att;
-            att = e.Attribute("Text");
+            att = e.Attribute("text");
             if (att != null)
                 mmi.Title = att.Value;
-            att = e.Attribute("Icon");
+            att = e.Attribute("icon");
             if (att != null)
                 mmi.ImageURL = att.Value;
+            att = e.Attribute("url");
+            if (att != null)
+                mmi.URL = att.Value;
             return mmi;
+        }
+
+        void mmi_ItemSelected(object sender, string url)
+        {
+            OnLinkClicked(url);
+            MessageBox.Show("Item link clicked");
         }
 
         public override BasicLibrary.Menu.ISubMenu CreateSubMenu()
@@ -241,14 +250,24 @@ namespace MyMenu
         public override BasicLibrary.Menu.ISubMenuItem CreateSubMenuItem(System.Xml.Linq.XElement e)
         {
             SevenSubMenuItem msmi = new SevenSubMenuItem();
+            msmi.ItemSelected += new SevenSubMenuItem.ItemSelectedHandler(msmi_ItemSelected);
             System.Xml.Linq.XAttribute att;
-            att = e.Attribute("Text");
+            att = e.Attribute("text");
             if (att != null)
                 msmi.Item.Text = att.Value;
-            att = e.Attribute("Icon");
+            att = e.Attribute("icon");
             if (att != null)
                 msmi.Item.Icon = att.Value;
+            att = e.Attribute("url");
+            if (att != null)
+                msmi.URL = att.Value;
             return msmi;
+        }
+
+        void msmi_ItemSelected(object sender, string url)
+        {
+            OnLinkClicked(url);
+            MessageBox.Show("submenu Item link clicked");
         }
     }
 }

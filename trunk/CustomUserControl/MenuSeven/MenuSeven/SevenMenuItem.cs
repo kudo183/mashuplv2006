@@ -14,6 +14,10 @@ namespace MyMenu
 {
     public class SevenMenuItem : BasicLibrary.BasicControl, BasicLibrary.Menu.IMenuItem
     {
+
+        public delegate void ItemSelectedHandler(object sender, string url);
+        public event ItemSelectedHandler ItemSelected;
+
         #region MenuItem Members
 
         public void AddItemSubMenu(BasicLibrary.Menu.ISubMenu subMenu)
@@ -29,7 +33,6 @@ namespace MyMenu
         void Menu_ItemSelected(object sender, Liquid.MenuEventArgs e)
         {
             Hide();
-            _menu.OnSelectionChanged("");
         }
 
         #endregion
@@ -50,6 +53,14 @@ namespace MyMenu
                 _ImageURL = value;
                 _Icon.Source = new BitmapImage(new Uri(_ImageURL, UriKind.RelativeOrAbsolute));
             }
+        }
+
+        private string _URL;
+
+        public string URL
+        {
+            get { return _URL; }
+            set { _URL = value; }
         }
 
         public string Title
@@ -73,7 +84,17 @@ namespace MyMenu
             LayoutRoot.Children.Add(p);
             LayoutRoot.MouseEnter += new MouseEventHandler(_Icon_MouseEnter);
             LayoutRoot.MouseLeave += new MouseEventHandler(_Icon_MouseLeave);
+            LayoutRoot.MouseLeftButtonUp += new MouseButtonEventHandler(LayoutRoot_MouseLeftButtonUp);
             //ToolTipService.SetPlacement(_Icon, System.Windows.Controls.Primitives.PlacementMode.Top);
+        }
+
+        void LayoutRoot_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (_subMenu != null && _subMenu.Menu != null)
+                return;
+            if (ItemSelected != null)
+                ItemSelected(this, URL);
+            MessageBox.Show("mouse up " + URL);
         }
 
         void Menu_MouseEnter(object sender, MouseEventArgs e)
@@ -85,21 +106,21 @@ namespace MyMenu
         {
             Hide();
         }
-        
+
         void _Icon_MouseLeave(object sender, MouseEventArgs e)
         {
             Hide();
         }
-        
+
         void _Icon_MouseEnter(object sender, MouseEventArgs e)
         {
-            _menu.TbTooptip.Text = Title;            
+            _menu.TbTooptip.Text = Title;
             Show();
         }
 
         private void Hide()
         {
-            if (_subMenu.Menu == null)
+            if (_subMenu == null || _subMenu.Menu == null)
                 return;
             _subMenu.Menu.Hide();
             foreach (UIElement ui in _subMenu.Menu.Items)
@@ -119,10 +140,11 @@ namespace MyMenu
 
         private void Show()
         {
-            if (_subMenu.Menu == null)
+            if (_subMenu == null || _subMenu.Menu == null)
                 return;
             _subMenu.Menu.Show();
             p.VerticalOffset = _Icon.ActualHeight;
-            p.IsOpen = true;       }
+            p.IsOpen = true;
+        }
     }
 }
