@@ -55,10 +55,23 @@ namespace BasicLibrary.Menu
     {
         #region event
         public event MDTEventHandler SelectionChanged;
-        public void OnSelectionChanged(string xml)
+        protected virtual void OnSelectionChanged(string xml)
         {
             if (SelectionChanged != null)
+            {
                 SelectionChanged(this, xml);
+                //try
+                //{
+                //    XDocument doc = XDocument.Parse(xml);
+                //    XElement root = doc.Element("root");
+                //    XAttribute att = root.Attribute("url");
+                //    if (att != null)
+                //    {
+                //        OnLinkClicked(att.Value);
+                //    }
+                //}
+                //catch { }
+            }
         }
         #endregion
 
@@ -96,10 +109,10 @@ namespace BasicLibrary.Menu
             try
             {
                 XDocument doc = XDocument.Parse(_xmlString);
-                XElement root = doc.Element("Menu");
+                XElement root = doc.Element("menu");
                 foreach (XElement element in root.Elements())
                 {
-                    XElement e = new XElement("Root");
+                    XElement e = new XElement("root");
                     foreach (XAttribute attri in element.Attributes())
                     {
                         e.SetAttributeValue(attri.Name, attri.Value);
@@ -115,7 +128,7 @@ namespace BasicLibrary.Menu
 
         private void LoadSubMenu(IMenuItem mi, XElement MenuItemElement)
         {
-            XElement subMenuElement = MenuItemElement.Element("SubMenu");
+            XElement subMenuElement = MenuItemElement.Element("submenu");
             if (subMenuElement == null)
                 return;
             ISubMenu sm = CreateSubMenu();
@@ -125,7 +138,7 @@ namespace BasicLibrary.Menu
 
         private void LoadSubMenu(ISubMenuItem smi, XElement SubMenuItemElement)
         {
-            XElement subMenuElement = SubMenuItemElement.Element("SubMenu");
+            XElement subMenuElement = SubMenuItemElement.Element("submenu");
             if (subMenuElement == null)
                 return;
             ISubMenu sm = CreateSubMenu();
@@ -137,7 +150,7 @@ namespace BasicLibrary.Menu
         {
             foreach (XElement element in subMenuElement.Elements())
             {
-                XElement e = new XElement("Root");
+                XElement e = new XElement("root");
                 foreach (XAttribute attri in element.Attributes())
                 {
                     e.SetAttributeValue(attri.Name, attri.Value);
