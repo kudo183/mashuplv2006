@@ -45,12 +45,13 @@
                 <RowDefinition/>
                 <RowDefinition MaxHeight="26" MinHeight="26" Height="26"/>
                 <RowDefinition MaxHeight="100" MinHeight="100" Height="100"/>
+                <RowDefinition MaxHeight="26" MinHeight="26" Height="26"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Margin="3" Text="ImageURL:"/>
             <TextBlock Grid.Column="0" Grid.Row="1" Margin="3" Text="Preview:"/>
             <TextBlock Grid.Column="0" Grid.Row="2" Margin="3" Text="Title:"/>
             <TextBlock Grid.Column="0" Grid.Row="3" Margin="3" Text="Description:"/>
-
+<TextBlock Grid.Column="0" Grid.Row="4" Margin="3" Text="Link:"/>
             <TextBox Grid.Column="1" Grid.Row="0" BorderThickness="1" Margin="2" Name="txtURL" KeyDown="txtURL_KeyDown" />
             <Grid Grid.Column="1" Grid.Row="1" Margin="3" >
                 <Grid.RowDefinitions>
@@ -62,6 +63,7 @@
             </Grid>
             <TextBox Grid.Column="1" Grid.Row="2" BorderThickness="1" Margin="2" Name="txtTitle" KeyDown="txtTitle_KeyDown" />
             <TextBox Grid.Column="1" Grid.Row="3" BorderThickness="1" Margin="2" AcceptsReturn="True" Name="txtDescription" KeyDown="txtDescription_KeyDown" />
+            <TextBox Grid.Column="1" Grid.Row="4" BorderThickness="1" Margin="2" Name="txtLink" KeyDown="txtLink_KeyDown"/>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="0">
