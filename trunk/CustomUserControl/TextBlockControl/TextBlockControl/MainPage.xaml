@@ -8,6 +8,6 @@
 
     <Grid x:Name="LayoutRoot" Background="White">
         <my:TextBlock HorizontalAlignment="Left" Margin="98,98,0,0" Name="textBlock1" VerticalAlignment="Top" Height="24" Width="174" />
-        <my1:StrokeTextBlock HorizontalAlignment="Left" Margin="92,188,0,0" Name="strokeTextBlock1" VerticalAlignment="Top" Height="36" Width="227" />
+        <my1:StrokeTextBlock HorizontalAlignment="Left" Margin="12,140,0,0" Name="strokeTextBlock1" VerticalAlignment="Top" Height="68" Width="376" />
     </Grid>
 </UserControl>
