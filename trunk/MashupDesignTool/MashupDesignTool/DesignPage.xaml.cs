@@ -642,8 +642,11 @@ namespace MashupDesignTool
                 doubleClickTimer.Stop();
                 if (ci.Group == "Common Silverlight Controls")
                 {
-                    AddFrameworkControl(ci.ControlName);
-                    return;
+                    if (ci.ControlName != "SilverlightTextBlock.TextBlock")
+                    {
+                        AddFrameworkControl(ci.ControlName);
+                        return;
+                    }
                 }
                 if (!LoadedControlAssembly.ContainsKey(ci.ControlName))
                 {
