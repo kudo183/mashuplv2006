@@ -45,10 +45,14 @@ namespace BasicLibrary
 
         void webClient_GetImageOpenReadCompleted(object sender, OpenReadCompletedEventArgs e)
         {
-            if (OnGetImageAsyncCompleted != null)
-            {   
-                OnGetImageAsyncCompleted(ReadStream(e.Result));
+            try
+            {
+                if (OnGetImageAsyncCompleted != null)
+                {
+                    OnGetImageAsyncCompleted(ReadStream(e.Result));
+                }
             }
+            catch { }
         }
         #endregion
 
@@ -75,12 +79,16 @@ namespace BasicLibrary
 
         void webClient_GetListDataFromDatabaseOpenReadCompleted(object sender, OpenReadCompletedEventArgs e)
         {
-            if (OnGetListDataFromDatabaseAsyncCompleted != null)
+            try
             {
-                XmlSerializer xm = new XmlSerializer(typeof(List<List<string>>));                
-                List<List<string>> result = xm.Deserialize(e.Result) as List<List<string>>;
-                OnGetListDataFromDatabaseAsyncCompleted(result);
+                if (OnGetListDataFromDatabaseAsyncCompleted != null)
+                {
+                    XmlSerializer xm = new XmlSerializer(typeof(List<List<string>>));
+                    List<List<string>> result = xm.Deserialize(e.Result) as List<List<string>>;
+                    OnGetListDataFromDatabaseAsyncCompleted(result);
+                }
             }
+            catch { }
         }
         #endregion
 
@@ -105,10 +113,14 @@ namespace BasicLibrary
 
         void webClient_GetListDataFromDatabaseStructureDownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            if (OnGetListDataFromDatabaseStructureAsyncCompleted != null)
+            try
             {
-                OnGetListDataFromDatabaseStructureAsyncCompleted(e.Result);
+                if (OnGetListDataFromDatabaseStructureAsyncCompleted != null)
+                {
+                    OnGetListDataFromDatabaseStructureAsyncCompleted(e.Result);
+                }
             }
+            catch { }
         }
         #endregion
 
@@ -132,12 +144,16 @@ namespace BasicLibrary
 
         void webClient_GetListDataFromXmlOpenReadCompleted(object sender, OpenReadCompletedEventArgs e)
         {
-            if (OnGetListDataFromXmlAsyncCompleted != null)
+            try
             {
-                XmlSerializer xm = new XmlSerializer(typeof(List<List<string>>));
-                List<List<string>> result = xm.Deserialize(e.Result) as List<List<string>>;
-                OnGetListDataFromXmlAsyncCompleted(result);
+                if (OnGetListDataFromXmlAsyncCompleted != null)
+                {
+                    XmlSerializer xm = new XmlSerializer(typeof(List<List<string>>));
+                    List<List<string>> result = xm.Deserialize(e.Result) as List<List<string>>;
+                    OnGetListDataFromXmlAsyncCompleted(result);
+                }
             }
+            catch { }
         }
         #endregion
 
@@ -159,10 +175,14 @@ namespace BasicLibrary
 
         void webClient_DownloadXmlStructureStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            if (OnGetListDataFromXmlStructureAsyncCompleted != null)
+            try
             {
-                OnGetListDataFromXmlStructureAsyncCompleted(e.Result);
+                if (OnGetListDataFromXmlStructureAsyncCompleted != null)
+                {
+                    OnGetListDataFromXmlStructureAsyncCompleted(e.Result);
+                }
             }
+            catch {}
         }
         
         #endregion
@@ -180,13 +200,17 @@ namespace BasicLibrary
 
         void webClient_OpenReadCompleted(object sender, OpenReadCompletedEventArgs e)
         {
-            if (OnGetStringAsyncCompleted != null)
+            try
             {
-                //StreamReader sr = new StreamReader(e.Result);
-                //OnGetStringAsyncCompleted(sr.ReadToEnd());
-                XmlSerializer xm = new XmlSerializer(typeof(string));
-                OnGetStringAsyncCompleted((string)xm.Deserialize(e.Result));
+                if (OnGetStringAsyncCompleted != null)
+                {
+                    //StreamReader sr = new StreamReader(e.Result);
+                    //OnGetStringAsyncCompleted(sr.ReadToEnd());
+                    XmlSerializer xm = new XmlSerializer(typeof(string));
+                    OnGetStringAsyncCompleted((string)xm.Deserialize(e.Result));
+                }
             }
+            catch { }
         }
         #endregion
 

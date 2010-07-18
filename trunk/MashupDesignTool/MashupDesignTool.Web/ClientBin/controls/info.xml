@@ -319,6 +319,18 @@
     <Group>User defined control</Group>
   </Control>
   <Control>
+    <Name>BlacklightTextBlock.DropShadowTextBlock</Name>
+    <DllFilename>BlacklightTextBlock.dll</DllFilename>
+    <DllReferences>
+		<Dll>Blacklight.Controls.dll</Dll>
+		<Dll>System.ServiceModel.Syndication.dll</Dll>
+	</DllReferences>
+    <DisplayName>DropShadowTextBlock</DisplayName>
+    <Description>Drop shadow text block</Description>
+    <IconName>DropShadowTextBlock.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
     <Name>NavigateControl.Navigate</Name>
     <DllFilename>NavigateControl.dll</DllFilename>
     <DllReferences></DllReferences>

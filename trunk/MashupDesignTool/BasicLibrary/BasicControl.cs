@@ -106,11 +106,16 @@ namespace BasicLibrary
         {
             if (LinkClicked != null)
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append("<root><Click>true</Click><Link>");
-                sb.Append(link);
-                sb.Append("</Link></root>");
-                LinkClicked(this, link);
+                if (!link.StartsWith("<root>") && !link.EndsWith("</root>"))
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("<root><Click>true</Click><Link>");
+                    sb.Append(link);
+                    sb.Append("</Link></root>");
+                    LinkClicked(this, sb.ToString());
+                }
+                else
+                    LinkClicked(this, link);
             }
         }
 

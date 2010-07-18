@@ -36,4 +36,13 @@
     <IconName>CategoryQuickView.png</IconName>
     <Group>User defined control</Group>
   </Control>
+  <Control>
+    <Name>BriefNewsControl.BriefNews</Name>
+    <DllFilename>BriefNewsControl.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Brief news</DisplayName>
+    <Description>Control used to show display the summary of news</Description>
+    <IconName>BriefNews.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
 </Controls>
