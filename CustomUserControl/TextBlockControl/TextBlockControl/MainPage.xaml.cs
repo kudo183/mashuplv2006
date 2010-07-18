@@ -24,13 +24,14 @@ namespace TextBlockControl
             textBlock1.FontWeight = FontWeights.ExtraBold;
             textBlock1.FontSize = 15;
 
-            strokeTextBlock1.Text = "Hello world";
+            //strokeTextBlock1.Text = "Hello world";
             strokeTextBlock1.StrokeOpacity = 0.8;
-            strokeTextBlock1.StrokeThickness = 8;
-            strokeTextBlock1.FontSize = 30;
+            strokeTextBlock1.StrokeThickness = 3;
+            strokeTextBlock1.FontSize = 40;
             strokeTextBlock1.Stroke = new SolidColorBrush(Colors.Red);
             strokeTextBlock1.TextColor = new SolidColorBrush(Colors.Yellow);
-            strokeTextBlock1.ChangeText("<xml><Text>hello</Text></xml>");
+            strokeTextBlock1.TextBackground = new SolidColorBrush(Colors.Black);
+            //strokeTextBlock1.ChangeText("<xml><Text>hello</Text></xml>");
         }
     }
 }

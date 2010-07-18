@@ -27,7 +27,7 @@ namespace BlacklightTextBlock
             parameterNameList.Add("FontSize");
             parameterNameList.Add("FontWeight");
             parameterNameList.Add("TextWrapping");
-            parameterNameList.Add("Background");
+            parameterNameList.Add("TextBackground");
             parameterNameList.Add("StrokeOpacity");
             parameterNameList.Add("StrokeThickness");
             parameterNameList.Add("Stroke");
@@ -45,6 +45,12 @@ namespace BlacklightTextBlock
         {
             get { return (SolidColorBrush)textBlock1.Foreground; }
             set { textBlock1.Foreground = value; }
+        }
+
+        public Brush TextBackground
+        {
+            get { return LayoutRoot.Background; }
+            set { LayoutRoot.Background = value; }
         }
 
         public FontStyle FontStyle
