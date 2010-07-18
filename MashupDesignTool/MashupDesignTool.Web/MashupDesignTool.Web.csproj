@@ -62,6 +62,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientAccessPolicy.xml" />
+    <Content Include="ClientBin\Controls\ControlDll\AnimatedGifImage.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\C1.Silverlight.Extended.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\C1.Silverlight.Maps.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\CategoryQuickViewControl.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\DataListControl.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\HtmlHostControl.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\ImageListControl.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\ImageTitleDataListItemControl.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\ListDataListItemControl.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\MacStyleContactFormControl.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\MenuClassic.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\MenuFishEye.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\MenuSeven.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\PivotViewer.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\QuickViewContentControl.dll" />
+    <Content Include="ClientBin\Controls\ControlDll\RssSlideshowControl.dll" />
     <Content Include="ClientBin\Controls\listItemControlInfo.xml">
       <SubType>Designer</SubType>
     </Content>
