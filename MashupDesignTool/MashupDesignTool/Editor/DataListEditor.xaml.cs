@@ -52,10 +52,32 @@ namespace ItemCollectionEditor
             f.Closed += new EventHandler(f_Closed);
             treeControl.ItemsSource = listControlTemplate;
             this.controlDownloader = controlDownloader;
-        
+
             doubleClickTimer = new DispatcherTimer();
             doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
+            if (list.Datasource == null)
+                return;
+            _sourceType = list.Datasource.SourceType;
+            if (_sourceType == ListDataSource.DataSourceType.XML)
+            {
+                if (list.Datasource.XmlURL == null)
+                    return;
+                tabControl1.SelectedIndex = 0;                
+                textXmlURL.Text = _list.Datasource.XmlURL;
+                textXmlElement.Text = list.Datasource.ElementName;
+            }
+            else if (_sourceType == ListDataSource.DataSourceType.MYSQL)
+            {
+                if (list.Datasource.Server == null)
+                    return;
+                tabControl1.SelectedIndex = 1;
+                textDBName.Text = list.Datasource.Db;
+                textServerUrl.Text = list.Datasource.Server;
+                textUserName.Text = list.Datasource.Username;
+                textSQLString.Text = list.Datasource.Table;
+                textPassword.Password = list.Datasource.Password;
+            }
         }
 
         public void ShowDialog()
@@ -365,10 +387,10 @@ namespace ItemCollectionEditor
             _listItem = Activator.CreateInstance(item.GetType()) as BasicDataListItem;
             brdPreview.Child = _listItem;
         }
-        
+
         void f_Closed(object sender, EventArgs e)
         {
-            controlDownloader.DownloadControlCompleted -= new ControlDownloader.DownloadControlCompletedHandler(controlDownloader_DownloadControlCompleted); 
+            controlDownloader.DownloadControlCompleted -= new ControlDownloader.DownloadControlCompletedHandler(controlDownloader_DownloadControlCompleted);
         }
         #endregion Download control
 
@@ -376,12 +398,12 @@ namespace ItemCollectionEditor
         {
             if (brdPreview.Child == null)
                 return;
-            
+
             BasicControl bc = brdPreview.Child as BasicControl;
             if (bc == null)
                 return;
             List<string> properties = bc.GetParameterNameList();
-            foreach(string s in skipList)
+            foreach (string s in skipList)
                 properties.Remove(s);
             propertyGrid1.SetSelectedObject(bc, properties);
         }
