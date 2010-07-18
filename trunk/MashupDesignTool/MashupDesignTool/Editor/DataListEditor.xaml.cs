@@ -40,7 +40,7 @@ namespace ItemCollectionEditor
         string downloadingControlName = "";
         ControlInfo downloadControlInfo;
         bool bAdd = false;
-
+        List<string> skipList = new List<string>() { "ControlName", "Visible", "Width", "Height" };
         public DataListEditor(Panel p, BasicDataListControl list, List<ControlInfo> listControlTemplate, ControlDownloader controlDownloader)
         {
             list.U = u;
@@ -60,7 +60,8 @@ namespace ItemCollectionEditor
 
         public void ShowDialog()
         {
-            f.Width = f.Height = 600;
+            f.Width = 700;
+            f.Height = 600;
             f.ShowDialog();
         }
 
@@ -370,5 +371,19 @@ namespace ItemCollectionEditor
             controlDownloader.DownloadControlCompleted -= new ControlDownloader.DownloadControlCompletedHandler(controlDownloader_DownloadControlCompleted); 
         }
         #endregion Download control
+
+        private void brdPreview_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (brdPreview.Child == null)
+                return;
+            
+            BasicControl bc = brdPreview.Child as BasicControl;
+            if (bc == null)
+                return;
+            List<string> properties = bc.GetParameterNameList();
+            foreach(string s in skipList)
+                properties.Remove(s);
+            propertyGrid1.SetSelectedObject(bc, properties);
+        }
     }
 }
