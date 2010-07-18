@@ -20,7 +20,7 @@
             <StackPanel Grid.Column="1">
                 <HyperlinkButton x:Name="tbTitle" FontFamily="Verdana" FontSize="18" FontWeight="Bold" Margin="3,0,0,0" Click="tbTitle_Click">
                     <ContentControl>
-                        <TextBlock TextWrapping="Wrap" x:Name="tbTitleControl" Text="abcd" Foreground="#98B2D8"></TextBlock>
+                        <TextBlock TextWrapping="Wrap" x:Name="tbTitleControl" Foreground="#98B2D8"></TextBlock>
                     </ContentControl>
                 </HyperlinkButton>
                 <TextBlock x:Name="tbContent" Margin="2,0,0,0" TextWrapping="Wrap"></TextBlock>
