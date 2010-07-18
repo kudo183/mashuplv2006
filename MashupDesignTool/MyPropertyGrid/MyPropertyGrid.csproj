@@ -62,6 +62,7 @@
     <Compile Include="Converter\BooleanConverter.cs" />
     <Compile Include="Converter\ByteConverter.cs" />
     <Compile Include="Converter\CharConverter.cs" />
+    <Compile Include="Converter\CornerRadiusConverter.cs" />
     <Compile Include="Converter\UriConverter.cs" />
     <Compile Include="Converter\DecimalConverter.cs" />
     <Compile Include="Converter\DoubleConverter.cs" />
