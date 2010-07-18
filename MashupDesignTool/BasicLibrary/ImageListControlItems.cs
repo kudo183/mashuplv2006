@@ -47,6 +47,15 @@ namespace BasicLibrary
                 ToolTipService.SetToolTip(img, _Description);
             }
         }
+
+        private string _Link;
+
+        public string Link
+        {
+            get { return _Link; }
+            set { _Link = value; }
+        }
+
         private Image img = new Image();
 
         public Image Img
@@ -73,7 +82,7 @@ namespace BasicLibrary
         public ImageListControlItems()
         {
             img.Stretch = Stretch.Fill;
-
+            img.MouseLeftButtonDown += new MouseButtonEventHandler(img_MouseLeftButtonDown);
             //Content = img;
             Content = grid;
             // grid.Background = new SolidColorBrush(Colors.Red);
@@ -86,7 +95,13 @@ namespace BasicLibrary
             grid.Children.Add(tbTitle);
             //img.Source = new BitmapImage(new Uri("Images/default.png", UriKind.Relative));
             ImageUrl = "Images/default.png";
+            _Link = "";
             IsShowTitle = false;
+        }
+
+        void img_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            OnLinkClicked(_Link);
         }
 
         public ImageListControlItems(string url)

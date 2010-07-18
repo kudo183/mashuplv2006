@@ -30,6 +30,7 @@ namespace BasicLibrary
                     _ItemsData.Add(item.ImageUrl);
                     _ItemsData.Add(item.Description);
                     _ItemsData.Add(item.Title);
+                    _ItemsData.Add(item.Link);
                 }
                 IsManual = false;
                 return _ItemsData;
@@ -99,9 +100,12 @@ namespace BasicLibrary
                         case 3:
                             temp.Title = e.NewItems[0].ToString();
                             break;
+                        case 4:
+                            temp.Link = e.NewItems[0].ToString();
+                            break;
                     }
                 }
-                if (i == 3)
+                if (i == 4)
                 {
                     AddItem(new EffectableControl(temp));
                     temp = new ImageListControlItems();
