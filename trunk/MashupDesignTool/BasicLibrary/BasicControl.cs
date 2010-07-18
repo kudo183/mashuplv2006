@@ -105,7 +105,13 @@ namespace BasicLibrary
         protected virtual void OnLinkClicked(string link)
         {
             if (LinkClicked != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("<root><Click>true</Click><Link>");
+                sb.Append(link);
+                sb.Append("</Link></root>");
                 LinkClicked(this, link);
+            }
         }
 
         protected List<string> effectPropertyNameList = new List<string>();
