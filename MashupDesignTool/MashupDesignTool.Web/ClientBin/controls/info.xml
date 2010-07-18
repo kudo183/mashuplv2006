@@ -320,7 +320,7 @@
   </Control>
   <Control>
     <Name>NavigateControl.Navigate</Name>
-    <DllFilename>Navigate.dll</DllFilename>
+    <DllFilename>NavigateControl.dll</DllFilename>
     <DllReferences></DllReferences>
     <DisplayName>Navigate</DisplayName>
     <Description>This is a control used to navigate to a link or open a new window.</Description>
