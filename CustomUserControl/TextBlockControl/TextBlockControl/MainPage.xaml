@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="TextBlockControl.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400" xmlns:my="clr-namespace:SilverlightTextBlock;assembly=SilverlightTextBlock" xmlns:my1="clr-namespace:BlacklightTextBlock;assembly=BlacklightTextBlock">
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <my:TextBlock HorizontalAlignment="Left" Margin="98,98,0,0" Name="textBlock1" VerticalAlignment="Top" Height="24" Width="174" />
+        <my1:StrokeTextBlock HorizontalAlignment="Left" Margin="92,188,0,0" Name="strokeTextBlock1" VerticalAlignment="Top" Height="36" Width="227" />
+    </Grid>
+</UserControl>

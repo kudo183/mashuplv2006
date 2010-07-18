@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextBlockControl", "TextBlockControl\TextBlockControl.csproj", "{3F72EDF4-F5B5-4F3E-942A-BBB67C22D7B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextBlockControl.Web", "TextBlockControl.Web\TextBlockControl.Web.csproj", "{D9372FCD-A44F-41BD-BE3A-D183FB457B6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightTextBlock", "SilverlightTextBlock\SilverlightTextBlock.csproj", "{3E19187D-C5D5-4DF3-80F2-21F8E52F94C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlacklightTextBlock", "BlacklightTextBlock\BlacklightTextBlock.csproj", "{C21BD45A-B50E-4897-AE21-0A8D590DB756}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F72EDF4-F5B5-4F3E-942A-BBB67C22D7B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F72EDF4-F5B5-4F3E-942A-BBB67C22D7B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F72EDF4-F5B5-4F3E-942A-BBB67C22D7B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F72EDF4-F5B5-4F3E-942A-BBB67C22D7B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9372FCD-A44F-41BD-BE3A-D183FB457B6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9372FCD-A44F-41BD-BE3A-D183FB457B6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9372FCD-A44F-41BD-BE3A-D183FB457B6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9372FCD-A44F-41BD-BE3A-D183FB457B6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E19187D-C5D5-4DF3-80F2-21F8E52F94C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E19187D-C5D5-4DF3-80F2-21F8E52F94C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E19187D-C5D5-4DF3-80F2-21F8E52F94C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E19187D-C5D5-4DF3-80F2-21F8E52F94C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C21BD45A-B50E-4897-AE21-0A8D590DB756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C21BD45A-B50E-4897-AE21-0A8D590DB756}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C21BD45A-B50E-4897-AE21-0A8D590DB756}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C21BD45A-B50E-4897-AE21-0A8D590DB756}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
