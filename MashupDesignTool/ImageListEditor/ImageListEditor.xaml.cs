@@ -102,6 +102,7 @@ namespace ItemCollectionEditor
             txtURL.Text = item.ImageUrl;            
             txtDescription.Text = item.Description;
             txtTitle.Text = item.Title;
+            txtLink.Text = item.Link;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -212,11 +213,23 @@ namespace ItemCollectionEditor
             temp.Title = item.Title;
             temp.Description = item.Description;
             temp.Img.Source = item.Img.Source;
+            temp.Link = item.Link;
             temp.Width = temp.Height = 130;
             temp.Margin = new Thickness(20, 0, 0, 0);
             temp.IsShowTitle = item.IsShowTitle;
             Border b = new Border() { Child = temp };
             listBox.Items.Add(b);
+        }
+
+        private void txtLink_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                EffectableControl ec = listControl.GetAt(listBox.SelectedIndex) as EffectableControl;
+                ImageListControlItems item = ec.Control as ImageListControlItems;
+                ((listBox.SelectedItem as Border).Child as ImageListControlItems).Link = txtLink.Text;
+                item.Link = txtLink.Text;
+            }
         }
     }
 }
