@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C21BD45A-B50E-4897-AE21-0A8D590DB756}</ProjectGuid>
+    <ProjectGuid>{E645C59E-D572-493B-9BC7-12F9DBCA0E9F}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BlacklightTextBlock</RootNamespace>
-    <AssemblyName>BlacklightTextBlock</AssemblyName>
+    <RootNamespace>BriefNewsControl</RootNamespace>
+    <AssemblyName>BriefNewsControl</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -49,7 +49,6 @@
     <Reference Include="BasicLibrary">
       <HintPath>..\..\..\MashupDesignTool\BasicLibrary\Bin\Debug\BasicLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="Blacklight.Controls, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -59,23 +58,13 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DropShadowTextBlock.xaml.cs">
-      <DependentUpon>DropShadowTextBlock.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StrokeTextBlock.xaml.cs">
-      <DependentUpon>StrokeTextBlock.xaml</DependentUpon>
+    <Compile Include="BriefNews.xaml.cs">
+      <DependentUpon>BriefNews.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dll\Blacklight.Controls.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="DropShadowTextBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StrokeTextBlock.xaml">
+    <Page Include="BriefNews.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

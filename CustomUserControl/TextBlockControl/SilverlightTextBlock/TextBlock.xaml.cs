@@ -40,9 +40,9 @@ namespace SilverlightTextBlock
             set { textBlock1.Text = value; }
         }
 
-        public SolidColorBrush TextColor
+        public Brush TextColor
         {
-            get { return (SolidColorBrush)textBlock1.Foreground; }
+            get { return textBlock1.Foreground; }
             set { textBlock1.Foreground = value; }
         }
 

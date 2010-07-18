@@ -23,6 +23,7 @@ namespace NavigateControl
             InitializeComponent();
 
             AddOperationNameToList("NavigateTo");
+            AddOperationNameToList("OpenNewWindow");
         }
 
         public void NavigateTo(string xml)
@@ -33,7 +34,9 @@ namespace NavigateControl
                 while (reader.Read())
                 {
                     if (reader.Name == "Link")
+                    {
                         HtmlPage.Window.Navigate(new Uri(reader.ReadInnerXml()));
+                    }
                 }
             }
             catch { }
