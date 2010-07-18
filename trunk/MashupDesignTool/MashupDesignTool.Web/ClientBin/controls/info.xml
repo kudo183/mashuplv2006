@@ -143,7 +143,7 @@
       <Dll>ImageTools.Utils.dll</Dll>
     </DllReferences>
     <DisplayName>Animated gif image</DisplayName>
-    <Description>Control để hiển thị ảnh</Description>
+    <Description>This is a control used to show gif image file</Description>
     <IconName>GifIcon.png</IconName>
     <Group>User defined control</Group>
   </Control>
@@ -316,6 +316,15 @@
     <DisplayName>StrokeTextBlock</DisplayName>
     <Description>Stroke text block</Description>
     <IconName>StrokeTextBlock.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>NavigateControl.Navigate</Name>
+    <DllFilename>Navigate.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Navigate</DisplayName>
+    <Description>This is a control used to navigate to a link or open a new window.</Description>
+    <IconName>NavigateControl.png</IconName>
     <Group>User defined control</Group>
   </Control>
 </Controls>
