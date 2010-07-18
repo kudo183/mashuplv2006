@@ -6,8 +6,8 @@
     xmlns:my1="clr-namespace:Blacklight.Controls;assembly=Blacklight.Controls" 
     xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
     mc:Ignorable="d"
-    d:DesignHeight="330" d:DesignWidth="400" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
-    
+    d:DesignHeight="330" d:DesignWidth="400" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" xmlns:my="clr-namespace:SL30PropertyGrid;assembly=MyPropertyGrid">
+
     <UserControl.Resources>
         <Style x:Key="PopupBorderStyle" TargetType="Border">
             <!--<Setter Property="" Value="White"></Setter>-->
@@ -113,8 +113,8 @@
             <ColumnDefinition Width="238" />
             <ColumnDefinition Width="66*" />
         </Grid.ColumnDefinitions>
-        
-        <TextBlock Name="textBlock3" Text="List item template:" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" />
+
+        <TextBlock Name="textBlock3" Text="Item templates:" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
         <Grid x:Name="gridTitle" Grid.ColumnSpan="2" Grid.Row="1" Margin="0,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="145" />
@@ -127,7 +127,7 @@
 
             <sdk:GridSplitter Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="3" Background="#FF94ADEB" MouseMove="GridSplitter_MouseMove" MouseLeftButtonDown="GridSplitter_MouseLeftButtonDown" MouseLeftButtonUp="GridSplitter_MouseLeftButtonUp"></sdk:GridSplitter>
             <Border Grid.Column="0" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
-                <TextBlock Text="Property" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                <TextBlock Text="Data Property" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
             </Border>
             <Border Grid.Column="1" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" Margin="3,0,0,0" BorderThickness="1">
                 <TextBlock Text="Data" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
@@ -143,10 +143,29 @@
                 </Grid>
             </ScrollViewer>
         </Grid>
+        <Grid Grid.Column="2" Grid.Row="1" Margin="3,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="2" Grid.Row="1" x:Name="brdPreview" BorderBrush="#FF617584" BorderThickness="1" Margin="5,10,0,0">
-        </Border>
+            <Border Grid.Column="0" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
+                <TextBlock Text="Item Preview" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" Margin="3,0,0,0" BorderThickness="1">
+                <TextBlock Text="Property" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+            </Border>
 
+            <Border x:Name="brdPreview" Grid.Row="1" BorderBrush="#FF617584" BorderThickness="1" Margin="5,5,0,0" MouseLeftButtonUp="brdPreview_MouseLeftButtonUp"></Border>
+            <Border Grid.Column="1" Grid.Row="1" x:Name="brdPropertyGrid" BorderBrush="#FF617584" BorderThickness="1" Margin="5,5,0,0">
+                <my:PropertyGrid Name="propertyGrid1"/>
+            </Border>
+            <sdk:GridSplitter Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Name="gridSplitter10" VerticalAlignment="Stretch" Width="5" Background="#FFEBEBEC" Margin="0,5,0,0"/>
+        </Grid>
         <ScrollViewer Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
             <ItemsControl x:Name="treeControl">
                 <ItemsControl.ItemsPanel>
