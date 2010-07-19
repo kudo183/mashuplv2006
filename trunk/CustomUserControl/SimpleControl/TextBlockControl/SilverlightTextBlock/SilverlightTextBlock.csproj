@@ -47,7 +47,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BasicLibrary">
-      <HintPath>..\..\..\MashupDesignTool\BasicLibrary\Bin\Debug\BasicLibrary.dll</HintPath>
+      <HintPath>..\..\..\..\MashupDesignTool\BasicLibrary\Bin\Debug\BasicLibrary.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
