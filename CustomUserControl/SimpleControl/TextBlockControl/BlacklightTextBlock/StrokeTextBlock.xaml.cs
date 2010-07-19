@@ -27,6 +27,7 @@ namespace BlacklightTextBlock
             parameterNameList.Add("FontSize");
             parameterNameList.Add("FontWeight");
             parameterNameList.Add("TextWrapping");
+            parameterNameList.Add("TextFontFamily");
             parameterNameList.Add("TextBackground");
             parameterNameList.Add("StrokeOpacity");
             parameterNameList.Add("StrokeThickness");
@@ -75,6 +76,12 @@ namespace BlacklightTextBlock
         {
             get { return textBlock1.TextWrapping; }
             set { textBlock1.TextWrapping = value; }
+        }
+
+        public FontFamily TextFontFamily
+        {
+            get { return textBlock1.FontFamily; }
+            set { textBlock1.FontFamily = value; }
         }
 
         public double StrokeOpacity

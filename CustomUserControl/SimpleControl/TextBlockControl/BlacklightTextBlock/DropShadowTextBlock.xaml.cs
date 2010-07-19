@@ -27,6 +27,7 @@ namespace BlacklightTextBlock
             parameterNameList.Add("FontWeight");
             parameterNameList.Add("TextWrapping");
             parameterNameList.Add("TextBackground");
+            parameterNameList.Add("TextFontFamily");
             parameterNameList.Add("DropShadowColor");
             parameterNameList.Add("DropShadowOpacity");
             parameterNameList.Add("DropShadowDistance");
@@ -75,6 +76,12 @@ namespace BlacklightTextBlock
         {
             get { return textBlock1.TextWrapping; }
             set { textBlock1.TextWrapping = value; }
+        }
+
+        public FontFamily TextFontFamily
+        {
+            get { return textBlock1.FontFamily; }
+            set { textBlock1.FontFamily = value; }
         }
 
         public double DropShadowOpacity
