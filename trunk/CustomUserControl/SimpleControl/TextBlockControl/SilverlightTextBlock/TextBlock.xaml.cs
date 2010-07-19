@@ -29,6 +29,7 @@ namespace SilverlightTextBlock
             parameterNameList.Add("FontWeight");
             parameterNameList.Add("TextTrimming");
             parameterNameList.Add("TextWrapping");
+            parameterNameList.Add("TextFontFamily");
             parameterNameList.Add("Background");
 
             AddOperationNameToList("ChangeText");
@@ -74,6 +75,12 @@ namespace SilverlightTextBlock
         {
             get { return textBlock1.TextTrimming; }
             set { textBlock1.TextTrimming = value; }
+        }
+
+        public FontFamily TextFontFamily
+        {
+            get { return textBlock1.FontFamily; }
+            set { textBlock1.FontFamily = value; }
         }
 
         public void ChangeText(string xml)
