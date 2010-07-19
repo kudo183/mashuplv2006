@@ -337,6 +337,26 @@
     <DisplayName>Navigate</DisplayName>
     <Description>This is a control used to navigate to a link or open a new window.</Description>
     <IconName>NavigateControl.png</IconName>
-    <Group>User defined control</Group>
+    <Group>Navigation</Group>
+  </Control>
+  <Control>
+    <Name>SilverlightHyperlinkControl.Hyperlink</Name>
+    <DllFilename>SilverlightHyperlinkControl.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Hyperlink</DisplayName>
+    <Description>Hyperlink control</Description>
+    <IconName>Hyperlink.png</IconName>
+    <Group>Navigation</Group>
+  </Control>
+  <Control>
+    <Name>WebLinkControl.WebLink</Name>
+    <DllFilename>WebLinkControl.dll</DllFilename>
+    <DllReferences>
+		<Dll>System.ServiceModel.Syndication.dll</Dll>
+	</DllReferences>
+    <DisplayName>Web link</DisplayName>
+    <Description>Web link control</Description>
+    <IconName>WebLink.png</IconName>
+    <Group>Navigation</Group>
   </Control>
 </Controls>
