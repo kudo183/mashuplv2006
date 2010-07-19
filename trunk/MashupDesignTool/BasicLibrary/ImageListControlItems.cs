@@ -76,12 +76,31 @@ namespace BasicLibrary
                 grid.RowDefinitions[1].Height = (_IsShowTitle) ? new GridLength(20, GridUnitType.Pixel) : new GridLength(0, GridUnitType.Pixel);
             }
         }
+
+        public double TitleSize
+        {
+            get { return tbTitle.FontSize; }
+            set { tbTitle.FontSize = value;}
+        }
+
+        public Brush TitleColor
+        {
+            get { return tbTitle.Foreground; }
+            set { tbTitle.Foreground = value; }
+        }
+
+        public FontFamily TitleFontFamily
+        {
+            get { return tbTitle.FontFamily; }
+            set { tbTitle.FontFamily = value; }
+        }
+
         private TextBlock tbTitle = new TextBlock() { TextAlignment = TextAlignment.Center };
         private Grid grid = new Grid();
 
         public ImageListControlItems()
         {
-            img.Stretch = Stretch.Fill;
+            img.Stretch = Stretch.Uniform;
             img.MouseLeftButtonDown += new MouseButtonEventHandler(img_MouseLeftButtonDown);
             //Content = img;
             Content = grid;
@@ -94,9 +113,10 @@ namespace BasicLibrary
             Grid.SetRow(tbTitle, 1);
             grid.Children.Add(tbTitle);
             //img.Source = new BitmapImage(new Uri("Images/default.png", UriKind.Relative));
-            ImageUrl = "Images/default.png";
+            ImageUrl = "/BasicLibrary;component/Images/default.png";
             _Link = "";
             IsShowTitle = false;
+            Cursor = Cursors.Hand;
         }
 
         void img_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
