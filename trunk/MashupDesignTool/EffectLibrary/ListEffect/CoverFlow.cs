@@ -75,6 +75,8 @@ namespace EffectLibrary
             coverFlowItems.Add(item);
             LayoutRoot.Children.Add(element);
             LayoutChildren();
+
+            sl.Maximum = coverFlowItems.Count - 1;
         }
 
         public void Swap(int index1, int index2)
@@ -101,9 +103,12 @@ namespace EffectLibrary
 
         public void RemoveItemAt(int index)
         {
+            if (index == 0)
+                return;
             LayoutRoot.Children.RemoveAt(index);
             coverFlowItems.RemoveAt(index);
             LayoutChildren();
+            sl.Maximum = coverFlowItems.Count - 1;
         }
         public void RemoveItem(FrameworkElement ui)
         {
@@ -114,6 +119,8 @@ namespace EffectLibrary
         {
             LayoutRoot.Children.Clear();
             coverFlowItems.Clear();
+            LayoutRoot.Children.Add(sl);
+            sl.Maximum = 0;
         }
         #endregion
 
@@ -554,17 +561,18 @@ namespace EffectLibrary
             EasingFunction = new CubicEase();
             _Scale = 0.7;
 
-            foreach (EffectableControl element in control.Items)
-            {
-                AddItem(element);
-            }
-            LayoutRoot.SizeChanged += new SizeChangedEventHandler(LayoutRoot_SizeChanged);
             _IsShowSlider = true;
             sl.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sl_ValueChanged);
             sl.Minimum = 0;
             sl.Maximum = control.ItemCount - 1;
             Canvas.SetLeft(sl, 5);
             LayoutRoot.Children.Add(sl);
+
+            foreach (EffectableControl element in control.Items)
+            {
+                AddItem(element);
+            }
+            LayoutRoot.SizeChanged += new SizeChangedEventHandler(LayoutRoot_SizeChanged);
 
             LayoutRoot.MouseWheel += new MouseWheelEventHandler(LayoutRoot_MouseWheel);
         }
