@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"                        
     xmlns:my1="clr-namespace:Blacklight.Controls;assembly=Blacklight.Controls" 
     xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
     mc:Ignorable="d"
     d:DesignHeight="330" d:DesignWidth="400" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" xmlns:my="clr-namespace:SL30PropertyGrid;assembly=MyPropertyGrid">
 
@@ -100,201 +101,202 @@
             <Setter Property="Foreground" Value="#FF3B66C4"></Setter>
         </Style>
     </UserControl.Resources>
-
-    <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="130" MaxHeight="130"/>
-            <RowDefinition Height="141*" MinHeight="10"/>
-            <RowDefinition Height="100*" MinHeight="10" />
-            <RowDefinition Height="35" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="84" />
-            <ColumnDefinition Width="238" />
-            <ColumnDefinition Width="66*" />
-        </Grid.ColumnDefinitions>
-
-        <TextBlock Name="textBlock3" Text="Item templates:" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
-        <Grid x:Name="gridTitle" Grid.ColumnSpan="2" Grid.Row="1" Margin="0,10,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="145" />
-                <ColumnDefinition Width="155*" />
-            </Grid.ColumnDefinitions>
+    <toolkit:BusyIndicator Name="busy" BusyContent="Downloading data ..." IsBusy="False">
+        <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="130" MaxHeight="130"/>
+                <RowDefinition Height="141*" MinHeight="10"/>
+                <RowDefinition Height="100*" MinHeight="10" />
+                <RowDefinition Height="35" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="84" />
+                <ColumnDefinition Width="238" />
+                <ColumnDefinition Width="66*" />
+            </Grid.ColumnDefinitions>
 
-            <sdk:GridSplitter Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="3" Background="#FF94ADEB" MouseMove="GridSplitter_MouseMove" MouseLeftButtonDown="GridSplitter_MouseLeftButtonDown" MouseLeftButtonUp="GridSplitter_MouseLeftButtonUp"></sdk:GridSplitter>
-            <Border Grid.Column="0" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
-                <TextBlock Text="Data Property" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
-            </Border>
-            <Border Grid.Column="1" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" Margin="3,0,0,0" BorderThickness="1">
-                <TextBlock Text="Data" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
-            </Border>
-            <ScrollViewer Grid.ColumnSpan="2" Grid.Row="1" HorizontalScrollBarVisibility="Disabled"
+            <TextBlock Name="textBlock3" Text="Item templates:" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
+            <Grid x:Name="gridTitle" Grid.ColumnSpan="2" Grid.Row="1" Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="145" />
+                    <ColumnDefinition Width="155*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <sdk:GridSplitter Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="3" Background="#FF94ADEB" MouseMove="GridSplitter_MouseMove" MouseLeftButtonDown="GridSplitter_MouseLeftButtonDown" MouseLeftButtonUp="GridSplitter_MouseLeftButtonUp"></sdk:GridSplitter>
+                <Border Grid.Column="0" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
+                    <TextBlock Text="Data Property" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" Margin="3,0,0,0" BorderThickness="1">
+                    <TextBlock Text="Data" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                </Border>
+                <ScrollViewer Grid.ColumnSpan="2" Grid.Row="1" HorizontalScrollBarVisibility="Disabled"
 									VerticalScrollBarVisibility="Visible" BorderThickness="1" BorderBrush="#FF94ADEB">
-                <Grid Name="gridXmlBinding">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="145" />
-                        <ColumnDefinition Width="150*" />
-                    </Grid.ColumnDefinitions>
+                    <Grid Name="gridXmlBinding">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="145" />
+                            <ColumnDefinition Width="150*" />
+                        </Grid.ColumnDefinitions>
 
-                </Grid>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+            <Grid Grid.Column="2" Grid.Row="1" Margin="3,10,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
+                    <TextBlock Text="Item Preview" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" Margin="3,0,0,0" BorderThickness="1">
+                    <TextBlock Text="Property" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
+                </Border>
+
+                <Border x:Name="brdPreview" Grid.Row="1" BorderBrush="#FF617584" BorderThickness="1" Margin="5,5,0,0" MouseLeftButtonUp="brdPreview_MouseLeftButtonUp"></Border>
+                <Border Grid.Column="1" Grid.Row="1" x:Name="brdPropertyGrid" BorderBrush="#FF617584" BorderThickness="1" Margin="5,5,0,0">
+                    <my:PropertyGrid Name="propertyGrid1"/>
+                </Border>
+                <sdk:GridSplitter Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Name="gridSplitter10" VerticalAlignment="Stretch" Width="5" Background="#FFEBEBEC" Margin="0,5,0,0"/>
+            </Grid>
+            <ScrollViewer Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
+                <ItemsControl x:Name="treeControl">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton Margin="8,0,6,0" Height="Auto" Width="Auto" x:Name="Control" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource RadioButtonControlStyle}" Click="Control_Click">
+                                <StackPanel Orientation="Vertical" Width="130">
+                                    <Image Width="130" Height="80" Source="{Binding IconName}" Stretch="Uniform"></Image>
+                                    <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="2,0,2,0" FontFamily="Verdana" FontSize="11" Text="{Binding DisplayName}" UseLayoutRounding="False" TextWrapping="Wrap" Style="{StaticResource TextBlockControlDisplayNameStyle}" />
+                                </StackPanel>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{Binding Description}"></ToolTip>
+                                </ToolTipService.ToolTip>
+                            </RadioButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ScrollViewer>
-        </Grid>
-        <Grid Grid.Column="2" Grid.Row="1" Margin="3,10,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20"></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" BorderThickness="1">
-                <TextBlock Text="Item Preview" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
-            </Border>
-            <Border Grid.Column="1" Grid.Row="0" Background="#FFE9ECFA" BorderBrush="#FF94ADEB" Margin="3,0,0,0" BorderThickness="1">
-                <TextBlock Text="Property" HorizontalAlignment="Center" FontWeight="SemiBold"></TextBlock>
-            </Border>
+            <sdk:TabControl x:Name="tabControl1" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Margin="0,10,0,0" >
+                <sdk:TabItem Header="Xml Source">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="84" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-            <Border x:Name="brdPreview" Grid.Row="1" BorderBrush="#FF617584" BorderThickness="1" Margin="5,5,0,0" MouseLeftButtonUp="brdPreview_MouseLeftButtonUp"></Border>
-            <Border Grid.Column="1" Grid.Row="1" x:Name="brdPropertyGrid" BorderBrush="#FF617584" BorderThickness="1" Margin="5,5,0,0">
-                <my:PropertyGrid Name="propertyGrid1"/>
-            </Border>
-            <sdk:GridSplitter Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Name="gridSplitter10" VerticalAlignment="Stretch" Width="5" Background="#FFEBEBEC" Margin="0,5,0,0"/>
-        </Grid>
-        <ScrollViewer Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
-            <ItemsControl x:Name="treeControl">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"></StackPanel>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <RadioButton Margin="8,0,6,0" Height="Auto" Width="Auto" x:Name="Control" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource RadioButtonControlStyle}" Click="Control_Click">
-                            <StackPanel Orientation="Vertical" Width="130">
-                                <Image Width="130" Height="80" Source="{Binding IconName}" Stretch="Uniform"></Image>
-                                <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="2,0,2,0" FontFamily="Verdana" FontSize="11" Text="{Binding DisplayName}" UseLayoutRounding="False" TextWrapping="Wrap" Style="{StaticResource TextBlockControlDisplayNameStyle}" />
-                            </StackPanel>
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{Binding Description}"></ToolTip>
-                            </ToolTipService.ToolTip>
-                        </RadioButton>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Name="textBlock1" Text="XmlURL:" VerticalAlignment="Center" />
+                        <TextBox Grid.Column="1" Grid.Row="0" Text="http://vnexpress.net/RSS/GL/Xa-hoi.rss" Name="textXmlURL"/>
+                        <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="Get data" x:Name="btnGetXml" Click="Get_Click" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" Name="textBlock2" Text="Xml element:" VerticalAlignment="Center" />
+                        <TextBox Grid.Column="1" Grid.Row="1" Text="item" Name="textXmlElement"/>
+                    </Grid>
+                </sdk:TabItem>
+                <sdk:TabItem Header="Database Source">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="25"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="85"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-        <sdk:TabControl x:Name="tabControl1" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Margin="0,10,0,0">
-            <sdk:TabItem Header="Xml Source">
+                        <TextBlock Text="ServerType:" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
+                        <ComboBox x:Name="comboServerType" Grid.Column="1" SelectedIndex="0">
+                            <ComboBoxItem Content="MySQL"></ComboBoxItem>
+                            <ComboBoxItem Content="MSSQL"></ComboBoxItem>
+                        </ComboBox>
+                        <TextBlock Text="ServerUrl:" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                        <TextBox x:Name="textServerUrl" Grid.Column="3" Text="SQL09.FREEMYSQL.NET"></TextBox>
+
+                        <TextBlock Text="DatabseName:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
+                        <TextBox x:Name="textDBName" Grid.Row="1" Grid.Column="1" Text="kudo001"></TextBox>
+                        <TextBlock Text="QueryString:" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                        <TextBox x:Name="textSQLString" Grid.Row="1" Grid.Column="3" Text="text"></TextBox>
+
+                        <TextBlock Text="UserName:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
+                        <TextBox x:Name="textUserName" Grid.Row="2" Grid.Column="1" Text="kudo183"></TextBox>
+                        <TextBlock Text="Password:" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
+                        <PasswordBox x:Name="textPassword" Grid.Row="2" Grid.Column="3" Password="nobita"></PasswordBox>
+
+                        <Button x:Name="btnGetDatabase" Content="Get data" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Click="btnGetDatabase_Click"></Button>
+                    </Grid>
+                </sdk:TabItem>
+            </sdk:TabControl>
+
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" x:Name="btnApply" Content="Apply" Margin="0,7,20,7" Click="btnApply_Click" />
+                <Button Grid.Column="2" x:Name="btnCancel" Content="Cancel"  Margin="0,7,40,7" Click="btnCancel_Click" />
+            </Grid>
+            <sdk:GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Name="gridSplitter1" VerticalAlignment="Top" Height="5" Background="#FFEBEBEC" Margin="0,3,0,0"/>
+            <sdk:GridSplitter Grid.Row="1" Grid.Column="2" Name="gridSplitter2" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="5" Background="#FFEBEBEC" Margin="0,10,0,0"/>
+            <sdk:GridSplitter Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Name="gridSplitter3" VerticalAlignment="Top" Height="5" Background="#FFEBEBEC" Margin="0,3,0,0"/>
+
+            <Grid Grid.ColumnSpan="3" Grid.RowSpan="4" Background="#BC968F8F" x:Name="LoadingPopup" Visibility="Collapsed">
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="25" />
-                        <RowDefinition Height="25" />
-                        <RowDefinition Height="25" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="84" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Column="0" Grid.Row="0" Name="textBlock1" Text="XmlURL:" VerticalAlignment="Center" />
-                    <TextBox Grid.Column="1" Grid.Row="0" Text="http://vnexpress.net/RSS/GL/Xa-hoi.rss" Name="textXmlURL"/>
-                    <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Content="Get data" x:Name="btnGetXml" Click="Get_Click" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Column="0" Grid.Row="1" Name="textBlock2" Text="Xml element:" VerticalAlignment="Center" />
-                    <TextBox Grid.Column="1" Grid.Row="1" Text="item" Name="textXmlElement"/>
-                </Grid>
-            </sdk:TabItem>
-            <sdk:TabItem Header="Database Source">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="25"/>
-                        <RowDefinition Height="25"/>
-                        <RowDefinition Height="25"/>
-                        <RowDefinition Height="25"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="90"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="85"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="ServerType:" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
-                    <ComboBox x:Name="comboServerType" Grid.Column="1" SelectedIndex="0">
-                        <ComboBoxItem Content="MySQL"></ComboBoxItem>
-                        <ComboBoxItem Content="MSSQL"></ComboBoxItem>
-                    </ComboBox>
-                    <TextBlock Text="ServerUrl:" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
-                    <TextBox x:Name="textServerUrl" Grid.Column="3" Text="SQL09.FREEMYSQL.NET"></TextBox>
-
-                    <TextBlock Text="DatabseName:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
-                    <TextBox x:Name="textDBName" Grid.Row="1" Grid.Column="1" Text="kudo001"></TextBox>
-                    <TextBlock Text="QueryString:" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
-                    <TextBox x:Name="textSQLString" Grid.Row="1" Grid.Column="3" Text="text"></TextBox>
-
-                    <TextBlock Text="UserName:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
-                    <TextBox x:Name="textUserName" Grid.Row="2" Grid.Column="1" Text="kudo183"></TextBox>
-                    <TextBlock Text="Password:" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"></TextBlock>
-                    <PasswordBox x:Name="textPassword" Grid.Row="2" Grid.Column="3" Password="nobita"></PasswordBox>
-
-                    <Button x:Name="btnGetDatabase" Content="Get data" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Click="btnGetDatabase_Click"></Button>
-                </Grid>
-            </sdk:TabItem>
-        </sdk:TabControl>
-
-        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="100"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" x:Name="btnApply" Content="Apply" Margin="0,7,20,7" Click="btnApply_Click" />
-            <Button Grid.Column="2" x:Name="btnCancel" Content="Cancel"  Margin="0,7,40,7" Click="btnCancel_Click" />
-        </Grid>
-        <sdk:GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Name="gridSplitter1" VerticalAlignment="Top" Height="5" Background="#FFEBEBEC" Margin="0,3,0,0"/>
-        <sdk:GridSplitter Grid.Row="1" Grid.Column="2" Name="gridSplitter2" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="5" Background="#FFEBEBEC" Margin="0,10,0,0"/>
-        <sdk:GridSplitter Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Name="gridSplitter3" VerticalAlignment="Top" Height="5" Background="#FFEBEBEC" Margin="0,3,0,0"/>
-
-        <Grid Grid.ColumnSpan="3" Grid.RowSpan="4" Background="#BC968F8F" x:Name="LoadingPopup" Visibility="Collapsed">
-            <Grid>
-                <Border HorizontalAlignment="Center" VerticalAlignment="Center"
+                    <Border HorizontalAlignment="Center" VerticalAlignment="Center"
                             Style="{StaticResource PopupBorderStyle}" 
                             CornerRadius="5" Margin="10">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="30" Color="Black" Direction="0" Opacity="1" ShadowDepth="0"></DropShadowEffect>
-                    </Border.Effect>
-                    <StackPanel x:Name="spPopupLoading" Orientation="Vertical" Width="300" Height="150"
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="30" Color="Black" Direction="0" Opacity="1" ShadowDepth="0"></DropShadowEffect>
+                        </Border.Effect>
+                        <StackPanel x:Name="spPopupLoading" Orientation="Vertical" Width="300" Height="150"
                                     VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource PopupBackgroundStyle}">
-                        <StackPanel.Resources>
-                            <Storyboard x:Name="openPopup">
-                                <DoubleAnimation Duration="0:0:.4" From="0" To="300"
+                            <StackPanel.Resources>
+                                <Storyboard x:Name="openPopup">
+                                    <DoubleAnimation Duration="0:0:.4" From="0" To="300"
                                                  Storyboard.TargetName="spPopupLoading" 
                                                  Storyboard.TargetProperty="Width"></DoubleAnimation>
-                                <DoubleAnimation Duration="0:0:.4" From="0" To="150"
+                                    <DoubleAnimation Duration="0:0:.4" From="0" To="150"
                                                  Storyboard.TargetName="spPopupLoading" 
                                                  Storyboard.TargetProperty="Height"></DoubleAnimation>
-                            </Storyboard>
-                            <Storyboard x:Name="closePopup">
-                                <DoubleAnimation Duration="0:0:.3" To="0"
+                                </Storyboard>
+                                <Storyboard x:Name="closePopup">
+                                    <DoubleAnimation Duration="0:0:.3" To="0"
                                                  Storyboard.TargetName="spPopupLoading" 
                                                  Storyboard.TargetProperty="Width"></DoubleAnimation>
-                                <DoubleAnimation Duration="0:0:.3" To="0"
+                                    <DoubleAnimation Duration="0:0:.3" To="0"
                                                  Storyboard.TargetName="spPopupLoading" 
                                                  Storyboard.TargetProperty="Height"></DoubleAnimation>
-                            </Storyboard>
-                        </StackPanel.Resources>
-                        <my1:LoadingAnimation AutoPlay="True" Margin="0,5" Style="{StaticResource PopupLoadingAnimationStyle}">
-                            <TextBlock x:Name="popupText" Text="L O A D I N G ..." VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Verdana" FontSize="12"></TextBlock>
-                        </my1:LoadingAnimation>
-                        <Button IsEnabled="True" x:Name="btnCancelDownload" Content="Cancel" Width="60" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource PopupButtonCancelStyle}" Click="Button_Click"></Button>
-                    </StackPanel>
-                </Border>
+                                </Storyboard>
+                            </StackPanel.Resources>
+                            <my1:LoadingAnimation AutoPlay="True" Margin="0,5" Style="{StaticResource PopupLoadingAnimationStyle}">
+                                <TextBlock x:Name="popupText" Text="L O A D I N G ..." VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Verdana" FontSize="12"></TextBlock>
+                            </my1:LoadingAnimation>
+                            <Button IsEnabled="True" x:Name="btnCancelDownload" Content="Cancel" Width="60" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource PopupButtonCancelStyle}" Click="Button_Click"></Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
             </Grid>
         </Grid>
-    </Grid>
+    </toolkit:BusyIndicator>
 </UserControl>
