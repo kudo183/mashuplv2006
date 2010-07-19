@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="HyperlinkControl.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400" xmlns:my1="clr-namespace:WebLinkControl;assembly=WebLinkControl" xmlns:my="clr-namespace:SilverlightHyperlinkControl;assembly=SilverlightHyperlinkControl">
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <my1:WebLink HorizontalAlignment="Left" Margin="68,134,0,0" Name="webLink1" VerticalAlignment="Top" Height="56" Width="239" />
+        <StackPanel Height="100" HorizontalAlignment="Left" Margin="560,274,0,0" Name="stackPanel1" VerticalAlignment="Top" Width="200" />
+        <my:Hyperlink HorizontalAlignment="Left" Margin="131,48,0,0" Name="hyperlink1" VerticalAlignment="Top" Height="30" Width="186" />
+    </Grid>
+</UserControl>
