@@ -68,6 +68,9 @@ namespace EffectLibrary
             CoverFlowItem item = new CoverFlowItem(element);
             element.Width = ItemWidth;
             element.Height = ItemHeight;
+            if (_ReflectionShader == true)
+                element.Effect = new EffectLibrary.CustomPixelShader.ReflectionShader() { ElementHeight = _ItemHeight };
+            
             item.ItemSelected += new EventHandler(item_ItemSelected);
             coverFlowItems.Add(item);
             LayoutRoot.Children.Add(element);
@@ -297,7 +300,7 @@ namespace EffectLibrary
 
         #region property
         private int selectedIndex;
-        
+
         private void SelectItem(int index)
         {
             IndexSelected(index, true, true);
@@ -329,7 +332,7 @@ namespace EffectLibrary
         }
 
         private double _SpaceBetweenSelectedItemAndItems;
-        
+
         public double SpaceBetweenSelectedItemAndItems
         {
             get { return _SpaceBetweenSelectedItemAndItems; }
@@ -357,7 +360,7 @@ namespace EffectLibrary
                 LayoutChildren();
             }
         }
-        
+
         private double _ZDistance;
 
         public double ZDistance
@@ -389,7 +392,7 @@ namespace EffectLibrary
         }
 
         private double _SingleItemDuration;
-        
+
         public double SingleItemDuration
         {
             get { return _SingleItemDuration; }
@@ -419,7 +422,7 @@ namespace EffectLibrary
         }
 
         private IEasingFunction EasingFunction;
-        
+
         private double _ItemWidth;
 
         public double ItemWidth
@@ -441,13 +444,15 @@ namespace EffectLibrary
         public double ItemHeight
         {
             get { return _ItemHeight; }
-            set 
+            set
             {
                 _ItemHeight = value;
                 for (int i = 0; i < coverFlowItems.Count; i++)
                 {
                     coverFlowItems[i].Element.Height = _ItemHeight;
                     LayoutChild(coverFlowItems[i], i);
+                    if (_ReflectionShader == true)
+                        coverFlowItems[i].Element.Effect = new EffectLibrary.CustomPixelShader.ReflectionShader() { ElementHeight = _ItemHeight };
                 }
             }
         }
@@ -476,7 +481,7 @@ namespace EffectLibrary
                 {
                     foreach (UIElement ui in LayoutRoot.Children)
                     {
-                        ui.Effect = new EffectLibrary.CustomPixelShader.ReflectionShader(_ItemHeight);
+                        ui.Effect = new EffectLibrary.CustomPixelShader.ReflectionShader() { ElementHeight = _ItemHeight };
                     }
                 }
                 else

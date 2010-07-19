@@ -435,7 +435,8 @@ namespace EffectLibrary
                     item.Center = _Center;
                     item.Element.Width = ItemWidth;
                     item.Element.Height = ItemHeight;
-
+                    if (_ReflectionShader == true)
+                        item.Element.Effect = new EffectLibrary.CustomPixelShader.ReflectionShader() { ElementHeight = _ItemHeight - 2};
                 }
                 Start();
             }
@@ -450,6 +451,31 @@ namespace EffectLibrary
             {
                 _Background = value;
                 LayoutRoot.Background = _Background;
+            }
+        }
+
+        private bool _ReflectionShader;
+
+        public bool ReflectionShader
+        {
+            get { return _ReflectionShader; }
+            set
+            {
+                _ReflectionShader = value;
+                if (_ReflectionShader == true)
+                {
+                    foreach (UIElement ui in LayoutRoot.Children)
+                    {
+                        ui.Effect = new EffectLibrary.CustomPixelShader.ReflectionShader() { ElementHeight = _ItemHeight - 2 };
+                    }
+                }
+                else
+                {
+                    foreach (UIElement ui in LayoutRoot.Children)
+                    {
+                        ui.Effect = null;
+                    }
+                }
             }
         }
 
@@ -479,6 +505,8 @@ namespace EffectLibrary
                 ca.Element.RenderTransform = null;
                 Canvas.SetTop(ca.Element, 0);
             }
+
+            ReflectionShader = false;
             LayoutRoot.Children.Clear();
             control.Content = null;
             IsSelfHandle = false;
@@ -519,6 +547,8 @@ namespace EffectLibrary
             element.Width = ItemWidth;
             element.Height = ItemHeight;
             element.RenderTransformOrigin = new Point(0.5, 0.5);
+            if (_ReflectionShader == true)
+                element.Effect = new EffectLibrary.CustomPixelShader.ReflectionShader() { ElementHeight = _ItemHeight - 2};
             carouselItems.Insert(index, item);
             UpdateItem();
         }
@@ -576,6 +606,7 @@ namespace EffectLibrary
             parameterNameList.Add("ScaleX");
             parameterNameList.Add("ScaleY");
             parameterNameList.Add("Background");
+            parameterNameList.Add("ReflectionShader");
 
             LayoutRoot = new Canvas();
             LayoutRoot.Background = new SolidColorBrush(Colors.Transparent);
