@@ -56,6 +56,7 @@ namespace ItemCollectionEditor
             doubleClickTimer = new DispatcherTimer();
             doubleClickTimer.Interval = new TimeSpan(0, 0, 0, 0, 200);
             doubleClickTimer.Tick += new EventHandler(DoubleClick_Timer);
+
             if (list.Datasource == null)
                 return;
             _sourceType = list.Datasource.SourceType;
@@ -207,12 +208,14 @@ namespace ItemCollectionEditor
             u.OnGetListDataFromXmlStructureAsyncCompleted += new Ultility.GetListDataFromXmlStructureAsyncCompletedHandler(u_OnGetListDataFromXmlStructureAsyncCompleted);
             u.GetListDataFromXmlStructureAsync(textXmlURL.Text, textXmlElement.Text);
             _sourceType = ListDataSource.DataSourceType.XML;
+            busy.IsBusy = true;
         }
 
         void u_OnGetListDataFromXmlStructureAsyncCompleted(string xmlString)
         {
             u.OnGetListDataFromXmlStructureAsyncCompleted -= new Ultility.GetListDataFromXmlStructureAsyncCompletedHandler(u_OnGetListDataFromXmlStructureAsyncCompleted);
             LoadComboboxData(xmlString);
+            busy.IsBusy = false;
         }
 
         private void btnGetDatabase_Click(object sender, RoutedEventArgs e)
@@ -223,18 +226,27 @@ namespace ItemCollectionEditor
             {
                 _sourceType = ListDataSource.DataSourceType.MYSQL;
             }
+            busy.IsBusy = true;
         }
 
         void u_OnGetListDataFromDatabaseStructureAsyncCompleted(string xmlString)
         {
             u.OnGetListDataFromDatabaseStructureAsyncCompleted += new Ultility.GetListDataFromDatabaseStructureAsyncCompletedHandler(u_OnGetListDataFromDatabaseStructureAsyncCompleted);
             LoadComboboxData(xmlString);
+            busy.IsBusy = false;
         }
 
         private void LoadComboboxData(string xmlString)
         {
-            XDocument xDoc = XDocument.Parse(xmlString);
-
+            XDocument xDoc = null;
+            try
+            {
+                 xDoc = XDocument.Parse(xmlString);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("load data error: " + ex.Message);
+            }
             _structure.Clear();
             _data.Clear();
             XElement eRoot = xDoc.Element("Root");
@@ -243,6 +255,7 @@ namespace ItemCollectionEditor
                 _structure.Add(e.Name.ToString());
                 _data.Add(e.Value);
             }
+           
             foreach (ComboBox cb in _comboData)
             {
                 cb.Items.Clear();
