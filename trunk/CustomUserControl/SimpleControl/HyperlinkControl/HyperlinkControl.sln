@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperlinkControl", "HyperlinkControl\HyperlinkControl.csproj", "{6A3AF2A4-7005-4824-BD82-62AC023B73EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperlinkControl.Web", "HyperlinkControl.Web\HyperlinkControl.Web.csproj", "{5DD5E676-2FEB-4C19-A75C-B86FA8ACC6CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebLinkControl", "WebLinkControl\WebLinkControl.csproj", "{F15629C5-995F-4F81-A6BE-CD305202E1A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilverlightHyperlinkControl", "SilverlightHyperlinkControl\SilverlightHyperlinkControl.csproj", "{71E09FBB-C7EC-427A-ABDC-E5BE5CE1313A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A3AF2A4-7005-4824-BD82-62AC023B73EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A3AF2A4-7005-4824-BD82-62AC023B73EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A3AF2A4-7005-4824-BD82-62AC023B73EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A3AF2A4-7005-4824-BD82-62AC023B73EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DD5E676-2FEB-4C19-A75C-B86FA8ACC6CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DD5E676-2FEB-4C19-A75C-B86FA8ACC6CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DD5E676-2FEB-4C19-A75C-B86FA8ACC6CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DD5E676-2FEB-4C19-A75C-B86FA8ACC6CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F15629C5-995F-4F81-A6BE-CD305202E1A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F15629C5-995F-4F81-A6BE-CD305202E1A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F15629C5-995F-4F81-A6BE-CD305202E1A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F15629C5-995F-4F81-A6BE-CD305202E1A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71E09FBB-C7EC-427A-ABDC-E5BE5CE1313A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71E09FBB-C7EC-427A-ABDC-E5BE5CE1313A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71E09FBB-C7EC-427A-ABDC-E5BE5CE1313A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71E09FBB-C7EC-427A-ABDC-E5BE5CE1313A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
