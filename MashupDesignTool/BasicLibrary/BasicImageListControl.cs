@@ -54,12 +54,64 @@ namespace BasicLibrary
             }
         }
 
+        private double titleSize = 12;
+        private Brush titleColor = new SolidColorBrush(Colors.Black);
+        private FontFamily titleFontFamily = new FontFamily("Arial");
+
+        public double TitleSize
+        {
+            get { return titleSize; }
+            set
+            {
+                if (titleSize == value)
+                    return;
+                titleSize = value;
+                foreach (EffectableControl ec in Items)
+                {
+                    (ec.Control as ImageListControlItems).TitleSize = titleSize;
+                }
+            }
+        }
+
+        public Brush TitleColor
+        {
+            get { return titleColor; }
+            set
+            {
+                if (titleColor == value)
+                    return;
+                titleColor = value;
+                foreach (EffectableControl ec in Items)
+                {
+                    (ec.Control as ImageListControlItems).TitleColor = titleColor;
+                }
+            }
+        }
+
+        public FontFamily TitleFontFamily
+        {
+            get { return titleFontFamily; }
+            set
+            {
+                if (titleFontFamily == value)
+                    return;
+                titleFontFamily = value;
+                foreach (EffectableControl ec in Items)
+                {
+                    (ec.Control as ImageListControlItems).TitleFontFamily = titleFontFamily;
+                }
+            }
+        }
+
         private bool IsManual = false;
         public BasicImageListControl()
             : base()
         {
             parameterNameList.Add("ItemsData");
             parameterNameList.Add("IsShowTitle");
+            parameterNameList.Add("TitleSize");
+            parameterNameList.Add("TitleColor");
+            parameterNameList.Add("TitleFontFamily");
             _ItemsData.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(_ItemsData_CollectionChanged);
 
             int count = 4;
@@ -69,6 +121,14 @@ namespace BasicLibrary
             // Width = Height = 150;
             for (int i = 0; i < count; i++)
                 AddItem(new EffectableControl(new ImageListControlItems() { Width = 50, Height = 50, }));
+            Loaded += new RoutedEventHandler(BasicImageListControl_Loaded);
+        }
+
+        void BasicImageListControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            TitleColor = TitleColor;
+            TitleFontFamily = TitleFontFamily;
+            TitleSize = TitleSize;
         }
 
         int i = 0;
@@ -107,6 +167,9 @@ namespace BasicLibrary
                 }
                 if (i == 4)
                 {
+                    temp.TitleSize = titleSize;
+                    temp.TitleColor = titleColor;
+                    temp.TitleFontFamily = titleFontFamily;
                     AddItem(new EffectableControl(temp));
                     temp = new ImageListControlItems();
                     i = 0;
