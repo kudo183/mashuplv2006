@@ -70,7 +70,7 @@ namespace EffectLibrary
             element.Height = ItemHeight;
             if (_ReflectionShader == true)
                 element.Effect = new EffectLibrary.CustomPixelShader.ReflectionShader() { ElementHeight = _ItemHeight };
-            
+
             item.ItemSelected += new EventHandler(item_ItemSelected);
             coverFlowItems.Add(item);
             LayoutRoot.Children.Add(element);
@@ -300,6 +300,14 @@ namespace EffectLibrary
 
         #region property
         private int selectedIndex;
+        public int SelectedIndex
+        {
+            get { return selectedIndex; }
+            set
+            {
+                IndexSelected(value, false, true);
+            }
+        }
 
         private void SelectItem(int index)
         {
@@ -313,6 +321,18 @@ namespace EffectLibrary
                 selectedIndex = index;
                 if (layoutChildren)
                     LayoutChildren();
+            }
+        }
+
+        private bool _IsShowSlider;
+
+        public bool IsShowSlider
+        {
+            get { return _IsShowSlider; }
+            set
+            {
+                _IsShowSlider = value;
+                sl.Visibility = (value) ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
@@ -513,6 +533,7 @@ namespace EffectLibrary
             parameterNameList.Add("ItemHeight");
             parameterNameList.Add("Background");
             parameterNameList.Add("ReflectionShader");
+            parameterNameList.Add("IsShowSlider");
 
             LayoutRoot = new Canvas();
             LayoutRoot.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
@@ -538,14 +559,56 @@ namespace EffectLibrary
                 AddItem(element);
             }
             LayoutRoot.SizeChanged += new SizeChangedEventHandler(LayoutRoot_SizeChanged);
+            _IsShowSlider = true;
+            sl.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sl_ValueChanged);
+            sl.Minimum = 0;
+            sl.Maximum = control.ItemCount - 1;
+            Canvas.SetLeft(sl, 5);
+            LayoutRoot.Children.Add(sl);
+
+            LayoutRoot.MouseWheel += new MouseWheelEventHandler(LayoutRoot_MouseWheel);
         }
 
+        void LayoutRoot_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            int i = -(e.Delta / 120);
+            int index = selectedIndex + i;
+            if (index < 0)
+                First();
+            else if (index > control.ItemCount - 1)
+                Last();
+            else
+                SelectedIndex = index;
+        }
+
+        public void First()
+        {
+            if (control.ItemCount == 0)
+                return;
+            duration = PageDuration;
+            SelectedIndex = 0;
+        }
+        public void Last()
+        {
+            if (control.ItemCount == 0)
+                return;
+            duration = PageDuration;
+            SelectedIndex = control.ItemCount - 1;
+        }
+
+        void sl_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            SelectedIndex = (int)sl.Value;
+        }
+        Slider sl = new Slider();
         void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (LayoutRoot.ActualWidth != 0)
                 control.Width = LayoutRoot.ActualWidth;
             if (LayoutRoot.ActualHeight != 0)
                 control.Height = LayoutRoot.ActualHeight;
+            sl.Width = LayoutRoot.ActualWidth - 20;
+            Canvas.SetTop(sl, LayoutRoot.ActualHeight - 30);
             LayoutChildren();
         }
 
@@ -582,6 +645,7 @@ namespace EffectLibrary
             int index = coverFlowItems.IndexOf(item);
             if (index >= 0)
                 IndexSelected(index, true, true);
+            sl.Value = selectedIndex;
         }
 
         protected void LayoutChildren()
