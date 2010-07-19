@@ -21,6 +21,13 @@ namespace EffectLibrary.CustomPixelShader
             base.UpdateShaderValue(ElementHeightProperty);
         }
 
+        public ReflectionShader()
+        {
+            parameterNameList.Add("ElementHeight");
+            Uri u = Ultily.MakePackUri(@"Reflection.ps");
+            PixelShader = new PixelShader() { UriSource = u };
+        }
+
         public static readonly DependencyProperty ElementHeightProperty =
                 DependencyProperty.Register("ElementHeight",
                 typeof(double),
