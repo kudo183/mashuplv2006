@@ -28,7 +28,7 @@ namespace Present.DataService {
         
         private System.Guid UserIdField;
         
-        private string XmlStringField;
+        private byte[] XmlStringField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string ApplicationName {
@@ -83,7 +83,7 @@ namespace Present.DataService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string XmlString {
+        public byte[] XmlString {
             get {
                 return this.XmlStringField;
             }

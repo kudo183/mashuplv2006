@@ -374,7 +374,7 @@ namespace MashupDesignTool
             appName = appData.ApplicationName;
             this.Title = appName;
             SetWindowTitle(appName + " - H2 Design Tool");
-            LoadDesign(appData.XmlString);
+            LoadDesign(Serializer.CompressUltility.Decompress(appData.XmlString));
         }
 
         private void LoadDesign(string xml)
@@ -1432,7 +1432,7 @@ namespace MashupDesignTool
             }
             else
             {
-                appData.XmlString = xmlString;
+                appData.XmlString = Serializer.CompressUltility.Compress(xmlString);
                 client.UpdateCompleted += new EventHandler<DataService.UpdateCompletedEventArgs>(client_UpdateCompleted);
                 client.UpdateAsync(appData);
             }
@@ -1479,7 +1479,7 @@ namespace MashupDesignTool
         {
             appData = new DataService.DesignedApplicationData()
             {
-                XmlString = xmlString,
+                XmlString = Serializer.CompressUltility.Compress(xmlString),
                 UserId = userId,
                 ApplicationName = appName
             };
@@ -1573,7 +1573,7 @@ namespace MashupDesignTool
                 }
                 else
                 {
-                    appData.XmlString = xmlString;
+                    appData.XmlString = Serializer.CompressUltility.Compress(xmlString);
                     client.UpdateCompleted += new EventHandler<DataService.UpdateCompletedEventArgs>(client_UpdateCompleted1);
                     client.UpdateAsync(appData);
                 }
@@ -1628,7 +1628,7 @@ namespace MashupDesignTool
         {
             appData = new DataService.DesignedApplicationData()
             {
-                XmlString = xmlString,
+                XmlString = Serializer.CompressUltility.Compress(xmlString),
                 UserId = userId,
                 ApplicationName = appName
             };

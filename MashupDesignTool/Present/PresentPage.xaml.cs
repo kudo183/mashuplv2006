@@ -87,7 +87,7 @@ namespace Present
             HtmlWindow top = HtmlPage.Window.GetProperty("top") as HtmlWindow;
             HtmlDocument doc = top.GetProperty("document") as HtmlDocument;
             doc.SetProperty("title", e.Result.ApplicationName + " - H2 Design Tool");
-            Preview(e.Result.XmlString);
+            Preview(Serializer.CompressUltility.Decompress(e.Result.XmlString));
         }
 
         private void Preview(string xml)

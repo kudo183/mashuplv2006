@@ -36,7 +36,7 @@ namespace WebServer.Web
         Guid id;
         Guid userId;
         string applicationName;
-        string xmlString;
+        byte[] xmlString;
         DateTime lastUpdate = new DateTime();
 
         [DataMember]
@@ -61,7 +61,7 @@ namespace WebServer.Web
         }
 
         [DataMember]
-        public string XmlString
+        public byte[] XmlString
         {
             get { return xmlString; }
             set { xmlString = value; }
