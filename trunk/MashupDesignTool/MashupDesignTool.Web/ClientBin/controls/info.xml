@@ -13,6 +13,8 @@
       <Dll>System.Windows.Pivot.SharedUI.dll</Dll>
       <Dll>System.Windows.Pivot.StringResources.dll</Dll>
       <Dll>System.Windows.Pivot.Utilities.dll</Dll>
+      <Dll>System.Xml.Linq.dll</Dll>
+      <Dll>System.Xml.Serialization.dll</Dll>
     </DllReferences>
     <DisplayName>Pivot viewer</DisplayName>
     <Description>Basic contact form control</Description>
@@ -310,9 +312,9 @@
     <Name>BlacklightTextBlock.StrokeTextBlock</Name>
     <DllFilename>BlacklightTextBlock.dll</DllFilename>
     <DllReferences>
-		<Dll>Blacklight.Controls.dll</Dll>
-		<Dll>System.ServiceModel.Syndication.dll</Dll>
-	</DllReferences>
+      <Dll>Blacklight.Controls.dll</Dll>
+      <Dll>System.ServiceModel.Syndication.dll</Dll>
+    </DllReferences>
     <DisplayName>StrokeTextBlock</DisplayName>
     <Description>Stroke text block</Description>
     <IconName>StrokeTextBlock.png</IconName>
@@ -322,9 +324,9 @@
     <Name>BlacklightTextBlock.DropShadowTextBlock</Name>
     <DllFilename>BlacklightTextBlock.dll</DllFilename>
     <DllReferences>
-		<Dll>Blacklight.Controls.dll</Dll>
-		<Dll>System.ServiceModel.Syndication.dll</Dll>
-	</DllReferences>
+      <Dll>Blacklight.Controls.dll</Dll>
+      <Dll>System.ServiceModel.Syndication.dll</Dll>
+    </DllReferences>
     <DisplayName>DropShadowTextBlock</DisplayName>
     <Description>Drop shadow text block</Description>
     <IconName>DropShadowTextBlock.png</IconName>
@@ -352,8 +354,8 @@
     <Name>WebLinkControl.WebLink</Name>
     <DllFilename>WebLinkControl.dll</DllFilename>
     <DllReferences>
-		<Dll>System.ServiceModel.Syndication.dll</Dll>
-	</DllReferences>
+      <Dll>System.ServiceModel.Syndication.dll</Dll>
+    </DllReferences>
     <DisplayName>Web link</DisplayName>
     <Description>Web link control</Description>
     <IconName>WebLink.png</IconName>
