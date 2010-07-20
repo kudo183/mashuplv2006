@@ -245,6 +245,7 @@ namespace ItemCollectionEditor
             }
             catch (Exception ex)
             {
+                busy.IsBusy = false;
                 MessageBox.Show("load data error: " + ex.Message);
             }
             _structure.Clear();
