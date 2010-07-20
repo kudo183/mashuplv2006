@@ -39,6 +39,7 @@ namespace BasicLibrary
         {
             WebClient webClient = new WebClient();
             webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_GetImageOpenReadCompleted);
+            URL = HttpUtility.UrlEncode(URL);
             Uri xmlUri = new Uri(_ServerURL, "GetBinaryData.ashx?URL=" + URL);
             webClient.OpenReadAsync(xmlUri);
         }
@@ -72,6 +73,7 @@ namespace BasicLibrary
             url += "&TABLE=" + table;
             url += "&INDEX=" + startIndex;
             url += "&COUNT=" + count;
+            url = HttpUtility.UrlEncode(url);
 
             Uri xmlUri = new Uri(_ServerURL, url);
             webClient.OpenReadAsync(xmlUri);
@@ -106,6 +108,7 @@ namespace BasicLibrary
             url += "&PASS=" + pass;
             url += "&DB=" + db;
             url += "&TABLE=" + table;
+            url = HttpUtility.UrlEncode(url);
 
             Uri xmlUri = new Uri(_ServerURL, url);
             webClient.DownloadStringAsync(xmlUri);
@@ -137,6 +140,7 @@ namespace BasicLibrary
             url += "&ELEMENT=" + elementName;
             url += "&INDEX=" + startIndex;
             url += "&COUNT=" + count;
+            url = HttpUtility.UrlEncode(url);
 
             Uri xmlUri = new Uri(_ServerURL, url);
             webClient.OpenReadAsync(xmlUri);
@@ -169,6 +173,7 @@ namespace BasicLibrary
             url += "URL=" + xmlUrl;
             url += "&ELEMENT=" + elementName;
 
+            url = HttpUtility.UrlEncode(url);
             Uri xmlUri = new Uri(_ServerURL, url);
             webClient.DownloadStringAsync(xmlUri);
         }
@@ -192,6 +197,7 @@ namespace BasicLibrary
         public event GetStringAsyncCompletedHandler OnGetStringAsyncCompleted;
         public void GetStringAsync(string URL)
         {
+            URL = HttpUtility.UrlEncode(URL);
             WebClient webClient = new WebClient();
             webClient.OpenReadCompleted += new OpenReadCompletedEventHandler(webClient_OpenReadCompleted);
             Uri xmlUri = new Uri(_ServerURL, "GetStringDataFromURL.ashx?URL=" + URL);
