@@ -54,7 +54,7 @@ namespace ItemCollectionEditor
             foreach (EffectableControl ec in list.Items)
             {
                 ImageListControlItems item = ec.Control as ImageListControlItems;
-                AddItemToListBox(item);
+                listBox.Items.Add(MakeListBoxItem(item));
                 //listControlItems.Add(ec.Control as ImageListControlItems);
                 listControlItems.Add(ec);
             }
@@ -163,9 +163,13 @@ namespace ItemCollectionEditor
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             ImageListControlItems item = new ImageListControlItems();
-            listControl.AddItem(new EffectableControl(item));
+            item.TitleColor = listControl.TitleColor;
+            item.TitleFontFamily = listControl.TitleFontFamily;
+            item.TitleSize = listControl.TitleSize;
+            item.IsShowTitle = listControl.IsShowTitle;
+            listControl.InsertItem(listBox.SelectedIndex + 1, new EffectableControl(item));
 
-            AddItemToListBox(item);
+            listBox.Items.Insert(listBox.SelectedIndex + 1, MakeListBoxItem(item));
         }
 
         private void txtURL_KeyDown(object sender, KeyEventArgs e)
@@ -207,7 +211,7 @@ namespace ItemCollectionEditor
             }
         }
 
-        private void AddItemToListBox(ImageListControlItems item)
+        private Border MakeListBoxItem(ImageListControlItems item)
         {
             ImageListControlItems temp = new ImageListControlItems();
             temp.Title = item.Title;
@@ -216,9 +220,8 @@ namespace ItemCollectionEditor
             temp.Link = item.Link;
             temp.Width = temp.Height = 130;
             temp.Margin = new Thickness(20, 0, 0, 0);
-            temp.IsShowTitle = item.IsShowTitle;
-            Border b = new Border() { Child = temp };
-            listBox.Items.Add(b);
+            temp.IsShowTitle = item.IsShowTitle;            
+            return new Border() { Child = temp };
         }
 
         private void txtLink_KeyDown(object sender, KeyEventArgs e)
