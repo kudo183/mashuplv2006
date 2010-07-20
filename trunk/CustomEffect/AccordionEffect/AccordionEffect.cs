@@ -35,7 +35,7 @@ namespace CustomListEffect
                 LayoutRoot.FontFamily = _Font;
             }
         }
-        
+
         [Category("Header")]
         public double FontSize
         {
@@ -44,6 +44,7 @@ namespace CustomListEffect
             {
                 _FontSize = value;
                 LayoutRoot.FontSize = _FontSize;
+                LayoutRoot.OnApplyTemplate();
             }
         }
 
@@ -57,7 +58,7 @@ namespace CustomListEffect
                 LayoutRoot.Foreground = _TextColor;
             }
         }
-        
+
         [Category("Header")]
         public Brush HeaderBackground
         {
@@ -190,11 +191,22 @@ namespace CustomListEffect
             //Border b = new Border() { Background = _HeaderBackground };
             //b.Child = new TextBlock() { Text = "hgfjhgfh" };
             //item.Header = b;
-            item.Header = "sadfasdf";
+            item.Header = " ";
+            EffectableControl ec = element as EffectableControl;
+            if (ec != null && ec.Control != null)
+            {
+                System.Reflection.PropertyInfo p = ec.Control.GetType().GetProperty("Title");
+
+                if (p != null)
+                {
+                    string s = p.GetValue(ec.Control, null).ToString();
+                    if (string.IsNullOrEmpty(s))
+                        s = " ";
+                    item.Header = s;
+                }
+            }
             item.Content = element;
             LayoutRoot.Items.Insert(index, item);
-
-            //LayoutRoot.Items.Add(element)
         }
 
         public void Swap(int index1, int index2)
@@ -243,23 +255,21 @@ namespace CustomListEffect
             parameterNameList.Add("Font");
             parameterNameList.Add("FontSize");
             parameterNameList.Add("TextColor");
-            
+
             main = new SilverlightControl1();
             main.HorizontalAlignment = HorizontalAlignment.Stretch;
             main.VerticalAlignment = VerticalAlignment.Stretch;
             LayoutRoot = main.LayoutRoot;
-            
+
             _Font = LayoutRoot.FontFamily;
             _FontSize = LayoutRoot.FontSize;
             _TextColor = LayoutRoot.Foreground;
-            
+
             control.Content = main;
             //LayoutRoot = new Accordion();
 
             //control.Content = LayoutRoot;
-
-            control.OnListChange += new BasicListControl.ListChangeHandler(control_OnListChange);
-
+            
             ExpandDirection = ExpandDirection.Right;
 
             LayoutRoot.Background = new SolidColorBrush(Colors.Transparent);
@@ -268,7 +278,7 @@ namespace CustomListEffect
             LayoutRoot.VerticalAlignment = VerticalAlignment.Stretch;
 
             _ItemWidth = _ItemHeight = 100;
-            _HeaderBackground = new SolidColorBrush(Colors.LightGray);
+            _HeaderBackground = new SolidColorBrush(Colors.Green);
             foreach (EffectableControl c in control.Items)
             {
                 AddItem(c);
