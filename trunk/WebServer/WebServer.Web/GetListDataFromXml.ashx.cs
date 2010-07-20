@@ -5,7 +5,7 @@ using System.Xml.Linq;
 using System.Web;
 using System.Net;
 using System.Xml.Serialization;
-
+using System.IO;
 namespace MashupDesignTool.Web
 {
     /// <summary>
@@ -24,7 +24,10 @@ namespace MashupDesignTool.Web
                 int index = int.Parse(context.Request["INDEX"]);
                 int count = int.Parse(context.Request["COUNT"]);
 
-                string xmlString = webClient.DownloadString(uri);
+                //string xmlString = webClient.DownloadString(uri);
+                StreamReader sr = new StreamReader(webClient.OpenRead(uri));
+                string xmlString = sr.ReadToEnd();
+                sr.Close();
 
                 XDocument xDoc = XDocument.Parse(xmlString);
                 List<List<string>> result = new List<List<string>>();
