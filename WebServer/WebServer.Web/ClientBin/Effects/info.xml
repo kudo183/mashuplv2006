@@ -200,4 +200,17 @@
     <IconName>Matrix.png</IconName>
     <Group>List</Group>
   </Effect>
+  <Effect>
+    <Name>CustomListEffect.AccordionEffect</Name>
+    <DllFilename>AccordionEffect.dll</DllFilename>
+    <DllReferences>
+      <Dll>BasicLibrary.dll</Dll>
+      <Dll>System.Windows.Controls.Layout.Toolkit.dll</Dll>
+      <Dll>System.Windows.Controls.Toolkit.dll</Dll>
+    </DllReferences>
+    <DisplayName>Accordion</DisplayName>
+    <Description>Accordion effect</Description>
+    <IconName>Accordion.png</IconName>
+    <Group>List</Group>
+  </Effect>
 </Effects>
