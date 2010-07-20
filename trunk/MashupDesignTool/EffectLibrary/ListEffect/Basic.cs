@@ -127,6 +127,7 @@ namespace EffectLibrary
         }
         public override void DetachEffect()
         {
+            control.OnListChange -= new BasicListControl.ListChangeHandler(control_OnListChange);
             ReflectionShader = false;
             LayoutRoot.Children.Clear();
             control.Content = null;
@@ -205,7 +206,7 @@ namespace EffectLibrary
             scrollView.Content = LayoutRoot;
 
             control.Content = scrollView;
-
+            control.OnListChange += new BasicListControl.ListChangeHandler(control_OnListChange);
             _ListOrientation = Orientation.Horizontal;
             LayoutRoot.Background = new SolidColorBrush(Colors.Transparent);
             LayoutRoot.Orientation = _ListOrientation;
@@ -218,26 +219,26 @@ namespace EffectLibrary
             }
         }
 
-        void control_OnListChange(string action, int index1, EffectableControl control, int index2)
+        void control_OnListChange(BasicListControl.ListItemsAction action, int index1, EffectableControl control, int index2)
         {
             switch (action)
             {
-                case "ADD":
+                case BasicListControl.ListItemsAction.ADD:
                     AddItem(control);
                     break;
-                case "INSERT":
+                case BasicListControl.ListItemsAction.INSERT:
                     InsertItem(index1, control);
                     break;
-                case "SWAP":
+                case BasicListControl.ListItemsAction.SWAP:
                     Swap(index1, index2);
                     break;
-                case "REMOVEAT":
+                case BasicListControl.ListItemsAction.REMOVEAT:
                     RemoveItemAt(index1);
                     break;
-                case "REMOVE":
+                case BasicListControl.ListItemsAction.REMOVE:
                     RemoveItem(control);
                     break;
-                case "REMOVEALL":
+                case BasicListControl.ListItemsAction.REMOVEALL:
                     RemoveAllItem();
                     break;
             }
