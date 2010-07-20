@@ -59,15 +59,11 @@ namespace ControlLibrary
             get { return _HTMLUrl; }
             set
             {
+                if (string.IsNullOrEmpty(value))
+                    return;
                 _HTMLUrl = value;
                 _HTMLString = "";
-                //if (divIFrameHost == null)
-                //    return;
-                //if (iFrame != null)
-                //    divIFrameHost.RemoveChild(iFrame);
-                //iFrame = CreateIFrameFromURL();
-                //divIFrameHost.AppendChild(iFrame);
-
+                
                 if (divIFrameHost == null)
                     return;
                 if (iFrame == null)
@@ -86,6 +82,8 @@ namespace ControlLibrary
             get { return _HTMLString; }
             set
             {
+                if (string.IsNullOrEmpty(value))
+                    return;
                 _HTMLString = value;
                 _HTMLUrl = "";
 
@@ -177,7 +175,10 @@ namespace ControlLibrary
             HtmlPage.Document.Body.AppendChild(divIFrameHost);
             Ultility.RegisterForNotification("Visibility", this, VisibilityChanged);
 
-            HTMLUrl = HTMLUrl;
+            if (string.IsNullOrEmpty(_HTMLString))
+                HTMLUrl = _HTMLUrl;
+            else
+                HTMLString = _HTMLString;
         }
 
         void VisibilityChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
