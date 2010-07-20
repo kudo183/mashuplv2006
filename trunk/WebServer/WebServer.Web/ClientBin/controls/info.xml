@@ -13,8 +13,6 @@
       <Dll>System.Windows.Pivot.SharedUI.dll</Dll>
       <Dll>System.Windows.Pivot.StringResources.dll</Dll>
       <Dll>System.Windows.Pivot.Utilities.dll</Dll>
-      <Dll>System.Xml.Linq.dll</Dll>
-      <Dll>System.Xml.Serialization.dll</Dll>
     </DllReferences>
     <DisplayName>Pivot viewer</DisplayName>
     <Description>Basic contact form control</Description>
@@ -83,7 +81,6 @@
     <Name>ControlLibrary.DataListControl</Name>
     <DllFilename>DataListControl.dll</DllFilename>
     <DllReferences>
-      <Dll>BasicLibrary.dll</Dll>
       <Dll>EffectLibrary.dll</Dll>
     </DllReferences>
     <DisplayName>Data List</DisplayName>
@@ -99,7 +96,6 @@
       <Dll>System.Windows.Controls.Data.Input.dll</Dll>
       <Dll>Liquid.RichText.dll</Dll>
       <Dll>System.ServiceModel.Syndication.dll</Dll>
-      <Dll>System.Xml.Serialization.dll</Dll>
     </DllReferences>
     <DisplayName>Rss Slideshow</DisplayName>
     <Description>Rss Slideshow view</Description>
@@ -147,7 +143,7 @@
       <Dll>ImageTools.Utils.dll</Dll>
     </DllReferences>
     <DisplayName>Animated gif image</DisplayName>
-    <Description>Control để hiển thị ảnh</Description>
+    <Description>This is a control used to show gif image file</Description>
     <IconName>GifIcon.png</IconName>
     <Group>User defined control</Group>
   </Control>
@@ -284,11 +280,11 @@
     <Group>Common Silverlight Controls</Group>
   </Control>
   <Control>
-    <Name>TextBlock</Name>
-    <DllFilename></DllFilename>
+    <Name>SilverlightTextBlock.TextBlock</Name>
+    <DllFilename>SilverlightTextBlock.dll</DllFilename>
     <DllReferences></DllReferences>
     <DisplayName>Text Block</DisplayName>
-    <Description>Text block</Description>
+    <Description>Simple text block</Description>
     <IconName>TextBlock.png</IconName>
     <Group>Common Silverlight Controls</Group>
   </Control>
@@ -305,9 +301,62 @@
     <Name>Liquid.RichTextBox</Name>
     <DllFilename></DllFilename>
     <DllReferences></DllReferences>
-    <DisplayName>RichTextBox (Liquid)</DisplayName>
-    <Description>RichTextBox</Description>
+    <DisplayName>RichTextBox</DisplayName>
+    <Description>Rich text box</Description>
     <IconName>TextBox.png</IconName>
     <Group>Common Silverlight Controls</Group>
+  </Control>
+  <Control>
+    <Name>BlacklightTextBlock.StrokeTextBlock</Name>
+    <DllFilename>BlacklightTextBlock.dll</DllFilename>
+    <DllReferences>
+		<Dll>Blacklight.Controls.dll</Dll>
+		<Dll>System.ServiceModel.Syndication.dll</Dll>
+	</DllReferences>
+    <DisplayName>StrokeTextBlock</DisplayName>
+    <Description>Stroke text block</Description>
+    <IconName>StrokeTextBlock.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>BlacklightTextBlock.DropShadowTextBlock</Name>
+    <DllFilename>BlacklightTextBlock.dll</DllFilename>
+    <DllReferences>
+		<Dll>Blacklight.Controls.dll</Dll>
+		<Dll>System.ServiceModel.Syndication.dll</Dll>
+	</DllReferences>
+    <DisplayName>DropShadowTextBlock</DisplayName>
+    <Description>Drop shadow text block</Description>
+    <IconName>DropShadowTextBlock.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>NavigateControl.Navigate</Name>
+    <DllFilename>NavigateControl.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Navigate</DisplayName>
+    <Description>This is a control used to navigate to a link or open a new window.</Description>
+    <IconName>NavigateControl.png</IconName>
+    <Group>Navigation</Group>
+  </Control>
+  <Control>
+    <Name>SilverlightHyperlinkControl.Hyperlink</Name>
+    <DllFilename>SilverlightHyperlinkControl.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Hyperlink</DisplayName>
+    <Description>Hyperlink control</Description>
+    <IconName>Hyperlink.png</IconName>
+    <Group>Navigation</Group>
+  </Control>
+  <Control>
+    <Name>WebLinkControl.WebLink</Name>
+    <DllFilename>WebLinkControl.dll</DllFilename>
+    <DllReferences>
+		<Dll>System.ServiceModel.Syndication.dll</Dll>
+	</DllReferences>
+    <DisplayName>Web link</DisplayName>
+    <Description>Web link control</Description>
+    <IconName>WebLink.png</IconName>
+    <Group>Navigation</Group>
   </Control>
 </Controls>
