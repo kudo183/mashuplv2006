@@ -17,10 +17,9 @@ namespace CustomListEffect
         double _ItemWidth;
         double _ItemHeight;
         Orientation _ListOrientation;
-        double _SpaceBetweenItem;
+        Thickness _SpaceBetweenItem;
 
-        Thickness _space = new Thickness();
-        public double SpaceBetweenItem
+        public Thickness SpaceBetweenItem
         {
             get { return _SpaceBetweenItem; }
             set
@@ -103,9 +102,8 @@ namespace CustomListEffect
 
         internal void UpdateSpace()
         {
-            _space = new Thickness(_SpaceBetweenItem);
             foreach (FrameworkElement element in LayoutRoot.Children)
-                element.Margin = _space;
+                element.Margin = _SpaceBetweenItem;
         }
 
         internal void UpdateScrollview()
@@ -132,6 +130,7 @@ namespace CustomListEffect
         public override void DetachEffect()
         {
             ReflectionShader = false;
+            SpaceBetweenItem = _orginMargin;
             LayoutRoot.Children.Clear();
             control.Content = null;
             IsSelfHandle = false;
@@ -168,7 +167,8 @@ namespace CustomListEffect
         {
             element.Width = _ItemWidth;
             element.Height = _ItemHeight;
-            element.Margin = _space;
+            _orginMargin = element.Margin;
+            element.Margin = _SpaceBetweenItem;
             LayoutRoot.Children.Insert(index, element);
         }
 
@@ -203,7 +203,7 @@ namespace CustomListEffect
 
         WrapPanel LayoutRoot;
         ScrollViewer scrollView;
-
+        Thickness _orginMargin;
         public Matrix(BasicListControl control)
             : base(control)
         {
