@@ -129,6 +129,8 @@ namespace BasicLibrary
             TitleColor = TitleColor;
             TitleFontFamily = TitleFontFamily;
             TitleSize = TitleSize;
+            if (_ItemsData.Count == 0)
+                RemoveAllItem();
         }
 
         int i = 0;
