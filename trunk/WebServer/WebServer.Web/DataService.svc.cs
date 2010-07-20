@@ -85,7 +85,7 @@ namespace WebServer.Web
                 Id = data.Id,
                 UserId = data.UserId,
                 ApplicationName = data.ApplicationName,
-                XmlString = data.XmlString,
+                XmlString = data.XmlString.ToArray(),
                 LastUpdate = data.LastUpdate
             };
             return dad;
@@ -98,7 +98,7 @@ namespace WebServer.Web
                 Id = data.Id,
                 UserId = data.UserId,
                 ApplicationName = data.ApplicationName,
-                XmlString = data.XmlString,
+                XmlString = new System.Data.Linq.Binary(data.XmlString),
                 LastUpdate = data.LastUpdate
             };
             return da;

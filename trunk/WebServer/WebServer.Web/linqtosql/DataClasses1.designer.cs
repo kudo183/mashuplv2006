@@ -370,7 +370,7 @@ namespace WebServer.Web.linqtosql
 		
 		private string _ApplicationName;
 		
-		private string _XmlString;
+		private System.Data.Linq.Binary _XmlString;
 		
 		private System.DateTime _LastUpdate;
 		
@@ -386,7 +386,7 @@ namespace WebServer.Web.linqtosql
     partial void OnUserIdChanged();
     partial void OnApplicationNameChanging(string value);
     partial void OnApplicationNameChanged();
-    partial void OnXmlStringChanging(string value);
+    partial void OnXmlStringChanging(System.Data.Linq.Binary value);
     partial void OnXmlStringChanged();
     partial void OnLastUpdateChanging(System.DateTime value);
     partial void OnLastUpdateChanged();
@@ -462,8 +462,8 @@ namespace WebServer.Web.linqtosql
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_XmlString", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string XmlString
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_XmlString", DbType="VarBinary(MAX) NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary XmlString
 		{
 			get
 			{

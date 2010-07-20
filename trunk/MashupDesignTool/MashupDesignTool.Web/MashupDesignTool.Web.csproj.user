@@ -25,7 +25,7 @@
           <AlwaysStartWebServerOnDebug>True</AlwaysStartWebServerOnDebug>
           <ProjectOutputReferences>
             <Ref Project="{BE85779E-34C2-47DA-ABF5-0A629C04029B}" Folder="ClientBin">Present.xap</Ref>
-            <Ref Project="{156D2974-36B2-493C-BF74-6D5D6303C215}" Folder="ClientBin">MashupDesignTool.xap</Ref>
+            <Ref Project="{7E3443B4-1174-49EF-B6E7-251DA76AFD69}" Folder="ClientBin">MashupDesignTool.xap</Ref>
           </ProjectOutputReferences>
         </WebProjectProperties>
       </FlavorProperties>

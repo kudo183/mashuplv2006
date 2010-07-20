@@ -13,7 +13,7 @@
     <RootNamespace>MashupDesignTool.Web</RootNamespace>
     <AssemblyName>MashupDesignTool.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <SilverlightApplicationList>{BE85779E-34C2-47DA-ABF5-0A629C04029B}|..\Present\Present.csproj|ClientBin|False,{156D2974-36B2-493C-BF74-6D5D6303C215}|..\MashupDesignTool\MashupDesignTool.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{BE85779E-34C2-47DA-ABF5-0A629C04029B}|..\Present\Present.csproj|ClientBin|False,{7E3443B4-1174-49EF-B6E7-251DA76AFD69}|..\MashupDesignTool\MashupDesignTool.csproj|ClientBin|False</SilverlightApplicationList>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -102,6 +102,13 @@
     <Content Include="crossdomain.xml" />
     <Content Include="dll\MySql.Data.dll" />
     <Content Include="dll\PivotServerTools.dll" />
+    <Content Include="Hinh\GiaiTri.png" />
+    <Content Include="Hinh\KinhTe.png" />
+    <Content Include="Hinh\PhapLuat.png" />
+    <Content Include="Hinh\TheGioi.png" />
+    <Content Include="Hinh\TheThao.png" />
+    <Content Include="Hinh\ThoiSu.png" />
+    <Content Include="Hinh\ViTinh.png" />
     <Content Include="MashupDesignToolTestPage.aspx" />
     <Content Include="MashupDesignToolTestPage.html" />
     <Content Include="PresentTestPage.aspx" />
