@@ -159,6 +159,7 @@ namespace CustomListEffect
             RemoveAllItem();
             control.Content = null;
             IsSelfHandle = false;
+            control.OnListChange -= new BasicListControl.ListChangeHandler(control_OnListChange);
         }
         public override void Next()
         {
@@ -266,10 +267,8 @@ namespace CustomListEffect
             _TextColor = LayoutRoot.Foreground;
 
             control.Content = main;
-            //LayoutRoot = new Accordion();
-
-            //control.Content = LayoutRoot;
-            
+            control.OnListChange+=new BasicListControl.ListChangeHandler(control_OnListChange);
+           
             ExpandDirection = ExpandDirection.Right;
 
             LayoutRoot.Background = new SolidColorBrush(Colors.Transparent);
@@ -283,14 +282,6 @@ namespace CustomListEffect
             {
                 AddItem(c);
             }
-
-            control.SizeChanged += new SizeChangedEventHandler(LayoutRoot_SizeChanged);
-        }
-
-        void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            //LayoutRoot.Width = e.NewSize.Width;
-            //LayoutRoot.Height = e.NewSize.Height;
         }
 
         void control_OnListChange(BasicListControl.ListItemsAction action, int index1, EffectableControl control, int index2)
