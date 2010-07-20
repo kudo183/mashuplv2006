@@ -120,7 +120,7 @@ namespace MyMenu
             parameterNameList.Add("SubMenuMode");
 
             _menu = new WebFishEye();
-
+            _menu.ButtonClick += new WebFishEyeButtonEventHandler(_menu_ButtonClick);
             BackgroundImageCenter = new BitmapImage(new Uri("http://img690.imageshack.us/img690/243/sirius2dockcenter.png", UriKind.RelativeOrAbsolute));
             BackgroundImageLeft = new BitmapImage(new Uri("http://img337.imageshack.us/img337/5193/sirius2dockleft.png", UriKind.RelativeOrAbsolute));
             BackgroundImageRight = new BitmapImage(new Uri("http://img84.imageshack.us/img84/3558/sirius2dockright.png", UriKind.RelativeOrAbsolute));
@@ -133,6 +133,11 @@ namespace MyMenu
 
             Content = _menu;
             SizeChanged += new SizeChangedEventHandler(FishEyeMenu_SizeChanged);
+        }
+
+        void _menu_ButtonClick(object sender, WebFishEyeButtonEventArgs e)
+        {
+            OnLinkClicked(e.Button.TargetUrl);
         }
 
         void FishEyeMenu_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -154,13 +159,17 @@ namespace MyMenu
         public override BasicLibrary.Menu.IMenuItem CreateMenuItem(System.Xml.Linq.XElement e)
         {
             FishEyeMenuItem mmi = new FishEyeMenuItem();
+            
             System.Xml.Linq.XAttribute att;
-            att = e.Attribute("Text");
+            att = e.Attribute("text");
             if (att != null)
                 mmi.Text = att.Value;
-            att = e.Attribute("Icon");
+            att = e.Attribute("icon");
             if (att != null)
                 mmi.ImageSource = new BitmapImage(new Uri(att.Value, UriKind.RelativeOrAbsolute));
+            att = e.Attribute("url");
+            if (att != null)
+                mmi.TargetUrl = att.Value;
             return mmi;
         }
 
@@ -174,12 +183,15 @@ namespace MyMenu
         {
             FishEyeSubMenuItem msmi = new FishEyeSubMenuItem();
             System.Xml.Linq.XAttribute att;
-            att = e.Attribute("Text");
+            att = e.Attribute("text");
             if (att != null)
                 msmi.Text = att.Value;
-            att = e.Attribute("Icon");
+            att = e.Attribute("icon");
             if (att != null)
                 msmi.ImageSource = new BitmapImage(new Uri(att.Value, UriKind.RelativeOrAbsolute));
+            att = e.Attribute("url");
+            if (att != null)
+                msmi.TargetUrl = att.Value;
             return msmi;
         }
     }
