@@ -135,6 +135,7 @@ namespace CustomListEffect
             LayoutRoot.Children.Clear();
             control.Content = null;
             IsSelfHandle = false;
+            control.OnListChange -= new BasicListControl.ListChangeHandler(control_OnListChange);
         }
         public override void Next()
         {
@@ -145,12 +146,14 @@ namespace CustomListEffect
 
         protected override void SetSelfHandle()
         {
-            if (IsSelfHandle == true)
-            {
-            }
-            else
-            {
-            }
+            //if (_isSelfHandle == true)
+            //{
+            //    control.OnListChange += new BasicListControl.ListChangeHandler(control_OnListChange);
+            //}
+            //else
+            //{
+            //    control.OnListChange -= new BasicListControl.ListChangeHandler(control_OnListChange);
+            //}
         }
         #endregion
 
