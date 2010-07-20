@@ -66,7 +66,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dll\BasicLibrary.dll" />
     <Content Include="dll\ISNet.Silverlight.dll" />
     <Content Include="dll\ISNet.Silverlight.WebAqua.dll" />
   </ItemGroup>
