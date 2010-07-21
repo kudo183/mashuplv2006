@@ -30,7 +30,9 @@ namespace PivotServer
 
             string facets = context.Request["Facets"];
             string[] str = facets.Split(',');
-
+            if (str.Length % 2 == 1)
+                return;
+            
             Collection collection = new Collection();
             collection.Name = name;
 
