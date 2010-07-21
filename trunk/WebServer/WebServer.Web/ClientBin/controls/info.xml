@@ -369,4 +369,13 @@
     <IconName>NewsDetailShower.png</IconName>
     <Group>User defined control</Group>
   </Control>
+  <Control>
+    <Name>BlacklightButton.BlacklightButtonControl</Name>
+    <DllFilename>BlacklightButton.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Button</DisplayName>
+    <Description>Button</Description>
+    <IconName>Button.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
 </Controls>
