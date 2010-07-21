@@ -15,16 +15,20 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
             <Image Stretch="Uniform" VerticalAlignment="Top" Width="0" x:Name="image" Margin="0"></Image>
-            <StackPanel Grid.Column="1">
-                <HyperlinkButton x:Name="tbTitle" FontFamily="Verdana" FontSize="18" FontWeight="Bold" Margin="3,0,0,0" Click="tbTitle_Click">
+            <!--<StackPanel Grid.Column="1">-->
+                <HyperlinkButton Grid.Column="1" x:Name="tbTitle" FontFamily="Verdana" FontSize="12" FontWeight="Bold" Margin="3,0,0,0" Click="tbTitle_Click">
                     <ContentControl>
                         <TextBlock TextWrapping="Wrap" x:Name="tbTitleControl" Foreground="#98B2D8"></TextBlock>
                     </ContentControl>
                 </HyperlinkButton>
-                <TextBlock x:Name="tbContent" Margin="2,0,0,0" TextWrapping="Wrap"></TextBlock>
-            </StackPanel>
+                <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="tbContent" Margin="2,0,0,0" TextWrapping="Wrap"></TextBlock>
+            <!--</StackPanel>-->
         </Grid>
     </Border>
 </bl:BasicDataListItem>
