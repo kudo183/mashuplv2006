@@ -1,0 +1,27 @@
+﻿<bl:BasicControl x:Class="NewsDetailsShowerControl.NewsDetailShower"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:bl="clr-namespace:BasicLibrary;assembly=BasicLibrary"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+    
+    <Border x:Name="border">
+        <Grid x:Name="LayoutRoot" Background="Transparent" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+        
+            <TextBlock x:Name="tbTitle" FontFamily="Verdana" FontSize="18" Foreground="#FF0000CF" TextWrapping="Wrap" FontWeight="Bold"></TextBlock>
+            <TextBlock Grid.Row="1" x:Name="tbBoldContent" FontSize="14" Foreground="#FFAFAFAF" FontWeight="Bold" TextWrapping="Wrap"></TextBlock>
+            <Image Grid.Row="2" Stretch="Uniform" Margin="5" x:Name="image"></Image>
+            <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
+                <TextBlock x:Name="tbContent" FontSize="12" TextWrapping="Wrap"></TextBlock>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</bl:BasicControl>
