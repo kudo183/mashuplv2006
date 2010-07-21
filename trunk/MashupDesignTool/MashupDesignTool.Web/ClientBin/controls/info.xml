@@ -18,18 +18,7 @@
     </DllReferences>
     <DisplayName>Pivot viewer</DisplayName>
     <Description>Basic contact form control</Description>
-    <IconName>MacStyleContactForm.png</IconName>
-    <Group>User defined control</Group>
-  </Control>
-  <Control>
-    <Name>SL_Menu.MyMenu</Name>
-    <DllFilename>MenuClassic.dll</DllFilename>
-    <DllReferences>
-      <Dll>Liquid.Menu.dll</Dll>
-    </DllReferences>
-    <DisplayName>MyMenu</DisplayName>
-    <Description>Basic contact form control</Description>
-    <IconName>MacStyleContactForm.png</IconName>
+    <IconName>pivot.png</IconName>
     <Group>User defined control</Group>
   </Control>
   <Control>
@@ -41,7 +30,7 @@
     </DllReferences>
     <DisplayName>FishEyeMenu</DisplayName>
     <Description>Basic contact form control</Description>
-    <IconName>MacStyleContactForm.png</IconName>
+    <IconName>fisheye_menu.png</IconName>
     <Group>User defined control</Group>
   </Control>
   <Control>
@@ -53,7 +42,7 @@
     </DllReferences>
     <DisplayName>SevenMenu</DisplayName>
     <Description>Basic contact form control</Description>
-    <IconName>MacStyleContactForm.png</IconName>
+    <IconName>seven_menu.png</IconName>
     <Group>User defined control</Group>
   </Control>
   <Control>
@@ -87,7 +76,7 @@
     </DllReferences>
     <DisplayName>Data List</DisplayName>
     <Description>List control support binding data from Xml file and Database.</Description>
-    <IconName>control4.png</IconName>
+    <IconName>datalist.png</IconName>
     <Group>User defined control</Group>
   </Control>
   <Control>
