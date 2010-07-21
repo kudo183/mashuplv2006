@@ -23,10 +23,66 @@ namespace EffectLibrary
         List<SplineDoubleKeyFrame> lstSDKFEnterHeight = new List<SplineDoubleKeyFrame>();
         List<SplineDoubleKeyFrame> lstSDKFLeaveWidth = new List<SplineDoubleKeyFrame>();
         List<SplineDoubleKeyFrame> lstSDKFLeaveHeight = new List<SplineDoubleKeyFrame>();
+
+        Image _ImageLeft = new Image();
+        Image _ImageCenter = new Image();
+        Image _ImageRight = new Image();
         double _ItemWidth;
         double _ItemHeight;
         double _Scale;
         double _Range;
+        double _SpaceBetweenItem;
+
+        public double SpaceBetweenItem
+        {
+            get { return _SpaceBetweenItem; }
+            set
+            {
+                _SpaceBetweenItem = value / 2;
+                foreach (FrameworkElement element in LayoutRoot.Children)
+                {
+                    element.Margin = new Thickness(_SpaceBetweenItem, 0, _SpaceBetweenItem, 0);
+                }
+            }
+        }
+        public enum VerticalAlignment
+        {
+            Top,
+            Center,
+            Bottom
+        }
+
+        VerticalAlignment _ItemVerticalAlignment;
+
+        public VerticalAlignment ItemVerticalAlignment
+        {
+            get { return _ItemVerticalAlignment; }
+            set
+            {
+                _ItemVerticalAlignment = value;
+                System.Windows.VerticalAlignment align;
+                switch (value)
+                {
+                    case VerticalAlignment.Top:
+                        align = System.Windows.VerticalAlignment.Top;
+                        break;
+                    case VerticalAlignment.Center:
+                        align = System.Windows.VerticalAlignment.Center;
+                        break;
+                    case VerticalAlignment.Bottom:
+                        align = System.Windows.VerticalAlignment.Bottom;
+                        break;
+                    default:
+                        align = System.Windows.VerticalAlignment.Center;
+                        break;
+                }
+                LayoutRoot.VerticalAlignment = align;
+                foreach (FrameworkElement element in LayoutRoot.Children)
+                {
+                    element.VerticalAlignment = LayoutRoot.VerticalAlignment;
+                }
+            }
+        }
 
         public double ItemWidth
         {
@@ -66,7 +122,11 @@ namespace EffectLibrary
                 }
 
                 ReflectionShader = _ReflectionShader;
-
+                if (_ReflectionShader == true)
+                {
+                    foreach (FrameworkElement element in LayoutRoot.Children)
+                        element.Effect = new EffectLibrary.CustomPixelShader.ReflectionShader() { ElementHeight = _ItemHeight };
+                }
                 control.UpdateLayout();
             }
         }
@@ -88,11 +148,11 @@ namespace EffectLibrary
 
         public Brush Background
         {
-            get { return LayoutRoot.Background; }
+            get { return b.Background; }
             set
             {
                 _Background = value;
-                LayoutRoot.Background = _Background;
+                b.Background = _Background;
             }
         }
 
@@ -101,7 +161,8 @@ namespace EffectLibrary
         public bool ReflectionShader
         {
             get { return _ReflectionShader; }
-            set { 
+            set
+            {
                 _ReflectionShader = value;
                 if (_ReflectionShader == true)
                 {
@@ -129,6 +190,11 @@ namespace EffectLibrary
         public override void DetachEffect()
         {
             ReflectionShader = false;
+            foreach (FrameworkElement element in LayoutRoot.Children)
+            {
+                element.VerticalAlignment = origin;
+                element.Margin = originSpace;
+            }
             LayoutRoot.Children.Clear();
             control.Content = null;
             IsSelfHandle = false;
@@ -166,12 +232,21 @@ namespace EffectLibrary
             InsertItem(LayoutRoot.Children.Count, element);
         }
 
+        System.Windows.VerticalAlignment origin;
+        Thickness originSpace;
+
         public void InsertItem(int index, FrameworkElement element)
         {
             element.Width = _ItemWidth;
             element.Height = _ItemHeight;
+            origin = element.VerticalAlignment;
+            originSpace = element.Margin;
+            element.Margin = new Thickness(_SpaceBetweenItem, 0, _SpaceBetweenItem, 0);
+            element.VerticalAlignment = LayoutRoot.VerticalAlignment;
+            if(_ReflectionShader == true)
+                element.Effect = new EffectLibrary.CustomPixelShader.ReflectionShader() { ElementHeight = _ItemHeight };
             LayoutRoot.Children.Insert(index, element);
-            
+
             Storyboard sb;
             DoubleAnimationUsingKeyFrames dakf;
             SplineDoubleKeyFrame sdkf;
@@ -282,7 +357,9 @@ namespace EffectLibrary
         }
         #endregion
 
+
         StackPanel LayoutRoot;
+        Border b;
         public FishEye(BasicListControl control)
             : base(control)
         {
@@ -292,13 +369,20 @@ namespace EffectLibrary
             parameterNameList.Add("Range");
             parameterNameList.Add("Background");
             parameterNameList.Add("ReflectionShader");
+            parameterNameList.Add("ItemVerticalAlignment");
+            parameterNameList.Add("SpaceBetweenItem");
 
             LayoutRoot = new StackPanel();
-            control.Content = LayoutRoot;
+            //b.Children.Add(LayoutRoot);
+            b = new Border() { Child = LayoutRoot };            
+            control.Content = b;
 
+            Background = new SolidColorBrush(Colors.White);
             LayoutRoot.Background = new SolidColorBrush(Colors.Transparent);
             LayoutRoot.Orientation = Orientation.Horizontal;
             LayoutRoot.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+
+            ItemVerticalAlignment = VerticalAlignment.Center;
 
             _ItemWidth = _ItemHeight = 100;
             _Range = 500;
@@ -307,6 +391,13 @@ namespace EffectLibrary
             {
                 AddItem(c);
             }
+
+            b.SizeChanged += new SizeChangedEventHandler(LayoutRoot_SizeChanged);
+        }
+
+        void LayoutRoot_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            b.Clip = new RectangleGeometry() { Rect = new Rect(0, 0, e.NewSize.Width, e.NewSize.Height) };
         }
 
         void control_OnListChange(BasicListControl.ListItemsAction action, int index1, EffectableControl control, int index2)
