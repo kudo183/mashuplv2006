@@ -52,7 +52,8 @@ namespace MashupDesignTool
             List<ControlComboBoxItemData> listControls = new List<ControlComboBoxItemData>();
             listControls.Add(ControlComboBoxItemData.None);
             foreach (EffectableControl fe in controls)
-                if (typeof(BasicControl).IsAssignableFrom(fe.Control.GetType()) && fe.Control.Name != selectedObject.Name)
+                //if (typeof(BasicControl).IsAssignableFrom(fe.Control.GetType()) && fe.Control.Name != selectedObject.Name)
+                if (typeof(BasicControl).IsAssignableFrom(fe.Control.GetType()))
                     listControls.Add(new ControlComboBoxItemData((BasicControl)fe.Control));
             
             List<MDTEventInfo> listEventInfo = MDTEventManager.GetListEventInfoRaiseBy(selectedObject);
