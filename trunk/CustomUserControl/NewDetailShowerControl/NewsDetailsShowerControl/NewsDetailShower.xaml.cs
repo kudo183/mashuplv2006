@@ -164,7 +164,8 @@ namespace NewsDetailsShowerControl
                             ContentText = sb.ToString();
                             break;
                         case "image":
-                            ImageURL = new Uri(child.Value, UriKind.Absolute);
+                            if (child.Value.Length != 0)
+                                ImageURL = new Uri(child.Value, UriKind.Absolute);
                             break;
                         default:
                             LoadData(child);
@@ -173,6 +174,7 @@ namespace NewsDetailsShowerControl
                 }
             }
             catch { }
+            busy.IsBusy = false;
         }
 
         public void LoadData(string xml)
@@ -194,6 +196,11 @@ namespace NewsDetailsShowerControl
 
             if (link != "")
             {
+                busy.IsBusy = true;
+                Title = "";
+                BoldContent = "";
+                ContentText = "";
+                //image.Source = null;
                 Ultility ulti = new Ultility();
                 ulti.OnGetStringAsyncCompleted += new Ultility.GetStringAsyncCompletedHandler(ulti_OnGetStringAsyncCompleted);
                 //gan tham so vao
