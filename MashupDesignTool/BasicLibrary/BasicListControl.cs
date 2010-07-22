@@ -147,12 +147,16 @@ namespace BasicLibrary
                 }
             }
         }
+        
+        public BusyIndicator Container = new BusyIndicator();
 
         public BasicListControl()
             : base()
         {
             effectPropertyNameList.Add("ListEffect");
             effectPropertyNameList.Add("ListItemEffect");
+            
+            Content = Container;
         }
     }
 }

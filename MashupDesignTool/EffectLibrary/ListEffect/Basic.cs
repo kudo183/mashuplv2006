@@ -130,7 +130,7 @@ namespace EffectLibrary
             control.OnListChange -= new BasicListControl.ListChangeHandler(control_OnListChange);
             ReflectionShader = false;
             LayoutRoot.Children.Clear();
-            control.Content = null;
+            control.Container.Content = null;
             IsSelfHandle = false;
         }
         public override void Next()
@@ -205,7 +205,7 @@ namespace EffectLibrary
             ScrollViewer scrollView = new ScrollViewer() { HorizontalScrollBarVisibility = ScrollBarVisibility.Auto, VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
             scrollView.Content = LayoutRoot;
 
-            control.Content = scrollView;
+            control.Container.Content = scrollView;
             control.OnListChange += new BasicListControl.ListChangeHandler(control_OnListChange);
             _ListOrientation = Orientation.Horizontal;
             LayoutRoot.Background = new SolidColorBrush(Colors.Transparent);

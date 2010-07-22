@@ -33,7 +33,7 @@ namespace EffectLibrary
                 item.Element.Projection = null;
             }
             LayoutRoot.Children.Clear();
-            control.Content = null;
+            control.Container.Content = null;
             IsSelfHandle = false;
         }
         public override void Next()
@@ -545,7 +545,7 @@ namespace EffectLibrary
             LayoutRoot = new Canvas();
             LayoutRoot.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             LayoutRoot.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
-            control.Content = LayoutRoot;
+            control.Container.Content = LayoutRoot;
             LayoutRoot.Background = new SolidColorBrush(Colors.Transparent);
 
             _ItemWidth = _ItemHeight = 100;

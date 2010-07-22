@@ -508,7 +508,7 @@ namespace EffectLibrary
 
             ReflectionShader = false;
             LayoutRoot.Children.Clear();
-            control.Content = null;
+            control.Container.Content = null;
             IsSelfHandle = false;
         }
         public override void Next()
@@ -612,7 +612,7 @@ namespace EffectLibrary
             LayoutRoot.Background = new SolidColorBrush(Colors.Transparent);
             LayoutRoot.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             LayoutRoot.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
-            control.Content = LayoutRoot;
+            control.Container.Content = LayoutRoot;
 
             Duration = 5000;
             _ScaleX = 1;
