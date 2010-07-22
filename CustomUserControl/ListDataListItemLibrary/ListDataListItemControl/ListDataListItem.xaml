@@ -9,7 +9,7 @@
     
     <Border x:Name="LayoutBorder" BorderBrush="Black" BorderThickness="1">
         <StackPanel x:Name="LayoutRoot" Background="White">
-            <sdk:Label Height="28" Name="lblHeader" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" FontFamily="Verdana" FontWeight="Bold" Foreground="White">
+            <sdk:Label Content="Header" Height="28" Name="lblHeader" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" FontFamily="Verdana" FontWeight="Bold" Foreground="White">
                 <sdk:Label.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="White" Offset="0" />
@@ -26,7 +26,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Rectangle Grid.Column="0" Width="5" Height="5" Fill="Blue" Margin="0,6,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="recBullet1"></Rectangle>
-                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent1">
+                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="content" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent1">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Name="tbSubItemTooltip1"></TextBlock>
                             </ToolTipService.ToolTip>
@@ -42,7 +42,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Rectangle Grid.Column="0" Width="5" Height="5" Fill="Blue" Margin="0,6,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="recBullet2"></Rectangle>
-                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent2">
+                        <TextBlock Grid.Column="1" Text="content" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent2">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Name="tbSubItemTooltip2"></TextBlock>
                             </ToolTipService.ToolTip>
@@ -58,7 +58,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Rectangle Grid.Column="0" Width="5" Height="5" Fill="Blue" Margin="0,6,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="recBullet3"></Rectangle>
-                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent3">
+                        <TextBlock Grid.Column="1" Text="content" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent3">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Name="tbSubItemTooltip3"></TextBlock>
                             </ToolTipService.ToolTip>
@@ -74,7 +74,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Rectangle Grid.Column="0" Width="5" Height="5" Fill="Blue" Margin="0,6,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="recBullet4"></Rectangle>
-                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent4">
+                        <TextBlock Grid.Column="1" Text="content" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent4">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Name="tbSubItemTooltip4"></TextBlock>
                             </ToolTipService.ToolTip>
@@ -90,7 +90,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Rectangle Grid.Column="0" Width="5" Height="5" Fill="Blue" Margin="0,6,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="recBullet5"></Rectangle>
-                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent5">
+                        <TextBlock Grid.Column="1" Text="content" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent5">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Name="tbSubItemTooltip5"></TextBlock>
                             </ToolTipService.ToolTip>
@@ -106,7 +106,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Rectangle Grid.Column="0" Width="5" Height="5" Fill="Blue" Margin="0,6,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="recBullet6"></Rectangle>
-                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent6">
+                        <TextBlock Grid.Column="1" Text="content" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent6">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Name="tbSubItemTooltip6"></TextBlock>
                             </ToolTipService.ToolTip>
@@ -122,7 +122,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Rectangle Grid.Column="0" Width="5" Height="5" Fill="Blue" Margin="0,6,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="recBullet7"></Rectangle>
-                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent7">
+                        <TextBlock Grid.Column="1" Text="content" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent7">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Name="tbSubItemTooltip7"></TextBlock>
                             </ToolTipService.ToolTip>
@@ -138,7 +138,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Rectangle Grid.Column="0" Width="5" Height="5" Fill="Blue" Margin="0,6,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="recBullet8"></Rectangle>
-                        <TextBlock Grid.Column="1" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent8">
+                        <TextBlock Grid.Column="1" Text="content" TextWrapping="Wrap" Cursor="Hand" HorizontalAlignment="Stretch" x:Name="tbSubItemContent8">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Name="tbSubItemTooltip8"></TextBlock>
                             </ToolTipService.ToolTip>
