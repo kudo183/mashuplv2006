@@ -15,10 +15,10 @@
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Border x:Name="borderImage" BorderBrush="#EFEFEF" BorderThickness="1" Margin="2">
-                <Image Grid.Row="0" x:Name="imgImage" Cursor="Hand" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="Uniform"></Image>
+                <Image Grid.Row="0" x:Name="imgImage" Source="http://tuntravel.com/images/resources/no_image.jpg" Cursor="Hand" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="Uniform"></Image>
             </Border>
-            <TextBlock Grid.Row="1" x:Name="tbTitle" Margin="6,1" Cursor="Hand" TextTrimming="WordEllipsis" FontFamily="Verdana" FontSize="18" Foreground="#0072BC" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
-            <TextBlock Grid.Row="2" x:Name="tbContent" Margin="6,0" TextWrapping="Wrap"></TextBlock>
+            <TextBlock Grid.Row="1" x:Name="tbTitle" Text="Title" Margin="6,1" Cursor="Hand" TextTrimming="WordEllipsis" FontFamily="Verdana" FontSize="18" Foreground="#0072BC" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Row="2" x:Name="tbContent" Text="Location of the original image for an item. Publishing will generate Deep Zoom files from this image" Margin="6,0" TextWrapping="Wrap"></TextBlock>
         </Grid>
     </Border>
 </bl:BasicDataListItem>
