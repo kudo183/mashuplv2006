@@ -53,7 +53,9 @@ namespace BasicLibrary
             parameterNameList.Add("ListItemXMlString");
             parameterNameList.Add("ControlDataMapping");
             parameterNameList.Add("Datasource");
+
             Loaded += new RoutedEventHandler(BasicDataListControl_Loaded);
+            Container.BusyContent = "Downloading data ...";
         }
 
         void BasicDataListControl_Loaded(object sender, RoutedEventArgs e)
@@ -77,6 +79,7 @@ namespace BasicLibrary
                     return;
                 u.OnGetListDataFromXmlAsyncCompleted += new Ultility.GetListDataFromXmlAsyncCompletedHandler(u_OnGetListDataCompleted);
                 u.GetListDataFromXmlAsync(_Datasource.XmlURL, _Datasource.ElementName, 0, int.MaxValue);
+                Container.IsBusy = true;
             }
             else if (_Datasource.SourceType == ListDataSource.DataSourceType.MYSQL)
             {
@@ -84,6 +87,7 @@ namespace BasicLibrary
                     return;
                 u.OnGetListDataFromDatabaseAsyncCompleted += new Ultility.GetListDataFromDatabaseAsyncCompletedHandler(u_OnGetListDataFromDatabaseAsyncCompleted);
                 u.GetListDataFromDatabaseAsync(_Datasource.Server, _Datasource.Username, _Datasource.Password, _Datasource.Db, _Datasource.Table, 0, int.MaxValue);
+                Container.IsBusy = true;
             }
         }
 
@@ -91,12 +95,14 @@ namespace BasicLibrary
         {
             u.OnGetListDataFromDatabaseAsyncCompleted -= new Ultility.GetListDataFromDatabaseAsyncCompletedHandler(u_OnGetListDataFromDatabaseAsyncCompleted);
             CreateListItemFromData(result);
+            Container.IsBusy = false;
         }
 
         void u_OnGetListDataCompleted(List<List<string>> result)
         {
             u.OnGetListDataFromXmlAsyncCompleted -= new Ultility.GetListDataFromXmlAsyncCompletedHandler(u_OnGetListDataCompleted);
             CreateListItemFromData(result);
+            Container.IsBusy = false;
         }
 
         private void CreateListItemFromData(List<List<string>> data)

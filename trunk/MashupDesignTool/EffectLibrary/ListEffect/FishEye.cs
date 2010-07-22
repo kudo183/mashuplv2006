@@ -196,7 +196,7 @@ namespace EffectLibrary
                 element.Margin = originSpace;
             }
             LayoutRoot.Children.Clear();
-            control.Content = null;
+            control.Container.Content = null;
             IsSelfHandle = false;
         }
         public override void Next()
@@ -375,7 +375,7 @@ namespace EffectLibrary
             LayoutRoot = new StackPanel();
             //b.Children.Add(LayoutRoot);
             b = new Border() { Child = LayoutRoot };            
-            control.Content = b;
+            control.Container.Content = b;
 
             Background = new SolidColorBrush(Colors.White);
             LayoutRoot.Background = new SolidColorBrush(Colors.Transparent);
