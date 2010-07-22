@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Net;
 using System.Xml.Serialization;
+using System.IO;
 
 namespace MashupDesignTool.Web
 {
@@ -20,7 +21,8 @@ namespace MashupDesignTool.Web
             try
             {
                 Uri uri = new Uri(context.Request["URL"], UriKind.RelativeOrAbsolute);
-                string result = webClient.DownloadString(uri);
+                StreamReader sr = new StreamReader(webClient.OpenRead(uri));
+                string result = sr.ReadToEnd(); 
 
                 XmlSerializer xm = new XmlSerializer(typeof(string));
                 xm.Serialize(context.Response.OutputStream, result);
