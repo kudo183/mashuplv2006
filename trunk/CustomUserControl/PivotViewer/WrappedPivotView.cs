@@ -94,13 +94,20 @@ namespace ControlLibrary
             Loaded += new RoutedEventHandler(WrappedPivotView_Loaded);
             p.LinkClicked += new EventHandler<LinkEventArgs>(p_LinkClicked);
             _XmlDataElement = "item";
+            //_CollectionName = "";
+            //_DescriptionElement = "";
+            //_ImageUrlElement = "";
+            //_LinkElement = "";
+            //_TitleElement = "";
+            //_XmlDataURL = "";
+            //_XmlFacets = "";
             _CollectionName = "";
-            _DescriptionElement = "";
-            _ImageUrlElement = "";
-            _LinkElement = "";
-            _TitleElement = "";
+            _DescriptionElement = "content";
+            _ImageUrlElement = "image";
+            _LinkElement = "link";
+            _TitleElement = "title";
             _XmlDataURL = "";
-            _XmlFacets = "";
+            _XmlFacets = "gia,gia";
         }
 
         void p_LinkClicked(object sender, LinkEventArgs e)
@@ -123,7 +130,6 @@ namespace ControlLibrary
                 XElement root = doc.Element("root");
                 root = root.Element("Link");
                 _XmlDataURL = root.Value;
-                MessageBox.Show(_XmlDataURL);
                 LoadCollection();
             }
             catch { }
