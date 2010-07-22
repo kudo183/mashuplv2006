@@ -13,21 +13,12 @@
       <Dll>System.Windows.Pivot.SharedUI.dll</Dll>
       <Dll>System.Windows.Pivot.StringResources.dll</Dll>
       <Dll>System.Windows.Pivot.Utilities.dll</Dll>
+      <Dll>System.Xml.Linq.dll</Dll>
+      <Dll>System.Xml.Serialization.dll</Dll>
     </DllReferences>
     <DisplayName>Pivot viewer</DisplayName>
     <Description>Basic contact form control</Description>
-    <IconName>MacStyleContactForm.png</IconName>
-    <Group>User defined control</Group>
-  </Control>
-  <Control>
-    <Name>SL_Menu.MyMenu</Name>
-    <DllFilename>MenuClassic.dll</DllFilename>
-    <DllReferences>
-      <Dll>Liquid.Menu.dll</Dll>
-    </DllReferences>
-    <DisplayName>MyMenu</DisplayName>
-    <Description>Basic contact form control</Description>
-    <IconName>MacStyleContactForm.png</IconName>
+    <IconName>pivot.png</IconName>
     <Group>User defined control</Group>
   </Control>
   <Control>
@@ -39,7 +30,7 @@
     </DllReferences>
     <DisplayName>FishEyeMenu</DisplayName>
     <Description>Basic contact form control</Description>
-    <IconName>MacStyleContactForm.png</IconName>
+    <IconName>fisheye_menu.png</IconName>
     <Group>User defined control</Group>
   </Control>
   <Control>
@@ -51,7 +42,7 @@
     </DllReferences>
     <DisplayName>SevenMenu</DisplayName>
     <Description>Basic contact form control</Description>
-    <IconName>MacStyleContactForm.png</IconName>
+    <IconName>seven_menu.png</IconName>
     <Group>User defined control</Group>
   </Control>
   <Control>
@@ -85,7 +76,7 @@
     </DllReferences>
     <DisplayName>Data List</DisplayName>
     <Description>List control support binding data from Xml file and Database.</Description>
-    <IconName>control4.png</IconName>
+    <IconName>datalist.png</IconName>
     <Group>User defined control</Group>
   </Control>
   <Control>
@@ -310,9 +301,9 @@
     <Name>BlacklightTextBlock.StrokeTextBlock</Name>
     <DllFilename>BlacklightTextBlock.dll</DllFilename>
     <DllReferences>
-		<Dll>Blacklight.Controls.dll</Dll>
-		<Dll>System.ServiceModel.Syndication.dll</Dll>
-	</DllReferences>
+      <Dll>Blacklight.Controls.dll</Dll>
+      <Dll>System.ServiceModel.Syndication.dll</Dll>
+    </DllReferences>
     <DisplayName>StrokeTextBlock</DisplayName>
     <Description>Stroke text block</Description>
     <IconName>StrokeTextBlock.png</IconName>
@@ -322,9 +313,9 @@
     <Name>BlacklightTextBlock.DropShadowTextBlock</Name>
     <DllFilename>BlacklightTextBlock.dll</DllFilename>
     <DllReferences>
-		<Dll>Blacklight.Controls.dll</Dll>
-		<Dll>System.ServiceModel.Syndication.dll</Dll>
-	</DllReferences>
+      <Dll>Blacklight.Controls.dll</Dll>
+      <Dll>System.ServiceModel.Syndication.dll</Dll>
+    </DllReferences>
     <DisplayName>DropShadowTextBlock</DisplayName>
     <Description>Drop shadow text block</Description>
     <IconName>DropShadowTextBlock.png</IconName>
@@ -352,8 +343,8 @@
     <Name>WebLinkControl.WebLink</Name>
     <DllFilename>WebLinkControl.dll</DllFilename>
     <DllReferences>
-		<Dll>System.ServiceModel.Syndication.dll</Dll>
-	</DllReferences>
+      <Dll>System.ServiceModel.Syndication.dll</Dll>
+    </DllReferences>
     <DisplayName>Web link</DisplayName>
     <Description>Web link control</Description>
     <IconName>WebLink.png</IconName>

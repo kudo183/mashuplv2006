@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Web;
 using System.Xml.Linq;
+using System.IO;
 using PivotServerTools;
 
 namespace PivotServer
@@ -18,34 +20,66 @@ namespace PivotServer
     {
         public void ProcessRequest(HttpContext context)
         {
-            //PivotHttpHandlers.ServeCxml(context);
-            string rss = context.Request["rss"];
-            Collection collection = new Collection();
-            collection.Name = "My specific collection";
-            WebClient web = new WebClient();
-            string s = web.DownloadString(rss);
-            XDocument doc = XDocument.Parse(s);
-            int i = 0;
-            string title, des, link, pub;
-            foreach (XElement element in doc.Descendants("item"))
-            {
-                title = (element.Element("title") != null) ? element.Element("title").Value : "";
-                des = (element.Element("description") != null) ? element.Element("description").Value : "";
-                link = (element.Element("link") != null) ? element.Element("link").Value : "";
-                pub = (element.Element("pubDate") != null) ? element.Element("pubDate").Value : "";
-                collection.AddItem(i.ToString(), "url", "des", null,
-                    new Facet("Title", title),
-                    new Facet("des", des),
-                    new Facet("link", link),
-                    new Facet("pubDate", pub));
-                //collection.AddItem(title, link, des, null);
-                i++;
-            }
+            string url = context.Request["url"];
+            string name = context.Request["Name"];
+            string dataElement = context.Request["DataElement"];
+            string title = context.Request["Title"];
+            string link = context.Request["Link"];
+            string des = context.Request["Description"];
+            string imageUrl = context.Request["ImageUrl"];
+
+            string facets = context.Request["Facets"];
+            string[] str = facets.Split(',');
+            if (str.Length % 2 == 1)
+                return;
             
+            Collection collection = new Collection();
+            collection.Name = name;
+
+            WebClient web = new WebClient();
+            StreamReader sr = new StreamReader(web.OpenRead(url));
+            string s = sr.ReadToEnd();
+            sr.Close();
+
+            XDocument doc = XDocument.Parse(s);
+            string strTitle, strLink, strDes, strImageUrl;
+            foreach (XElement element in doc.Descendants(dataElement))
+            {
+                strTitle = (element.Element(title) != null) ? element.Element(title).Value : "";
+                strDes = (element.Element(des) != null) ? element.Element(des).Value : "";
+                strLink = (element.Element(link) != null) ? element.Element(link).Value : "";
+                strImageUrl = (element.Element(imageUrl) != null) ? element.Element(imageUrl).Value : "";
+                collection.AddItem(strTitle, strLink, strDes, new ItemImage(new Uri(strImageUrl, UriKind.RelativeOrAbsolute)), MakeFacet(str, element).ToArray());
+                //string title, des, link, pub, href, content, image, price;
+                //title = (element.Element("title") != null) ? element.Element("title").Value : "";
+                //des = (element.Element("description") != null) ? element.Element("description").Value : "";
+                //link = (element.Element("link") != null) ? element.Element("link").Value : "";
+                //href = (element.Element("href") != null) ? element.Element("href").Value : "";
+                //content = (element.Element("content") != null) ? element.Element("content").Value : "";
+                //image = (element.Element("image") != null) ? element.Element("image").Value : "";
+                //pub = (element.Element("pubDate") != null) ? element.Element("pubDate").Value : "";
+                //price = (element.Element("price") != null) ? element.Element("price").Value : "";                
+                //collection.AddItem(title, href, content, new ItemImage(new Uri(image, UriKind.RelativeOrAbsolute)),
+                //    new Facet("Title", title),
+                //    new Facet("Price", price));
+
+            }
 
             PivotHttpHandlers.ServeCxml(context, collection);
         }
+        private List<Facet> MakeFacet(string[] mapping, XElement element)
+        {
+            List<Facet> result = new List<Facet>();
+            for (int i = 0; i < mapping.Length; i += 2)
+            {
+                XElement e = element.Element(mapping[i + 1]);
+                if (e == null)
+                    continue;
+                result.Add(new Facet(mapping[i], e.Value));
 
+            }
+            return result;
+        }
         public bool IsReusable
         {
             get { return true; }
