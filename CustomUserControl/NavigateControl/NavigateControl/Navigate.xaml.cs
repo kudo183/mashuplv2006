@@ -13,7 +13,6 @@ using BasicLibrary;
 using System.Xml;
 using System.IO;
 using System.Windows.Browser;
-
 namespace NavigateControl
 {
     public partial class Navigate : BasicControl
@@ -30,14 +29,9 @@ namespace NavigateControl
         {
             try
             {
-                XmlReader reader = XmlReader.Create(new StringReader(xml));
-                while (reader.Read())
-                {
-                    if (reader.Name == "Link")
-                    {
-                        HtmlPage.Window.Navigate(new Uri(reader.ReadInnerXml()));
-                    }
-                }
+                xml = xml.Replace("<root><Click>true</Click><Link>", "");
+                xml = xml.Replace("</Link></root>", "");
+                HtmlPage.Window.Navigate(new Uri(xml));
             }
             catch { }
         }
@@ -46,14 +40,11 @@ namespace NavigateControl
         {
             try
             {
-                XmlReader reader = XmlReader.Create(new StringReader(xml));
-                while (reader.Read())
-                {
-                    if (reader.Name == "Link")
-                        HtmlPage.Window.Navigate(new Uri(reader.ReadInnerXml()), "_blank");
-                }
+                xml = xml.Replace("<root><Click>true</Click><Link>", "");
+                xml = xml.Replace("</Link></root>", "");
+                HtmlPage.Window.Navigate(new Uri(xml), "_blank");
             }
-            catch { }
+            catch (Exception e) { MessageBox.Show(e.Message); }
         }
     }
 }
