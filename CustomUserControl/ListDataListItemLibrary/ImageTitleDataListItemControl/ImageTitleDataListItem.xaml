@@ -14,7 +14,7 @@
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Border x:Name="borderImage" BorderBrush="#EFEFEF" BorderThickness="1" Margin="2">
-                <Image Grid.Row="0" x:Name="imgImage" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="Uniform" MouseEnter="imgImage_MouseEnter" MouseLeave="imgImage_MouseLeave">
+                <Image Grid.Row="0" x:Name="imgImage" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="Uniform" MouseEnter="imgImage_MouseEnter" MouseLeave="imgImage_MouseLeave" Source="http://tuntravel.com/images/resources/no_image.jpg">
                     <!--<ToolTipService.ToolTip>
                         <Image x:Name="imgTooltip" Visibility="Collapsed">
                             <Image.Resources>
@@ -26,7 +26,7 @@
                     </ToolTipService.ToolTip>-->
                 </Image>
             </Border>
-            <TextBlock Grid.Row="1" x:Name="tbTitle" Margin="5,5" Cursor="Hand" TextWrapping="Wrap"></TextBlock>
+            <TextBlock Grid.Row="1" x:Name="tbTitle" Margin="5,5" Cursor="Hand" Text="Location of the original image for an item. Publishing will generate Deep Zoom files from this image" TextWrapping="Wrap"></TextBlock>
         </Grid>
     </Border>
 </bl:BasicDataListItem>
