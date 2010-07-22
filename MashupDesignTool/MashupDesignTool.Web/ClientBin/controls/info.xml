@@ -350,4 +350,23 @@
     <IconName>WebLink.png</IconName>
     <Group>Navigation</Group>
   </Control>
+ <Control>
+    <Name>NewsDetailsShowerControl.NewsDetailShower</Name>
+    <DllFilename>NewsDetailsShowerControl.dll</DllFilename>
+    <DllReferences>		
+	</DllReferences>
+    <DisplayName>News Detail Shower</DisplayName>
+    <Description>Control used to show news detail</Description>
+    <IconName>NewsDetailShower.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
+  <Control>
+    <Name>BlacklightButton.BlacklightButtonControl</Name>
+    <DllFilename>BlacklightButton.dll</DllFilename>
+    <DllReferences></DllReferences>
+    <DisplayName>Button</DisplayName>
+    <Description>Button</Description>
+    <IconName>Button.png</IconName>
+    <Group>User defined control</Group>
+  </Control>
 </Controls>
