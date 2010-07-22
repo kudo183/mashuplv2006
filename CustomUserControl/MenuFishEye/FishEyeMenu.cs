@@ -120,7 +120,7 @@ namespace MyMenu
             parameterNameList.Add("SubMenuMode");
 
             _menu = new WebFishEye();
-            _menu.ButtonClick += new WebFishEyeButtonEventHandler(_menu_ButtonClick);
+            //_menu.ButtonClick += new WebFishEyeButtonEventHandler(_menu_ButtonClick);
             BackgroundImageCenter = new BitmapImage(new Uri("http://img690.imageshack.us/img690/243/sirius2dockcenter.png", UriKind.RelativeOrAbsolute));
             BackgroundImageLeft = new BitmapImage(new Uri("http://img337.imageshack.us/img337/5193/sirius2dockleft.png", UriKind.RelativeOrAbsolute));
             BackgroundImageRight = new BitmapImage(new Uri("http://img84.imageshack.us/img84/3558/sirius2dockright.png", UriKind.RelativeOrAbsolute));
@@ -167,9 +167,9 @@ namespace MyMenu
             att = e.Attribute("icon");
             if (att != null)
                 mmi.ImageSource = new BitmapImage(new Uri(att.Value, UriKind.RelativeOrAbsolute));
-            att = e.Attribute("url");
-            if (att != null)
-                mmi.TargetUrl = att.Value;
+            //att = e.Attribute("url");
+            //if (att != null)
+            //    mmi.TargetUrl = att.Value;
             return mmi;
         }
 
@@ -189,9 +189,9 @@ namespace MyMenu
             att = e.Attribute("icon");
             if (att != null)
                 msmi.ImageSource = new BitmapImage(new Uri(att.Value, UriKind.RelativeOrAbsolute));
-            att = e.Attribute("url");
-            if (att != null)
-                msmi.TargetUrl = att.Value;
+            //att = e.Attribute("url");
+            //if (att != null)
+            //    msmi.TargetUrl = att.Value;
             return msmi;
         }
     }
