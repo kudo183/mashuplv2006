@@ -214,9 +214,9 @@ namespace ItemCollectionEditor
         private Border MakeListBoxItem(ImageListControlItems item)
         {
             ImageListControlItems temp = new ImageListControlItems();
+            temp.ImageUrl = item.ImageUrl;
             temp.Title = item.Title;
             temp.Description = item.Description;
-            temp.Img.Source = item.Img.Source;
             temp.Link = item.Link;
             temp.Width = temp.Height = 130;
             temp.Margin = new Thickness(20, 0, 0, 0);
