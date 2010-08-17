@@ -216,9 +216,14 @@ namespace MashupDesignTool
                 try { id = Guid.Parse(dic["app"]); }
                 catch { ret = false; }
 
-                DataService.DataServiceClient client = new DataService.DataServiceClient();
+                string url = HtmlPage.Document.DocumentUri.AbsoluteUri;
+                url = url.Substring(0, url.IndexOf("Design/design.aspx"));
+                DataService.DataServiceClient client = new DataService.DataServiceClient("BasicHttpBinding_IDataService", url + "DataService.svc");
+
                 client.GetDesignedApplicationCompleted += new EventHandler<DataService.GetDesignedApplicationCompletedEventArgs>(client_GetDesignedApplicationCompleted);
-                client.GetDesignedApplicationAsync(id); 
+                client.GetDesignedApplicationAsync(id);
+
+                MessageBox.Show(url);
                 
                 if (ret == true)
                     return;
@@ -355,7 +360,10 @@ namespace MashupDesignTool
             }
             appData = e.Result;
 
-            DataService.DataServiceClient client = new DataService.DataServiceClient();
+            string url = HtmlPage.Document.DocumentUri.AbsoluteUri;
+            url = url.Substring(0, url.IndexOf("Design/design.aspx"));
+            DataService.DataServiceClient client = new DataService.DataServiceClient("BasicHttpBinding_IDataService", url + "DataService.svc");
+
             client.GetUserIdFromNameCompleted += new EventHandler<DataService.GetUserIdFromNameCompletedEventArgs>(client_GetUserIdFromNameCompleted2);
             client.GetUserIdFromNameAsync(WebContext.Current.User.Name);
         }
@@ -1417,7 +1425,10 @@ namespace MashupDesignTool
             List<string> effectReferenceDll = new List<string>();
             GetDlls(controlDll, controlReferenceDll, effectDll, effectReferenceDll);
             xmlString = PageSerializer.Serialize(designCanvas1, controlDll, controlReferenceDll, effectDll, effectReferenceDll);
-            DataService.DataServiceClient client = new DataService.DataServiceClient();
+
+            string url = HtmlPage.Document.DocumentUri.AbsoluteUri;
+            url = url.Substring(0, url.IndexOf("Design/design.aspx"));
+            DataService.DataServiceClient client = new DataService.DataServiceClient("BasicHttpBinding_IDataService", url + "DataService.svc");
 
             saveCompleted = false;
             sw = new SavingWindow();
@@ -1454,7 +1465,10 @@ namespace MashupDesignTool
                 {
                     if (gotUserId == false)
                     {
-                        DataService.DataServiceClient client = new DataService.DataServiceClient();
+                        string url = HtmlPage.Document.DocumentUri.AbsoluteUri;
+                        url = url.Substring(0, url.IndexOf("Design/design.aspx"));
+                        DataService.DataServiceClient client = new DataService.DataServiceClient("BasicHttpBinding_IDataService", url + "DataService.svc");
+
                         client.GetUserIdFromNameCompleted += new EventHandler<DataService.GetUserIdFromNameCompletedEventArgs>(client_GetUserIdFromNameCompleted);
                         client.GetUserIdFromNameAsync(WebContext.Current.User.Name);
                     }
@@ -1483,7 +1497,11 @@ namespace MashupDesignTool
                 UserId = userId,
                 ApplicationName = appName
             };
-            DataService.DataServiceClient client = new DataService.DataServiceClient();
+
+            string url = HtmlPage.Document.DocumentUri.AbsoluteUri;
+            url = url.Substring(0, url.IndexOf("Design/design.aspx"));
+            DataService.DataServiceClient client = new DataService.DataServiceClient("BasicHttpBinding_IDataService", url + "DataService.svc");
+
             client.InsertCompleted += new EventHandler<DataService.InsertCompletedEventArgs>(client_InsertCompleted);
             client.InsertAsync(appData);
         }
@@ -1526,7 +1544,10 @@ namespace MashupDesignTool
             List<string> effectReferenceDll = new List<string>();
             GetDlls(controlDll, controlReferenceDll, effectDll, effectReferenceDll);
             xmlString = PageSerializer.Serialize(designCanvas1, controlDll, controlReferenceDll, effectDll, effectReferenceDll);
-            DataService.DataServiceClient client = new DataService.DataServiceClient();
+
+            string url = HtmlPage.Document.DocumentUri.AbsoluteUri;
+            url = url.Substring(0, url.IndexOf("Design/design.aspx"));
+            DataService.DataServiceClient client = new DataService.DataServiceClient("BasicHttpBinding_IDataService", url + "DataService.svc");
 
             saveCompleted = false;
             sw = new SavingWindow();
@@ -1558,7 +1579,10 @@ namespace MashupDesignTool
                 List<string> effectReferenceDll = new List<string>();
                 GetDlls(controlDll, controlReferenceDll, effectDll, effectReferenceDll);
                 xmlString = PageSerializer.Serialize(designCanvas1, controlDll, controlReferenceDll, effectDll, effectReferenceDll);
-                DataService.DataServiceClient client = new DataService.DataServiceClient();
+
+                string url = HtmlPage.Document.DocumentUri.AbsoluteUri;
+                url = url.Substring(0, url.IndexOf("Design/design.aspx"));
+                DataService.DataServiceClient client = new DataService.DataServiceClient("BasicHttpBinding_IDataService", url + "DataService.svc");
 
                 saveCompleted = false;
                 sw = new SavingWindow();
@@ -1603,7 +1627,10 @@ namespace MashupDesignTool
                 {
                     if (gotUserId == false)
                     {
-                        DataService.DataServiceClient client = new DataService.DataServiceClient();
+                        string url = HtmlPage.Document.DocumentUri.AbsoluteUri;
+                        url = url.Substring(0, url.IndexOf("Design/design.aspx"));
+                        DataService.DataServiceClient client = new DataService.DataServiceClient("BasicHttpBinding_IDataService", url + "DataService.svc");
+
                         client.GetUserIdFromNameCompleted += new EventHandler<DataService.GetUserIdFromNameCompletedEventArgs>(client_GetUserIdFromNameCompleted1);
                         client.GetUserIdFromNameAsync(WebContext.Current.User.Name);
                     }
@@ -1632,7 +1659,11 @@ namespace MashupDesignTool
                 UserId = userId,
                 ApplicationName = appName
             };
-            DataService.DataServiceClient client = new DataService.DataServiceClient();
+
+            string url = HtmlPage.Document.DocumentUri.AbsoluteUri;
+            url = url.Substring(0, url.IndexOf("Design/design.aspx"));
+            DataService.DataServiceClient client = new DataService.DataServiceClient("BasicHttpBinding_IDataService", url + "DataService.svc");
+
             client.InsertCompleted += new EventHandler<DataService.InsertCompletedEventArgs>(client_InsertCompleted1);
             client.InsertAsync(appData);
         }
