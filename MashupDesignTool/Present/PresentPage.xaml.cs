@@ -55,7 +55,10 @@ namespace Present
                 try { id = Guid.Parse(dic["app"]); }
                 catch { ret = false; }
 
-                DataService.DataServiceClient client = new DataService.DataServiceClient();
+                string url = HtmlPage.Document.DocumentUri.AbsoluteUri;
+                url = url.Substring(0, url.IndexOf("Present/present.aspx"));
+                DataService.DataServiceClient client = new DataService.DataServiceClient("BasicHttpBinding_IDataService", url + "DataService.svc");
+
                 client.GetDesignedApplicationCompleted += new EventHandler<DataService.GetDesignedApplicationCompletedEventArgs>(client_GetDesignedApplicationCompleted);
                 client.GetDesignedApplicationAsync(id);
 
