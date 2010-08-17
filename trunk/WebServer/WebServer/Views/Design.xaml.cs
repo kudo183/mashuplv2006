@@ -40,7 +40,10 @@ namespace WebServer
 
         void GetDesignedApplicationList()
         {
-            DataServiceClient client = new DataServiceClient();
+            string uri = HtmlPage.Document.DocumentUri.AbsoluteUri;
+            uri = uri.Substring(0,uri.IndexOf("index.aspx"));
+            DataServiceClient client = new DataServiceClient("BasicHttpBinding_IDataService", uri + "DataService.svc");
+            
             client.GetDesignedApplicationListCompleted += new EventHandler<GetDesignedApplicationListCompletedEventArgs>(client_GetDesignedApplicationListCompleted);
             client.GetDesignedApplicationListAsync(WebContext.Current.User.Name);
             //busyIndicator.IsBusy = true;
@@ -130,7 +133,7 @@ namespace WebServer
             //navigate toi trang aspx preview
             string para = "?app=" + id;
             Uri documentUri = HtmlPage.Document.DocumentUri;
-            HtmlPage.Window.Navigate(new Uri(documentUri, "Present/present.aspx" + para));
+            HtmlPage.Window.Navigate(new Uri(documentUri, "Present/present.aspx" + para), "", "fullscreen=yes");
         }
 
         void hb2_Click(object sender, RoutedEventArgs e)
@@ -141,7 +144,7 @@ namespace WebServer
             //navvigate toi trang aspx design
             string para = "?app=" + id;
             Uri documentUri = HtmlPage.Document.DocumentUri;
-            HtmlPage.Window.Navigate(new Uri(documentUri, "Design/design.aspx" + para));
+            HtmlPage.Window.Navigate(new Uri(documentUri, "Design/design.aspx" + para),"","fullscreen=yes");
         }
 
         void hb3_Click(object sender, RoutedEventArgs e)
@@ -177,7 +180,7 @@ namespace WebServer
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             Uri documentUri = HtmlPage.Document.DocumentUri;
-            HtmlPage.Window.Navigate(new Uri(documentUri, "Design/design.aspx"));
+            HtmlPage.Window.Navigate(new Uri(documentUri, "Design/design.aspx"), "", "fullscreen=yes");
         }
     }
 }
