@@ -38,7 +38,6 @@ namespace MashupDesignTool
             string absoluteUri = Application.Current.Host.Source.AbsoluteUri;
             int lastSlash = absoluteUri.LastIndexOf("/");
             clientRoot = absoluteUri.Substring(0, lastSlash + 1);
-            MessageBox.Show(clientRoot);
         }
 
         public void Download(List<string> dllFilenames, List<string> dllReferences)
