@@ -223,8 +223,6 @@ namespace MashupDesignTool
                 client.GetDesignedApplicationCompleted += new EventHandler<DataService.GetDesignedApplicationCompletedEventArgs>(client_GetDesignedApplicationCompleted);
                 client.GetDesignedApplicationAsync(id);
 
-                MessageBox.Show(url);
-                
                 if (ret == true)
                     return;
 
@@ -358,6 +356,7 @@ namespace MashupDesignTool
                 ew.Show();
                 return;
             }
+
             appData = e.Result;
 
             string url = HtmlPage.Document.DocumentUri.AbsoluteUri;
