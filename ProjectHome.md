@@ -1,0 +1,1 @@
+Mashup website is used to transfer web pages from the web interface 1.0 to interface RIA. This is the thesis of our courses. We are students of university of science.
